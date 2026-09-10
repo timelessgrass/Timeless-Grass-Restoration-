@@ -3,26 +3,27 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Header shadow once the page scrolls
+  // Header shadow, mobile drawer and Services dropdown (the /fb/ page has no header)
   const hdr = $('[data-hdr]');
-  const onScroll = () => hdr.classList.toggle('is-scrolled', scrollY > 8);
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  if (hdr) {
+    const onScroll = () => hdr.classList.toggle('is-scrolled', scrollY > 8);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-  // Mobile drawer
-  const burger = $('.hdr__burger');
-  const drawer = $('#drawer');
-  const setDrawer = (open) => { burger.setAttribute('aria-expanded', open); drawer.hidden = !open; };
-  burger.addEventListener('click', () => setDrawer(drawer.hidden));
-  $$('a', drawer).forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+    const burger = $('.hdr__burger');
+    const drawer = $('#drawer');
+    const setDrawer = (open) => { burger.setAttribute('aria-expanded', open); drawer.hidden = !open; };
+    burger.addEventListener('click', () => setDrawer(drawer.hidden));
+    $$('a', drawer).forEach((a) => a.addEventListener('click', () => setDrawer(false)));
 
-  // Services dropdown: hover/focus handled in CSS, click for touch
-  const drop = $('.nav__drop');
-  const dropBtn = $('button', drop);
-  const setDrop = (open) => { drop.classList.toggle('is-open', open); dropBtn.setAttribute('aria-expanded', open); };
-  dropBtn.addEventListener('click', () => setDrop(!drop.classList.contains('is-open')));
-  document.addEventListener('click', (e) => { if (!drop.contains(e.target)) setDrop(false); });
-  $$('a', drop).forEach((a) => a.addEventListener('click', () => { setDrop(false); a.blur(); }));
+    // Services dropdown: hover/focus handled in CSS, click for touch
+    const drop = $('.nav__drop');
+    const dropBtn = $('button', drop);
+    const setDrop = (open) => { drop.classList.toggle('is-open', open); dropBtn.setAttribute('aria-expanded', open); };
+    dropBtn.addEventListener('click', () => setDrop(!drop.classList.contains('is-open')));
+    document.addEventListener('click', (e) => { if (!drop.contains(e.target)) setDrop(false); });
+    $$('a', drop).forEach((a) => a.addEventListener('click', () => { setDrop(false); a.blur(); }));
+  }
 
   // Reveal sections as they enter the viewport
   const io = new IntersectionObserver((entries) => entries.forEach((e) => {
@@ -105,9 +106,8 @@
     ['pointerup', 'pointercancel'].forEach((t) => ba.addEventListener(t, () => { dragging = false; }));
   }
 
-  // Quote form: submit to Netlify Forms without leaving the page
-  const form = $('form[name="quote"]');
-  if (form) {
+  // Netlify forms: submit without leaving the page
+  $$('form[data-netlify]').forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const ok = $('.form__msg--ok', form), err = $('.form__msg--err', form), btn = $('button[type="submit"]', form);
@@ -121,13 +121,40 @@
         });
         if (!res.ok) throw new Error(res.status);
         form.reset();
+        $$('[data-ballpark]', form).forEach((b) => { b.hidden = true; });
         ok.hidden = false;
+        ok.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+        if (window.fbq && form.dataset.fbq) window.fbq('track', form.dataset.fbq);
       } catch {
         err.hidden = false;
       } finally {
         btn.disabled = false;
       }
     });
+  });
+
+  // /fb/ page: greet by name from ?name= or ?first_name= (e.g. a link sent by text after the lead form)
+  const nameSlot = $('[data-name]');
+  if (nameSlot) {
+    const qs = new URLSearchParams(location.search);
+    const raw = (qs.get('name') || qs.get('first_name') || '').trim().split(/\s+/)[0].slice(0, 24);
+    if (raw) {
+      const first = raw.charAt(0).toUpperCase() + raw.slice(1);
+      nameSlot.textContent = `, ${first}`;
+      const input = $('[data-name-input]');
+      if (input) input.value = first;
+    }
+  }
+
+  // /fb/ page: show a ballpark price as soon as a turf size is picked
+  const ballpark = $('[data-ballpark]');
+  if (ballpark) {
+    $$('input[name="size"]').forEach((r) => r.addEventListener('change', () => {
+      ballpark.hidden = false;
+      ballpark.innerHTML = r.dataset.e
+        ? `Ballpark for your yard: Essential Clean <b>${r.dataset.e}</b> · Premium Restoration <b>${r.dataset.p}</b>`
+        : 'No problem. Brian will help you measure. Pricing starts at <b>$199</b> for yards up to 500 sq ft.';
+    }));
   }
 
   $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
