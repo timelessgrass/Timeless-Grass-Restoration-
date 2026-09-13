@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { GREENS, ALL_PROBLEMS, ALL_GUIDES, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL, LOCAL_SERVICES, findService, findTown, TIERS } from '../../data/registry';
+import { brand, area } from '../../data/site';
+
+/** The putting green hub: every page on the site about greens, grouped by what the reader is trying to do. */
+const T = TIERS.greens;
+const crumbs = [{ name: 'Home', item: '/' }, { name: T.name, item: T.base }];
+const svc = findService('putting-green-restoration')!;
+type Entry = { slug: string; h1: string; answer: string };
+type Card = { href: string; label: string; h: string; p: string };
+const firstSentence = (s: string) => s.replace(/<[^>]+>/g, '').split('. ')[0].replace(/\.$/, '') + '.';
+const cards = (items: Entry[], base: string, label: string): Card[] => items.map((a) => ({ href: `${base}${a.slug}/`, label, h: a.h1, p: firstSentence(a.answer) }));
+const pick = <X extends { slug: string }>(arr: X[], slugs: string[]) => slugs.map((s) => arr.find((x) => x.slug === s)).filter(Boolean) as X[];
+
+const groups: { h: string; intro: string; items: Card[] }[] = [
+  {
+    h: 'Start with what the green is doing',
+    intro: 'Each of these starts from a symptom, works out which cause you have, and says honestly what a brush and sand can fix and what they cannot.',
+    items: [
+      ...cards(GREENS.filter((g) => g.kind === 'problem'), T.base, 'Problem'),
+      ...cards(pick(ALL_PROBLEMS, ['putting-green-rolls-slow-or-bumpy', 'putting-green-cups-sunk-or-uneven']), '/turf-problems/', 'Problem'),
+    ],
+  },
+  {
+    h: 'Keeping it rolling',
+    intro: 'Schedules, speed, sand and the owner routine that keeps a green playing between visits.',
+    items: [
+      ...cards(pick(ALL_GUIDES, ['putting-green-care-schedule']), '/guides/', 'Guide'),
+      ...cards(GREENS.filter((g) => g.kind === 'guide' || g.kind === 'explainer'), T.base, 'Guide'),
+      ...cards(pick(CARE, ['backyard-putting-green']), '/turf-care/', 'Care'),
+      ...cards(pick(HOWTOS, ['clean-a-synthetic-putting-green', 'top-dress-a-putting-green']), '/how-to/', 'How-to'),
+      ...cards(pick(EXPLAINERS, ['putting-green-sand-explained']), '/turf-101/', 'Turf 101'),
+    ],
+  },
+  {
+    h: 'What a green costs to keep',
+    intro: 'Greens are quoted after an inspection. These pages show where typical greens land and how the arithmetic works over a year.',
+    items: [
+      ...cards(pick(COSTS, ['putting-green-restoration-cost']), '/cost/', 'Cost'),
+      ...cards(GREENS.filter((g) => g.kind === 'cost'), T.base, 'Cost'),
+    ],
+  },
+  {
+    h: 'Greens beyond the backyard',
+    intro: 'Golf communities, courses, mini golf, simulator venues and large properties each put a different kind of wear on a green.',
+    items: cards(pick(COMMERCIAL, ['golf-communities-and-amenity-greens', 'golf-courses-and-practice-facilities', 'mini-golf-courses', 'indoor-golf-and-simulator-venues', 'private-estates-and-large-properties']), '/commercial/', 'Commercial'),
+  },
+];
+const towns = LOCAL_SERVICES.filter((l) => l.service === svc.slug).map((l) => {
+  const t = findTown(l.town)!;
+  return { href: `/service-areas/${t.slug}/${svc.slug}/`, label: `${t.name}, ${t.state}`, h: l.h1, p: firstSentence(l.answer) };
+});
+
+const question = 'Who restores and maintains synthetic putting greens on the Grand Strand?';
+const answer = `TIMELESS Turf Restoration restores and maintains synthetic putting greens from Shallotte, NC to Burgess, SC. A visit clears the green, brushes it, cleans the cups and fringe, top-dresses with kiln-dried green sand, rolls it and checks the speed. Greens are quoted after an inspection, and most backyard greens land between $299 and $899. Brian has worked in turf and putting greens for ${brand.ownerYears} years.`;
+const description = `How synthetic putting greens are restored and kept rolling true on the Grand Strand: speed, sand, seams, chip shots and cost. Call ${brand.phone}.`;
+const image = { src: '/assets/img/backyard-putting-green-landscaped-boulders.jpg', alt: 'Backyard synthetic putting green set among landscaped boulders' };
+---
+<Base title="Putting Green Maintenance on the Grand Strand | TIMELESS" description={description} crumbs={crumbs} answer={{ question, answer }} ogImage={image.src}>
+  <SubHero kicker="Putting greens" h1="Keeping a synthetic green rolling true" lede={`A green is the one piece of turf that has to play, not just look clean. Everything we have written about greens is here: why they slow down, speed up and stop holding shots, what they cost to keep, and how we restore them across ${area.name}.`} crumbs={crumbs} image={image}>
+    <div class="btnrow"><a class="btn btn--green btn--lg" href="/quote/?plan=Putting" data-cta="quote-hero">Get a Putting Green Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
+  </SubHero>
+
+  <section class="sec sec--tight">
+    <div class="wrap hub">
+      <article class="prose">
+        <AnswerBox question={question} answer={answer} />
+        <h2>What a green needs that a lawn does not</h2>
+        <p>A lawn is judged by how it looks. A green is judged by how a ball rolls on it, and that comes down to three things: sand at a consistent depth, fibers standing up to hold that sand, and a surface clear enough to blow off. When any one of them slips, the green goes slow, bumpy or unpredictable long before it looks worn.</p>
+        <p>On the Grand Strand the usual culprits are seasonal. Pine pollen starts in February and turns to paste in the sand, live oaks drop their leaves in April, and heavy summer rain moves sand from the high side of a green to the low side. That is why most home greens do well with a light owner routine all year and one proper restoration once pollen season is over.</p>
+        <p>Brian has worked in turf and putting greens for {brand.ownerYears} years, and our sister company builds greens. When a green needs more than sand and a brush, such as a settled base or fibers worn down to the backing, we will say so rather than sell a restoration that cannot fix it.</p>
+        <h2>What a restoration visit includes</h2>
+        <ul class="checks">{svc.included.map((i) => <li>{i}</li>)}</ul>
+        <p>{svc.priceLine}. The <a href={`/services/${svc.slug}/`}>putting green restoration page</a> walks through each step and why the order matters.</p>
+      </article>
+    </div>
+  </section>
+
+  {groups.filter((g) => g.items.length).map((g) => (
+    <section class="sec sec--tight">
+      <div class="wrap">
+        <div class="sec__head" data-reveal><h2>{g.h}</h2><p>{g.intro}</p></div>
+        <div class="index">{g.items.map((c) => <a class="index__item" href={c.href} data-reveal><small>{c.label}</small><h3>{c.h}</h3><p>{c.p}</p></a>)}</div>
+      </div>
+    </section>
+  ))}
+
+  <section class="sec sec--tight">
+    <div class="wrap">
+      <div class="sec__head" data-reveal><h2>Putting green restoration by town</h2><p>What the trees, water and golf in each town do to the greens there.</p></div>
+      <div class="index">{towns.map((c) => <a class="index__item" href={c.href} data-reveal><small>{c.label}</small><h3>{c.h}</h3><p>{c.p}</p></a>)}</div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

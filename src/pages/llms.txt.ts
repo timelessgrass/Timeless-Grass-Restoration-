@@ -1,7 +1,7 @@
 /** Derived only from site data, so it cannot claim anything the pages don't. */
 import type { APIRoute } from 'astro';
 import { brand, area, pricing as P, SITE_URL } from '../data/site';
-import { ALL_SERVICES as SERVICES, ALL_PROBLEMS as PROBLEMS, ALL_GUIDES as GUIDES, ALL_TOWNS as TOWNS, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL } from '../data/registry';
+import { ALL_SERVICES as SERVICES, ALL_PROBLEMS as PROBLEMS, ALL_GUIDES as GUIDES, ALL_TOWNS as TOWNS, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL, GREENS } from '../data/registry';
 
 export const GET: APIRoute = () => {
   const body = `# ${brand.name}
@@ -37,6 +37,10 @@ ${CARE.map((c) => `- [${c.h1}](${SITE_URL}/turf-care/${c.slug}/)`).join('\n')}
 
 ## Turf 101
 ${EXPLAINERS.map((e) => `- [${e.h1}](${SITE_URL}/turf-101/${e.slug}/)`).join('\n')}
+
+## Putting greens
+- [Putting green restoration and care](${SITE_URL}/putting-greens/)
+${GREENS.map((g) => `- [${g.h1}](${SITE_URL}/putting-greens/${g.slug}/)`).join('\n')}
 
 ## Commercial programs
 ${COMMERCIAL.map((c) => `- [${c.h1}](${SITE_URL}/commercial/${c.slug}/)`).join('\n')}

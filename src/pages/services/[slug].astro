@@ -38,6 +38,7 @@ const schema = [{
         { h: 'Problems this fixes', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
         { h: 'Related services', items: related.map((r) => ({ href: `/services/${r!.slug}/`, label: r!.name })) },
         { h: 'Where we do it', items: TOWNS.slice(0, 6).map((t) => ({ href: `/service-areas/${t.slug}/`, label: `${t.name}, ${t.state}` })) },
+        ...(s.slug === 'putting-green-restoration' ? [{ h: 'Putting green center', items: [{ href: '/putting-greens/', label: 'Every putting green guide, problem and cost' }] }] : []),
       ]} />
     </div>
   </section>

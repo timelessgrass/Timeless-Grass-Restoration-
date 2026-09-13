@@ -564,7 +564,7 @@ a.card{text-decoration:none;color:inherit}
 .hdr__cta{margin-left:0}
 @media (max-width:1100px){.hdr .search:not(.search--drawer){display:none}}
 
-.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .tier{display:flex;flex-direction:column;padding:22px;border:1px solid var(--stone);border-radius:18px;background:#fff;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s}
 .tier:hover{border-color:var(--green);transform:translateY(-3px)}
 .tier h3{font-size:1.05rem}.tier p{flex:1;margin-top:8px;font-size:.9rem;color:var(--muted)}
@@ -574,3 +574,18 @@ a.card{text-decoration:none;color:inherit}
 .side__plain{list-style:none}
 .side__plain li{position:relative;padding-left:20px;font-size:.9rem;color:var(--dark)}
 .side__plain li::before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;background:var(--green);-webkit-mask:var(--ck) center/contain no-repeat;mask:var(--ck) center/contain no-repeat}
+
+/* ===== Header fit =====
+   Placed last so it wins over the base header and search rules. Logo, phone and quote button never shrink or wrap.
+   The desktop search is an icon that opens over the nav on focus; below 1240px the phone shows as an icon
+   (the topbar still prints the number); below 1180px the nav moves into the drawer. */
+.hdr__logo,.hdr__cta,.hdr__cta>*{flex:none;white-space:nowrap}
+.nav__link{white-space:nowrap;padding:10px 12px}
+.hdr__in{gap:14px}
+.hdr .search:not(.search--drawer){width:40px;height:40px}
+.hdr .search:not(.search--drawer) .search__in{position:absolute;top:0;right:0;width:40px;height:40px;padding:0 0 0 38px;color:transparent;cursor:pointer;background-position:11px center}
+.hdr .search:not(.search--drawer) .search__in::placeholder{color:transparent}
+.hdr .search:not(.search--drawer) .search__in:focus,.hdr .search:not(.search--drawer) .search__in:not(:placeholder-shown){width:300px;padding:10px 14px 10px 36px;color:var(--ink);cursor:text;z-index:61}
+.hdr .search:not(.search--drawer) .search__in:focus::placeholder{color:var(--muted)}
+@media (max-width:1240px){.hdr__phone{font-size:0;gap:0}.hdr__phone .ic{width:22px;height:22px}}
+@media (max-width:1180px){.nav,.hdr__phone{display:none}.hdr__burger{display:block}}

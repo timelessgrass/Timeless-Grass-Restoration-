@@ -14,7 +14,12 @@ import { HOWTOS_2 } from './howtos-2';
 import { CARE } from './care';
 import { COSTS } from './costs';
 import { EXPLAINERS } from './explainers';
-import { COMMERCIAL } from './commercial';
+import { COMMERCIAL as COMMERCIAL_1 } from './commercial';
+import { COMMERCIAL_2 } from './commercial-2';
+import { COMMERCIAL_3 } from './commercial-3';
+import { GUIDES_4 } from './guides-4';
+import { GREENS_1 } from './greens-1';
+import { GREENS_2 } from './greens-2';
 import { LOCAL_SERVICES_1 } from './local-services-1';
 import { LOCAL_SERVICES_2 } from './local-services-2';
 import { brand } from './site';
@@ -27,10 +32,12 @@ const uniq = <T extends { slug: string }>(arr: T[], name: string): T[] => {
 
 export const ALL_SERVICES = SERVICES;
 export const ALL_PROBLEMS = uniq([...PROBLEMS, ...PROBLEMS_2, ...PROBLEMS_3], 'problems');
-export const ALL_GUIDES = uniq([...GUIDES, ...GUIDES_2, ...GUIDES_3, ...COMPARISONS], 'guides');
+export const ALL_GUIDES = uniq([...GUIDES, ...GUIDES_2, ...GUIDES_3, ...GUIDES_4, ...COMPARISONS], 'guides');
 export const HOWTOS = uniq([...HOWTOS_1, ...HOWTOS_2], 'howtos');
 export const ALL_TOWNS = uniq([...TOWNS, ...TOWNS_2], 'towns');
-export { CARE, COSTS, EXPLAINERS, COMMERCIAL };
+export const COMMERCIAL = uniq([...COMMERCIAL_1, ...COMMERCIAL_2, ...COMMERCIAL_3], 'commercial');
+export const GREENS = uniq([...GREENS_1, ...GREENS_2], 'greens');
+export { CARE, COSTS, EXPLAINERS };
 export const LOCAL_SERVICES = (() => { const all = [...LOCAL_SERVICES_1, ...LOCAL_SERVICES_2]; const seen = new Set<string>(); for (const l of all) { const k = `${l.town}/${l.service}`; if (seen.has(k)) throw new Error(`duplicate local page ${k}`); seen.add(k); } return all; })();
 
 /** Tier metadata: base path, index title, kicker. */
@@ -42,6 +49,7 @@ export const TIERS = {
   costs: { base: '/cost/', name: 'Costs', kicker: 'Cost' },
   explainers: { base: '/turf-101/', name: 'Turf 101', kicker: 'Turf 101' },
   commercial: { base: '/commercial/', name: 'Commercial', kicker: 'Commercial' },
+  greens: { base: '/putting-greens/', name: 'Putting greens', kicker: 'Putting greens' },
 } as const;
 
 export const findProblem = (slug: string) => ALL_PROBLEMS.find((p) => p.slug === slug);
@@ -72,6 +80,7 @@ export const allRoutes = (): string[] => [
   ...COSTS.map((c) => `/cost/${c.slug}/`),
   ...EXPLAINERS.map((e) => `/turf-101/${e.slug}/`),
   ...COMMERCIAL.map((c) => `/commercial/${c.slug}/`),
+  ...GREENS.map((g) => `/putting-greens/${g.slug}/`),
   ...ALL_TOWNS.map((t) => `/service-areas/${t.slug}/`),
   ...LOCAL_SERVICES.map((l) => `/service-areas/${l.town}/${l.service}/`),
 ];

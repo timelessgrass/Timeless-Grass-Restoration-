@@ -42,6 +42,8 @@ const schema = [{
   author: { '@type': 'Person', name: brand.owner, worksFor: { '@id': `${SITE_URL}/#business` } }, publisher: { '@id': `${SITE_URL}/#business` },
   mainEntityOfPage: { '@id': `${canonical}#webpage` }, ...(a.image ? { image: new URL(a.image.src, Astro.site).href } : {}),
 }, ...extraSchema];
+/** Every green or golf page outside the greens tier points back to the putting green hub. */
+const hubLinks = /putting-green|golf/.test(a.slug) && !Astro.url.pathname.startsWith('/putting-greens/') ? [{ h: 'Putting green center', items: [{ href: '/putting-greens/', label: 'Every putting green guide, problem and cost' }] }] : [];
 const defaultCallout = `<b>Need it done?</b> ${brand.name} does this across the Grand Strand, priced by square foot before we come out. <a href="/quote/">Get a free quote</a> or call ${brand.phone}.`;
 ---
 <Base title={a.title} description={description} crumbs={crumbs} answer={{ question: a.question, answer: a.answer }} faq={a.faq} schema={schema} ogImage={a.image?.src}>
@@ -58,7 +60,7 @@ const defaultCallout = `<b>Need it done?</b> ${brand.name} does this across the 
         {a.sections.map((s) => <><h2 id={slugify(s.h2)}>{s.h2}</h2><div set:html={s.html} /></>)}
         <div class="callout callout--cta" set:html={callout ?? defaultCallout} />
       </article>
-      <Sidebar priceLine={priceLine} priceLabel={priceLabel} plan={plan} links={sideLinks} />
+      <Sidebar priceLine={priceLine} priceLabel={priceLabel} plan={plan} links={[...sideLinks, ...hubLinks]} />
     </div>
   </section>
   <Faq faq={a.faq} h2={faqH2} />
