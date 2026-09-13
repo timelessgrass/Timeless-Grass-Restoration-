@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Faq from '../../components/Faq.astro';
+import Related from '../../components/Related.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { TOWNS, townBySlug } from '../../data/towns';
+import { SERVICES } from '../../data/services';
+import { brand, pricing as P, money } from '../../data/site';
+
+export function getStaticPaths() { return TOWNS.map((t) => ({ params: { town: t.slug }, props: { t } })); }
+const { t } = Astro.props;
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }, { name: t.name, item: `/service-areas/${t.slug}/` }];
+const nearby = t.nearby.map(townBySlug).filter(Boolean);
+const facts = [
+  { b: 'Jurisdiction', v: t.kind === 'unincorporated' ? `Unincorporated ${t.county}` : `${t.kind === 'city' ? 'City' : 'Town'} of ${t.name}, ${t.county}` },
+  { b: 'ZIP', v: t.zips.join(', ') },
+  { b: 'Coastal band', v: t.band === 'oceanfront' ? 'Oceanfront' : t.band === 'waterway' ? 'Intracoastal Waterway' : 'Inland' },
+  ...(t.water ? [{ b: 'Water', v: t.water }] : []),
+];
+---
+<Base title={t.title} description={t.description} crumbs={crumbs} answer={{ question: t.question, answer: t.answer }} faq={t.faq} ogImage={t.image.src}>
+  <SubHero kicker={`${t.name}, ${t.state}`} h1={t.h1} lede={t.intro} crumbs={crumbs} image={t.image}>
+    <div class="btnrow"><a class="btn btn--green btn--lg" href="/quote/" data-cta="quote-hero">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
+  </SubHero>
+  <section class="sec">
+    <div class="wrap article">
+      <article class="prose">
+        <AnswerBox question={t.question} answer={t.answer} />
+        <div class="facts">{facts.map((f) => <div class="fact"><b>{f.b}</b><span>{f.v}</span></div>)}</div>
+        {t.blocks.map((b) => <><h2>{b.h2}</h2><div set:html={b.html} /></>)}
+        <h2>Turf cleaning prices in {t.name}</h2>
+        <p>Same price table everywhere on the Strand: Essential Clean from {money(P.rows[0].essential!)}, Premium Restoration with pet-odor, antimicrobial and algae treatment from {money(P.rows[0].premium!)}, both by square footage. Memberships from ${P.memberships[0].monthly} a month. The <a href="/pricing/">pricing page</a> has every band and add-on; no trip charge inside the service area.</p>
+        <h2>Every service, in {t.name}</h2>
+        <ul class="chips chips--links">{SERVICES.map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}</ul>
+        {nearby.length > 0 && <><h2>Nearby</h2><ul class="chips chips--links">{nearby.map((n) => <li><a href={`/service-areas/${n!.slug}/`}>{n!.name}, {n!.state}</a></li>)}</ul></>}
+        <div class="src"><b>Sources for the facts on this page</b><ul>{t.sources.map((s) => <li><a href={s} rel="nofollow noopener">{s}</a></li>)}</ul></div>
+      </article>
+      <Sidebar priceLine={`Essential from ${money(P.rows[0].essential!)} · Premium from ${money(P.rows[0].premium!)}`} priceLabel={`In ${t.name}`} links={[
+        { h: `Turf in ${t.name}`, items: [...t.communities.slice(0, 5).map((c) => ({ href: '/quote/', label: c })), ...t.golf.slice(0, 3).map((g) => ({ href: '/services/putting-green-restoration/', label: g }))] },
+        { h: 'Nearby areas', items: nearby.map((n) => ({ href: `/service-areas/${n!.slug}/`, label: `${n!.name}, ${n!.state}` })) },
+      ]} />
+    </div>
+  </section>
+  <Faq faq={t.faq} h2={`Turf questions from ${t.name}`} />
+  <Related kicker="Most requested here" h2={`What ${t.name} yards usually need`} items={SERVICES.slice(0, 3).map((s) => ({ href: `/services/${s.slug}/`, title: s.name, blurb: s.short, image: s.image.src }))} />
+  <CtaBand h2={`Turf cleaning in ${t.name}, priced before we come out`} />
+</Base>

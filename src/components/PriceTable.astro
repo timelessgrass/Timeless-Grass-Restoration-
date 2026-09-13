@@ -1,0 +1,15 @@
+---
+import { pricing, money } from '../data/site';
+interface Props { caption?: string; note?: boolean }
+const { caption = 'Price by turf size', note = true } = Astro.props;
+---
+<div class="sizes" data-reveal>
+  <table>
+    <caption>{caption}</caption>
+    <thead><tr><th scope="col">Turf area</th><th scope="col">{pricing.essential.name}</th><th scope="col">{pricing.premium.name}</th></tr></thead>
+    <tbody>
+      {pricing.rows.map((r) => r.essential ? <tr><th scope="row">{r.size}</th><td>{money(r.essential)}</td><td>{money(r.premium!)}</td></tr> : <tr><th scope="row">{r.size}</th><td colspan="2">Custom quote</td></tr>)}
+    </tbody>
+  </table>
+  {note && <p class="sizes__note">{money(pricing.minimum)} minimum per visit. Repairs, new infill and heavy odor or stain treatments are quoted after we inspect. Prices as of <time datetime={pricing.updated}>{new Date(pricing.updated + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</time>.</p>}
+</div>

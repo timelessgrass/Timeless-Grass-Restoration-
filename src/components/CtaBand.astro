@@ -1,0 +1,18 @@
+---
+import { brand } from '../data/site';
+interface Props { kicker?: string; h2?: string; text?: string; image?: string }
+const { kicker = 'Ready when you are', h2 = 'Get your turf back to new. Free quote in minutes.', text = 'Send a few details or call. You get an upfront price before any work starts, and every job ends blown clean.', image = '/assets/img/putting-green-at-sunset-wide.jpg' } = Astro.props;
+---
+<section class="final">
+  <img src={image} width="1400" height="1050" alt="" loading="lazy" decoding="async">
+  <div class="wrap" data-reveal>
+    <p class="kicker">{kicker}</p>
+    <h2>{h2}</h2>
+    <p>{text}</p>
+    <div class="btnrow btnrow--center">
+      <a class="btn btn--green btn--lg" href="/quote/" data-cta="quote-band">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn--outline-light btn--lg" href={brand.phoneHref} data-cta="call-band"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+    </div>
+    <ul class="ticks"><li>Free, no-obligation quote</li><li>Priced by square foot, never by the hour</li><li>Blown-clean finish</li></ul>
+  </div>
+</section>

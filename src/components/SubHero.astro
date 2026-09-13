@@ -1,0 +1,19 @@
+---
+import Crumbs from './Crumbs.astro';
+interface Props { kicker: string; h1: string; lede: string; crumbs?: { name: string; item: string }[]; image?: { src: string; alt: string }; dark?: boolean }
+const { kicker, h1, lede, crumbs, image, dark = false } = Astro.props;
+---
+<section class:list={['sub-hero', { 'sub-hero--dark': dark, 'sub-hero--img': !!image }]}>
+  <div class="wrap">
+    {crumbs && <Crumbs crumbs={crumbs} />}
+    <div class="sub-hero__grid">
+      <div>
+        <p class="kicker">{kicker}</p>
+        <h1 set:html={h1} />
+        <p class="sub-hero__lede" set:html={lede} />
+        <slot />
+      </div>
+      {image && <div class="sub-hero__media"><img src={image.src} alt={image.alt} width="1400" height="1050" fetchpriority="high" decoding="async"></div>}
+    </div>
+  </div>
+</section>

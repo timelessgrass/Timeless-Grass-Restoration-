@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { GUIDES } from '../../data/guides';
+import { brand } from '../../data/site';
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Guides', item: '/guides/' }];
+---
+<Base title="Artificial Turf Care Guides, Grand Strand | TIMELESS" description={`How often to clean turf, what it costs, DIY mistakes that damage it, a coastal maintenance calendar, and how to tell dirty turf from dead turf.`} crumbs={crumbs}>
+  <SubHero kicker="Guides" h1="Turf care, written down" lede="Tables, calendars and real prices instead of 'call for a quote'. Written for the Grand Strand, where the pollen, the humidity and the storms make the generic advice wrong by a notch." crumbs={crumbs} />
+  <section class="sec"><div class="wrap"><div class="index">{GUIDES.map((g) => <a class="index__item" href={`/guides/${g.slug}/`} data-reveal><small>{g.kind}</small><h3>{g.h1}</h3><p>{g.lede.slice(0, 160)}…</p></a>)}</div></div></section>
+  <CtaBand />
+</Base>

@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import PriceTable from '../../components/PriceTable.astro';
+import Faq from '../../components/Faq.astro';
+import Related from '../../components/Related.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { GUIDES, guideBySlug } from '../../data/guides';
+import { serviceBySlug } from '../../data/services';
+import { problemBySlug } from '../../data/problems';
+import { brand, SITE_URL } from '../../data/site';
+
+export function getStaticPaths() { return GUIDES.map((g) => ({ params: { slug: g.slug }, props: { g } })); }
+const { g } = Astro.props;
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Guides', item: '/guides/' }, { name: g.short, item: `/guides/${g.slug}/` }];
+const services = g.services.map(serviceBySlug).filter(Boolean);
+const problems = g.problems.map(problemBySlug).filter(Boolean);
+const related = g.related.map(guideBySlug).filter(Boolean);
+const schema = [{ '@type': 'Article', '@id': `${SITE_URL}/guides/${g.slug}/#article`, headline: g.h1, description: g.description, dateModified: g.updated, author: { '@id': `${SITE_URL}/#business` }, publisher: { '@id': `${SITE_URL}/#business` }, mainEntityOfPage: { '@id': `${SITE_URL}/guides/${g.slug}/#webpage` } }];
+const updated = new Date(g.updated + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+---
+<Base title={g.title} description={g.description} crumbs={crumbs} answer={{ question: g.question, answer: g.answer }} faq={g.faq} schema={schema} ogImage={g.image?.src}>
+  <SubHero kicker={g.kind === 'comparison' ? 'Comparison' : 'Guide'} h1={g.h1} lede={g.lede} crumbs={crumbs} image={g.image}>
+    <p class="sub-hero__meta">Updated <time datetime={g.updated}>{updated}</time> · by {brand.owner}, {brand.name}</p>
+  </SubHero>
+  <section class="sec">
+    <div class="wrap article">
+      <article class="prose">
+        <AnswerBox question={g.question} answer={g.answer} />
+        {g.sections.map((sec) => <><h2>{sec.h2}</h2><div set:html={sec.html} />{g.slug === 'artificial-turf-cleaning-cost' && sec.h2 === 'The price table' && <PriceTable />}</>)}
+      </article>
+      <Sidebar links={[
+        { h: 'Services mentioned', items: services.map((s) => ({ href: `/services/${s!.slug}/`, label: s!.name })) },
+        { h: 'Related problems', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
+        { h: 'More guides', items: related.map((r) => ({ href: `/guides/${r!.slug}/`, label: r!.short })) },
+      ]} />
+    </div>
+  </section>
+  <Faq faq={g.faq} h2="Related questions" />
+  <Related kicker="Keep reading" h2="More guides" items={related.map((r) => ({ href: `/guides/${r!.slug}/`, title: r!.h1, blurb: r!.lede.slice(0, 140) + '…' }))} />
+  <CtaBand />
+</Base>

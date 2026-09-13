@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Faq from '../../components/Faq.astro';
+import Related from '../../components/Related.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { PROBLEMS, problemBySlug, CLUSTERS } from '../../data/problems';
+import { serviceBySlug } from '../../data/services';
+import { brand } from '../../data/site';
+
+export function getStaticPaths() { return PROBLEMS.map((p) => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Turf problems', item: '/turf-problems/' }, { name: p.short, item: `/turf-problems/${p.slug}/` }];
+const svc = serviceBySlug(p.service)!;
+const related = p.related.map(problemBySlug).filter(Boolean);
+---
+<Base title={p.title} description={p.description} crumbs={crumbs} answer={{ question: p.question, answer: p.answer }} faq={p.faq} ogImage={p.image?.src}>
+  <SubHero kicker={CLUSTERS[p.cluster]} h1={p.h1} lede={p.lede} crumbs={crumbs} image={p.image}>
+    <div class="btnrow"><a class="btn btn--green btn--lg" href="/quote/" data-cta="quote-hero">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
+  </SubHero>
+  <section class="sec">
+    <div class="wrap article">
+      <article class="prose">
+        <AnswerBox question={p.question} answer={p.answer} />
+        {p.sections.map((sec) => <><h2>{sec.h2}</h2><div set:html={sec.html} /></>)}
+        <div class="callout"><b>The fix:</b> <a href={`/services/${svc.slug}/`}>{svc.name}</a>. {svc.priceLine}. <a href="/quote/">Get a free quote</a> or call {brand.phone}.</div>
+      </article>
+      <Sidebar priceLine={svc.priceLine} priceLabel={svc.name} links={[
+        { h: 'The service that fixes it', items: [{ href: `/services/${svc.slug}/`, label: svc.name }, ...svc.related.map((r) => serviceBySlug(r)!).map((r) => ({ href: `/services/${r.slug}/`, label: r.name }))] },
+        { h: 'Related problems', items: related.map((r) => ({ href: `/turf-problems/${r!.slug}/`, label: r!.short })) },
+      ]} />
+    </div>
+  </section>
+  <Faq faq={p.faq} h2="Related questions" />
+  <Related kicker="Related problems" h2="If you have this, you might also have…" items={related.map((r) => ({ href: `/turf-problems/${r!.slug}/`, title: r!.h1, blurb: r!.lede.slice(0, 140) + '…', image: r!.image?.src }))} />
+  <CtaBand />
+</Base>

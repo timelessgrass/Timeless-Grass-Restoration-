@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { TOWNS } from '../../data/towns';
+import { brand, area } from '../../data/site';
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }];
+const q = `Where does ${brand.name} clean turf?`;
+const a = `${brand.name} serves ${area.name}: ${area.line}. That covers Horry County, SC and the southern Brunswick County, NC beaches. ${TOWNS.map((t) => t.name).join(', ')}. If your town is not listed, call ${brand.phone}; if it is on the Strand, we will come out.`;
+const sc = TOWNS.filter((t) => t.state === 'SC');
+const nc = TOWNS.filter((t) => t.state === 'NC');
+---
+<Base title="Turf Cleaning Service Areas, Grand Strand | TIMELESS" description={`Artificial turf cleaning and putting green restoration across the Grand Strand, Shallotte NC to Burgess SC. Owner-operated. Call ${brand.phone}.`} crumbs={crumbs} answer={{ question: q, answer: a }}>
+  <SubHero kicker="Service areas" h1={`Turf cleaning across ${area.name}`} lede={`${area.line}. Every town page explains what its yards, water and weather do to turf, and what we do about it.`} crumbs={crumbs}>
+    <AnswerBox question={q} answer={a} />
+  </SubHero>
+  <section class="sec"><div class="wrap">
+    <div class="sec__head" data-reveal><p class="kicker">South Carolina</p><h2>Horry County</h2></div>
+    <div class="index">{sc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, SC</h3><p>{t.intro.split('. ')[0]}.</p></a>)}</div>
+    {nc.length > 0 && <><div class="sec__head" data-reveal style="margin-top:48px"><p class="kicker">North Carolina</p><h2>Brunswick County beaches</h2></div><div class="index">{nc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, NC</h3><p>{t.intro.split('. ')[0]}.</p></a>)}</div></>}
+  </div></section>
+  <CtaBand />
+</Base>

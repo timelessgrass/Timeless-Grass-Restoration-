@@ -1,40 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>You're in! Here's what happens next | TIMELESS Grass &amp; Greens</title>
-<meta name="description" content="Your turf cleaning quote request is in. Here's what happens next.">
-<meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0c1809">
-<link rel="icon" type="image/png" href="/assets/brand/favicon.png">
-<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/styles.css">
-<script>document.documentElement.classList.add('js')</script>
-<script src="/main.js" defer></script>
-<!-- Meta Pixel: paste the base code here. Don't fire 'Lead' on this page (the Instant Form already counts it).
-     Once the pixel is installed, the follow-up form below fires 'Contact' on submit. -->
-</head>
-<body>
+---
+/* Follow-up page for Meta Instant Form leads. noindex; no site chrome (its own minimal header).
+   Meta Pixel base code goes in the head slot below once Brian has the pixel ID; the follow-up
+   form fires "Contact" on submit via data-fbq. Never fire "Lead" here (the Instant Form counts it). */
+import Base from '../../layouts/Base.astro';
+import { brand } from '../../data/site';
+---
+<Base title={`You're in! Here's what happens next | ${brand.name}`} description="Your turf cleaning quote request is in. Here's what happens next." robots="noindex, nofollow" chrome="minimal">
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></symbol>
-  <symbol id="i-save" viewBox="0 0 24 24"><path d="M15 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 8v6M16 11h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-</svg>
 
 <header class="lp-bar">
   <div class="wrap lp-bar__in">
-    <a href="/"><img src="/assets/brand/logo.png" width="480" height="362" alt="TIMELESS Grass &amp; Greens"></a>
+    <a href="/"><img src="/assets/brand/logo.png" width="480" height="362" alt="TIMELESS Turf Restoration"></a>
     <a class="lp-bar__tel" href="tel:+13033492368"><svg class="ic"><use href="#i-phone"/></svg>303-349-2368</a>
   </div>
 </header>
 
-<main id="main">
+
 
 <section class="hero lp-hero">
   <div class="wrap lp-hero__in">
@@ -44,7 +25,7 @@
     <p class="lead">Thanks for asking about a turf cleaning quote. Brian, the owner, will call or text you from <b>303-349-2368</b> within one business day.</p>
     <div class="phonecard">
       <img src="/assets/brand/apple-touch-icon.png" width="180" height="180" alt="">
-      <div><small>Calls &amp; texts come from</small><b>303-349-2368</b><span>Brian · TIMELESS Grass &amp; Greens</span></div>
+      <div><small>Calls &amp; texts come from</small><b>303-349-2368</b><span>Brian · TIMELESS Turf Restoration</span></div>
       <a class="btn btn--ghost btn--sm" href="/assets/timeless-contact.vcf"><svg class="ic"><use href="#i-save"/></svg>Save</a>
     </div>
     <p class="lp-hint">Save the number so you know it's us when we call.</p>
@@ -131,8 +112,9 @@
 <section class="sec lp-work" aria-label="Recent Timeless work">
   <div class="wrap">
     <div class="sec__head" data-reveal>
-      <p class="kicker">Recent Timeless jobs</p>
-      <h2>Real work, not stock photos</h2>
+      <p class="kicker">Our work</p>
+      <h2>Lawns and greens Brian built</h2>
+      <p>Before-and-after photos from restoration jobs go here as they come in. Nothing on this page is stock.</p>
     </div>
   </div>
   <div class="strip">
@@ -147,7 +129,7 @@
 
 <section class="sec">
   <div class="wrap split">
-    <!-- Swap in a photo of Brian: a friendly face builds more trust with cold traffic than a yard. -->
+    
     <figure class="photo" data-reveal>
       <img src="/assets/img/putting-green-at-sunset-wide.jpg" width="1400" height="1050" alt="Putting green at sunset" loading="lazy" decoding="async">
       <figcaption><b>Blown clean.</b> The finish on every Timeless job.</figcaption>
@@ -157,7 +139,7 @@
       <h2>Hi, I'm Brian.</h2>
       <p class="body">I've spent 13 years building and caring for artificial turf and putting greens. When I clean your turf, I clean it the way it was built: through the blades, backing and infill, not a perfume spray on top.</p>
       <p class="body">You'll get a clear price before any work starts, and I don't leave until it's blown clean.</p>
-      <p class="sig">Brian, owner of TIMELESS Grass &amp; Greens</p>
+      <p class="sig">Brian, owner of TIMELESS Turf Restoration</p>
     </div>
   </div>
 </section>
@@ -199,7 +181,7 @@
     <details><summary><span class="n">2</span>How much will it cost?</summary><p>It depends on size and condition. Pricing starts at $199 for yards up to 500 sq ft, and the table above shows every size. You'll get your exact price before any work starts.</p></details>
     <details><summary><span class="n">3</span>Is it safe for my kids and dog?</summary><p>Yes. We use turf-safe, pet-safe products, and your turf is ready to use as soon as it's dry.</p></details>
     <details><summary><span class="n">4</span>I missed the call. What now?</summary><p>No problem. Call or text 303-349-2368 anytime and we'll pick up where we left off.</p></details>
-    <details><summary><span class="n">5</span>Where do you work?</summary><p>The Grand Strand (Myrtle Beach to Loris), Denver Metro and Northeast Florida. Not sure you're covered? Just ask when Brian calls.</p></details>
+    <details><summary><span class="n">5</span>Where do you work?</summary><p>Our Grand Strand service area runs from Shallotte, North Carolina, to Burgess, South Carolina, along the coast and inland through Loris and Conway. That includes communities such as Myrtle Beach, North Myrtle Beach, Carolina Forest and Longs. Not sure you're covered? Just ask when Brian calls.</p></details>
   </div>
 </section>
 
@@ -216,15 +198,15 @@
   </div>
 </section>
 
-</main>
+
 
 <footer class="lp-foot">
-  <div class="wrap"><p>© <span data-year>2026</span> TIMELESS Grass &amp; Greens · <a href="mailto:timelessgrass@gmail.com">timelessgrass@gmail.com</a> · <a href="/">Visit our full site</a></p></div>
+  <div class="wrap"><p>© <span data-year>2026</span> TIMELESS Turf Restoration · <a href="mailto:timelessgrass@gmail.com">timelessgrass@gmail.com</a> · <a href="/">Visit our full site</a> · <a href="/privacy/">Privacy</a></p></div>
 </footer>
 
 <div class="mbar">
   <a class="btn btn--ghost" href="tel:+13033492368"><svg class="ic"><use href="#i-phone"/></svg>Call</a>
   <a class="btn btn--green" href="sms:+13033492368?&amp;body=Hi%20Brian!%20I%20just%20asked%20for%20a%20turf%20cleaning%20quote.%20Here%20are%20a%20few%20photos%20of%20my%20turf%3A"><svg class="ic"><use href="#i-chat"/></svg>Text us photos</a>
 </div>
-</body>
-</html>
+
+</Base>

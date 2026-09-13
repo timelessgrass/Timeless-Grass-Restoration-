@@ -1,0 +1,14 @@
+---
+interface Props { faq: { q: string; a: string }[]; kicker?: string; h2?: string; intro?: string }
+const { faq, kicker = 'FAQs', h2 = 'Questions we get asked', intro } = Astro.props;
+---
+<section class="sec faq-sec" id="faq">
+  <div class="wrap faq">
+    <div class="sec__head center" data-reveal>
+      <p class="kicker">{kicker}</p>
+      <h2>{h2}</h2>
+      {intro && <p>{intro}</p>}
+    </div>
+    {faq.map((f, i) => <details><summary><span class="n">{i + 1}</span>{f.q}</summary><div class="faq__a" set:html={f.a} /></details>)}
+  </div>
+</section>

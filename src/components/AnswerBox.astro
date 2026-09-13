@@ -1,0 +1,10 @@
+---
+import { brand } from '../data/site';
+interface Props { question: string; answer: string }
+const { question, answer } = Astro.props;
+---
+<div class="answer-box">
+  <p class="answer-box__q">{question}</p>
+  <p class="answer-box__a" set:html={answer} />
+  <p class="answer-box__tel">Talk to {brand.owner}: <a href={brand.phoneHref} data-cta="call-answer">{brand.phone}</a></p>
+</div>

@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import AnswerBox from '../../components/AnswerBox.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { SERVICES } from '../../data/services';
+import { brand, area } from '../../data/site';
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Services', item: '/services/' }];
+const q = 'What does TIMELESS Turf Restoration do?';
+const a = `TIMELESS Turf Restoration cleans, treats and restores existing artificial turf and synthetic putting greens on ${area.name}: deep cleaning, pet odor removal, antimicrobial sanitizing, algae and mold removal, hard-water and stain removal, power brushing, infill replenishment, putting green restoration, seam and edge repair, and post-storm cleanup. We do not install new turf; our sister company does.`;
+---
+<Base title="Turf Cleaning & Restoration Services | TIMELESS" description={`Every turf cleaning and restoration service we offer on the Grand Strand, what each fixes, and what it costs. From $199. We restore turf; we don't install it.`} crumbs={crumbs} answer={{ question: q, answer: a }}>
+  <SubHero kicker="Services" h1="What we do to turf, and what we don't" lede="We clean, treat and restore artificial turf and putting greens that are already in the ground. Ten services, two price tiers, one finish standard: blown clean." crumbs={crumbs}>
+    <AnswerBox question={q} answer={a} />
+  </SubHero>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec__head" data-reveal><p class="kicker">Cleaning &amp; odor</p><h2>The core services</h2></div>
+      <div class="svc">{SERVICES.filter((s) => s.tier === 'core').map((s) => <a class="card" href={`/services/${s.slug}/`} data-reveal><img src={s.image.src} alt={s.image.alt} width="1400" height="1050" loading="lazy" decoding="async"><div><h3>{s.name}</h3><p>{s.short}</p><small class="card__price">{s.priceLine}</small></div></a>)}</div>
+      <div class="sec__head" data-reveal style="margin-top:56px"><p class="kicker">Repair &amp; restoration</p><h2>When cleaning isn't enough</h2></div>
+      <div class="svc">{SERVICES.filter((s) => s.tier !== 'core').map((s) => <a class="card" href={`/services/${s.slug}/`} data-reveal><img src={s.image.src} alt={s.image.alt} width="1400" height="1050" loading="lazy" decoding="async"><div><h3>{s.name}</h3><p>{s.short}</p><small class="card__price">{s.priceLine}</small></div></a>)}</div>
+    </div>
+  </section>
+  <section class="sec sec--cream">
+    <div class="wrap prose" data-reveal>
+      <h2>What we don't do</h2>
+      <p>We don't install new turf or build putting greens. When turf is past restoring, because the base has settled, the backing is breaking down, or the fibers are worn through, we say so on the inspection and hand you across to our sister company, <a href={brand.sister.url} rel="noopener">{brand.sister.name}</a>, which is run by the same owner and builds turf and greens. We'd rather lose the cleaning job than sell you a clean that won't hold. Our guide on <a href="/guides/clean-or-replace-artificial-turf/">clean or replace</a> explains how we tell the difference.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

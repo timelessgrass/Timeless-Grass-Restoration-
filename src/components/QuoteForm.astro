@@ -1,0 +1,23 @@
+---
+import { brand, pricing } from '../data/site';
+interface Props { plan?: string; compact?: boolean }
+const { plan, compact = false } = Astro.props;
+const options = ['Not sure, recommend one', pricing.essential.name, pricing.premium.name, ...pricing.memberships.map((m) => `${m.name} membership ($${m.monthly}/mo)`), 'Putting green restoration', 'Turf repair', 'Something else'];
+---
+<form class:list={['form', { 'form--compact': compact }]} name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-reveal>
+  <input type="hidden" name="form-name" value="quote">
+  <input type="hidden" name="page" value={Astro.url.pathname}>
+  <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+  <div class="field"><label for="f-name">Name *</label><input id="f-name" name="name" autocomplete="name" required></div>
+  <div class="field"><label for="f-phone">Phone *</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
+  <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+  <div class="field"><label for="f-zip">ZIP code *</label><input id="f-zip" name="zip" inputmode="numeric" autocomplete="postal-code" required></div>
+  <div class="field field--full"><label for="f-plan">What do you need?</label>
+    <select id="f-plan" name="plan">{options.map((o) => <option selected={o === plan}>{o}</option>)}</select>
+  </div>
+  <div class="field field--full"><label for="f-msg">Anything we should know?</label><textarea id="f-msg" name="message" placeholder="Rough size, pets, problem spots…"></textarea></div>
+  <button class="btn btn--green btn--lg" type="submit" data-cta="quote-submit">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></button>
+  <p class="form__msg form__msg--ok" role="status" hidden>Got it! {brand.owner} will reach out shortly with your quote.</p>
+  <p class="form__msg form__msg--err" role="alert" hidden>Something went wrong. Please try again or call {brand.phone}.</p>
+  <p class="form__fine">By submitting, you agree to be contacted about your quote by phone, text or email. <a href="/privacy/">Privacy</a>.</p>
+</form>

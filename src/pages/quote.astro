@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { brand, area, pricing as P, money } from '../data/site';
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Free quote', item: '/quote/' }];
+---
+<Base title={`Free Turf Cleaning Quote | ${brand.name}`} description={`Tell us about your turf and get an upfront price by square foot. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration from ${money(P.rows[0].premium!)}. No pressure, no call center.`} crumbs={crumbs} robots="noindex, follow">
+  <section class="sec sec--cream" id="quote">
+    <div class="wrap split split--form">
+      <div data-reveal>
+        <p class="kicker">Free quote</p>
+        <h1>Tell us about your turf</h1>
+        <p class="body">Send a few details and {brand.owner} will come back with a recommendation and a price by square foot. Rather talk? Call <a href={brand.phoneHref} data-cta="call-quote">{brand.phone}</a>.</p>
+        <ul class="checks"><li>No obligation, no pressure</li><li>Price before any work starts</li><li>A real turf pro follows up, not a call center</li><li>Serving {area.name}: {area.line}</li></ul>
+        <p class="ph-note">Prefer to text a photo? <a href={`${brand.smsHref}?&body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos of my turf:')}`} data-cta="sms-quote">Text {brand.phone}</a>.</p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>
+<script is:inline>
+  // ?plan= from a "Select plan" button pre-selects the dropdown
+  const plan = new URLSearchParams(location.search).get('plan');
+  const sel = document.querySelector('#f-plan');
+  if (plan && sel) [...sel.options].forEach((o) => { if (o.value.startsWith(plan)) sel.value = o.value; });
+</script>

@@ -1,0 +1,376 @@
+import { brand } from './site';
+/**
+ * Problem pages: titled the way the buyer says it, answered directly in the first
+ * paragraph, then cause → how to check → the fix → when DIY is not enough.
+ * Each names the service that fixes it and links sideways to related problems.
+ */
+export type Problem = {
+  slug: string;
+  short: string;
+  cluster: 'odor' | 'mess' | 'growth' | 'wear' | 'debris' | 'damage';
+  title: string;
+  description: string;
+  h1: string;
+  lede: string;
+  question: string;
+  answer: string;
+  image?: { src: string; alt: string };
+  sections: { h2: string; html: string }[];
+  faq: { q: string; a: string }[];
+  service: string;
+  related: string[];
+  footer?: boolean;
+};
+
+export const PROBLEMS: Problem[] = [
+  {
+    slug: 'artificial-grass-smells-like-dog-pee',
+    short: 'Turf smells like dog pee',
+    cluster: 'odor',
+    footer: true,
+    title: 'Turf Smells Like Dog Pee? It\'s the Infill | TIMELESS',
+    description: `Dog urine smell in artificial grass comes from residue and bacteria in the infill. Why hosing fails, what works, and when the infill has to go.`,
+    h1: 'Why your artificial grass smells like dog pee, and what actually fixes it',
+    lede: 'The blades are not the problem. Urine drains through them in seconds. It dries in the sand underneath and on the backing, bacteria turn it into ammonia, and every humid morning on the coast brings the smell back up. Here is why the hose and the spray bottle have not worked, and what does.',
+    question: 'Why does my artificial grass smell like dog urine even after I hose it?',
+    answer: 'Because the smell is not on the grass. Dog urine drains through the blades and dries as residue in the infill and on the turf backing, where bacteria convert it to ammonia. Hosing rinses the surface and adds the moisture that reactivates the bacteria. Removing the smell means flushing the infill, breaking the residue down with an enzyme treatment, and treating the bacteria with an antimicrobial. TIMELESS Turf Restoration does this across the Grand Strand as part of a Premium Restoration.',
+    image: { src: '/assets/img/pet-turf-dog-resting-under-deck.jpg', alt: 'Dog lying on pet turf under a deck' },
+    sections: [
+      { h2: 'What is actually smelling', html: `<p>Fresh dog urine is mostly water and urea, and it hardly smells. The smell you notice is ammonia, which is what bacteria produce as they break the urea down. Those bacteria live in the infill, the sand or crumb layer that supports the grass fibers, and on the backing the fibers are stitched into. Every time the dog uses the same corner, more residue goes in and the colony grows. On the Grand Strand the infill stays damp for days after rain from spring to fall, which is exactly the condition that keeps the bacteria active. That is why the yard smells worst on a warm, wet morning and seems fine during a dry week.</p>` },
+      { h2: 'Why the usual fixes fail', html: `<ul><li><strong>Hosing it down.</strong> Rinses fresh urine off the blades, leaves the residue in the infill, and adds the moisture bacteria need. It can make a yard smell worse for a day.</li><li><strong>Deodorizer sprays.</strong> Cover ammonia with fragrance. The residue is still there, so the smell returns as soon as the fragrance fades.</li><li><strong>Vinegar.</strong> Neutralizes some ammonia on the surface. Does not reach the infill in any useful concentration, and the smell returns.</li><li><strong>Bleach.</strong> Kills surface bacteria, can lighten turf, is hard on the backing, kills border plants, and runs into the storm drain. Not a fix.</li><li><strong>Adding more sand on top.</strong> Buries the smell for a few weeks. The residue is under the new sand.</li></ul>` },
+      { h2: 'How to check how bad it is', html: `<p>Go out early on a humid morning, before the sun has dried the yard. Kneel at the spot the dog uses most and smell the turf from a foot away. Then part the fibers with your fingers and look at the infill. Clean infill is loose and pale. Saturated infill is darker, crusted, and sometimes has a greasy feel. If you can smell it standing up in the middle of the yard, the residue has spread beyond the pet zone. If the infill is crusted into a pan, treatment alone will not hold and the infill in that zone needs replacing.</p>` },
+      { h2: 'What fixes it', html: `<ol><li><strong>Flush.</strong> A high-volume, low-pressure rinse moves loose residue down through the backing.</li><li><strong>Enzyme treatment.</strong> An enzyme cleaner applied to the infill and left to dwell digests the urine residue rather than covering it. This is the step that separates a treatment from a spray.</li><li><strong>Antimicrobial.</strong> Treats the bacterial colony so it does not restart the cycle on the next wet day.</li><li><strong>Infill.</strong> Pet zones that have gone thin from years of rinsing get topped up; zones that are saturated get the old infill extracted and replaced, ideally with an odor-control infill made for dogs.</li></ol><p>That is our <a href="/services/pet-odor-removal/">pet odor removal</a> process, and it is included in a <a href="/pricing/">Premium Restoration</a>. Most single-dog yards on the Grand Strand are treated in one visit.</p>` },
+      { h2: 'Keeping it from coming back', html: `<p>Pick up solids daily. Rinse the pet zone with the hose in the evening, not the heat of the afternoon, two or three times a week in summer. Do not let the infill go thin; thin infill puts urine straight onto the backing. And for two or more dogs, accept that it is a schedule rather than a one-time fix: that is what the <a href="/pricing/#memberships">Pet Turf ELITE membership</a> is for.</p>` },
+    ],
+    faq: [
+      { q: 'Does artificial grass always smell with dogs?', a: 'No. Turf with adequate, clean infill and decent drainage that is rinsed regularly and deep-cleaned a couple of times a year does not smell. Turf that is never treated, or that has thin or saturated infill, does.' },
+      { q: 'Will a zeolite infill stop the smell?', a: 'It helps a lot in the pet zone. Zeolite-type infills trap ammonia and release it slowly, so the yard does not spike after rain. It still needs occasional treatment and eventually replacing, like any infill.' },
+      { q: 'How much does it cost to get the urine smell out of turf?', a: 'For a typical yard the odor treatment is part of a Premium Restoration, from $299 for up to 500 square feet. Heavy-odor yards may need an add-on treatment ($75–$150) or infill replacement in the pet zone, which is quoted after inspection.' },
+    ],
+    service: 'pet-odor-removal',
+    related: ['artificial-turf-smells-after-rain', 'can-you-get-urine-smell-out-of-artificial-turf', 'how-to-clean-dog-poop-off-artificial-grass'],
+  },
+  {
+    slug: 'artificial-turf-smells-after-rain',
+    short: 'Turf only smells after rain',
+    cluster: 'odor',
+    footer: true,
+    title: 'Turf Smells After Rain? It\'s Moisture | TIMELESS',
+    description: `Turf that smells only after rain has odor residue that moisture reactivates, and often water sitting in it. How to tell, and how we fix both.`,
+    h1: 'Your turf only smells after it rains. Here is what that tells you.',
+    lede: 'Dry week, no smell. One storm, and the yard smells like a kennel by morning. That pattern is information: there is residue in the infill that moisture reactivates, and there may be water sitting in the turf longer than it should. On a coast that gets fifty inches of rain a year, both are worth fixing.',
+    question: 'Why does my artificial turf only smell after it rains?',
+    answer: 'Rain reactivates bacteria living on urine and organic residue in the turf infill, which produce ammonia and other odor compounds only while they are wet. In a dry spell they go dormant and the smell fades. Turf that stays damp for days after rain, because the infill is compacted or the base drains slowly, smells longer. The fix is to remove the residue with an enzyme and antimicrobial treatment and to correct whatever is keeping the turf wet. TIMELESS Turf Restoration does both on the Grand Strand.',
+    sections: [
+      { h2: 'Two things happen when it rains', html: `<p>First, water reaches residue that had dried out. Bacteria in the infill wake up and start producing ammonia, sulfur compounds and the general "wet dog run" smell. Second, the water has to go somewhere. In turf that drains well it is through the backing and gone in an hour, and the smell fades with it. In turf where the infill has compacted, or organic matter has clogged the backing, or the base underneath was never built to drain, water sits for a day or more and the bacteria keep working the whole time.</p><p>Humidity does the same thing more slowly. A run of muggy August nights on the Grand Strand keeps the infill damp without any rain at all, which is why late summer is when odor complaints peak.</p>` },
+      { h2: 'Check your drainage', html: `<p>After the next heavy rain, walk the yard an hour after it stops. Press your palm flat on the turf in the pet zone, in the middle of the lawn, and at the lowest edge. Damp is normal. Squelching, or water rising around your fingers, is not, and it means the turf is holding water. Then look for the reasons: a downspout that discharges onto the turf, a spot that is lower than the patio or the border, infill that has crusted into a pan, or a strip along a fence that never sees sun.</p>` },
+      { h2: 'The fix', html: `<p>The residue is treated the way we treat any <a href="/turf-problems/artificial-grass-smells-like-dog-pee/">urine odor</a>: flush, enzyme, antimicrobial, infill groomed or replaced in the pet zones. The moisture side depends on what we find. Compacted or organic-clogged infill is loosened, rinsed or replaced so water passes through again. A downspout or a low spot is a conversation about grading or a drain, which we can point you to. A base that was built without drainage is a rebuild, and we will tell you rather than treat it every year.</p>` },
+    ],
+    faq: [
+      { q: 'Is a smell after rain always urine?', a: 'No. Organic matter, especially pollen and leaf litter that has broken down in the infill, produces a musty, sour smell when wet. It is treated the same way: remove the organic layer, treat the infill, sanitize.' },
+      { q: 'Should turf drain right after rain?', a: 'Properly built turf drains at a rate that leaves the surface damp but not wet within an hour or two of a normal rain. Standing water or squelching underfoot means something is blocking it.' },
+    ],
+    service: 'pet-odor-removal',
+    related: ['artificial-grass-smells-like-dog-pee', 'water-pooling-on-artificial-turf', 'black-patches-algae-on-artificial-grass'],
+  },
+  {
+    slug: 'can-you-get-urine-smell-out-of-artificial-turf',
+    short: 'Can the smell ever come out?',
+    cluster: 'odor',
+    title: 'Can You Get Urine Smell Out of Turf? Yes, If… | TIMELESS',
+    description: `Yes, if the infill and base are sound. The honest test for whether your turf is treatable, what treatment involves, and when infill must be replaced.`,
+    h1: 'Can you ever get the pee smell out of artificial turf? The honest answer.',
+    lede: 'Yes, in most yards. The smell lives in the infill and on the backing, and both can be cleaned and treated. The exceptions are turf where the infill has become a saturated crust, and turf where the base underneath has been soaking up urine for years. Here is how to tell which yard you have.',
+    question: 'Can you completely remove dog urine smell from artificial turf?',
+    answer: 'Yes, when the infill and base are sound. Enzyme treatment breaks down the urine residue in the infill, an antimicrobial treats the bacteria producing the ammonia, and a flush carries it out through the drainage. If the infill has become a saturated crust, that infill is extracted and replaced. The only turf where the smell cannot be fully removed is turf laid on a base with no drainage that has absorbed urine for years; that needs rebuilding. TIMELESS Turf Restoration diagnoses which case you have on the first visit.',
+    sections: [
+      { h2: 'Three kinds of smelly turf', html: `<ol><li><strong>Residue in the infill, infill still loose.</strong> The most common case and the easiest. Enzyme treatment, antimicrobial, flush. Gone in one visit, stays gone with basic upkeep.</li><li><strong>Infill saturated or crusted.</strong> Years of a dog using one corner, or a large yard with several dogs. Treatment reduces the smell but it comes back within weeks because the residue load is bigger than the enzymes can digest. The fix is extracting the infill in the pet zones and replacing it, ideally with an odor-control infill. Still one visit, but it costs more.</li><li><strong>Urine in the base.</strong> Turf laid directly on compacted dirt or on a base with no drainage. Urine has gone through the backing for years and the smell is coming from the ground. Cleaning the turf helps for a week. The real fix is lifting the turf and rebuilding the base with drainage, which is an install job.</li></ol>` },
+      { h2: 'How we tell them apart', html: `<p>Part the fibers and look at the infill: loose and pale is case one; dark, crusted or greasy is case two. Then we lift a corner or an edge if we can and smell the base. If the smell is stronger under the turf than in it, that is case three. We do this on the inspection, before quoting, so you are paying for the fix that will hold rather than the one that sounds cheapest.</p>` },
+      { h2: 'What each fix costs', html: `<p>Case one is a <a href="/pricing/">Premium Restoration</a>: from $299 for up to 500 square feet, with a heavy-odor add-on of $75–$150 for bad zones. Case two adds <a href="/services/infill-replenishment/">infill replacement</a> in the affected area at $0.75–$1.50 per square foot installed; a typical pet corner is a small area. Case three is a rebuild by our sister company, and we will quote it honestly rather than sell you a clean that will not last.</p>` },
+    ],
+    faq: [
+      { q: 'How long does the odor treatment last?', a: 'In a treatable yard with basic upkeep, the smell does not come back. The bacteria and residue that made it are gone. It can start again if the dog keeps using the same spot and it is never rinsed, which is why pet yards do best on a schedule.' },
+      { q: 'Is it cheaper to replace the turf?', a: 'Almost never. A Premium Restoration with infill replacement in the pet zone costs a few hundred dollars. Replacing turf costs several dollars per square foot installed. Replacement only makes sense when the base itself is the problem.' },
+    ],
+    service: 'pet-odor-removal',
+    related: ['artificial-grass-smells-like-dog-pee', 'artificial-turf-smells-after-rain', 'crunchy-artificial-grass'],
+  },
+  {
+    slug: 'how-to-clean-dog-poop-off-artificial-grass',
+    short: 'Cleaning dog poop off turf',
+    cluster: 'mess',
+    title: 'How to Clean Dog Poop Off Artificial Grass | TIMELESS',
+    description: `Solid waste lifts off easily; runny stool works into the fibers and infill. The method that gets it out, what to use, what to avoid, and when to call.`,
+    h1: 'How to clean dog poop off artificial grass, including the runny kind',
+    lede: 'Solid waste is easy: let it firm up, lift it, rinse. Runny stool is the one that ruins a Saturday, because it works down between the fibers and into the sand. Here is the method that gets it out without spreading it, and what to do about the smell afterward.',
+    question: 'How do you clean runny dog poop off artificial grass?',
+    answer: 'Let it dry for an hour or two so it firms up, then lift as much as possible with a bag or a plastic scraper without pressing down. Rinse the spot with a hose on a gentle setting, apply an enzyme cleaner made for pet turf, let it dwell, and rinse again. Do not scrub it in, use bleach, or pressure wash it. If the spot smells after it dries or the infill has stained, it needs the infill treated or replaced, which TIMELESS Turf Restoration does across the Grand Strand.',
+    sections: [
+      { h2: 'Solid waste', html: `<p>Pick it up as you would on a lawn, daily if you can. The fibers hold it up off the infill so there is rarely residue. Rinse the spot with the hose once a week or so. That is genuinely all there is to it.</p>` },
+      { h2: 'Runny stool, step by step', html: `<ol><li><strong>Wait.</strong> Trying to lift it wet spreads it. An hour or two of sun firms it enough to lift.</li><li><strong>Lift, do not wipe.</strong> A bag over your hand, or a plastic putty knife slid under it. Lift straight up. Anything that presses down pushes it into the infill.</li><li><strong>Rinse.</strong> Hose on a gentle shower setting, aimed to flush the residue down through the turf rather than across it to the next spot.</li><li><strong>Enzyme cleaner.</strong> A pet-turf enzyme cleaner sprayed on the spot and left for the dwell time on the label. Enzymes digest what is left in the fibers and infill.</li><li><strong>Rinse again</strong> and let it dry.</li></ol>` },
+      { h2: 'What not to do', html: `<ul><li><strong>Do not scrub</strong> with a stiff brush while it is wet. It grinds waste into the infill.</li><li><strong>Do not use bleach.</strong> It lightens turf, damages backing and kills the plants at the border.</li><li><strong>Do not pressure wash.</strong> It blows the infill and the waste across the yard.</li><li><strong>Do not use a wire brush</strong> or a metal rake. They tear fibers.</li></ul>` },
+      { h2: 'When it needs more than a hose', html: `<p>If the spot smells after it dries, the residue reached the infill and it needs a proper <a href="/services/pet-odor-removal/">odor treatment</a>. If it happens often, or the infill in that area has darkened or crusted, the infill itself is contaminated and should be <a href="/services/infill-replenishment/">extracted and replaced</a>. Both are one-visit jobs across the Grand Strand.</p>` },
+    ],
+    faq: [
+      { q: 'Does dog poop damage artificial grass?', a: 'Not the fibers. The risk is residue in the infill, which feeds bacteria and causes odor and, in shaded yards, algae. Regular pickup and an occasional rinse prevent it.' },
+      { q: 'What cleaner is safe for pet turf?', a: 'Enzyme-based cleaners labeled for artificial turf or pet areas. Avoid chlorine bleach, ammonia-based cleaners (they smell like the problem) and anything with solvents.' },
+    ],
+    service: 'pet-odor-removal',
+    related: ['artificial-grass-smells-like-dog-pee', 'flies-and-gnats-on-artificial-grass', 'black-patches-algae-on-artificial-grass'],
+  },
+  {
+    slug: 'black-patches-algae-on-artificial-grass',
+    short: 'Black or green patches (algae)',
+    cluster: 'growth',
+    footer: true,
+    title: 'Black Patches on Artificial Grass? It\'s Algae | TIMELESS',
+    description: `Dark, slippery patches on turf are algae and mold on damp, dirty infill. Why coastal yards get it, how to remove it without bleach, how to keep it off.`,
+    h1: 'Black or green patches on your artificial grass: algae, and why the coast grows it',
+    lede: 'It starts as a green tint along the fence line or under the deck, goes slippery, and turns black. It is algae and mold, and it is growing on a layer of pollen, dust and leaf litter that sits in the infill and never dries out. Here is why it shows up in Grand Strand yards, how to get rid of it, and the one thing that keeps it gone.',
+    question: 'What causes black patches on artificial grass?',
+    answer: 'Black or dark green patches on artificial grass are algae and mold growing on organic buildup, mainly pollen, dust and leaf litter, that has settled into infill that stays damp and shaded. They are removed by power-brushing the film loose, rinsing the organic layer out of the infill, applying a turf-safe algaecide or oxidizer rather than bleach, and sanitizing. They stay gone if the area is kept clear of debris and drains. TIMELESS Turf Restoration treats algae across the Grand Strand as part of a Premium Restoration.',
+    image: { src: '/assets/img/artificial-turf-side-yard-concrete-edge.jpg', alt: 'Shaded artificial turf side yard along a house' },
+    sections: [
+      { h2: 'What it is and where it grows', html: `<p>Algae need three things: moisture, shade and something to eat. On the Grand Strand the moisture comes from fifty-plus inches of rain and humidity that keeps surfaces damp overnight most of the year. The shade is the north side of the house, the strip between two houses, under a deck, along a privacy fence. The food is the fine organic layer that builds up in the infill every year: pine pollen in spring, live-oak catkins and leaves, dust, and in pet yards, waste residue. Green film is algae. Black film is algae plus mold plus trapped dirt. A musty smell with no visible growth is mildew in the infill.</p>` },
+      { h2: 'Why bleach is the wrong fix', html: `<p>Bleach kills algae on contact and it is what most people reach for. It also lightens turf color, degrades the polyurethane backing over time, kills whatever plants share the border, and runs into the storm drain, which on the coast empties into a creek or the beach. It also does not remove the organic layer the algae was eating, so the patch comes back. A turf-safe algaecide or an oxidizing cleaner does the job without those costs.</p>` },
+      { h2: 'How we remove it', html: `<ol><li>Clear all debris and power-brush the film and the matted organic layer up out of the pile.</li><li>Rinse the organic layer out of the infill with a high-volume, low-pressure flush. This is the step that matters: remove the food.</li><li>Apply a turf-safe algaecide or oxidizer and let it dwell.</li><li>Apply an <a href="/services/antimicrobial-sanitizing/">antimicrobial</a> to slow regrowth.</li><li>Find the reason it stayed wet, and tell you.</li></ol><p>That is the <a href="/services/algae-and-mold-removal/">algae and mold removal</a> service. It is part of a Premium Restoration and, because algae usually affects a strip rather than a whole yard, often falls in the smallest price band.</p>` },
+      { h2: 'Keeping it off', html: `<p>Blow the shaded strip off every couple of weeks in pollen and leaf season so the food never builds up. Redirect any downspout that dumps onto the turf. If the strip is below the patio grade, ask about a drain. And plan on an algae check once a year, in late spring after pollen ends, which is when the memberships schedule it.</p>` },
+    ],
+    faq: [
+      { q: 'Is algae on turf dangerous?', a: 'It is slippery, which is the real hazard on a path or beside a pool. The mold that grows with it can bother people with allergies. It is not damaging the turf itself.' },
+      { q: 'Why does only one side of my yard have it?', a: 'That side is shaded, or damp, or both. North-facing strips, side yards and the ground under decks dry slowest. The rest of the yard would grow it too if it stayed wet as long.' },
+      { q: 'Will vinegar kill algae on artificial grass?', a: 'Diluted vinegar will knock back a light green film and is turf-safe. It is slow on black buildup and does not remove the organic layer, so the patch returns. For anything established, a proper clean and treatment is faster and holds.' },
+    ],
+    service: 'algae-and-mold-removal',
+    related: ['artificial-turf-smells-after-rain', 'weeds-growing-in-artificial-grass', 'pine-needles-and-oak-leaves-on-turf'],
+  },
+  {
+    slug: 'weeds-growing-in-artificial-grass',
+    short: 'Weeds in artificial grass',
+    cluster: 'growth',
+    title: 'Weeds in Artificial Grass Grow On Top | TIMELESS',
+    description: `Weeds in artificial grass sprout from seed in dirty infill, not from below. Why a clean yard has no weeds, and what weeds at the edges mean.`,
+    h1: 'Weeds in artificial grass grow on top of it, not through it',
+    lede: 'Turf with a weed barrier and a proper base does not get weeds from below. It gets them from above: seeds blow in, land in infill full of pollen and leaf litter, and grow in that. A yard with weeds is a yard with dirty infill, and the fix is the clean, not a herbicide.',
+    question: 'Why are weeds growing in my artificial grass?',
+    answer: 'Weeds in artificial grass almost always grow from seeds that landed on the surface and rooted in organic matter that has built up in the infill, not from soil underneath. The permanent fix is removing the organic layer: pull the weeds, power-brush and flush the infill so seeds have nothing to root in, and keep debris off. Weeds along the edges and seams can come from below and point to a gap in the edge or a seam, which is a repair. TIMELESS Turf Restoration removes weeds and cleans the infill across the Grand Strand.',
+    sections: [
+      { h2: 'Where the weeds are tells you the cause', html: `<ul><li><strong>Scattered across the lawn, small and shallow-rooted.</strong> Airborne seed rooting in organic buildup in the infill. The infill is dirty. This is the common case.</li><li><strong>Along the edges and borders.</strong> Soil is meeting turf at a gap, or the edge has lifted and let soil in. A cleaning plus an <a href="/services/turf-repair/">edge repair</a>.</li><li><strong>In a line.</strong> A seam has opened and soil or seed is getting in. Seam repair.</li><li><strong>Big, deep-rooted, coming up through the turf.</strong> Rare, and it means there is no weed barrier or the base was never done. That is an install conversation.</li></ul>` },
+      { h2: 'Removing them', html: `<p>Pull small weeds by hand while the turf is damp; the roots are in loose infill and come out clean. Do not use a hoe, a wire brush or a string trimmer on turf. For a heavy crop, a turf-safe weed control applied to the leaves works, but it is treating the symptom. The cause is the organic layer, and that is what a <a href="/services/artificial-turf-cleaning/">deep clean</a> removes: power brush to lift the layer, flush the infill, and the seeds have nothing to grow in.</p>` },
+      { h2: 'Moss', html: `<p>Moss is the same story in the shade: it grows on the organic layer in damp infill along the north side and under trees. It comes out with the <a href="/services/algae-and-mold-removal/">algae treatment</a>, and it stays out if the strip is kept clear and drains.</p>` },
+    ],
+    faq: [
+      { q: 'Can I use Roundup on artificial grass?', a: 'Glyphosate will not damage the turf fibers, and it will kill the weed. It also will not fix the dirty infill the next seed lands in. Use it sparingly if you must, keep it off borders, and get the infill cleaned.' },
+      { q: 'Does artificial grass need a weed barrier?', a: 'Yes, and properly built turf has one under the base. If large weeds are coming up through the turf itself rather than rooting in the infill, the barrier is missing or failed.' },
+    ],
+    service: 'algae-and-mold-removal',
+    related: ['black-patches-algae-on-artificial-grass', 'pine-needles-and-oak-leaves-on-turf', 'crunchy-artificial-grass'],
+  },
+  {
+    slug: 'white-chalky-patches-on-artificial-turf',
+    short: 'White chalky patches',
+    cluster: 'growth',
+    title: 'White Chalky Patches on Turf Are Hard Water | TIMELESS',
+    description: `White chalky patches on turf are mineral deposits from sprinklers or hard water, not fading. The wet-finger test, safe removal, and prevention.`,
+    h1: 'White chalky patches on your turf are hard water, not fading',
+    lede: 'If the white is concentrated near the sprinkler heads, feels slightly rough, and lightens when you wet it, it is mineral deposit. Every pass of the irrigation leaves a little calcium behind when the water evaporates, and a season of it builds a crust. It comes off. The wrong cleaner makes it worse.',
+    question: 'Why does my artificial turf have white chalky patches?',
+    answer: 'White chalky patches on artificial turf are mineral deposits, mostly calcium carbonate, left behind when irrigation overspray or hard water evaporates on the fibers. They build up near sprinkler heads and hose drip points, feel slightly gritty, and lighten when wet, which is how to tell them from sun fading. They are removed with a mild, turf-safe descaling cleaner and a thorough rinse. TIMELESS Turf Restoration removes hard-water deposits across the Grand Strand as a spot treatment or within a Premium Restoration.',
+    sections: [
+      { h2: 'Deposit or fade: the wet-finger test', html: `<p>Wet your finger and rub the white area. Mineral deposit feels slightly gritty, and the patch looks darker and greener while it is wet, then goes white again as it dries. Fading does not change with water and it follows the sun, covering the brightest area evenly, rather than following the sprinkler pattern. Deposits also show first on the fibers nearest the heads and on the side of the yard the wind carries spray to.</p>` },
+      { h2: 'Removing it', html: `<p>A mild descaling cleaner formulated for synthetic surfaces dissolves the mineral layer. It is applied, left to dwell, agitated with a soft brush and rinsed thoroughly. Diluted white vinegar does the same job slowly on a light film. What to avoid: muriatic acid and other strong acids, which etch fibers and are dangerous to handle near pets and plants, and pressure washers, which strip the infill out with the deposit. Where a heavy crust has bonded the infill into a crunchy layer, that infill is loosened and cleaned or replaced.</p>` },
+      { h2: 'Stopping it', html: `<p>Turf does not need water, so every sprinkler pass onto it is pure mineral. Adjust or cap the heads that throw onto the turf. Move the hose drip. If you rinse the turf in summer, do it in the evening so it does not flash-dry in the sun. On well water, expect to descale once a year regardless, and ask us to check the heads on the visit.</p>` },
+    ],
+    faq: [
+      { q: 'Can hard water permanently damage artificial grass?', a: 'Not the fibers. Left for years the crust can bond the infill and make the surface hard and slow to drain, which is fixed by replacing that infill. Caught in a season, it is a cleaning job.' },
+      { q: 'Does the Grand Strand have hard water?', a: 'It varies by provider and by whether you are on a well. Irrigation on a private well is the usual source of heavy deposits here. The pattern on your turf will tell you more than a water report will.' },
+    ],
+    service: 'hard-water-and-stain-removal',
+    related: ['crunchy-artificial-grass', 'sand-and-salt-on-artificial-grass-after-storm'],
+  },
+  {
+    slug: 'matted-artificial-grass-walking-paths',
+    short: 'Flat, matted walking paths',
+    cluster: 'wear',
+    footer: true,
+    title: 'Why Artificial Grass Goes Flat in the Paths | TIMELESS',
+    description: `Flattened, shiny paths are fibers bent by traffic over packed infill. Power brushing stands them up. What it fixes, what it can't, how to keep paths up.`,
+    h1: 'Why your artificial grass went flat in the walking paths',
+    lede: 'From the back door to the gate, beside the pool, where the dog runs the fence: the grass lies down, goes shiny, and looks years older than the rest of the yard. The fibers are bent, not broken, and the infill under them has packed down. It comes back up.',
+    question: 'How do you fix flattened artificial grass?',
+    answer: 'Flattened artificial grass is fixed by power brushing against the grain of the fibers, which lifts them upright, and by fluffing and topping up the infill that supports them. Hand brooming helps small spots; a season of foot or dog traffic needs a rotating turf brush. Fibers that are broken or worn through do not come back and need a patch. TIMELESS Turf Restoration includes power brushing in every clean on the Grand Strand.',
+    image: { src: '/assets/img/artificial-lawn-fenced-yard-rock-border.jpg', alt: 'Upright, groomed artificial grass in a fenced yard' },
+    sections: [
+      { h2: 'What is happening under your feet', html: `<p>A turf fiber stands up because infill is packed around its base. Each step compresses that infill and bends the fiber in the direction you were walking. On a path that happens the same way thousands of times, so the fibers lie flat in one direction and the infill under them compacts or gets kicked out to the sides. You see the flat side of the blade instead of the tip, which is why paths look shiny and a different color. Heat speeds it up; fibers are softest on a July afternoon, which is also when the yard is busiest.</p>` },
+      { h2: 'The fix', html: `<p><a href="/services/power-brushing/">Power brushing</a>: a rotating turf brush run against the grain, in more than one direction on the worst paths, lifts the fibers and fluffs the infill. Where traffic has pushed the infill out of the path, it is topped up and leveled so the fibers have support again. The path stands up, feels softer and reads the same green as the rest of the yard. It is included in every clean we do.</p>` },
+      { h2: 'What brushing cannot do', html: `<p>Fibers that have broken off at the base, worn thin in a dog-run corner, or melted do not stand back up. A dog run after six years usually has some fiber loss at the turns. Brushing improves it; a <a href="/services/turf-repair/">patch</a> fixes it. Faded fibers stand up but stay faded. We tell you which you have before we start.</p>` },
+      { h2: 'Keeping paths up', html: `<p>Hand-broom the main paths against the grain every few weeks; it takes five minutes. Move furniture occasionally rather than leaving it in one spot all summer. Keep the infill topped up, because thin infill flattens fastest. And plan a power brush at the start and end of summer, which is roughly the interval at which paths start to show on the coast and is what the quarterly memberships cover.</p>` },
+    ],
+    faq: [
+      { q: 'Can I fix matted turf with a leaf blower?', a: 'A blower clears debris but does not lift fibers. A stiff synthetic-bristle push broom used against the grain does, on small spots. A power broom does it across the whole yard.' },
+      { q: 'Is my turf worn out or just flat?', a: 'Brush a small patch by hand against the grain. If the fibers stand up, it is flat and a power brush will fix the yard. If they stay short or you can see backing between them, that section is worn and needs a patch.' },
+    ],
+    service: 'power-brushing',
+    related: ['crunchy-artificial-grass', 'putting-green-rolls-slow-or-bumpy', 'burn-marks-on-artificial-turf'],
+  },
+  {
+    slug: 'crunchy-artificial-grass',
+    short: 'Turf feels hard or crunchy',
+    cluster: 'wear',
+    title: 'Why Is My Artificial Grass Crunchy? | TIMELESS',
+    description: `Crunchy or hard artificial grass is compacted, mineral-bonded or residue-crusted infill. What each feels like and how it's loosened, cleaned or replaced.`,
+    h1: 'Why your artificial grass feels crunchy or hard underfoot',
+    lede: 'New turf feels like a firm carpet. Turf that crunches, or that has gone hard as a patio in places, has infill that has compacted into a pan, bonded with mineral deposits, or dried into a crust with urine and organic residue. It is fixable without replacing anything.',
+    question: 'Why does my artificial grass feel crunchy when I walk on it?',
+    answer: 'Crunchy or hard artificial grass is almost always the infill: sand that has compacted into a pan under years of traffic and rain, bonded together by hard-water minerals, or crusted with dried urine and organic residue. Fibers can also stiffen from dried residue. The fix is loosening the infill with a power brush, cleaning or descaling it, and replacing any that has crusted, then re-leveling. TIMELESS Turf Restoration does this across the Grand Strand.',
+    sections: [
+      { h2: 'Three kinds of crunch', html: `<ul><li><strong>Compacted infill.</strong> The surface feels uniformly hard, drains slowly and the fibers lie flat. Years of traffic and rain have packed the sand into a pan. Power brushing and a drag loosens it; a top-up restores the cushion.</li><li><strong>Mineral-bonded infill.</strong> Hard in the sprinkler pattern, often with white crust on the fibers. Calcium from irrigation has cemented the sand. Descale and loosen; replace the worst.</li><li><strong>Residue crust.</strong> Hard, darker, and it smells, in the pet zone. Urine and organic matter have dried the infill into a block. Extract and replace, with an odor-control infill.</li></ul>` },
+      { h2: 'What we do', html: `<p>Diagnose which one on the inspection by where it is and what it smells like. Then <a href="/services/power-brushing/">power brush</a> to break the surface, <a href="/services/hard-water-and-stain-removal/">descale</a> if minerals are involved, flush, and <a href="/services/infill-replenishment/">replace</a> whatever will not loosen. The yard is re-leveled so the fibers stand and the surface drains. Most of it is a Premium Restoration; infill replacement is quoted by the square foot on site.</p>` },
+    ],
+    faq: [
+      { q: 'Is crunchy turf a sign it needs replacing?', a: 'No. The fibers are usually fine; the infill under them has gone hard. Loosening, cleaning or replacing the infill brings the cushion back.' },
+      { q: 'Can I loosen the infill myself?', a: 'A rented power broom will break up compacted sand. It will not fix mineral-bonded or residue-crusted infill, which needs treating or replacing.' },
+    ],
+    service: 'infill-replenishment',
+    related: ['white-chalky-patches-on-artificial-turf', 'matted-artificial-grass-walking-paths', 'water-pooling-on-artificial-turf'],
+  },
+  {
+    slug: 'water-pooling-on-artificial-turf',
+    short: 'Water pooling on turf',
+    cluster: 'damage',
+    title: 'Water Pooling on Artificial Turf? Two Causes | TIMELESS',
+    description: `Standing water on turf is clogged infill, which a deep clean fixes, or a settled base, which is a rebuild. How to tell which in one rain, and the cost.`,
+    h1: 'Water pooling on your turf: clogged infill, or a base that has settled?',
+    lede: 'Turf is built to drain. When water sits on it, either the path through the turf is blocked, which is a cleaning job, or the ground under it has sunk, which is not. One rain and a five-minute walk tells you which.',
+    question: 'Why is water pooling on my artificial turf?',
+    answer: 'Water pools on artificial turf for one of two reasons. Either the infill and backing have clogged with compacted organic matter, pollen and dirt so water cannot pass through, which a deep clean and infill replacement fixes; or the base underneath has settled into a low spot, which only regrading and rebuilding that section fixes. If the pooling is in a shaded, dirty area and the turf squelches everywhere, it is the infill; if it is one distinct low spot with clean turf around it, it is the base. TIMELESS Turf Restoration diagnoses this on inspection across the Grand Strand.',
+    sections: [
+      { h2: 'The one-rain test', html: `<p>An hour after a heavy rain, look at where the water is. <strong>Clogged infill</strong> looks like a yard that is wet everywhere, drains slowly overall, and is worst in the dirty, shaded parts; press your palm down anywhere and it squelches. <strong>A settled base</strong> looks like a distinct puddle in one place with turf around it draining fine; the puddle is in the same spot every time and the turf there is not dirtier than the rest. Also rule out the obvious: a downspout discharging onto the turf, a patio that sheds onto it, a French drain outlet that has blocked.</p>` },
+      { h2: 'If it is the infill', html: `<p>Years of pollen paste, leaf litter, dust and pet residue compact into the infill and coat the backing, and the drain holes clog. A <a href="/services/artificial-turf-cleaning/">Premium Restoration</a> lifts the organic layer with a power brush and flushes it out; where the infill has bonded into a pan it is <a href="/services/infill-replenishment/">loosened or replaced</a>. Drainage comes back. Then it stays back if the debris is kept off.</p>` },
+      { h2: 'If it is the base', html: `<p>Aggregate that was not compacted, a base that was too thin, or ground that has settled under it has created a bowl, and water finds the bowl every time. Cleaning the turf over it does nothing. The fix is lifting the turf in that section, regrading and compacting the base, and re-laying, which is a job for our sister company. We will tell you on the inspection rather than sell you a clean that will not hold. Horry County soil is mostly sandy and drains through, but the water table comes up in wet months, so a base built too shallow here shows itself fast.</p>` },
+    ],
+    faq: [
+      { q: 'Can standing water damage artificial turf?', a: 'Slowly. It keeps the infill saturated, which grows algae and holds odor, and repeated saturation can float edges and stress seams. Fix the cause before it becomes a repair.' },
+      { q: 'Is the drainage rate of turf fixed?', a: 'Turf backing is made to pass many inches of water per hour when clean. Clogged backing can drop to almost nothing, which is why a dirty yard drains like a bathtub.' },
+    ],
+    service: 'artificial-turf-cleaning',
+    related: ['artificial-turf-smells-after-rain', 'crunchy-artificial-grass', 'black-patches-algae-on-artificial-grass'],
+  },
+  {
+    slug: 'putting-green-rolls-slow-or-bumpy',
+    short: 'Putting green slow or bumpy',
+    cluster: 'wear',
+    footer: true,
+    title: 'Putting Green Rolls Slow or Bumpy? Here\'s Why | TIMELESS',
+    description: `A synthetic green slows and goes bumpy when sand migrates, debris builds up and it's never rolled. What restores speed and a true roll. Call ${brand.phone}.`,
+    h1: 'Your backyard putting green rolls slow, or bumpy, or both',
+    lede: 'Speed on a sand-filled green comes from a firm, even bed of sand in short fibers, rolled flat. Leaves and pollen soften it, sand washes off the high side, and a green that is never rolled goes bumpy in a season. All of it comes back. Brian has built and looked after greens for thirteen years, and it is the work he is fussiest about.',
+    question: 'Why does my artificial putting green roll slow and bumpy?',
+    answer: 'A synthetic putting green rolls slow when debris and pollen have softened the surface and the sand infill has washed thin, and bumpy when sand has migrated unevenly and the surface has not been rolled. Restoring it means clearing and brushing the green, cleaning the fringe and cups, top-dressing with fresh green-grade sand to an even depth, and rolling to compact and true it. TIMELESS Turf Restoration does this across the Grand Strand; Brian has built and maintained putting greens for 13 years.',
+    image: { src: '/assets/img/putting-green-landscape-lighting-at-dusk.jpg', alt: 'Backyard putting green with landscape lighting at dusk' },
+    sections: [
+      { h2: 'What sets green speed', html: `<p>On a sand-filled green the ball rolls on the sand as much as on the fibers. Deeper, firmer, more even sand means a faster, truer roll. Anything that softens the sand or makes it uneven slows the green or sends the ball off line: pollen paste, leaf litter, sand washed from the high side to the low, fibers matted where people stand to putt, and the general settling of a green that has not been rolled. On the Grand Strand the pine pollen in March and live-oak drop in April are the two events that do the most damage, and a green under an oak that is not blown off all fall is slow by Christmas.</p>` },
+      { h2: 'Bumpy is a different problem from slow', html: `<p>Slow is usually surface contamination and thin sand, and it is fixed by cleaning and top-dressing. Bumpy is sand that has moved or a surface that has never been compacted, and it is fixed by redistributing sand to a consistent depth and rolling in more than one direction. A green can be both. A green that puddles or has a distinct dip is a base problem, and no amount of sand fixes it; that is a rebuild, which we can diagnose and refer.</p>` },
+      { h2: 'The restoration', html: `<p>Clear and blow the green, fringe and collar. Brush to lift fibers and loosen contaminated sand. Clean the cups and the fringe. Top-dress with kiln-dried, rounded green sand to depth and brush it in evenly. Roll. Check speed with a consistent-release ball roll and adjust. Walk the seams and edges. That is the <a href="/services/putting-green-restoration/">putting green restoration</a>, and it is quoted by green size and condition.</p>` },
+      { h2: 'Keeping it fast', html: `<p>Blow it off weekly. Brush monthly against the grain. Keep sprinklers off it. Top-dress once a year after pollen season. A green kept that way holds its speed; a green that gets a restoration every spring because it sat under leaves all winter is spending money on neglect.</p>` },
+    ],
+    faq: [
+      { q: 'What speed can a backyard green reach?', a: 'Sand depth and rolling set the speed and the turf product sets the ceiling. Most home nylon or polyethylene greens can be brought to a firm, consistent roll comparable to a well-kept practice green. Tell us the feel you want and we will tell you if the surface can get there.' },
+      { q: 'How often should a synthetic green be top-dressed?', a: 'Once a year for most home greens, twice under trees or with heavy use, with monthly brushing in between.' },
+    ],
+    service: 'putting-green-restoration',
+    related: ['pine-needles-and-oak-leaves-on-turf', 'matted-artificial-grass-walking-paths', 'water-pooling-on-artificial-turf'],
+  },
+  {
+    slug: 'pine-needles-and-oak-leaves-on-turf',
+    short: 'Pine needles and oak leaves',
+    cluster: 'debris',
+    title: 'Pine Pollen & Oak Leaves on Artificial Turf | TIMELESS',
+    description: `Pine pollen, needles and live-oak leaves are the biggest load a Grand Strand turf yard takes all year. What they do to the infill, and how to clear them.`,
+    h1: 'Pine needles, pollen and live-oak leaves: the Grand Strand turf problem nobody warns you about',
+    lede: 'Turf sold as low-maintenance was tested somewhere without a longleaf pine in the yard. Here, spring drops a yellow layer of pollen that rain turns to paste, then the live oaks let go, and by May the infill is holding a season of organic matter that feeds everything that goes wrong in summer.',
+    question: 'How do you get pine needles and pollen out of artificial turf?',
+    answer: 'Blow pine needles and leaves off artificial turf weekly before they mat into the fibers; a leaf blower is the right tool and a rake is not. Pollen that has settled into the infill needs a power brush to lift it and a high-volume rinse to flush it through the backing, ideally in late spring after pollen season ends so the layer is not left to feed algae and odor through the humid summer. TIMELESS Turf Restoration does this across the Grand Strand as the annual Premium Restoration.',
+    sections: [
+      { h2: 'What each one does', html: `<ul><li><strong>Pine pollen.</strong> Fine, oily, and in March it lands on everything. Rain turns it to a yellow-brown paste that settles into the infill and coats the backing. It is the organic layer that algae grows on and bacteria feed on all summer, and it is why the annual deep clean should follow pollen season, not precede it.</li><li><strong>Pine needles.</strong> They slide down between fibers point-first and are hard to blow out once they are in. They decompose slowly, add acidity, and mat. Weekly blowing while they are still on top is the whole answer.</li><li><strong>Live-oak leaves and catkins.</strong> Small, tough and dropped in April in enormous quantity. They mat into a layer that traps moisture and, on a putting green, softens and slows the surface.</li><li><strong>Sap.</strong> Pine and oak drip leaves sticky spots that collect dirt. Freeze and lift; do not use solvents.</li></ul>` },
+      { h2: 'Clearing it without damage', html: `<p>A leaf blower, weekly, is ninety percent of it. Blow with the grain of the fibers. Never use a metal rake, which tears fibers, and never a pressure washer, which blows out infill. A synthetic-bristle broom against the grain lifts needles that have started to work in. For the pollen paste in the infill, that is a <a href="/services/power-brushing/">power brush</a> and a flush, which is the <a href="/services/artificial-turf-cleaning/">Premium Restoration</a>.</p>` },
+      { h2: 'Timing on the coast', html: `<p>Pollen starts on warm days in February, peaks in March and tails off in April as the oaks drop. The deep clean in late May removes the whole season's load before summer humidity turns it into algae, odor and clogged drainage. Cleaning in March means doing it twice. Our <a href="/guides/coastal-turf-maintenance-calendar/">month-by-month calendar</a> lays the whole year out.</p>` },
+    ],
+    faq: [
+      { q: 'Can I use a leaf vacuum on artificial grass?', a: 'A blower-vac on the blow setting, yes. On the vacuum setting it pulls infill out along with the leaves. Blow, then collect.' },
+      { q: 'Does pollen stain turf?', a: 'Not permanently. It dulls the color while it sits and flushes out with a rinse. The damage is what it does inside the infill if it is left there.' },
+    ],
+    service: 'storm-and-seasonal-cleanup',
+    related: ['black-patches-algae-on-artificial-grass', 'putting-green-rolls-slow-or-bumpy', 'sand-and-salt-on-artificial-grass-after-storm'],
+  },
+  {
+    slug: 'sand-and-salt-on-artificial-grass-after-storm',
+    short: 'Sand and salt after a storm',
+    cluster: 'debris',
+    title: 'Sand & Salt on Turf After a Storm: Flush It | TIMELESS',
+    description: `After a storm, windblown sand and salt spray settle into turf. Why to flush them within weeks, how to do it without losing infill, and what to check.`,
+    h1: 'Sand and salt on your turf after a storm: why to flush it now, not next spring',
+    lede: 'Salt spray dries into a white film that dulls the color; beach sand works into the fibers and changes how the surface drains and feels; and a storm surge or a blocked drain can float an edge. Dealt with in the weeks after a storm, all of it is a cleaning job. Left through a dry fall, some of it is not.',
+    question: 'How do you clean artificial grass after a hurricane?',
+    answer: 'After a hurricane or tropical storm, clear branches and heavy debris, blow off loose material, then flush salt spray and windblown sand down through the infill with a high-volume, low-pressure fresh-water rinse within a few weeks, before the salt dries into a mineral crust and bonds with the infill. Walk every seam and edge, because standing water can lift them, and re-level the infill. TIMELESS Turf Restoration does post-storm turf cleanups across the Grand Strand from $199.',
+    sections: [
+      { h2: 'Salt', html: `<p>Turf fibers tolerate salt, which is why turf is common a block from the beach. The residue is the problem. Salt spray carried inland on a storm dries on the fibers as a white film that dulls the green and, if it is left to accumulate through a dry spell, bonds with the infill into a crust much like hard-water deposit. A fresh-water flush in the weeks after a storm takes it out completely.</p>` },
+      { h2: 'Sand', html: `<p>Beach sand is finer and rounder than turf infill. Blown into the yard it sits on top at first and a blower takes it off. Once it has been rained on it works down into the fibers, where it changes the surface texture and can slow drainage by filling the spaces between infill grains. That needs a flush and then a re-leveling of the infill, which is part of the <a href="/services/storm-and-seasonal-cleanup/">post-storm cleanup</a>.</p>` },
+      { h2: 'Water', html: `<p>Standing water from surge, or from a storm drain that backed up, is the thing that turns a cleanup into a repair. Water under the turf can float the edges and open seams, and a yard that stayed flooded for a day can have infill washed to one end. Every post-storm visit includes a walk of every seam and edge, and a look at where the infill has gone.</p>` },
+      { h2: 'Doing it yourself', html: `<p>Branches off, then blow, then a hose on a gentle, high-volume setting across the whole yard, working from the high side down. Do not pressure wash; it blows the infill out with the sand. Then look at the edges and along the seams in low light. If anything has lifted or the infill is obviously uneven, that is when to call.</p>` },
+    ],
+    faq: [
+      { q: 'Will salt water kill my artificial grass?', a: 'No. The fibers are salt-tolerant. The risk is dried residue bonding with infill and the standing water lifting edges, both of which are prevented by a timely flush and check.' },
+      { q: 'How soon after a storm should turf be cleaned?', a: 'Within a few weeks. Sooner if the yard was flooded. Salt and sand that are flushed before they dry into a crust are a cleaning job; after that some of the infill may need replacing.' },
+    ],
+    service: 'storm-and-seasonal-cleanup',
+    related: ['white-chalky-patches-on-artificial-turf', 'water-pooling-on-artificial-turf', 'pine-needles-and-oak-leaves-on-turf'],
+  },
+  {
+    slug: 'burn-marks-on-artificial-turf',
+    short: 'Burn marks and melted spots',
+    cluster: 'damage',
+    title: 'Burn Marks on Artificial Turf, Repaired | TIMELESS',
+    description: `Melted patches come from grills, fire pits, cigarettes and sunlight reflected off low-E windows. Why they can't be cleaned, how they're patched.`,
+    h1: 'Burn marks on artificial turf, and the one that comes from your windows',
+    lede: 'Turf fibers are plastic, and plastic melts. A grill dripping, a fire pit ember, a dropped cigarette and, on the Grand Strand, sunlight bounced off an energy-efficient window all leave a patch of fused, browned fibers. Nothing cleans a burn. It gets cut out and patched, and the patch disappears if the turf matches.',
+    question: 'Can burn marks on artificial turf be repaired?',
+    answer: 'Yes. A burn is melted fiber, so it cannot be cleaned, but the burned section is cut out and replaced with a matching piece of turf, seamed in and infilled so it blends. Burns come from grills, fire pit embers, cigarettes and, increasingly, sunlight reflected from low-emissivity windows onto the turf, which will keep burning the same spot until the reflection is blocked. TIMELESS Turf Restoration patches burns across the Grand Strand from $250.',
+    sections: [
+      { h2: 'Where burns come from', html: `<ul><li><strong>Grills and smokers.</strong> Drippings, a dropped coal, or radiant heat from a grill sitting directly on turf. Put a mat under it.</li><li><strong>Fire pits.</strong> Embers carry farther than people think. A ring of small melted spots around a fire pit is the signature.</li><li><strong>Cigarettes and fireworks.</strong> Single small fused spots.</li><li><strong>Window reflection.</strong> Low-E glass reflects a concentrated band of sunlight, and at the right time of day and year it lands on the turf and melts a stripe. The tell is a brown, shiny, slightly curved band a few feet from a window on the south or west side, that gets worse every spring and fall when the sun is low. It will keep happening until the reflection is blocked with a screen, an awning, a film on the glass or a planting.</li></ul>` },
+      { h2: 'The repair', html: `<p>The burned section is cut out square, a matching piece is cut to size, the edges are seamed with tape and adhesive, and the patch is infilled and brushed so the grain matches. With an offcut from the original install it vanishes. With a close match it reads a shade greener until it weathers in over a season. That is the <a href="/services/turf-repair/">turf repair</a> service, from $250.</p>` },
+      { h2: 'Before the repair, stop the cause', html: `<p>We will not patch a window burn without pointing at the window, because the patch will burn too. Screens on the outside of the glass are the usual fix; a shade sail or a shrub works where the angle allows.</p>` },
+    ],
+    faq: [
+      { q: 'Can I hide a small burn instead of patching it?', a: 'A small single spot can sometimes be trimmed with scissors and brushed over so it is less visible. It will always be there. A patch is the real fix and is not expensive.' },
+      { q: 'Is my turf flammable?', a: 'Residential turf is generally made to resist ignition and will melt rather than burn, but it is still plastic. Keep open flame off it and use a mat under any grill.' },
+    ],
+    service: 'turf-repair',
+    related: ['matted-artificial-grass-walking-paths', 'white-chalky-patches-on-artificial-turf'],
+  },
+  {
+    slug: 'flies-and-gnats-on-artificial-grass',
+    short: 'Flies and gnats on turf',
+    cluster: 'mess',
+    title: 'Flies & Gnats on Artificial Grass? The Cause | TIMELESS',
+    description: `Flies and gnats on artificial grass feed on pet-waste residue and decaying matter in the infill. Why sprays fail, what fixes it, how to keep them off.`,
+    h1: 'Flies and gnats on your artificial grass are telling you what is in the infill',
+    lede: 'Flies do not like plastic grass. They like what is in it: pet-waste residue, and pollen and leaf litter that have gone to compost in damp infill. Spray the flies and they come back tomorrow. Remove what they are eating and they leave.',
+    question: 'Why are there so many flies on my artificial grass?',
+    answer: 'Flies and gnats gather on artificial grass because there is pet-waste residue or decaying organic matter in the infill for them to feed and breed on, usually in the damp, shaded parts of the yard. The fix is removing the food source: pick up solids daily, flush and enzyme-treat the pet zones, power-brush and rinse the organic layer out of the infill, and sanitize. TIMELESS Turf Restoration does this as part of a Premium Restoration across the Grand Strand.',
+    sections: [
+      { h2: 'What they are feeding on', html: `<p>House flies and blow flies come to pet waste, fresh or the residue left after it has been picked up. Fungus gnats and drain flies breed in wet, decaying organic matter, which is exactly what pollen paste and leaf litter become in damp infill by midsummer. If the flies cluster over the dog's spot, it is waste. If the gnats hang in the shaded strip by the fence, it is organic buildup. Both mean the infill has a food source in it.</p>` },
+      { h2: 'Why sprays fail', html: `<p>An insecticide kills the flies present and does nothing to the residue. The next generation hatches or arrives within days. The only fix that holds is removing what they are there for.</p>` },
+      { h2: 'The fix', html: `<p>Daily pickup. Then a proper <a href="/services/pet-odor-removal/">odor treatment</a> of the pet zones, which digests the residue with enzymes, and a <a href="/services/artificial-turf-cleaning/">deep clean</a> that power-brushes and flushes the organic layer out of the rest of the yard. An <a href="/services/antimicrobial-sanitizing/">antimicrobial</a> finishes it. Yards with a persistent gnat problem in the shade usually also have algae, and usually also have a drainage reason the strip stays wet, which we point out.</p>` },
+    ],
+    faq: [
+      { q: 'Do fleas live in artificial grass?', a: 'Fleas need a host and shelter; they do not breed in clean turf. A yard with organic buildup and a dog can harbor them. Cleaning the infill removes the shelter; treat the dog with your vet.' },
+      { q: 'Are the gnats coming from under the turf?', a: 'Usually from the infill, not the base. If they persist after a clean, the base is holding water and organic matter, which is a drainage problem.' },
+    ],
+    service: 'antimicrobial-sanitizing',
+    related: ['how-to-clean-dog-poop-off-artificial-grass', 'artificial-grass-smells-like-dog-pee', 'black-patches-algae-on-artificial-grass'],
+  },
+];
+
+export const problemBySlug = (slug: string) => PROBLEMS.find((p) => p.slug === slug);
+export const CLUSTERS: Record<Problem['cluster'], string> = { odor: 'Smell & odor', mess: 'Pets & mess', growth: 'Algae, weeds & buildup', wear: 'Flat, hard & worn', debris: 'Debris, storms & seasons', damage: 'Damage & drainage' };

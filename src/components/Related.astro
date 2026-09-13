@@ -1,0 +1,12 @@
+---
+interface Props { kicker: string; h2: string; items: { href: string; title: string; blurb: string; image?: string }[] }
+const { kicker, h2, items } = Astro.props;
+---
+{items.length > 0 && <section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head" data-reveal><p class="kicker">{kicker}</p><h2>{h2}</h2></div>
+    <div class="rel">
+      {items.map((it) => <a class="rel__card" href={it.href} data-reveal>{it.image && <img src={it.image} alt="" width="700" height="500" loading="lazy" decoding="async">}<div><h3>{it.title}</h3><p>{it.blurb}</p><span class="rel__more">Read more<svg class="ic ic--sm"><use href="#i-arrow"/></svg></span></div></a>)}
+    </div>
+  </div>
+</section>}

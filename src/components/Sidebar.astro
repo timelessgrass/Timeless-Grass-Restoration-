@@ -1,0 +1,15 @@
+---
+import { brand } from '../data/site';
+interface Props { priceLine?: string; priceLabel?: string; links?: { h: string; items: { href: string; label: string }[] }[]; plan?: string }
+const { priceLine, priceLabel = 'Pricing', links = [], plan } = Astro.props;
+---
+<aside class="side">
+  <div class="side__card side__card--cta">
+    <h3>Get an upfront price</h3>
+    {priceLine && <p class="side__price"><small>{priceLabel}</small>{priceLine}</p>}
+    <p>Free quote, priced by square foot before any work starts. Every job ends blown clean.</p>
+    <a class="btn btn--green" href={plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/'} data-cta="quote-side">Get My Free Quote</a>
+    <a class="btn btn--outline-light" href={brand.phoneHref} data-cta="call-side"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+  </div>
+  {links.map((g) => g.items.length > 0 && <div class="side__card"><h3>{g.h}</h3><ul>{g.items.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul></div>)}
+</aside>

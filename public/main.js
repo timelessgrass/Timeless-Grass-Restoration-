@@ -86,7 +86,7 @@
   const planSelect = $('#f-plan');
   document.addEventListener('click', (e) => {
     const a = e.target.closest('[data-plan]');
-    if (a && planSelect) planSelect.value = a.dataset.plan;
+    if (a && planSelect) [...planSelect.options].forEach((o) => { if (o.value.startsWith(a.dataset.plan)) planSelect.value = o.value; });
   });
 
   // Before / after slider: drag anywhere on the photo, or use arrow keys on the range

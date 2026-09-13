@@ -1,0 +1,61 @@
+---
+import { brand, area } from '../data/site';
+import { SERVICES } from '../data/services';
+const core = SERVICES.filter((s) => s.tier === 'core');
+const more = SERVICES.filter((s) => s.tier !== 'core');
+---
+<div class="topbar">
+  <div class="wrap topbar__in">
+    <span><svg class="ic ic--sm"><use href="#i-pin"/></svg>Serving {area.name}: {area.line}</span>
+    <span class="topbar__r">Owner-operated <i>·</i> Free quotes <i>·</i> <a href={brand.phoneHref} data-cta="call-topbar">{brand.phone}</a></span>
+  </div>
+</div>
+<header class="hdr" data-hdr id="top">
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="/"><img src="/assets/brand/logo.png" width="480" height="362" alt={brand.name}></a>
+    <nav class="nav" aria-label="Main">
+      <div class="nav__drop">
+        <button class="nav__link" type="button" aria-expanded="false">Services<svg class="ic ic--sm"><use href="#i-chev"/></svg></button>
+        <div class="mega">
+          <div class="mega__col">
+            <p class="mega__h">Cleaning &amp; odor</p>
+            {core.map((s) => <a href={`/services/${s.slug}/`}><b>{s.name}</b><small>{s.short}</small></a>)}
+          </div>
+          <div class="mega__col">
+            <p class="mega__h">Repair &amp; restoration</p>
+            {more.map((s) => <a href={`/services/${s.slug}/`}><b>{s.name}</b><small>{s.short}</small></a>)}
+            <a href="/services/"><b>All services</b><small>What we do, and what we don't</small></a>
+          </div>
+          <div class="mega__promo">
+            <p class="mega__promo-h">Not sure what your turf needs?</p>
+            <p>Start with the problem. We'll point you to the right fix.</p>
+            <a class="btn btn--green btn--sm" href="/turf-problems/">Turf problems, solved</a>
+            <a class="mega__tel" href={brand.phoneHref} data-cta="call-mega">or call {brand.phone}</a>
+          </div>
+        </div>
+      </div>
+      <a class="nav__link" href="/pricing/">Pricing</a>
+      <a class="nav__link" href="/turf-problems/">Problems</a>
+      <a class="nav__link" href="/service-areas/">Areas</a>
+      <a class="nav__link" href="/guides/">Guides</a>
+      <a class="nav__link" href="/about/">About</a>
+    </nav>
+    <div class="hdr__cta">
+      <a class="hdr__phone" href={brand.phoneHref} data-cta="call-header"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+      <a class="btn btn--green" href="/quote/" data-cta="quote-header">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <button class="hdr__burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer"><span></span></button>
+  </div>
+  <div class="drawer" id="drawer" hidden>
+    <nav class="wrap drawer__nav" aria-label="Mobile">
+      <a href="/services/">Services</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/turf-problems/">Turf problems</a>
+      <a href="/service-areas/">Service areas</a>
+      <a href="/guides/">Guides</a>
+      <a href="/about/">About Brian</a>
+      <a class="btn btn--green btn--lg" href="/quote/" data-cta="quote-drawer">Get My Free Quote</a>
+      <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-drawer"><svg class="ic"><use href="#i-phone"/></svg>Call {brand.phone}</a>
+    </nav>
+  </div>
+</header>

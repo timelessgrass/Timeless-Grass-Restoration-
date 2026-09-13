@@ -1,0 +1,110 @@
+---
+/**
+ * Every page's head, entity graph and chrome.
+ * One LocalBusiness node (#business) for the whole site; pages hang WebPage / Service /
+ * FAQPage / BreadcrumbList off it by @id. No ratings, no reviews in JSON-LD, ever.
+ */
+import { brand, area, SITE_URL, PRELAUNCH } from '../data/site';
+import { SERVICES } from '../data/services';
+import { TOWNS } from '../data/towns';
+import Icons from '../components/Icons.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: { name: string; item: string }[];
+  /** The page's answer-box, mirrored into speakable for answer engines. */
+  answer?: { question: string; answer: string };
+  faq?: { q: string; a: string }[];
+  schema?: Record<string, unknown>[];
+  robots?: string;
+  ogImage?: string;
+  chrome?: 'full' | 'minimal';
+  bodyClass?: string;
+}
+const { title, description, crumbs, answer, faq, schema, robots, ogImage, chrome = 'full', bodyClass } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const robotsMeta = PRELAUNCH ? 'noindex, nofollow' : robots;
+const og = new URL(ogImage ?? '/assets/img/backyard-putting-green-landscaped-boulders.jpg', Astro.site).href;
+
+const graph: any[] = [
+  {
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/#business`,
+    name: brand.name,
+    url: `${SITE_URL}/`,
+    telephone: brand.phone,
+    email: brand.email,
+    image: og,
+    logo: new URL('/assets/brand/logo.png', Astro.site).href,
+    foundingDate: String(brand.founded),
+    founder: { '@type': 'Person', name: brand.owner },
+    priceRange: '$199–$899+',
+    /* Service-area business: no storefront, so areaServed instead of an address. */
+    areaServed: [
+      ...TOWNS.map((t) => ({ '@type': 'City', name: `${t.name}, ${t.state}` })),
+      ...area.counties.map((c) => ({ '@type': 'AdministrativeArea', name: c })),
+    ],
+    knowsAbout: SERVICES.map((s) => s.name),
+  },
+  { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: brand.name, publisher: { '@id': `${SITE_URL}/#business` } },
+  {
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#business` },
+    ...(answer ? { speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.answer-box__a', '.sub-hero__lede'] } } : {}),
+  },
+];
+if (faq?.length) graph.push({
+  '@type': 'FAQPage', '@id': `${canonical}#faq`,
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&') } })),
+});
+if (crumbs?.length) graph.push({
+  '@type': 'BreadcrumbList', '@id': `${canonical}#breadcrumb`,
+  itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.item, Astro.site).href })),
+});
+if (schema?.length) graph.push(...schema);
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+{robotsMeta && <meta name="robots" content={robotsMeta}>}
+<meta name="theme-color" content="#0c1809">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content={brand.name}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={og}>
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/assets/brand/favicon.png">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<script is:inline>document.documentElement.classList.add('js')</script>
+<script is:inline src="/main.js" defer></script>
+<script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
+<slot name="head" />
+</head>
+<body class={bodyClass}>
+<a class="skip" href="#main">Skip to content</a>
+<Icons />
+{chrome === 'full' && <Header />}
+<main id="main"><slot /></main>
+{chrome === 'full' && <Footer />}
+<slot name="after" />
+</body>
+</html>
