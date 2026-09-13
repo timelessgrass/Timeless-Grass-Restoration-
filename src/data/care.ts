@@ -50,7 +50,7 @@ export const CARE: Article[] = [
     h1: `Backyard putting green care: what damages it, and the signs it needs work`,
     lede: `A putting green is not a lawn with a cup in it. The ball rolls on the sand infill as much as on the fibers, so speed and roll depend on keeping that sand clean, even and firm. Debris, pollen and a green that never gets rolled all slow it down or send the ball off line long before the turf itself wears out.`,
     question: `What damages a backyard putting green, and how can you tell it needs work?`,
-    answer: `Most damage to a backyard green comes from habits: leaves and pollen left to sit, sprinklers and dogs on the surface, the wrong sand, and a green that is never rolled. The warning signs are a slower roll, a ball that drifts on one side, fuzzy or thin patches and water sitting after rain. Brian has built and maintained greens for 13 years, and TIMELESS Turf Restoration restores them across the Grand Strand.`,
+    answer: `Most damage to a backyard green comes from habits: leaves and pollen left to sit, sprinklers and dogs on the surface, the wrong sand, and a green that is never rolled. The warning signs are a slower roll, a ball that drifts on one side, and sand that has gone visibly uneven or thin in spots. Brian has built and maintained greens for 13 years, and TIMELESS Turf Restoration restores them across the Grand Strand.`,
     takeaways: [
       `Speed comes from sand depth and how recently it was rolled, not from the turf product alone.`,
       `Keep it clear of leaves and pollen; a green under an oak that never gets blown off is slow by winter.`,
