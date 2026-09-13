@@ -14,6 +14,12 @@ export const EXPLAINERS: Article[] = [
     lede: `From a foot away, artificial turf looks like one thing: green plastic grass. It is actually a stack of separate layers doing separate jobs, and most of what goes wrong with turf, odor, drainage, a bumpy feel, traces back to one specific layer rather than the turf as a whole. Knowing the layers makes every other explainer on this site make more sense.`,
     question: `What is artificial turf actually made of?`,
     answer: `Artificial turf is built in layers: fibers stitched into a backing, a thatch layer for body, infill that supports and weighs the fibers down, a compacted base that drains water, and edge restraint at the borders. Each layer has its own job, and problems usually trace to one layer rather than the turf as a whole. TIMELESS Turf Restoration works with all five layers on every Grand Strand visit.`,
+    takeaways: [
+      `Turf is five layers: fibers, thatch, backing, infill and a compacted base, plus edge restraint at the borders.`,
+      `Odor residue that gets past the infill settles on the backing, which is why a surface rinse rarely solves a smell.`,
+      `Infill is the layer most often topped up or replaced, since it compacts, saturates or washes thin over time.`,
+      `The base is the hardest and most expensive layer to fix, since correcting it means lifting the turf.`,
+    ],
     diagram: 'cross-section',
     sections: [
       { h2: `The fibers`, html: `<p>The part everyone means when they say "the grass" is the fiber: strands of polyethylene or nylon, tufted or woven into rows, cut and textured to look and feel like blades of natural grass. Fiber shape, thickness, and the way it is textured determine how soft the turf feels underfoot and how well it stands back up after being walked on, sat on, or brushed against by a mower along the border. Fiber is also the layer most exposed to the sun, since it sits on top of everything else, which is why it is the layer that fades and gradually stiffens over years of UV exposure. A fiber that looks slightly duller or feels a bit stiffer than it did when new is simply weathering the way any outdoor plastic does; it is not a sign anything underneath has failed.</p>` },
@@ -42,6 +48,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Infill looks like an afterthought poured in after the grass goes down, sand or crumb scattered between the fibers. It is actually doing four or five jobs at once: holding the fibers upright, weighing the whole system down, cushioning the surface, helping water pass through, and in some products, controlling odor. Getting the depth and type right matters as much as anything else in the system.`,
     question: `What does the sand or infill in artificial turf actually do?`,
     answer: `Turf infill supports the fibers upright, adds ballast weight, cushions the surface underfoot, and helps water drain evenly through the backing. Some infills, such as zeolite-type or antimicrobial-coated sand, also help control odor in pet areas. Depth matters: too little leaves fibers unsupported, too much buries them. TIMELESS Turf Restoration checks and restores infill depth across the Grand Strand on every visit.`,
+    takeaways: [
+      `Infill does several jobs at once: support, ballast, cushion, drainage and, in some products, odor control.`,
+      `A crunchy or hard-feeling lawn is almost always compacted infill, not a fiber problem.`,
+      `Plain sand does nothing special about odor; only infills built for it, like zeolite or coated sand, do.`,
+      `Depth matters as much as infill type; a good product still fails if it has washed too thin.`,
+    ],
     sections: [
       { h2: `Support`, html: `<p>Without something packed in around their base, fiber blades would flop over in every direction the moment anyone walked on them, the way a paintbrush with no bristle stiffener would. Infill fills the gaps between fibers and gives each blade something to lean against, which is what lets turf stand back up after a footstep rather than staying flattened. This is also why infill that has compacted or washed thin shows up first as matted, flat-looking paths rather than as a drainage or odor problem, since support is the first job to fail.</p>` },
       { h2: `Ballast`, html: `<p>Turf is a manufactured system laid over a base, not rooted into the ground, and infill adds enough weight to help hold it in place against wind, foot traffic and the general shifting an unweighted surface would be prone to over time. This matters most at a large open lawn or a rooftop installation, where more open surface gives wind more to catch, and where a shift in the turf itself is a bigger problem than a shift in a small enclosed yard.</p>` },
@@ -70,6 +82,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Zeolite is a mineral with a structure full of microscopic pores, and those pores are what make it useful in a pet yard: ammonia molecules get trapped inside them instead of evaporating up into the air the way they do from plain sand. It is not magic and it does not last forever, but the mechanism explains both why it works and why it eventually needs attention.`,
     question: `How does zeolite infill control pet odor in artificial turf?`,
     answer: `Zeolite-type infill is a porous mineral that traps ammonia molecules inside its structure instead of letting them evaporate, which is what causes the smell from plain sand. It reduces odor markedly in a pet zone, but its capacity is not unlimited; over time the pores fill up, and a recharge or eventual replacement is needed. TIMELESS Turf Restoration installs and maintains zeolite-type infill in pet zones across the Grand Strand.`,
+    takeaways: [
+      `Zeolite works by trapping ammonium ions inside microscopic pores instead of letting them evaporate as smell.`,
+      `Every zeolite zone eventually saturates; a yard that used to go a month between odors starts needing attention sooner.`,
+      `A thorough rinse recharges some of zeolite's capacity, but recharging has limits and worn-out zeolite needs replacing.`,
+      `Zeolite costs more than plain sand, so it makes the most sense concentrated in pet zones rather than a whole lawn.`,
+    ],
     sections: [
       { h2: `The mechanism`, html: `<p>Zeolite is a naturally occurring mineral riddled with a honeycomb of microscopic pores, and those pores have a chemical attraction to ammonium ions, the form ammonia takes once it is dissolved in moisture. When urine breaks down in the infill and produces ammonia, zeolite grains nearby trap a portion of it inside those pores rather than letting it evaporate straight up into the air where you would smell it. Plain sand has no such structure, which is why the same amount of urine smells noticeably stronger in a plain-sand yard than in a zeolite-infilled one.</p>` },
       { h2: `Why it eventually saturates`, html: `<p>Every pore that traps an ammonium ion is one fewer pore available for the next one. Over months of regular use, the zeolite in a heavy pet zone gradually fills up, the way a sponge eventually holds all the water it can. A saturated zeolite infill does not fail suddenly; it simply becomes gradually less effective, so a yard that used to go a month between odor complaints starts needing attention every couple of weeks instead, well before it looks any different to the eye.</p>` },
@@ -97,6 +115,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Some pet-zone infill comes with an antimicrobial coating applied to the sand grains themselves. The coating does not remove urine or stop odor-causing residue from landing in the infill in the first place; what it does is make it harder for bacteria to establish a colony on the coated surface once residue is there, which slows the whole odor cycle down.`,
     question: `What does antimicrobial-coated turf infill actually do?`,
     answer: `Antimicrobial-coated infill has a coating on each sand grain that inhibits bacterial growth on the infill's surface. It does not remove urine residue or stop it from landing in the infill, and it does not replace cleaning; it slows how fast odor-causing bacteria can multiply, which stretches the time between problems. TIMELESS Turf Restoration uses coated infill in pet zones across the Grand Strand where it fits the yard.`,
+    takeaways: [
+      `The antimicrobial coating is applied to each infill grain at manufacturing, not sprayed on afterward.`,
+      `Coated infill slows bacteria growth on the grain surface; it does not remove urine residue or replace cleaning.`,
+      `The coating wears down gradually with traffic, UV and rinsing over years, so older infill protects less than new infill.`,
+      `Coated infill and an antimicrobial treatment are different things that work best together, not as substitutes for each other.`,
+    ],
     sections: [
       { h2: `What the coating actually does`, html: `<p>The coating is applied to the surface of each sand or infill grain during manufacturing, and it works by making conditions on that surface inhospitable to bacteria, which slows their ability to establish and multiply compared with an uncoated grain sitting in the same residue. It is a defensive measure built into the material itself, working continuously in the background, rather than an active treatment applied after the fact on a schedule.</p>` },
       { h2: `What it does not do`, html: `<p>Coated infill does not stop urine or organic residue from reaching the infill in the first place, does not digest residue that is already there the way an enzyme treatment does, and does not replace regular rinsing or professional cleaning. A coated-infill yard that is never rinsed will still build up residue and eventually smell; the coating changes how fast bacteria can act on that residue, not whether residue accumulates in the first place. It is a slower fuse, not a fireproof one, which is a meaningful difference over the life of a pet zone but not a substitute for upkeep.</p>` },
@@ -123,6 +147,12 @@ export const EXPLAINERS: Article[] = [
     lede: `A fragrance spray covers a smell for as long as the fragrance lasts. An enzyme cleaner is different: it contains proteins that break organic residue down into smaller, odorless compounds, which is why it needs time sitting on the residue rather than an immediate rinse to work. Understanding that difference explains why one product fades in a day and the other actually removes the problem.`,
     question: `How do enzyme cleaners remove urine odor from artificial turf?`,
     answer: `Enzyme cleaners contain proteins that break down organic compounds in urine and waste residue into smaller, odorless byproducts, rather than covering the smell with fragrance. They need dwell time to work, which is why they are applied and left rather than rinsed right away. They do not reach residue bonded into crusted, saturated infill, which needs replacing instead. TIMELESS Turf Restoration uses enzyme treatment on every Grand Strand visit.`,
+    takeaways: [
+      `Enzymes are proteins that digest urine residue into smaller, odorless compounds rather than masking the smell.`,
+      `Enzyme cleaners need dwell time, usually at least twenty minutes, and rinsing too soon is the most common reason they seem not to work.`,
+      `Unlike fragrance or bleach, enzymes actually remove the source material rather than covering or partially disinfecting it.`,
+      `Enzymes cannot reach urine that has dried into crusted, saturated infill; that infill needs replacing instead.`,
+    ],
     diagram: 'odor',
     sections: [
       { h2: `What enzymes actually digest`, html: `<p>Enzymes are proteins that speed up specific chemical reactions, and the ones used in pet-turf cleaners are chosen to break down the organic compounds in urine, feces and other biological residue into smaller molecules that no longer produce the same odor. This is fundamentally different from a fragrance product, which adds a stronger, more pleasant smell on top of the existing one without changing the residue underneath it at all, and it is why the two behave so differently over time.</p>` },
@@ -151,6 +181,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Turf looks solid, but it is built to let water pass straight through it: down through the backing, through the base beneath it, and away. Drainage depends on two backing styles working differently, a base built with the right slope, and infill that has not clogged the path. When turf stops draining, the cause is almost always one of those three, not the turf itself failing.`,
     question: `How does artificial turf drain water?`,
     answer: `Water passes down between the infill grains, through the backing, and into a compacted, sloped base built underneath to carry it away. The rate drops sharply once infill compacts or clogs with organic debris. TIMELESS Turf Restoration restores drainage across the Grand Strand by cleaning what has clogged, and diagnoses the rarer base problem cleaning cannot fix.`,
+    takeaways: [
+      `Water passes through infill, then a perforated or fully permeable backing, into a compacted, sloped base beneath it.`,
+      `Pollen, leaf litter and pet residue are what clog the drainage path over time, not the turf or backing failing.`,
+      `Properly draining turf leaves the surface damp, not pooled, within an hour or two of a normal rain.`,
+      `Most slow-draining yards are fixed by cleaning the infill; a true base problem is far less common.`,
+    ],
     diagram: 'cross-section',
     sections: [
       { h2: `Perforated versus fully permeable backing`, html: `<p>Some turf backing is a solid material with drainage holes punched through it at set intervals, which drains well as long as infill and debris do not block those specific openings. Fully permeable backing is porous across its entire surface rather than relying on individual holes, so water can pass through anywhere rather than needing to find its way to a perforation. Both styles are common and both work well when clean; the difference matters mainly for how the backing responds once it starts to clog rather than for everyday performance.</p>` },
@@ -179,6 +215,12 @@ export const EXPLAINERS: Article[] = [
     lede: `A blower moves loose debris. A rake tears at whatever is caught in the fibers. A power broom does something different: a motorized, rotating brush works down into the turf, lifting fibers upright while pulling loose material out from between them, which is why it is behind most of what a professional clean actually changes about how a lawn looks and feels.`,
     question: `What does a power broom do to artificial turf?`,
     answer: `A power broom uses a motorized, rotating brush to lift flattened fibers upright, loosen compacted infill, and pull embedded debris out of the pile rather than just off the surface. It reaches deeper than a push broom or leaf blower, restoring a lawn's texture and color rather than just its surface cleanliness. TIMELESS Turf Restoration power brushes every Grand Strand visit.`,
+    takeaways: [
+      `A power broom's brush spins against the grain of the fibers, which is what lets it lift and fluff them.`,
+      `It pulls embedded debris like pollen paste up out of the pile, a step a blower cannot do at all.`,
+      `A blower only moves surface debris and a metal rake can tear fibers; a power broom works with the fiber direction instead.`,
+      `The brush head wears down with use, so a well-maintained machine lifts fibers more effectively than a tired one.`,
+    ],
     sections: [
       { h2: `What a power broom is`, html: `<p>A power broom for turf is a walk-behind or push machine with a motorized brush head, usually with stiff synthetic bristles, that spins against the direction the fibers naturally lean. That rotation is what gives it an advantage over any hand tool: a person pushing a broom can lift fibers a little on each pass, but a spinning brush works at a speed and consistency no arm can match, reaching into the base of the fibers rather than skimming the tips.</p>` },
       { h2: `Lift`, html: `<p>Foot traffic, furniture and general use press fibers down and bend them in the direction of travel over time, which is what makes a walking path look flattened and shiny compared with the rest of a lawn. Power brushing against that lean physically stands the fibers back up, restoring both the texture underfoot and the more even, matte color a lawn has when its fibers are upright rather than lying flat and reflecting light differently across the surface.</p>` },
@@ -206,6 +248,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Fresh urine barely smells at all. What you notice days or weeks later is ammonia, and ammonia is not in the urine to begin with, it is what bacteria produce as they feed on urea, one of urine's main components, once it has settled into the infill. That single chemical chain explains almost everything odd about how turf odor behaves, including why it comes and goes with the weather.`,
     question: `Why does artificial turf smell like ammonia?`,
     answer: `Urine contains urea, which is nearly odorless on its own. Bacteria in turf infill break urea down into ammonia, the sharp, unpleasant compound people actually smell. Those bacteria need moisture to stay active, which is why the smell fades in a dry spell and returns after rain or on a humid morning. TIMELESS Turf Restoration removes both the residue and the bacteria producing it across the Grand Strand.`,
+    takeaways: [
+      `Fresh urine barely smells; the sharp odor is ammonia produced by bacteria breaking down urea afterward.`,
+      `Urine passes through the fibers in seconds and settles in the infill and backing, which is why a surface hose does little.`,
+      `The bacteria producing ammonia need moisture to stay active, which is why the smell fades when dry and returns after rain.`,
+      `Hosing, fragrance and vinegar all fail for the same reason: none of them remove the urea or treat the bacteria feeding on it.`,
+    ],
     diagram: 'odor',
     sections: [
       { h2: `The chemistry in three steps`, html: `<p>Urine is mostly water, salts and urea, and urea itself has very little smell. The process that creates the odor happens after the urine has already soaked into the infill: bacteria that live naturally in soil, sand and organic debris consume urea as a food source, and ammonia is a byproduct of that metabolic process. So the smell is not urine at all; it is the output of a bacterial colony that has set up shop wherever urine residue has accumulated over time.</p>` },
@@ -234,6 +282,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Not all sand is the same shape, and shape is most of what determines how a synthetic putting green plays. Rounded, kiln-dried sand made for greens packs and rolls differently than the angular, moisture-holding sand from a beach or a sandbox, and that difference shows up directly in how fast and how true a ball rolls.`,
     question: `What kind of sand should be used on a synthetic putting green?`,
     answer: `Rounded, kiln-dried sand made for synthetic greens, not beach sand, play sand or general construction sand. Rounded grains pack into an even, firm, low-friction surface when rolled, while angular, moisture-retaining sand packs unevenly and holds water, both of which slow the roll and make it unpredictable. Depth and even distribution matter as much as the sand type. TIMELESS Turf Restoration top-dresses greens with the right sand across the Grand Strand.`,
+    takeaways: [
+      `Rounded, kiln-dried sand rolls smoothly; angular beach or play sand interlocks and creates a slower, less predictable roll.`,
+      `Sand depth is measured against fiber height; too shallow feels bouncy, too deep buries the fibers and softens the roll.`,
+      `Freshly added sand has to be rolled in multiple directions to compact it; unrolled sand plays slower even at the right depth.`,
+      `Beach sand also carries salt and silt that can affect drainage and color over time.`,
+    ],
     diagram: 'green',
     sections: [
       { h2: `Why grain shape changes everything`, html: `<p>Rounded sand grains, the kind produced by kiln-drying and screening sand specifically for putting greens, pack together smoothly and roll past each other with low friction, which is what lets a golf ball glide across the surface at a consistent speed. Angular grains, the kind found in beach sand, play sand or general construction sand, interlock with each other instead of rolling smoothly, which creates more friction, more unevenness, and a slower, less predictable roll even at the same depth and the same brushing schedule applied evenly to both surfaces.</p>` },
@@ -262,6 +316,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Every plastic exposed to sunlight for years eventually fades and stiffens, and turf fibers are no exception. Ultraviolet light slowly breaks down the polymer chains in polyethylene, which changes color and texture in ways that cleaning cannot reverse, because cleaning removes what is on the fiber, not what has changed inside it.`,
     question: `Does artificial turf fade in the sun, and can it be reversed?`,
     answer: `Yes, and no. Ultraviolet light gradually breaks down the polymer chains in polyethylene fiber, called photodegradation, fading color and making fibers stiffer and more brittle over years of sun. Because the change happens within the plastic itself, not on its surface, no cleaning product restores original color or flexibility. TIMELESS Turf Restoration can clean and groom faded turf but is honest when fading, not dirt, is what is being seen.`,
+    takeaways: [
+      `UV fade is photodegradation: sunlight breaks down the polymer chains inside the fiber itself, not just its surface.`,
+      `Cleaning cannot reverse fade because the change happens within the plastic's molecular structure, not in a removable film on top.`,
+      `Fading looks the same wet or dry; dirt and staining usually look noticeably different wet, which is a fast way to tell them apart.`,
+      `Shade slows fading but does not prevent it, since UV still reaches shaded areas to some degree throughout the day.`,
+    ],
     sections: [
       { h2: `What UV actually does at the material level`, html: `<p>Polyethylene, the plastic most turf fiber is made from, is a long chain of repeating molecular units, and ultraviolet light carries enough energy to break some of those chemical bonds over sustained exposure. That breakdown, called photodegradation, is what changes the fiber's color, usually toward a duller, slightly yellowed or grayed green, and its texture, usually toward stiffer and more brittle than when new. UV inhibitors are built into turf fiber during manufacturing specifically to slow this process, which is why quality varies noticeably between products after several years outdoors.</p>` },
       { h2: `Why cleaning cannot reverse it`, html: `<p>Dirt, residue and organic film sit on top of a fiber and can be rinsed, brushed or treated away, restoring the fiber's original appearance underneath. UV fade is different: the color and texture change because the plastic's molecular structure itself has changed, not because something is covering it. There is no cleaning product that puts broken polymer bonds back together, which is why a professional visit can make faded turf look as clean as it can, without making it look new again.</p>` },
@@ -288,6 +348,12 @@ export const EXPLAINERS: Article[] = [
     lede: `Brian has one line he judges every finished job by: if you can't blow off your own green, you're not done. It sounds simple, but it is a real test, one that catches sloppy grooming, leftover debris and uneven infill that a quick visual check would miss. Here is what the phrase actually means and what gets checked before a job is called finished.`,
     question: `What does it mean for a turf cleaning job to be "blown clean"?`,
     answer: `A job is blown clean when a leaf blower run across the finished turf moves only loose surface debris, nothing embedded, no clumped infill, no matted patches resisting the airflow, and leaves an even, groomed surface. It is Brian's own test: if a quick blow-off still turns up problems, the work was not actually done. TIMELESS Turf Restoration finishes every Grand Strand visit with this walk-through.`,
+    takeaways: [
+      `"Blown clean" tests what a blower reveals, not just debris removal: anything still matted or clumped resists the airflow.`,
+      `The check happens at the end, once the turf has settled and mostly dried, since a wet, just-rinsed lawn hides matting and uneven infill.`,
+      `A section that resists the blow-off gets more brushing or rinsing before the visit is considered finished, not a pass regardless.`,
+      `Homeowners can run the same test between visits with a stiff push broom or a flat hand instead of a blower.`,
+    ],
     sections: [
       { h2: `The phrase, and what it is really testing`, html: `<p>"Blown clean" sounds like it is just about tidiness, but the actual test is what a blower reveals rather than what it removes. A leaf blower moves air across the surface at a set force; loose debris lifts and clears easily, while anything still stuck, matted fibers that have not been properly brushed, infill that has clumped rather than been redistributed, residue that has not fully dried and released, resists that airflow in a way that is obvious to anyone watching. It is a fast, honest check that a five-second glance at a green lawn cannot replicate.</p>` },
       { h2: `What passes, and what does not`, html: `<p>A properly finished lawn responds to a final blow-off by clearing completely: fibers stand upright and move freely in the airflow, infill stays settled rather than blowing around in clumps, and no patches resist or look different from the rest. A lawn that still has flattened, matted sections, or infill that lifts in clumps instead of individual grains, has not actually been brushed and settled correctly, even if it looked fine standing at a distance before the blower ever touched it.</p>` },
