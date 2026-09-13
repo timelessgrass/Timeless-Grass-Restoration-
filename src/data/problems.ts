@@ -264,7 +264,7 @@ export const PROBLEMS: Problem[] = [
     title: 'Putting Green Rolls Slow or Bumpy? Here\'s Why | TIMELESS',
     description: `A synthetic green slows and goes bumpy when sand migrates, debris builds up and it's never rolled. What restores speed and a true roll. Call ${brand.phone}.`,
     h1: 'Your backyard putting green rolls slow, or bumpy, or both',
-    lede: 'Speed on a sand-filled green comes from a firm, even bed of sand in short fibers, rolled flat. Leaves and pollen soften it, sand washes off the high side, and a green that is never rolled goes bumpy in a season. All of it comes back. Brian has built and looked after greens for thirteen years, and it is the work he is fussiest about.',
+    lede: 'Speed on a sand-filled green comes from a firm, even bed of sand in short fibers, rolled flat. Leaves and pollen soften it, sand washes off the high side, and a green that is never rolled goes bumpy in a season. All of it comes back. Brian has built and looked after greens for thirteen years.',
     question: 'Why does my artificial putting green roll slow and bumpy?',
     answer: 'A synthetic putting green rolls slow when debris and pollen have softened the surface and the sand infill has washed thin, and bumpy when sand has migrated unevenly and the surface has not been rolled. Restoring it means clearing and brushing the green, cleaning the fringe and cups, top-dressing with fresh green-grade sand to an even depth, and rolling to compact and true it. TIMELESS Turf Restoration does this across the Grand Strand; Brian has built and maintained putting greens for 13 years.',
     image: { src: '/assets/img/putting-green-landscape-lighting-at-dusk.jpg', alt: 'Backyard putting green with landscape lighting at dusk' },
