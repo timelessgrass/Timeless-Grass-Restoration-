@@ -54,6 +54,8 @@ npm run build && python3 scripts/audit.py
 
 Fails on: broken internal links, orphan pages, titles over 60 or descriptions over 160, missing H1 or tel link, more or fewer than one LocalBusiness node, rating markup, any page under 450 words of content, forbidden claims (licensed, insured, guarantee, #1, same-day service…), and sibling-page similarity at or above 0.6 within a tier (doorway risk). Search index: `/search.json`, built from the registry.
 
+Content QA: `scripts/apply-fixes.py fixes.json` applies verified findings (each an exact, unique `quote` → `replacement`; a file that stops parsing is restored). `scripts/fix-quotes.py src/data/x.ts` repairs apostrophes inside single-quoted strings. `research/WRITER-BRIEF.md` is the rulebook for writing or reviewing any page: allowed facts, prices, methods and the Never list.
+
 ## Adding content
 
 - A new town: add an entry to `TOWNS` with at least three blocks that are true only of that town, each fact traceable to a URL in `sources[]`. The sitemap, footer, service pages and area index pick it up automatically.
