@@ -376,7 +376,7 @@ export const LOCAL_SERVICES_2: LocalService[] = [
     description: `Algae removal for Shallotte's high-traffic family yards, where compaction and river humidity make shaded corners crust up fast.`,
     h1: `Algae and mold removal for Shallotte's busy family yards`,
     lede: `A Shallotte yard gets more foot traffic than a retiree's, kids, a dog, a trampoline all sharing the same turf, and that traffic compacts the infill in a way that holds the Shallotte River's humidity longer than an open, lightly used lawn would. Compacted and damp is exactly the combination algae needs.`,
-    question: `Why does my Shallotte turf grow algae even where kids play, not just in the shade?`,
+    question: `Why does algae take hold so fast in the shaded corners of my Shallotte yard?`,
     answer: `Because heavy foot traffic compacts the infill, and compacted infill holds the humidity off the Shallotte River longer than loose infill does, so a shaded, damp section of yard can crust up with algae here faster than a drier, less-trafficked spot would. TIMELESS Turf Restoration clears debris, power-brushes the compacted layer loose, rinses the organic buildup from the infill, applies a turf-safe algaecide and an antimicrobial follow-up.`,
     blocks: [
       { h2: 'Traffic packs the infill, and packed infill stays wet', html: `<p>A family yard with a trampoline, a soccer goal and a dog gets walked across far more than a retiree's lawn, and every pass compacts the infill a little more. Compacted infill drains slower and holds the humidity coming off the Shallotte River longer than loose infill does, which means a shaded, heavily used path can crust up with that film faster here than a lightly used one would.</p>` },

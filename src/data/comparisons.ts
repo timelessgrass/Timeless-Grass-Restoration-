@@ -212,7 +212,7 @@ export const COMPARISONS: Guide[] = [
       { q: 'What PSI is safe for artificial turf?', a: `None that we recommend. Even a low-PSI pressure washer concentrates force enough to move infill in a way a hose cannot. The tool itself is the problem, not the setting.` },
       { q: 'My lawn service pressure washed my turf. Is it ruined?', a: `Usually not. It needs the infill leveled and likely topped up, and we check every seam while we are there. That is a Premium Restoration plus infill, not a replacement, in most cases.` },
       { q: 'Why does a hose work as well as a pressure washer if it has less force?', a: `Because turf cleaning is a volume problem, not a force problem. Moving enough water through the infill carries debris and residue out; concentrating that same water into a narrow jet does not clean better, it just displaces the infill instead.` },
-      { q: 'Is a soft-wash or low-pressure attachment on a pressure washer okay?', a: `A true low-pressure, high-volume attachment can be reasonable if used carefully, but a standard garden hose and a fan nozzle does the same job with no chance of accidentally switching back to full pressure.` },
+      { q: 'Is a soft-wash or low-pressure attachment on a pressure washer okay?', a: `A low-pressure attachment is still a pressure washer, and it can be switched back to full pressure just as easily; a standard garden hose with a fan nozzle does the same job with no chance of that happening.` },
     ],
     services: ['artificial-turf-cleaning', 'turf-repair'],
     problems: ['matted-artificial-grass-walking-paths', 'water-pooling-on-artificial-turf'],
