@@ -1,0 +1,24 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { COMMERCIAL, ALL_PROBLEMS, ALL_GUIDES, findService, withPhone, TIERS } from '../../data/registry';
+export function getStaticPaths() { return COMMERCIAL.map((a) => ({ params: { slug: a.slug }, props: { a } })); }
+const { a } = Astro.props;
+const T = TIERS.commercial;
+const crumbs = [{ name: 'Home', item: '/' }, { name: T.name, item: T.base }, { name: a.short, item: `${T.base}${a.slug}/` }];
+const services = (a.services ?? []).map(findService).filter(Boolean);
+const problems = (a.problems ?? []).map((s) => ALL_PROBLEMS.find((p) => p.slug === s)).filter(Boolean);
+const guides = (a.guides ?? []).map((s) => ALL_GUIDES.find((g) => g.slug === s)).filter(Boolean);
+const related = (a.related ?? []).map((s) => COMMERCIAL.find((x) => x.slug === s)).filter(Boolean);
+const svc = services[0];
+---
+<ArticleLayout a={a} kicker={T.kicker} crumbs={crumbs} description={withPhone(a.description)}
+  priceLine={svc?.priceLine} priceLabel={svc?.name} plan={svc?.plan === 'premium' ? 'Premium Restoration' : svc?.plan === 'essential' ? 'Essential Clean' : undefined}
+  sideLinks={[
+    { h: 'Services', items: services.map((s) => ({ href: `/services/${s!.slug}/`, label: s!.name })) },
+    { h: 'Related problems', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
+    { h: 'Guides', items: guides.map((g) => ({ href: `/guides/${g!.slug}/`, label: g!.short })) },
+    { h: `More ${T.name.toLowerCase()}`, items: related.map((r) => ({ href: `${T.base}${r!.slug}/`, label: r!.short })) },
+  ]}
+  related={related.map((r) => ({ href: `${T.base}${r!.slug}/`, title: r!.h1, blurb: r!.lede.slice(0, 140) + '…', image: r!.image?.src }))}
+  relatedH2={`More ${T.name.toLowerCase()}`}
+/>

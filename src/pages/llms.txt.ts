@@ -1,10 +1,7 @@
 /** Derived only from site data, so it cannot claim anything the pages don't. */
 import type { APIRoute } from 'astro';
 import { brand, area, pricing as P, SITE_URL } from '../data/site';
-import { SERVICES } from '../data/services';
-import { PROBLEMS } from '../data/problems';
-import { GUIDES } from '../data/guides';
-import { TOWNS } from '../data/towns';
+import { ALL_SERVICES as SERVICES, ALL_PROBLEMS as PROBLEMS, ALL_GUIDES as GUIDES, ALL_TOWNS as TOWNS, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL } from '../data/registry';
 
 export const GET: APIRoute = () => {
   const body = `# ${brand.name}
@@ -26,8 +23,23 @@ ${SERVICES.map((s) => `- [${s.name}](${SITE_URL}/services/${s.slug}/): ${s.short
 ## Turf problems explained
 ${PROBLEMS.map((p) => `- [${p.h1}](${SITE_URL}/turf-problems/${p.slug}/)`).join('\n')}
 
-## Guides
+## How-to
+${HOWTOS.map((h) => `- [${h.h1}](${SITE_URL}/how-to/${h.slug}/)`).join('\n')}
+
+## Guides and comparisons
 ${GUIDES.map((g) => `- [${g.h1}](${SITE_URL}/guides/${g.slug}/)`).join('\n')}
+
+## Costs
+${COSTS.map((c) => `- [${c.h1}](${SITE_URL}/cost/${c.slug}/)`).join('\n')}
+
+## Care by kind of turf
+${CARE.map((c) => `- [${c.h1}](${SITE_URL}/turf-care/${c.slug}/)`).join('\n')}
+
+## Turf 101
+${EXPLAINERS.map((e) => `- [${e.h1}](${SITE_URL}/turf-101/${e.slug}/)`).join('\n')}
+
+## Commercial programs
+${COMMERCIAL.map((c) => `- [${c.h1}](${SITE_URL}/commercial/${c.slug}/)`).join('\n')}
 
 ## Service areas
 ${TOWNS.map((t) => `- [${t.name}, ${t.state}](${SITE_URL}/service-areas/${t.slug}/)`).join('\n')}

@@ -2,7 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { PROBLEMS, CLUSTERS } from '../../data/problems';
+import { CLUSTERS } from '../../data/problems';
+import { ALL_PROBLEMS as PROBLEMS } from '../../data/registry';
 import { brand } from '../../data/site';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Turf problems', item: '/turf-problems/' }];
 const clusters = Object.keys(CLUSTERS) as (keyof typeof CLUSTERS)[];

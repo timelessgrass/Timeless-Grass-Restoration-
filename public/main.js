@@ -16,13 +16,14 @@
     burger.addEventListener('click', () => setDrawer(drawer.hidden));
     $$('a', drawer).forEach((a) => a.addEventListener('click', () => setDrawer(false)));
 
-    // Services dropdown: hover/focus handled in CSS, click for touch
-    const drop = $('.nav__drop');
-    const dropBtn = $('button', drop);
-    const setDrop = (open) => { drop.classList.toggle('is-open', open); dropBtn.setAttribute('aria-expanded', open); };
-    dropBtn.addEventListener('click', () => setDrop(!drop.classList.contains('is-open')));
-    document.addEventListener('click', (e) => { if (!drop.contains(e.target)) setDrop(false); });
-    $$('a', drop).forEach((a) => a.addEventListener('click', () => { setDrop(false); a.blur(); }));
+    // Dropdowns: hover/focus handled in CSS, click for touch; only one open at a time
+    const drops = $$('.nav__drop');
+    const setDrop = (d, open) => { d.classList.toggle('is-open', open); $('button', d).setAttribute('aria-expanded', open); };
+    drops.forEach((d) => {
+      $('button', d).addEventListener('click', () => { const open = !d.classList.contains('is-open'); drops.forEach((o) => setDrop(o, false)); setDrop(d, open); });
+      $$('a', d).forEach((a) => a.addEventListener('click', () => { setDrop(d, false); a.blur(); }));
+    });
+    document.addEventListener('click', (e) => { drops.forEach((d) => { if (!d.contains(e.target)) setDrop(d, false); }); });
   }
 
   // Reveal sections as they enter the viewport
@@ -155,6 +156,37 @@
         ? `Ballpark for your yard: Essential Clean <b>${r.dataset.e}</b> · Premium Restoration <b>${r.dataset.p}</b>`
         : 'No problem. Brian will help you measure. Pricing starts at <b>$199</b> for yards up to 500 sq ft.';
     }));
+  }
+
+  // Site search: fetch the build-time index once, filter by words, keyboard-navigable
+  const searches = $$('[data-search]');
+  if (searches.length) {
+    let idx = null;
+    const load = async () => { if (!idx) idx = await fetch('/search.json').then((r) => r.json()).catch(() => []); return idx; };
+    searches.forEach((box) => {
+      const input = $('[data-search-in]', box), res = $('[data-search-res]', box);
+      let active = -1;
+      const render = (rows) => {
+        res.innerHTML = rows.length ? rows.map((r) => `<a href="${r.u}"><small>${r.k}</small><b>${r.t}</b></a>`).join('') : '<p>No matches. Try "smell", "algae", "green" or a town.</p>';
+        res.hidden = false; active = -1;
+      };
+      input.addEventListener('focus', load);
+      input.addEventListener('input', async () => {
+        const q = input.value.trim().toLowerCase();
+        if (q.length < 2) { res.hidden = true; return; }
+        const rows = await load();
+        const terms = q.split(/\s+/);
+        const scored = rows.map((r) => { const hay = (r.t + ' ' + r.s + ' ' + r.k).toLowerCase(); let sc = 0; for (const t of terms) { if (!hay.includes(t)) return null; sc += r.t.toLowerCase().includes(t) ? 2 : 1; if (r.t.toLowerCase().startsWith(t)) sc += 2; } return { r, sc }; }).filter(Boolean).sort((a, b) => b.sc - a.sc).slice(0, 8).map((x) => x.r);
+        render(scored);
+      });
+      input.addEventListener('keydown', (e) => {
+        const links = $$('a', res); if (res.hidden || !links.length) return;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); active = (active + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length; links.forEach((l, i) => l.classList.toggle('is-active', i === active)); }
+        if (e.key === 'Enter' && active >= 0) { e.preventDefault(); location.href = links[active].href; }
+        if (e.key === 'Escape') res.hidden = true;
+      });
+      document.addEventListener('click', (e) => { if (!box.contains(e.target)) res.hidden = true; });
+    });
   }
 
   $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });

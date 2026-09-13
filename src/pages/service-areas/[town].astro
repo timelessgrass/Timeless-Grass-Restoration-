@@ -6,7 +6,7 @@ import Sidebar from '../../components/Sidebar.astro';
 import Faq from '../../components/Faq.astro';
 import Related from '../../components/Related.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { TOWNS, townBySlug } from '../../data/towns';
+import { ALL_TOWNS as TOWNS, findTown as townBySlug, LOCAL_SERVICES } from '../../data/registry';
 import { SERVICES } from '../../data/services';
 import { brand, pricing as P, money } from '../../data/site';
 
@@ -14,6 +14,7 @@ export function getStaticPaths() { return TOWNS.map((t) => ({ params: { town: t.
 const { t } = Astro.props;
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }, { name: t.name, item: `/service-areas/${t.slug}/` }];
 const nearby = t.nearby.map(townBySlug).filter(Boolean);
+const local = LOCAL_SERVICES.filter((l) => l.town === t.slug).map((l) => ({ l, s: SERVICES.find((s) => s.slug === l.service)! }));
 const facts = [
   { b: 'Jurisdiction', v: t.kind === 'unincorporated' ? `Unincorporated ${t.county}` : `${t.kind === 'city' ? 'City' : 'Town'} of ${t.name}, ${t.county}` },
   { b: 'ZIP', v: t.zips.join(', ') },
@@ -33,6 +34,7 @@ const facts = [
         {t.blocks.map((b) => <><h2>{b.h2}</h2><div set:html={b.html} /></>)}
         <h2>Turf cleaning prices in {t.name}</h2>
         <p>Same price table everywhere on the Strand: Essential Clean from {money(P.rows[0].essential!)}, Premium Restoration with pet-odor, antimicrobial and algae treatment from {money(P.rows[0].premium!)}, both by square footage. Memberships from ${P.memberships[0].monthly} a month. The <a href="/pricing/">pricing page</a> has every band and add-on; no trip charge inside the service area.</p>
+        {local.length > 0 && <><h2>{t.name} pages for the services that vary here</h2><ul>{local.map(({ l, s }) => <li><a href={`/service-areas/${t.slug}/${s.slug}/`}>{s.name} in {t.name}</a>: {l.lede.split('. ')[0]}.</li>)}</ul></>}
         <h2>Every service, in {t.name}</h2>
         <ul class="chips chips--links">{SERVICES.map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}</ul>
         {nearby.length > 0 && <><h2>Nearby</h2><ul class="chips chips--links">{nearby.map((n) => <li><a href={`/service-areas/${n!.slug}/`}>{n!.name}, {n!.state}</a></li>)}</ul></>}

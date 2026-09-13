@@ -1,21 +1,24 @@
 ---
 import { brand, area } from '../data/site';
 import { SERVICES } from '../data/services';
-import { TOWNS } from '../data/towns';
-import { PROBLEMS } from '../data/problems';
+import { ALL_TOWNS as TOWNS, ALL_PROBLEMS as PROBLEMS, HOWTOS, ALL_GUIDES, COMMERCIAL } from '../data/registry';
 const year = new Date().getFullYear();
 const topProblems = PROBLEMS.filter((p) => p.footer).slice(0, 6);
+const topHowtos = HOWTOS.slice(0, 5);
+const topGuides = ALL_GUIDES.slice(0, 4);
+const topCommercial = COMMERCIAL.slice(0, 5);
 ---
 <footer class="ftr">
   <div class="wrap">
-    <div class="ftr__grid ftr__grid--5">
+    <div class="ftr__grid ftr__grid--6">
       <div>
         <a class="ftr__logo" href="/"><img src="/assets/brand/logo-reverse.png" width="480" height="362" alt={brand.name} loading="lazy"></a>
         <p>Artificial turf cleaning, pet odor removal and putting green restoration on {area.name}. Owner-operated by {brand.owner}, who has worked in turf for {brand.ownerYears} years.</p>
         <p class="ftr__sister">New turf and putting greens are installed by our sister company, <a href={brand.sister.url} rel="noopener">{brand.sister.name}</a>.</p>
       </div>
       <div><h4>Services</h4><ul>{SERVICES.map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}</ul></div>
-      <div><h4>Turf problems</h4><ul>{topProblems.map((p) => <li><a href={`/turf-problems/${p.slug}/`}>{p.short}</a></li>)}<li><a href="/turf-problems/">All problems</a></li></ul></div>
+      <div><h4>Learn</h4><ul>{topProblems.slice(0, 4).map((p) => <li><a href={`/turf-problems/${p.slug}/`}>{p.short}</a></li>)}<li><a href="/turf-problems/">All turf problems</a></li>{topHowtos.slice(0, 3).map((h) => <li><a href={`/how-to/${h.slug}/`}>{h.short}</a></li>)}<li><a href="/how-to/">All how-tos</a></li><li><a href="/guides/">Guides &amp; comparisons</a></li><li><a href="/cost/">Costs</a></li><li><a href="/turf-care/">Care by turf type</a></li><li><a href="/turf-101/">Turf 101</a></li></ul></div>
+      <div><h4>For businesses</h4><ul>{topCommercial.map((c) => <li><a href={`/commercial/${c.slug}/`}>{c.short}</a></li>)}<li><a href="/commercial/">All programs</a></li></ul></div>
       <div><h4>Service areas</h4><ul>{TOWNS.map((t) => <li><a href={`/service-areas/${t.slug}/`}>{t.name}</a></li>)}<li><a href="/service-areas/">All areas</a></li></ul></div>
       <div class="ftr__contact"><h4>Ready to schedule?</h4><ul><li><a href={brand.phoneHref} data-cta="call-footer">{brand.phone}</a></li><li><a href={`mailto:${brand.email}`}>{brand.email}</a></li><li>{area.line}</li></ul><a class="btn btn--green btn--sm" href="/quote/" data-cta="quote-footer">Get My Free Quote</a>
         <ul class="ftr__links"><li><a href="/pricing/">Pricing</a></li><li><a href="/guides/">Guides</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul></div>

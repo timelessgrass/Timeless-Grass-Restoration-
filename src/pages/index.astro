@@ -7,8 +7,7 @@ import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { brand, area, pricing as P, money } from '../data/site';
 import { SERVICES } from '../data/services';
-import { TOWNS } from '../data/towns';
-import { PROBLEMS } from '../data/problems';
+import { ALL_TOWNS as TOWNS, ALL_PROBLEMS as PROBLEMS } from '../data/registry';
 const q = `Who cleans artificial turf on ${area.name}?`;
 const a = `${brand.name} deep-cleans, deodorizes and restores artificial turf and synthetic putting greens across ${area.name}, from Shallotte, NC to Burgess, SC and inland to Conway and Loris. Owner-operated by ${brand.owner}, who has built turf for ${brand.ownerYears} years. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration with pet-odor treatment from ${money(P.rows[0].premium!)}, priced by square foot before any work starts. Call ${brand.phone}.`;
 const faq = [
@@ -221,7 +220,15 @@ const topProblems = PROBLEMS.filter((p) => p.footer);
   <div class="wrap">
     <div class="sec__head" data-reveal><p class="kicker">Start with the symptom</p><h2>Common turf problems, explained</h2></div>
     <div class="index">{topProblems.map((p) => <a class="index__item" href={`/turf-problems/${p.slug}/`} data-reveal><small>{p.short}</small><h3>{p.h1}</h3><p>{p.answer.split('. ')[0]}.</p></a>)}</div>
-    <p class="plans__note"><a href="/turf-problems/">All turf problems</a> · <a href="/guides/">Guides</a></p>
+    <p class="plans__note"><a href="/turf-problems/">All turf problems</a> · <a href="/how-to/">How-to</a> · <a href="/guides/">Guides</a></p>
+  </div>
+</section>
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head" data-reveal><p class="kicker">Learn</p><h2>Everything we know about turf, written down</h2><p>Hundreds of pages, each answering one question the way it gets asked. Search the site, or start with a tier.</p></div>
+    <div class="tiers">
+      {[['/turf-problems/','Turf problems','Symptom first: what it is, why, how to check, what fixes it.'],['/how-to/','How-to','Honest DIY steps, and the point where a visit is cheaper.'],['/guides/','Guides & comparisons','Tables, schedules, checklists and the arithmetic.'],['/cost/','What it costs','Real numbers by square foot, and what neglect turns into.'],['/turf-care/','Care by turf type','Pet turf, greens, playgrounds, pools, rooftops, dog runs.'],['/turf-101/','Turf 101','How the layers work, where the smell lives, what infill does.'],['/commercial/','For businesses','Rentals, HOAs, daycares, golf communities, resorts, schools.'],['/service-areas/','Service areas','Every town on the Strand, with what its yards do to turf.']].map(([href,h,p]) => <a class="tier" href={href} data-reveal><h3>{h}</h3><p>{p}</p><span class="rel__more">Open<svg class="ic ic--sm"><use href="#i-arrow"/></svg></span></a>)}
+    </div>
   </div>
 </section>
 

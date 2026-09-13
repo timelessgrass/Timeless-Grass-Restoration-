@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
 import AnswerBox from '../../components/AnswerBox.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { TOWNS } from '../../data/towns';
+import { ALL_TOWNS as TOWNS } from '../../data/registry';
 import { brand, area } from '../../data/site';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }];
 const q = `Where does ${brand.name} clean turf?`;

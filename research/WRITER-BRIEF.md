@@ -1,0 +1,42 @@
+# Writer brief — TIMELESS Turf Restoration content tiers
+
+You are writing pages for a real small business: **TIMELESS Turf Restoration**, owner-operated by **Brian**, who has worked in artificial turf and putting greens for **13 years** (he builds them through his sister company, TIMELESS Grass & Greens). Started **2024**. It **cleans, treats and restores existing artificial turf and synthetic putting greens**; it **does not install** new turf. Service area: **the Grand Strand** — Shallotte, NC to Burgess, SC, along the coast and inland through Conway, Loris and Longs (Horry County SC, Brunswick County NC). Finish standard on every job: **blown clean** (Brian's phrase: if you can't blow off your green, you're not done).
+
+## The output
+A TypeScript file exporting one array typed with `Article` from `src/data/types.ts` (schema is in that file — read it first). Read `src/data/problems.ts` and `src/data/guides.ts` first for voice and format; match them. Write directly to the file path you were given, nothing else.
+
+String rules: use backticks for `html`, `answer`, `lede` and any string containing an apostrophe; never put a backtick or `${` inside a backtick string. Use single quotes only for strings with no apostrophe. `updated: '2026-09-12'` on every entry. Slugs kebab-case, unique, no stop-word padding.
+
+## Voice
+Plain, specific, second person, the way a tradesman explains it at the kitchen table. Short paragraphs. No exclamation marks, no marketing adjectives ("amazing", "top-rated", "state-of-the-art"), no "in today's world" filler, no rhetorical questions in body copy. Lead every answer with the answer. Use real mechanisms (urine → urea → bacteria → ammonia; infill supports fibers; algae needs moisture + shade + food). Where DIY works, say so honestly; where it doesn't, say why. Hedge with "usually", "most", "in our experience" rather than inventing precision.
+
+## Facts you may use
+- Pricing (as of Sept 2026), by turf square footage and condition, never hourly: **Essential Clean** $199 (≤500 sq ft), $249 (501–1,000), $299 (1,001–1,500), $349 (1,501–2,000), $449 (2,001–3,000), $599 (3,001–5,000), over 5,000 quoted. **Premium Restoration** $299 / $399 / $499 / $599 / $749 / $899 for the same bands. Minimum visit $199.
+- Essential Clean includes: debris removal, turf blowing, power brushing, surface rinse, basic spot treatment, final grooming. Premium Restoration adds: deep cleaning, pet-odor treatment (enzyme), antimicrobial treatment, organic-buildup (algae/mold) treatment, detailed grooming, infill redistribution, minor weed/debris removal, edge & seam inspection, before/after photos.
+- Add-ons: heavy pet-odor treatment $75–$150; antimicrobial stand-alone $75–$125; weed removal from $75; infill redistribution $0.35–$0.65/sq ft; new infill installed $0.75–$1.50/sq ft; minor turf repair from $250; seam repair from $250; edge repair from $175; pet spot treatment $50–$100; deep stain treatment $75–$150.
+- Memberships (4 visits/yr, billed monthly): Essential Care $89/mo; TIMELESS ELITE $139/mo (a Premium Restoration each quarter, 10% off add-ons); Pet Turf ELITE $169/mo (heavy-use dog yards; extra steps still being finalized — don't invent them).
+- Grand Strand climate: ~53 in of rain a year, wettest June–Sept; humidity ~85% before dawn most of the year; pine pollen starts Feb, peaks late March–early April, live-oak leaf drop April; hurricane season June 1–Nov 30, peak Sept, SC has never had a landfall after Oct 31; sandy Coastal Plain soils that percolate fast but sit wet in low areas; fire ants active spring and fall; Myrtle Beach city water is soft (54 mg/L) so white mineral crust is usually private-well irrigation or dried salt.
+- Methods we use: low-pressure high-volume rinse (never pressure washers); power brushing against the grain; enzyme odor treatment left to dwell; antimicrobial after cleaning; turf-safe algaecide/oxidizer (never chlorine bleach); mild descaler for minerals (never muriatic acid); infill measured, redistributed, topped up or extracted and replaced (odor-control infill such as zeolite-type or coated sand for pet zones); putting greens: clear, brush, clean cups and fringe, top-dress with kiln-dried rounded green sand, roll, check speed; repairs: seam tape + adhesive, edge re-securing, cut-and-patch.
+
+## Never
+- Invent statistics, percentages, study results, review counts, star ratings, testimonials, customer names, job counts, "since 19xx", or awards.
+- Claim licensed, insured, bonded, warranty, guarantee, price-match, same-day service, 24/7, "#1", "best", "top-rated", "trusted by".
+- Say we install turf (we refer installs to the sister company).
+- Recommend bleach, pressure washing, wire brushes, muriatic acid or solvents on turf.
+- Name competitor companies. Name specific cleaning-product brands as recommendations (generic categories only: "an enzyme cleaner labeled for pet turf").
+- Use the words "elevate", "seamless", "unlock", "delve", "robust", "leverage", "game-changer", "look no further".
+- Put an `<h2>` inside `html` (sections already provide the h2). `<h3>` is fine.
+
+## Internal links (use real ones, 3–8 per page, natural anchor text)
+Services: /services/artificial-turf-cleaning/ · /services/pet-odor-removal/ · /services/antimicrobial-sanitizing/ · /services/algae-and-mold-removal/ · /services/hard-water-and-stain-removal/ · /services/power-brushing/ · /services/infill-replenishment/ · /services/putting-green-restoration/ · /services/turf-repair/ · /services/storm-and-seasonal-cleanup/
+Problems (/turf-problems/{slug}/): artificial-grass-smells-like-dog-pee · artificial-turf-smells-after-rain · can-you-get-urine-smell-out-of-artificial-turf · how-to-clean-dog-poop-off-artificial-grass · black-patches-algae-on-artificial-grass · weeds-growing-in-artificial-grass · white-chalky-patches-on-artificial-turf · matted-artificial-grass-walking-paths · crunchy-artificial-grass · water-pooling-on-artificial-turf · putting-green-rolls-slow-or-bumpy · pine-needles-and-oak-leaves-on-turf · sand-and-salt-on-artificial-grass-after-storm · burn-marks-on-artificial-turf · flies-and-gnats-on-artificial-grass
+Guides (/guides/{slug}/): how-often-to-clean-artificial-turf · artificial-turf-cleaning-cost · diy-turf-cleaning-mistakes · coastal-turf-maintenance-calendar · clean-or-replace-artificial-turf
+Other: /pricing/ · /pricing/#memberships · /quote/ · /about/ · /service-areas/ · /service-areas/myrtle-beach/ (also carolina-forest, socastee, surfside-beach, murrells-inlet, north-myrtle-beach, little-river, longs, conway)
+New tiers being written in parallel (link to them by slug only if the slug is in your own list or the lists given in your task): /how-to/{slug}/ · /turf-care/{slug}/ · /cost/{slug}/ · /turf-101/{slug}/ · /commercial/{slug}/
+
+## Images (optional per page; pick the most relevant, or omit)
+/assets/img/backyard-putting-green-landscaped-boulders.jpg (green with boulders) · /assets/img/putting-green-fire-pit-stone-wall.jpg · /assets/img/putting-green-landscape-lighting-at-dusk.jpg · /assets/img/putting-green-at-sunset-wide.jpg · /assets/img/backyard-putting-green-from-the-street.jpg · /assets/img/backyard-putting-green-driveway-view.jpg · /assets/img/putting-green-shared-amenity-lawn.jpg (community green) · /assets/img/pet-turf-dog-resting-under-deck.jpg (dog on turf) · /assets/img/artificial-lawn-with-playset.jpg (kids/playset) · /assets/img/artificial-turf-backyard-patio.jpg · /assets/img/artificial-turf-between-concrete-pavers.jpg · /assets/img/artificial-turf-side-yard-concrete-edge.jpg (shaded side yard) · /assets/img/artificial-turf-edge-against-rock-border.jpg (edge/seam) · /assets/img/artificial-lawn-fenced-yard-rock-border.jpg · /assets/img/practice-nets-and-goals-on-turf.jpg (sports)
+Diagrams (`diagram` field): 'cross-section' (blade/infill/backing/base/drainage) · 'odor' (where urine residue sits) · 'shade' (algae zones: fence line, north side, under deck) · 'green' (sand depth vs speed). Use at most one per page, only where it genuinely helps.
+
+## Length and structure per entry
+title ≤60 · description ≤140 (no phone) · lede 40–70 words · answer 50–70 words · takeaways 3–4 · sections 4–8 (500–900 words total; at least one list or table where it helps) · faq 3–5. End the last section with the honest "when to call us" and the price band that applies. Every page must be different in substance from its neighbours: different cause, different steps, different mistakes — not the same paragraph with a noun swapped.

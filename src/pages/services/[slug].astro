@@ -8,7 +8,7 @@ import Related from '../../components/Related.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { SERVICES, serviceBySlug } from '../../data/services';
 import { PROBLEMS } from '../../data/problems';
-import { TOWNS } from '../../data/towns';
+import { ALL_TOWNS as TOWNS } from '../../data/registry';
 import { brand, SITE_URL } from '../../data/site';
 
 export function getStaticPaths() { return SERVICES.map((s) => ({ params: { slug: s.slug }, props: { s } })); }

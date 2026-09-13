@@ -1,0 +1,28 @@
+---
+import ArticleLayout from '../../../components/ArticleLayout.astro';
+import { LOCAL_SERVICES, findTown, findService, ALL_PROBLEMS, withPhone } from '../../../data/registry';
+import { SITE_URL } from '../../../data/site';
+import type { Article } from '../../../data/types';
+export function getStaticPaths() { return LOCAL_SERVICES.map((l) => ({ params: { town: l.town, service: l.service }, props: { l } })); }
+const { l } = Astro.props;
+const t = findTown(l.town)!; const s = findService(l.service)!;
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }, { name: t.name, item: `/service-areas/${t.slug}/` }, { name: s.name, item: `/service-areas/${t.slug}/${s.slug}/` }];
+const a: Article = { slug: `${t.slug}-${s.slug}`, short: `${s.name} in ${t.name}`, title: l.title, description: l.description, h1: l.h1, lede: l.lede, question: l.question, answer: l.answer, image: s.image,
+  sections: l.blocks,
+  faq: l.faq, updated: l.updated };
+const problems = s.problems.map((p) => ALL_PROBLEMS.find((x) => x.slug === p)).filter(Boolean);
+const siblings = LOCAL_SERVICES.filter((x) => x.service === s.slug && x.town !== t.slug).map((x) => findTown(x.town)!).filter(Boolean);
+const otherHere = LOCAL_SERVICES.filter((x) => x.town === t.slug && x.service !== s.slug).map((x) => findService(x.service)!);
+const extraSchema = [{ '@type': 'Service', '@id': `${SITE_URL}/service-areas/${t.slug}/${s.slug}/#service`, name: `${s.name} in ${t.name}, ${t.state}`, serviceType: s.name, provider: { '@id': `${SITE_URL}/#business` }, areaServed: { '@type': 'City', name: `${t.name}, ${t.state}` } }];
+---
+<ArticleLayout a={a} kicker={`${s.name} · ${t.name}, ${t.state}`} crumbs={crumbs} description={withPhone(l.description)} priceLine={s.priceLine} priceLabel={`In ${t.name}`} plan={s.plan === 'premium' ? 'Premium Restoration' : s.plan === 'essential' ? 'Essential Clean' : undefined}
+  sideLinks={[
+    { h: `What the visit includes`, items: s.included.map((i) => ({ label: i })) },
+    { h: `More in ${t.name}`, items: [{ href: `/service-areas/${t.slug}/`, label: `Turf cleaning in ${t.name}` }, ...otherHere.map((o) => ({ href: `/service-areas/${t.slug}/${o.slug}/`, label: `${o.name} in ${t.name}` }))] },
+    { h: 'Problems this fixes', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
+    { h: `${s.name} nearby`, items: siblings.filter((n) => t.nearby.includes(n.slug)).map((n) => ({ href: `/service-areas/${n.slug}/${s.slug}/`, label: `${n.name}, ${n.state}` })) },
+  ]}
+  related={problems.slice(0, 3).map((p) => ({ href: `/turf-problems/${p!.slug}/`, title: p!.h1, blurb: p!.lede.slice(0, 140) + '…', image: p!.image?.src }))}
+  relatedH2="Problems this service fixes" extraSchema={extraSchema}
+  callout={`<b>${s.name} in ${t.name}.</b> ${s.priceLine}. Method in full: <a href="/services/${s.slug}/">${s.name}</a>. <a href="/quote/">Get a free quote</a>.`}
+/>

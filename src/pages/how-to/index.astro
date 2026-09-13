@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { HOWTOS, TIERS } from '../../data/registry';
+import { brand } from '../../data/site';
+const T = TIERS.howtos;
+const crumbs = [{ name: 'Home', item: '/' }, { name: T.name, item: T.base }];
+const kinds = [...new Set(HOWTOS.map((a) => a.kind).filter(Boolean))] as string[];
+const groups = kinds.length > 1 ? kinds.map((k) => ({ k, items: HOWTOS.filter((a) => a.kind === k) })) : [{ k: '', items: HOWTOS }];
+---
+<Base title={`Artificial Turf How-To Guides | TIMELESS`} description={`Honest DIY: what works at home, the exact steps and materials, the mistakes that damage turf, and the point where a professional visit is the cheaper answer.`} crumbs={crumbs}>
+  <SubHero kicker={T.name} h1="Turf care, step by step" lede="Honest DIY: what works at home, the exact steps and materials, the mistakes that damage turf, and the point where a professional visit is the cheaper answer." crumbs={crumbs} />
+  {groups.map((g) => <section class="sec sec--tight"><div class="wrap">{g.k && <div class="sec__head" data-reveal><h2>{g.k.charAt(0).toUpperCase() + g.k.slice(1)}</h2></div>}<div class="index">{g.items.map((a) => <a class="index__item" href={`${T.base}${a.slug}/`} data-reveal><small>{a.short}</small><h3>{a.h1}</h3><p>{a.answer.split('. ')[0]}.</p></a>)}</div></div></section>)}
+  <CtaBand />
+</Base>

@@ -26,14 +26,33 @@ Netlify: build `npm run build`, publish `dist` (declared in `netlify.toml`). Two
 |---|---|
 | Business facts, pricing, memberships | `src/data/site.ts` |
 | Services (10) | `src/data/services.ts` |
-| Problem pages (15) | `src/data/problems.ts` |
-| Guides (5) | `src/data/guides.ts` |
-| Town pages (9), each with `sources[]` | `src/data/towns.ts` |
+| Problem pages | `src/data/problems.ts`, `problems-2.ts`, `problems-3.ts` |
+| How-to pages | `src/data/howtos.ts` |
+| Guides and comparisons | `src/data/guides.ts`, `guides-2.ts`, `comparisons.ts` |
+| Cost pages | `src/data/costs.ts` |
+| Care by turf type | `src/data/care.ts` |
+| Turf 101 explainers | `src/data/explainers.ts` |
+| Commercial segments | `src/data/commercial.ts` |
+| Town pages, each with `sources[]` | `src/data/towns.ts`, `towns-2.ts` |
+| Service × town pages (hand-written local angle) | `src/data/local-services-1.ts`, `-2.ts` |
+| Content registry (combines batches, builds routes, sitemap, search index) | `src/data/registry.ts` |
+| Shared article schema | `src/data/types.ts` |
+| Reading layout (TOC, takeaways, diagrams, FAQ, related) | `src/components/ArticleLayout.astro` |
+| SVG diagrams | `src/components/Diagram.astro` |
+| Writer rules for new content | `research/WRITER-BRIEF.md` |
 | Layout, entity graph (one `#business` node) | `src/layouts/Base.astro` |
 | Research notes | `research/` |
 | Original static build | `archive/` |
 
 Every page: unique title ≤60, description ≤160, self-canonical, breadcrumbs + `BreadcrumbList`, `WebPage` → `#business`, `FAQPage` mirroring the printed FAQ, an answer-box (`.answer-box__a`, speakable). Never `aggregateRating`.
+
+## Audit
+
+```
+npm run build && python3 scripts/audit.py
+```
+
+Fails on: broken internal links, orphan pages, titles over 60 or descriptions over 160, missing H1 or tel link, more or fewer than one LocalBusiness node, rating markup, any page under 450 words of content, forbidden claims (licensed, insured, guarantee, #1, same-day service…), and sibling-page similarity at or above 0.6 within a tier (doorway risk). Search index: `/search.json`, built from the registry.
 
 ## Adding content
 
