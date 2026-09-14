@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
 import AnswerBox from '../../components/AnswerBox.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { GREENS, ALL_PROBLEMS, ALL_GUIDES, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL, LOCAL_SERVICES, findService, findTown, TIERS } from '../../data/registry';
+import { GREENS, ALL_PROBLEMS, ALL_GUIDES, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL, LOCAL_SERVICES, NEIGHBORHOODS, findService, findTown, TIERS } from '../../data/registry';
 import { brand, area } from '../../data/site';
 
 /** The putting green hub: every page on the site about greens, grouped by what the reader is trying to do. */
@@ -48,6 +48,11 @@ const groups: { h: string; intro: string; items: Card[] }[] = [
     h: 'Greens beyond the backyard',
     intro: 'Golf communities, courses, mini golf, simulator venues and large properties each put a different kind of wear on a green.',
     items: cards(pick(COMMERCIAL, ['golf-communities-and-amenity-greens', 'golf-courses-and-practice-facilities', 'mini-golf-courses', 'indoor-golf-and-simulator-venues', 'private-estates-and-large-properties']), '/commercial/', 'Commercial'),
+  },
+  {
+    h: 'Golf and waterfront neighborhoods',
+    intro: 'What the water, trees, gates and review boards in each community mean for the greens and turf behind the houses.',
+    items: NEIGHBORHOODS.map((n) => ({ href: `/neighborhoods/${n.slug}/`, label: n.place, h: n.h1, p: firstSentence(n.answer) })),
   },
 ];
 const towns = LOCAL_SERVICES.filter((l) => l.service === svc.slug).map((l) => {

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { NEIGHBORHOODS, ALL_TOWNS, TIERS } from '../../data/registry';
+import { brand, area } from '../../data/site';
+
+/** Neighborhood guides, grouped under the town each community sits in. */
+const T = TIERS.neighborhoods;
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }, { name: 'Neighborhood guides', item: T.base }];
+const groups = ALL_TOWNS.map((t) => ({ t, items: NEIGHBORHOODS.filter((n) => n.town === t.slug) })).filter((g) => g.items.length);
+const lede = `A gated golf community, a waterway estate and a village of small courtyard yards all put different demands on turf and backyard greens. These guides cover what changes in specific communities across ${area.name}, with the sources for every local fact.`;
+---
+<Base title="Grand Strand Neighborhood Turf & Green Guides | TIMELESS" description={`Turf and putting green care in specific Grand Strand communities: gates, review boards, water, golf and what each means for a visit. Call ${brand.phone}.`} crumbs={crumbs}>
+  <SubHero kicker="Neighborhood guides" h1="Turf and putting green care, community by community" lede={lede} crumbs={crumbs} />
+  <section class="sec sec--tight">
+    <div class="wrap">
+      <div class="prose">
+        <p>Every guide here starts from facts about that community, such as how the gate handles contractors, whether homes sit on a course, a marsh or the waterway, and what the property owners association publishes about landscaping. Each one links the page that supports it. Where a community's rules on artificial turf or greens are not published, the guide says so rather than guessing, and points you to the review board.</p>
+        <p>Prices do not change by neighborhood. The same <a href="/pricing/">price table</a> applies everywhere from Shallotte to Burgess, backyard greens are quoted after a look, and larger properties are quoted after a walk-through.</p>
+      </div>
+    </div>
+  </section>
+  {groups.map((g) => (
+    <section class="sec sec--tight">
+      <div class="wrap">
+        <div class="sec__head" data-reveal><h2><a href={`/service-areas/${g.t.slug}/`}>{g.t.name}, {g.t.state}</a></h2></div>
+        <div class="index">{g.items.map((n) => <a class="index__item" href={`${T.base}${n.slug}/`} data-reveal><small>{n.place}</small><h3>{n.h1}</h3><p>{n.answer.split('. ')[0]}.</p></a>)}</div>
+      </div>
+    </section>
+  ))}
+  <CtaBand />
+</Base>

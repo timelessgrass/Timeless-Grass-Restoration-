@@ -36,3 +36,13 @@ export type Article = {
   related?: string[];
   updated: string;
 };
+
+/** A neighborhood guide: an Article about one named community, filed under its town. */
+export type Neighborhood = Article & {
+  /** display name, e.g. 'Grande Dunes' */
+  place: string;
+  /** town slug from towns.ts / towns-2.ts */
+  town: string;
+  /** every neighborhood-specific fact on the page, with the page that supports it */
+  sources: { label: string; url: string }[];
+};

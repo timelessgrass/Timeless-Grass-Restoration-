@@ -30,8 +30,10 @@ interface Props {
   faqH2?: string;
   relatedH2?: string;
   extraSchema?: Record<string, unknown>[];
+  /** external pages that support the page's local facts, printed under the sections */
+  sources?: { label: string; url: string }[];
 }
-const { a, kicker, crumbs, description, sideLinks = [], related = [], priceLine, priceLabel, plan, callout, faqH2 = 'Related questions', relatedH2 = 'Keep reading', extraSchema = [] } = Astro.props;
+const { a, kicker, crumbs, description, sideLinks = [], related = [], priceLine, priceLabel, plan, callout, faqH2 = 'Related questions', relatedH2 = 'Keep reading', extraSchema = [], sources = [] } = Astro.props;
 const words = (a.lede + ' ' + a.answer + ' ' + a.sections.map((s) => s.html).join(' ') + ' ' + a.faq.map((f) => f.q + f.a).join(' ')).replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
 const minutes = Math.max(2, Math.round(words / 220));
 const updated = new Date(a.updated + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -58,6 +60,7 @@ const defaultCallout = `<b>Need it done?</b> ${brand.name} does this across the 
         {a.diagram && <Diagram name={a.diagram} />}
         {a.sections.length > 3 && <nav class="toc" aria-label="On this page"><p class="toc__h">On this page</p><ol>{a.sections.map((s) => <li><a href={`#${slugify(s.h2)}`}>{s.h2}</a></li>)}<li><a href="#faq">Questions</a></li></ol></nav>}
         {a.sections.map((s) => <><h2 id={slugify(s.h2)}>{s.h2}</h2><div set:html={s.html} /></>)}
+        {sources.length > 0 && <div class="src"><b>Sources for the facts on this page</b><ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener">{s.label}</a></li>)}</ul></div>}
         <div class="callout callout--cta" set:html={callout ?? defaultCallout} />
       </article>
       <Sidebar priceLine={priceLine} priceLabel={priceLabel} plan={plan} links={[...sideLinks, ...hubLinks]} />

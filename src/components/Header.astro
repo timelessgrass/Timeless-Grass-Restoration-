@@ -42,7 +42,7 @@ const more = SERVICES.filter((s) => s.tier !== 'core');
         <div class="mega mega--learn">
           <div class="mega__col"><p class="mega__h">Turf problems</p>{ALL_PROBLEMS.filter((p) => p.footer).slice(0, 5).map((p) => <a href={`/turf-problems/${p.slug}/`}>{p.short}</a>)}<a href="/turf-problems/"><b>All problems</b></a></div>
           <div class="mega__col"><p class="mega__h">How-to</p>{HOWTOS.slice(0, 5).map((h) => <a href={`/how-to/${h.slug}/`}>{h.short}</a>)}<a href="/how-to/"><b>All how-tos</b></a></div>
-          <div class="mega__col"><p class="mega__h">Guides &amp; more</p><a href="/guides/">Guides &amp; comparisons</a><a href="/cost/">What it costs</a><a href="/turf-care/">Care by turf type</a><a href="/turf-101/">Turf 101</a><a href="/commercial/">For businesses</a></div>
+          <div class="mega__col"><p class="mega__h">Guides &amp; more</p><a href="/guides/">Guides &amp; comparisons</a><a href="/cost/">What it costs</a><a href="/turf-care/">Care by turf type</a><a href="/turf-101/">Turf 101</a><a href="/commercial/">For businesses</a><a href="/neighborhoods/">Neighborhood guides</a></div>
         </div>
       </div>
       <a class="nav__link" href="/service-areas/">Areas</a>
@@ -72,6 +72,7 @@ const more = SERVICES.filter((s) => s.tier !== 'core');
       <a href="/turf-care/">Care by turf type</a>
       <a href="/turf-101/">Turf 101</a>
       <a href="/service-areas/">Service areas</a>
+      <a href="/neighborhoods/">Neighborhood guides</a>
       <a href="/commercial/">For businesses</a>
       <a href="/about/">About Brian</a>
       <a class="btn btn--green btn--lg" href="/quote/" data-cta="quote-drawer">Get My Free Quote</a>
