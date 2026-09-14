@@ -27,7 +27,7 @@ interface Props {
 const { title, description, crumbs, answer, faq, schema, robots, ogImage, chrome = 'full', bodyClass } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const robotsMeta = PRELAUNCH ? 'noindex, nofollow' : robots;
-const og = new URL(ogImage ?? '/assets/img/backyard-putting-green-landscaped-boulders.jpg', Astro.site).href;
+const og = new URL(ogImage ?? '/assets/brand/og-default.jpg', Astro.site).href;
 
 const graph: any[] = [
   {
@@ -88,7 +88,8 @@ if (schema?.length) graph.push(...schema);
 <meta property="og:url" content={canonical}>
 <meta property="og:image" content={og}>
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="/assets/brand/favicon.png">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon.png">
 <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

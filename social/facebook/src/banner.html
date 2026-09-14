@@ -5,24 +5,25 @@
 <link rel="stylesheet" href="brand.css">
 <style>
   /* Facebook shows 820x312 on desktop (crops ~24px top and bottom) and crops ~90px off each side on phones.
-     The profile picture covers the bottom-left corner, so the copy sits on the right inside the safe zone.
-     The photo panel is 1180px wide, narrower than the 1400px source, so the photo is never upscaled. */
-  .cover{position:relative;width:1640px;height:624px;overflow:hidden;background:var(--dark)}
+     The profile picture covers the bottom-left corner, so the logo and copy sit on the right inside the safe zone.
+     The photo panel is 1180px wide, narrower than the 1400px source, so the photo is never upscaled.
+     logo-sticker.png is the logo with a white outline so its black edges read on the dark panel (made by src/logo.py). */
+  .cover{position:relative;width:1640px;height:624px;overflow:hidden;background:#070b07}
   .cover .photo{right:auto;width:1180px;background-image:url(../../../public/assets/img/backyard-putting-green-landscaped-boulders.jpg);background-position:50% 72%}
-  .cover .veil{background:linear-gradient(90deg,rgba(12,24,9,0) 0px,rgba(12,24,9,0) 720px,rgba(12,24,9,.86) 990px,var(--dark) 1150px,var(--dark) 1640px)}
-  .copy{position:absolute;left:1020px;width:440px;top:50%;transform:translateY(-50%)}
-  .kicker{font-size:20px}
-  h1{margin-top:18px;font-size:46px;line-height:1.06;font-weight:800;letter-spacing:-.025em}
-  .tag{margin-top:24px;font-size:28px;font-weight:800;letter-spacing:-.01em}
-  .area{margin-top:8px;font-size:21px;font-weight:600;color:#b9c8b0}
+  .cover .veil{background:linear-gradient(90deg,rgba(7,11,7,0) 0px,rgba(7,11,7,0) 700px,rgba(7,11,7,.88) 980px,#070b07 1140px,#070b07 1640px)}
+  .glow{position:absolute;left:1000px;top:0;width:640px;height:624px;background:radial-gradient(circle at 38% 42%,rgba(110,194,31,.2),rgba(110,194,31,0) 58%)}
+  .copy{position:absolute;left:1010px;width:460px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;text-align:center}
+  .copy img{width:340px;height:auto}
+  .line{margin-top:14px;font-size:28px;line-height:1.15;font-weight:800;letter-spacing:-.015em;background:linear-gradient(180deg,#ffffff 0%,#e6eae5 55%,#b9c0b8 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .area{margin-top:10px;font-size:19px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}
 </style>
 <div class="cover">
   <div class="photo"></div>
   <div class="veil"></div>
+  <div class="glow"></div>
   <div class="copy">
-    <p class="kicker">Grand Strand</p>
-    <h1>Artificial turf cleaning &amp; <span class="gold">putting green restoration</span></h1>
-    <p class="tag">Blown clean, every job.</p>
+    <img src="logo-sticker.png" alt="">
+    <p class="line">Artificial turf cleaning &amp;<br>putting green restoration</p>
     <p class="area">Shallotte, NC to Burgess, SC</p>
   </div>
 </div>

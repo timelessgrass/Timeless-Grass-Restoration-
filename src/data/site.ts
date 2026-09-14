@@ -4,8 +4,8 @@
  *
  * OPEN ITEMS (change here, nowhere else):
  *  - NAME: "TIMELESS Turf Restoration" is the working name Brian used on the
- *    2026-09-04 call (00:50:09). Confirm before launch; the logo file still reads
- *    "Grass & Greens" and needs a variant.
+ *    2026-09-04 call (00:50:09). Confirm before launch. The logo matches it; every logo
+ *    file is generated from brand/logo-source.png by scripts/brand-assets.py.
  *  - PHONE: 303-349-2368 is the only real number we have. A separate brand needs
  *    its own local (843) number so the GBP and this site match byte-for-byte.
  *  - SITE_URL: no domain registered yet. Canonicals and the sitemap use this value.

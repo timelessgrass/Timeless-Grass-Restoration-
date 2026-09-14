@@ -48,7 +48,8 @@ def copy_btn(target, label, small=False):
 
 
 cover_t, cover_s = thumb('cover-1640x624.png', 1200)
-pp_t, pp_s = thumb('profile-picture-dark-720.png', 360)
+pp_t, pp_s = thumb('profile-picture-720.png', 360)
+gc_t, gc_s = thumb('google-business-cover-1400x788.jpg', 1000)
 
 post_html = []
 for n, title, image, tip, caption in posts:
@@ -137,6 +138,8 @@ page = f'''<!doctype html>
   .pp{{width:min(100%,200px);aspect-ratio:1;margin:0 auto;border:1px solid var(--line);border-radius:50%}}
   .asset__foot{{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}}
   .meta{{margin:2px 0 0;font-size:13px;color:var(--muted)}}
+  .gcover{{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}}
+  .glogo{{width:min(100%,200px);aspect-ratio:1;margin:0 auto;border:1px solid var(--line);border-radius:12px}}
 
   .posts{{display:grid;gap:16px}}
   .post{{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:24px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);scroll-margin-top:16px}}
@@ -177,6 +180,7 @@ page = f'''<!doctype html>
     <p class="lede">Download an image, copy its caption, then paste both into a new post on the Page. Post them in order and pin post 1.</p>
     <ul class="jump">
       <li><a href="#images">Cover &amp; profile</a></li>
+      <li><a href="#google">Google profile</a></li>
       <li><a href="#posts">Posts</a></li>
       <li><a href="#details">Page details</a></li>
     </ul>
@@ -191,7 +195,20 @@ page = f'''<!doctype html>
     </article>
     <article class="asset">
       <img class="pp" src="{pp_t}" width="{pp_s[0]}" height="{pp_s[1]}" alt="Profile picture">
-      <div class="asset__foot"><div><h3>Profile picture</h3><p class="meta">720 × 720 PNG</p></div><div class="actions">{dl_btn('profile-picture-dark-720.png', 'Download')}<a class="btn btn--line" href="profile-picture-light-720.png" download data-download="profile-picture-light-720.png">{DL}<span>White version</span></a></div></div>
+      <div class="asset__foot"><div><h3>Profile picture</h3><p class="meta">720 × 720 PNG</p></div><div class="actions">{dl_btn('profile-picture-720.png', 'Download')}</div></div>
+    </article>
+  </section>
+
+  <h2 id="google">Google Business Profile</h2>
+  <p class="sec-note">Google favors a real photo with no text for the cover, so this one has none. The logo is the same image as the Facebook profile picture.</p>
+  <section class="assets">
+    <article class="asset">
+      <img class="gcover" src="{gc_t}" width="{gc_s[0]}" height="{gc_s[1]}" alt="Google Business Profile cover photo">
+      <div class="asset__foot"><div><h3>Cover photo</h3><p class="meta">1400 × 788 JPG</p></div><div class="actions">{dl_btn('google-business-cover-1400x788.jpg', 'Download cover')}</div></div>
+    </article>
+    <article class="asset">
+      <img class="glogo" src="{pp_t}" width="{pp_s[0]}" height="{pp_s[1]}" alt="Google Business Profile logo">
+      <div class="asset__foot"><div><h3>Logo</h3><p class="meta">720 × 720 PNG</p></div><div class="actions">{dl_btn('google-business-logo-720.png', 'Download')}</div></div>
     </article>
   </section>
 

@@ -15,7 +15,7 @@ Netlify: build `npm run build`, publish `dist` (declared in `netlify.toml`). Two
 ## Before launch (all in `src/data/site.ts`)
 
 - `PRELAUNCH = true` puts `noindex` on every page and a blanket `Disallow` in robots.txt. Flip to `false` only when the items below are settled.
-- `brand.name` — working name from Brian's call. Logo still reads "Grass & Greens".
+- `brand.name` — working name from Brian's call. The logo matches it; every logo file is generated from `brand/logo-source.png` by `python3 scripts/brand-assets.py`.
 - `brand.phone` — currently the Grass & Greens number. A separate brand needs its own local (843) number so the Google Business Profile and the site match byte-for-byte.
 - `SITE_URL` — no domain registered yet; canonicals and the sitemap use it.
 - Then: create the GBP as a service-area business, mirror NAP to Yelp / Nextdoor / Bing / Apple / Facebook, verify Search Console + Bing Webmaster, submit `/sitemap.xml`.

@@ -22,7 +22,7 @@ tier_lines = {}
 for p in pages:
     h = open(p, encoding='utf-8').read(); r = route(p)
     for href in set(re.findall(r'href="(/[^"#?]*)', h)):
-        if href.startswith('/assets/'):
+        if href.startswith('/assets/') or href.endswith(('.ico', '.png', '.jpg', '.webp', '.svg')):
             if not os.path.exists('public' + href): issues.append((r, 'missing asset', href))
         elif href.endswith(('.css', '.js', '.xml', '.txt', '.json')): continue
         elif href not in routes: issues.append((r, 'broken link', href))

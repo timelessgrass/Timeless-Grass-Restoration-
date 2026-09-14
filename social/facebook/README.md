@@ -1,23 +1,24 @@
 # Facebook page kit: Timeless Turf Restoration
 
-Everything needed to set up the Facebook Page: a cover banner, a profile picture, the page details and six posts with captions. Open `kit.html` to download each image and copy its caption.
+Everything needed to set up the Facebook Page: a cover banner, a profile picture, the page details and six posts with captions, plus the Google Business Profile logo and cover. Open `kit.html` to download each image and copy its caption.
 
 | File | Size | Use |
 |---|---|---|
-| `cover-1640x624.png` | 1640×624 | Cover photo. Copy sits right of centre, clear of the profile picture and the phone crop. The photo is never upscaled. |
-| `profile-picture-dark-720.png` | 720×720 | Profile picture (recommended). |
-| `profile-picture-light-720.png` | 720×720 | Alternate profile picture on white. |
+| `cover-1640x624.png` | 1640×624 | Cover photo: a sharp photo on the left, the logo (with a white outline) and tagline on the right, clear of the profile picture and the phone crop. |
+| `profile-picture-720.png` | 720×720 | Profile picture: the logo centred on its enclosing circle, so Facebook's round crop clips nothing. |
+| `google-business-logo-720.png` | 720×720 | Google Business Profile logo (same image). |
+| `google-business-cover-1400x788.jpg` | 1400×788 | Google Business Profile cover: a photo with no text, which is what Google recommends. |
 | `post-1-meet-brian.png` … `post-6-memberships.png` | 1080×1350 | Post images, 4:5 so they fill the feed on phones. |
 | `kit.html` | | Download buttons for every image, copy buttons for every caption and page detail. |
 
-To change a graphic, edit `src/banner.html` or `src/posts.html`, then run `bash social/facebook/src/render.sh` from the repo root. After editing anything below, run `python3 social/facebook/src/kit.py` to rebuild `kit.html`; it reads this file.
+The profile picture, Google logo, `src/logo-sticker.png` and the website's logo, favicon and share image all come from `python3 scripts/brand-assets.py`, which reads `brand/logo-source.png`. To change a graphic, edit `src/banner.html` or `src/posts.html`, then run `bash social/facebook/src/render.sh` from the repo root. After editing anything below, run `python3 social/facebook/src/kit.py` to rebuild `kit.html`; it reads this file.
 
 ## Before it goes live
 
 - **Name.** "TIMELESS Turf Restoration" is still the working name. Facebook rejects all-caps words that aren't acronyms, so the Page name is written "Timeless Turf Restoration".
 - **Phone.** 303-349-2368 is the Grass & Greens number. It appears only in the captions and the contact field, not in any image, so switching to the 843 number later means editing text, not redoing graphics.
 - **Website.** No domain yet, so leave the website field empty and keep links out of posts until the site is live.
-- **Logo.** The profile picture is the existing logo with "Grass" and "Greens" swapped for "Turf" and "Restoration". It's a stand-in until a proper variant is designed.
+- **Logo.** The doodle logo is in. Every logo file is generated from `brand/logo-source.png`, so a revised logo means replacing that file and running `python3 scripts/brand-assets.py`. The post images still carry the older gold "TIMELESS" wordmark in their footer strip.
 - **Photos.** Every photo is a lawn or green Brian built, not a Grand Strand cleaning job, and no caption says otherwise. Swap in before-and-after photos as they come in.
 
 ## Page setup
