@@ -15,3 +15,4 @@ shot "posts.html#p2" 1080,1350 post-2-pet-odor.png
 shot "posts.html#p3" 1080,1350 post-3-pricing.png
 shot "posts.html#p4" 1080,1350 post-4-putting-green.png
 shot "posts.html#p5" 1080,1350 post-5-storm-checklist.png
+shot "posts.html#p6" 1080,1350 post-6-memberships.png

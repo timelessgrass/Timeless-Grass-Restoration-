@@ -1,15 +1,16 @@
 # Facebook page kit: Timeless Turf Restoration
 
-Everything needed to set up the Facebook Page: a cover banner, a profile picture, the page details and five posts with captions. Open `preview.html` to see it all laid out.
+Everything needed to set up the Facebook Page: a cover banner, a profile picture, the page details and six posts with captions. Open `kit.html` to download each image and copy its caption.
 
 | File | Size | Use |
 |---|---|---|
-| `cover-1640x624.png` | 1640×624 | Cover photo. Copy sits right of centre, clear of the profile picture and the phone crop. |
+| `cover-1640x624.png` | 1640×624 | Cover photo. Copy sits right of centre, clear of the profile picture and the phone crop. The photo is never upscaled. |
 | `profile-picture-dark-720.png` | 720×720 | Profile picture (recommended). |
 | `profile-picture-light-720.png` | 720×720 | Alternate profile picture on white. |
-| `post-1-meet-brian.png` … `post-5-storm-checklist.png` | 1080×1350 | Post images, 4:5 so they fill the feed on phones. |
+| `post-1-meet-brian.png` … `post-6-memberships.png` | 1080×1350 | Post images, 4:5 so they fill the feed on phones. |
+| `kit.html` | | Download buttons for every image, copy buttons for every caption and page detail. |
 
-To change a graphic, edit `src/banner.html` or `src/posts.html`, then run `bash social/facebook/src/render.sh` from the repo root. After editing a caption below, run `python3 social/facebook/src/preview.py` to refresh `preview.html`.
+To change a graphic, edit `src/banner.html` or `src/posts.html`, then run `bash social/facebook/src/render.sh` from the repo root. After editing anything below, run `python3 social/facebook/src/kit.py` to rebuild `kit.html`; it reads this file.
 
 ## Before it goes live
 
@@ -37,6 +38,19 @@ Artificial turf cleaning, pet odor removal & putting green restoration. Shallott
 Timeless Turf Restoration cleans, treats and restores artificial turf and synthetic putting greens from Shallotte, NC to Burgess, SC. Owner Brian has 13 years in turf and putting greens. Priced by square footage, never by the hour.
 ```
 
+**Specialties (up to 10; each description 150 characters max):**
+
+1. **Artificial Turf Cleaning**: Deep cleaning through the blades, backing and infill. Debris removed, turf blown, power brushed, rinsed at low pressure and groomed.
+2. **Pet Odor Removal**: Urine smell treated at the source. We flush the infill, break the residue down with an enzyme treatment, then apply an antimicrobial.
+3. **Putting Green Restoration**: Greens brought back to a true roll: cleared and brushed, cups and fringe cleaned, top-dressed with kiln-dried green sand and rolled.
+4. **Algae, Moss & Mold Removal**: Algae, moss and mold in shady, damp spots treated with a turf-safe algaecide, never bleach, then brushed and rinsed.
+5. **Antimicrobial Sanitizing**: Antimicrobial treatment after cleaning for pet yards, play areas and busy turf, aimed at the bacteria that cause odor.
+6. **Infill Replenishment**: Infill measured, redistributed and topped up, or replaced with odor-control infill in pet areas, so fibers stand up and turf drains.
+7. **Power Brushing**: Matted walking paths and flattened fibers brushed against the grain to stand them back up. No wire brushes or metal rakes.
+8. **Turf Repair**: Open seams re-taped and glued, loose edges re-secured, and burned or damaged spots cut out and patched.
+9. **Hard Water & Stain Removal**: White crust from well water or dried salt removed with a mild descaler, never muriatic acid, plus deep stain treatment.
+10. **Storm & Seasonal Cleanup**: Pollen, oak leaves, storm sand and salt cleared. Debris removed, salt and sand flushed, infill re-leveled, seams and edges checked.
+
 **Contact:** phone 303-349-2368 · email timelessgrass@gmail.com · website: leave empty until the domain is live.
 
 **Location:** a service-area business. Don't show a street address. Add up to 10 service areas: Myrtle Beach SC, North Myrtle Beach SC, Conway SC, Surfside Beach SC, Murrells Inlet SC, Little River SC, Longs SC, Loris SC, Shallotte NC, Sunset Beach NC.
@@ -49,9 +63,11 @@ Timeless Turf Restoration cleans, treats and restores artificial turf and synthe
 
 Publish them in order, then pin post 1 to the top of the Page. Post 5 is seasonal and fits September and October; swap it for a pollen-season post next spring.
 
-### Post 1 · Meet Brian (pin this)
+### Post 1 · Meet Brian
 
 Image: `post-1-meet-brian.png`
+
+Tip: Pin this one to the top of the Page.
 
 ```text
 Hi, I'm Brian, the owner of Timeless Turf Restoration.
@@ -147,6 +163,8 @@ Most home greens need top-dressing once a year, twice under trees or with heavy 
 
 Image: `post-5-storm-checklist.png`
 
+Tip: Seasonal. Post it in September or October.
+
 ```text
 We're in the peak of hurricane season. If a storm leaves sand, salt or branches on your turf, here's the order to handle it. Save this one.
 
@@ -165,4 +183,29 @@ The good news: turf fibers are salt-tolerant, so salt water won't kill the grass
 Post-storm cleanups start at $199, anywhere from Shallotte to Burgess. Call or text 303-349-2368.
 
 #HurricaneSeason #GrandStrand #ArtificialTurf
+```
+
+### Post 6 · Memberships
+
+Image: `post-6-memberships.png`
+
+```text
+The Grand Strand has four turf seasons: pine pollen, oak leaf drop, a long summer of heavy use, and hurricane season. A membership keeps turf care on the calendar all year, so your yard doesn't slide back to smelly and matted between cleans.
+
+Every plan includes four visits a year and priority scheduling, billed monthly.
+
+Essential Care, $89/mo
+Light upkeep: blow-off and grooming, a light rinse and basic odor treatment.
+
+TIMELESS ELITE, $139/mo
+A Premium Restoration every quarter: deep cleaning, antimicrobial and pet odor treatment, brushing, infill conditioning, an edge and seam check and minor spot treatment. Plus 10% off repairs and add-ons.
+
+Pet Turf ELITE, $169/mo
+Everything in TIMELESS ELITE, built for multi-dog and daily-potty yards. Ask me what it adds for your yard.
+
+No long contract. You can cancel any time after the current quarter's visit.
+
+Not sure which plan fits? Call or text 303-349-2368 and tell me about your turf and your dogs.
+
+#GrandStrand #ArtificialTurf #PetTurf
 ```

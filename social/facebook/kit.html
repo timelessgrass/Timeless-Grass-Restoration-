@@ -1,0 +1,427 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timeless Facebook Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --ground:#f3f5ee; --surface:#ffffff; --sunk:#f0f3ea; --ink:#0f170c; --muted:#56654f; --line:#dce3d3;
+    --accent:#2e7a0b; --accent-hover:#225c06; --on-accent:#ffffff; --chip-bg:#f8efcf; --chip-ink:#6b5104; --focus:#48a008;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0a1308; --surface:#121f0e; --sunk:#0d180a; --ink:#e6eee0; --muted:#a1b39b; --line:#243a1c;
+      --accent:#8ad132; --accent-hover:#a2e052; --on-accent:#0c1809; --chip-bg:#2e2808; --chip-ink:#e7c552; --focus:#8ad132;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0a1308; --surface:#121f0e; --sunk:#0d180a; --ink:#e6eee0; --muted:#a1b39b; --line:#243a1c;
+    --accent:#8ad132; --accent-hover:#a2e052; --on-accent:#0c1809; --chip-bg:#2e2808; --chip-ink:#e7c552; --focus:#8ad132;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:400 15px/1.6 Poppins,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;height:auto;display:block}
+  .wrap{max-width:1080px;margin:0 auto;padding:36px 20px 88px}
+  .top{display:grid;gap:12px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+  .eyebrow{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  h1{margin:0;font-size:clamp(30px,5vw,44px);line-height:1.05;font-weight:800;letter-spacing:-.03em;text-wrap:balance}
+  .lede{margin:0;max-width:62ch;color:var(--muted);font-size:16px}
+  .jump{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0;padding:0;list-style:none}
+  .jump a{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:600;text-decoration:none}
+  .jump a:hover{border-color:var(--accent)}
+  h2{margin:52px 0 4px;font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.02em;scroll-margin-top:16px}
+  .sec-note{margin:0 0 18px;color:var(--muted);max-width:62ch}
+  h3{margin:0;font-size:17px;line-height:1.3;font-weight:700;letter-spacing:-.01em}
+  .btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1.5px solid transparent;border-radius:999px;font:600 14px/1 Poppins,ui-sans-serif,system-ui,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
+  .btn svg{width:18px;height:18px;flex:none}
+  .btn--main{background:var(--accent);color:var(--on-accent)}
+  .btn--main:hover{background:var(--accent-hover)}
+  .btn--line{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn--line:hover{border-color:var(--accent)}
+  .btn--sm{min-height:34px;padding:6px 12px;font-size:13px}
+  .btn--sm svg{width:16px;height:16px}
+  .btn.is-done{border-color:var(--accent);color:var(--accent)}
+  .btn--main.is-done{color:var(--on-accent)}
+  .btn:focus-visible,.cap:focus-visible,.jump a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .actions{display:flex;flex-wrap:wrap;gap:8px}
+  .hint{display:none;margin:0;font-size:13px;color:var(--muted)}
+  .no-save .hint{display:block}
+  .count{margin:0;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .cap{margin:0;padding:14px 16px;max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--sunk);font-size:14.5px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+
+  .assets{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(0,1fr);gap:16px}
+  .asset{display:grid;gap:14px;align-content:space-between;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+  .mock{position:relative;padding-bottom:34px}
+  .mock__cover{width:100%;aspect-ratio:1640/624;object-fit:cover;border-radius:8px}
+  .mock__pp{position:absolute;left:3%;bottom:0;width:19%;aspect-ratio:1;border:3px solid var(--surface);border-radius:50%}
+  .pp{width:min(100%,200px);aspect-ratio:1;margin:0 auto;border:1px solid var(--line);border-radius:50%}
+  .asset__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+  .meta{margin:2px 0 0;font-size:13px;color:var(--muted)}
+
+  .posts{display:grid;gap:16px}
+  .post{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:24px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);scroll-margin-top:16px}
+  .post__img{margin:0}
+  .post__img img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:10px}
+  .post__body{display:grid;gap:12px;align-content:start;min-width:0}
+  .post__head{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px}
+  .post__head .eyebrow{flex-basis:100%}
+  .chip{margin:0;padding:3px 10px;border-radius:999px;background:var(--chip-bg);color:var(--chip-ink);font-size:12.5px;font-weight:600}
+
+  .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .field{display:grid;gap:10px;align-content:start;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+  .field__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .specs{margin:16px 0 0;padding:0;list-style:none;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+  .spec{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr) auto;gap:4px 20px;align-items:start;padding:14px 16px;border-top:1px solid var(--line)}
+  .spec:first-child{border-top:0}
+  .spec__name{grid-row:1 / span 2;font-weight:700}
+  .spec__desc{margin:0}
+  .spec .count{grid-column:2}
+  .spec .actions{grid-column:3;grid-row:1 / span 2;flex-direction:column;align-items:stretch}
+
+  .toast{position:fixed;left:50%;bottom:24px;z-index:10;max-width:calc(100% - 32px);transform:translateX(-50%);padding:10px 18px;border-radius:999px;background:var(--ink);color:var(--ground);font-size:14px;font-weight:600;box-shadow:0 10px 30px -10px rgba(0,0,0,.45)}
+
+  @media (max-width:760px){
+    .assets,.post{grid-template-columns:1fr}
+    .post__img img{max-width:340px}
+    .spec{grid-template-columns:1fr}
+    .spec__name,.spec .count,.spec .actions{grid-column:auto;grid-row:auto}
+    .spec .actions{flex-direction:row}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Timeless Turf Restoration</p>
+    <h1>Facebook kit</h1>
+    <p class="lede">Download an image, copy its caption, then paste both into a new post on the Page. Post them in order and pin post 1.</p>
+    <ul class="jump">
+      <li><a href="#images">Cover &amp; profile</a></li>
+      <li><a href="#posts">Posts</a></li>
+      <li><a href="#details">Page details</a></li>
+    </ul>
+  </header>
+
+  <h2 id="images">Cover &amp; profile picture</h2>
+  <p class="sec-note">Shown the way Facebook lays them out on a computer.</p>
+  <section class="assets">
+    <article class="asset">
+      <div class="mock"><img class="mock__cover" src="thumbs/cover-1640x624.jpg" width="1200" height="457" alt="Cover photo"><img class="mock__pp" src="thumbs/profile-picture-dark-720.jpg" width="360" height="360" alt=""></div>
+      <div class="asset__foot"><div><h3>Cover photo</h3><p class="meta">1640 × 624 PNG</p></div><div class="actions"><a class="btn btn--main" href="cover-1640x624.png" download data-download="cover-1640x624.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download cover</span></a></div></div>
+    </article>
+    <article class="asset">
+      <img class="pp" src="thumbs/profile-picture-dark-720.jpg" width="360" height="360" alt="Profile picture">
+      <div class="asset__foot"><div><h3>Profile picture</h3><p class="meta">720 × 720 PNG</p></div><div class="actions"><a class="btn btn--main" href="profile-picture-dark-720.png" download data-download="profile-picture-dark-720.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download</span></a><a class="btn btn--line" href="profile-picture-light-720.png" download data-download="profile-picture-light-720.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>White version</span></a></div></div>
+    </article>
+  </section>
+
+  <h2 id="posts">Posts</h2>
+  <p class="sec-note">Each image is 1080 × 1350, so it fills the screen on phones.</p>
+  <section class="posts">
+    <article class="post" id="post-1">
+      <figure class="post__img"><img src="thumbs/post-1-meet-brian.jpg" width="640" height="800" alt="Meet Brian post image"></figure>
+      <div class="post__body">
+        <div class="post__head"><p class="eyebrow">Post 1</p><h3>Meet Brian</h3><p class="chip">Pin this one to the top of the Page.</p></div>
+        <div class="actions"><a class="btn btn--main" href="post-1-meet-brian.png" download data-download="post-1-meet-brian.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download image</span></a><button class="btn btn--line" type="button" data-copy="cap-1"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy caption</span></button></div>
+        <p class="hint">Saving isn't available in this view. Right-click or long-press the image to save it.</p>
+        <div class="cap" id="cap-1" tabindex="0">Hi, I&#x27;m Brian, the owner of Timeless Turf Restoration.
+
+I&#x27;ve spent 13 years building artificial turf and putting greens. This company is the other half of that work: cleaning, treating and restoring turf that&#x27;s already in the ground, from Shallotte, NC to Burgess, SC.
+
+What I do:
+• Deep cleaning through the blades, backing and infill
+• Pet odor treated at the source, not covered up with fragrance
+• Algae and mold treatment for shady, damp spots
+• Putting greens brought back to a true roll
+• Infill top-ups and seam and edge repairs
+
+Every job is priced by square footage, never by the hour, and I don&#x27;t leave until it&#x27;s blown clean.
+
+Call or text 303-349-2368 for a quote. A couple of photos of your turf help me get the price right the first time.
+
+Pictured: a backyard green I built.
+
+#GrandStrand #MyrtleBeach #ArtificialTurf</div>
+        <p class="count">833 characters · post-1-meet-brian.png</p>
+      </div>
+    </article>
+    <article class="post" id="post-2">
+      <figure class="post__img"><img src="thumbs/post-2-pet-odor.jpg" width="640" height="800" alt="Pet odor post image"></figure>
+      <div class="post__body">
+        <div class="post__head"><p class="eyebrow">Post 2</p><h3>Pet odor</h3></div>
+        <div class="actions"><a class="btn btn--main" href="post-2-pet-odor.png" download data-download="post-2-pet-odor.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download image</span></a><button class="btn btn--line" type="button" data-copy="cap-2"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy caption</span></button></div>
+        <p class="hint">Saving isn't available in this view. Right-click or long-press the image to save it.</p>
+        <div class="cap" id="cap-2" tabindex="0">Hosed the turf down and it still smells like dog pee the next morning? Here&#x27;s why.
+
+The smell isn&#x27;t on the grass. Urine drains through the blades in seconds and dries in the infill and on the backing underneath. Bacteria break it down into ammonia, and on a humid morning that smell comes right back up.
+
+Why the usual fixes don&#x27;t last:
+• Hosing rinses the surface, leaves the residue, and adds the moisture the bacteria need
+• Deodorizer sprays cover the ammonia with fragrance until the fragrance fades
+• Vinegar neutralizes a little on top but never reaches the infill
+• Bleach lightens the fibers, damages the backing and still leaves the residue
+
+What works is flushing the infill, breaking the residue down with an enzyme treatment, and treating the bacteria with an antimicrobial. That&#x27;s part of every Premium Restoration.
+
+Got a corner your dog has claimed? Text a photo to 303-349-2368 and I&#x27;ll tell you what it needs.
+
+#PetTurf #MyrtleBeach #DogOwners</div>
+        <p class="count">961 characters · post-2-pet-odor.png</p>
+      </div>
+    </article>
+    <article class="post" id="post-3">
+      <figure class="post__img"><img src="thumbs/post-3-pricing.jpg" width="640" height="800" alt="Pricing post image"></figure>
+      <div class="post__body">
+        <div class="post__head"><p class="eyebrow">Post 3</p><h3>Pricing</h3></div>
+        <div class="actions"><a class="btn btn--main" href="post-3-pricing.png" download data-download="post-3-pricing.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download image</span></a><button class="btn btn--line" type="button" data-copy="cap-3"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy caption</span></button></div>
+        <p class="hint">Saving isn't available in this view. Right-click or long-press the image to save it.</p>
+        <div class="cap" id="cap-3" tabindex="0">What does turf cleaning cost? Here&#x27;s the whole price list, so you don&#x27;t have to call to find out.
+
+Two levels, priced by the square footage of your turf, never by the hour.
+
+Essential Clean, from $199
+Regular upkeep for people-only yards: debris removal, blowing, power brushing, a rinse, basic spot treatment and final grooming.
+
+Premium Restoration, from $299
+The deep clean for pet yards, odor, algae and tired, matted turf. It adds pet odor and antimicrobial treatment, algae and mold treatment, infill redistribution, an edge and seam check, and before and after photos.
+
+Want it kept up all year? Memberships with four visits a year start at $89 a month.
+
+Not sure how big your turf is? Text a couple of photos to 303-349-2368 and I&#x27;ll help you work it out.
+
+Prices as of September 2026. Over 5,000 sq ft is quoted.
+
+#GrandStrand #ArtificialTurf #TurfCleaning</div>
+        <p class="count">865 characters · post-3-pricing.png</p>
+      </div>
+    </article>
+    <article class="post" id="post-4">
+      <figure class="post__img"><img src="thumbs/post-4-putting-green.jpg" width="640" height="800" alt="Putting greens post image"></figure>
+      <div class="post__body">
+        <div class="post__head"><p class="eyebrow">Post 4</p><h3>Putting greens</h3></div>
+        <div class="actions"><a class="btn btn--main" href="post-4-putting-green.png" download data-download="post-4-putting-green.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download image</span></a><button class="btn btn--line" type="button" data-copy="cap-4"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy caption</span></button></div>
+        <p class="hint">Saving isn't available in this view. Right-click or long-press the image to save it.</p>
+        <div class="cap" id="cap-4" tabindex="0">Is your backyard green rolling slower than it used to, or pulling putts off line?
+
+On a sand-filled green, the ball rolls on the sand as much as on the fibers. Speed comes from a firm, even bed of sand, rolled flat. Over time:
+• Pollen and leaves soften the surface
+• Rain washes sand off the high side
+• A green that never gets rolled goes bumpy
+
+Slow is usually a dirty surface and thin sand. Bumpy is usually sand that has moved, or a surface that was never compacted. Both come back without new turf.
+
+A putting green restoration means clearing and brushing the green, cleaning the cups and fringe, top-dressing with fresh kiln-dried green sand to an even depth, and rolling it true.
+
+One honest exception: a green that holds water or has a real dip has a base problem, and sand won&#x27;t fix it. I&#x27;ll tell you if that&#x27;s what you&#x27;ve got.
+
+Most home greens need top-dressing once a year, twice under trees or with heavy use. I&#x27;ve built and looked after greens for 13 years. Call or text 303-349-2368.
+
+#PuttingGreen #MyrtleBeach #GolfAtHome</div>
+        <p class="count">1,039 characters · post-4-putting-green.png</p>
+      </div>
+    </article>
+    <article class="post" id="post-5">
+      <figure class="post__img"><img src="thumbs/post-5-storm-checklist.jpg" width="640" height="800" alt="After-storm checklist post image"></figure>
+      <div class="post__body">
+        <div class="post__head"><p class="eyebrow">Post 5</p><h3>After-storm checklist</h3><p class="chip">Seasonal. Post it in September or October.</p></div>
+        <div class="actions"><a class="btn btn--main" href="post-5-storm-checklist.png" download data-download="post-5-storm-checklist.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download image</span></a><button class="btn btn--line" type="button" data-copy="cap-5"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy caption</span></button></div>
+        <p class="hint">Saving isn't available in this view. Right-click or long-press the image to save it.</p>
+        <div class="cap" id="cap-5" tabindex="0">We&#x27;re in the peak of hurricane season. If a storm leaves sand, salt or branches on your turf, here&#x27;s the order to handle it. Save this one.
+
+1. Clear branches and heavy debris first
+2. Blow off the loose sand and leaves
+3. Flush salt spray and blown-in sand down through the infill with fresh water: high volume, low pressure
+4. Walk every seam and edge, because standing water can lift them
+5. Re-level the infill
+
+Timing matters most. Flushed within a few weeks, salt and sand are a cleaning job. Left through a dry fall, they turn into a crust, and some of the infill may need replacing.
+
+Skip the pressure washer. It blows infill out in stripes and can force water under the seams. A garden hose on a shower setting does more good.
+
+The good news: turf fibers are salt-tolerant, so salt water won&#x27;t kill the grass itself.
+
+Post-storm cleanups start at $199, anywhere from Shallotte to Burgess. Call or text 303-349-2368.
+
+#HurricaneSeason #GrandStrand #ArtificialTurf</div>
+        <p class="count">971 characters · post-5-storm-checklist.png</p>
+      </div>
+    </article>
+    <article class="post" id="post-6">
+      <figure class="post__img"><img src="thumbs/post-6-memberships.jpg" width="640" height="800" alt="Memberships post image"></figure>
+      <div class="post__body">
+        <div class="post__head"><p class="eyebrow">Post 6</p><h3>Memberships</h3></div>
+        <div class="actions"><a class="btn btn--main" href="post-6-memberships.png" download data-download="post-6-memberships.png"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-4-4m4 4 4-4M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Download image</span></a><button class="btn btn--line" type="button" data-copy="cap-6"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy caption</span></button></div>
+        <p class="hint">Saving isn't available in this view. Right-click or long-press the image to save it.</p>
+        <div class="cap" id="cap-6" tabindex="0">The Grand Strand has four turf seasons: pine pollen, oak leaf drop, a long summer of heavy use, and hurricane season. A membership keeps turf care on the calendar all year, so your yard doesn&#x27;t slide back to smelly and matted between cleans.
+
+Every plan includes four visits a year and priority scheduling, billed monthly.
+
+Essential Care, $89/mo
+Light upkeep: blow-off and grooming, a light rinse and basic odor treatment.
+
+TIMELESS ELITE, $139/mo
+A Premium Restoration every quarter: deep cleaning, antimicrobial and pet odor treatment, brushing, infill conditioning, an edge and seam check and minor spot treatment. Plus 10% off repairs and add-ons.
+
+Pet Turf ELITE, $169/mo
+Everything in TIMELESS ELITE, built for multi-dog and daily-potty yards. Ask me what it adds for your yard.
+
+No long contract. You can cancel any time after the current quarter&#x27;s visit.
+
+Not sure which plan fits? Call or text 303-349-2368 and tell me about your turf and your dogs.
+
+#GrandStrand #ArtificialTurf #PetTurf</div>
+        <p class="count">998 characters · post-6-memberships.png</p>
+      </div>
+    </article>
+  </section>
+
+  <h2 id="details">Page details</h2>
+  <p class="sec-note">Paste these into the Page's Details and Specialties sections.</p>
+  <section class="fields">
+    <div class="field"><div class="field__head"><h3>Bio</h3><button class="btn btn--line" type="button" data-copy="bio"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy</span></button></div><div class="cap" id="bio" tabindex="0">Artificial turf cleaning, pet odor removal &amp; putting green restoration. Shallotte, NC to Burgess, SC.</div><p class="count">101 / 101</p></div>
+    <div class="field"><div class="field__head"><h3>Details / About</h3><button class="btn btn--line" type="button" data-copy="about"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy</span></button></div><div class="cap" id="about" tabindex="0">Timeless Turf Restoration cleans, treats and restores artificial turf and synthetic putting greens from Shallotte, NC to Burgess, SC. Owner Brian has 13 years in turf and putting greens. Priced by square footage, never by the hour.</div><p class="count">231 characters</p></div>
+  </section>
+  <h3 style="margin-top:28px">Specialties</h3>
+  <ul class="specs">
+      <li class="spec">
+        <b class="spec__name" id="spec-1-name">Artificial Turf Cleaning</b>
+        <p class="spec__desc" id="spec-1-desc">Deep cleaning through the blades, backing and infill. Debris removed, turf blown, power brushed, rinsed at low pressure and groomed.</p>
+        <p class="count">132 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-1-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-1-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-2-name">Pet Odor Removal</b>
+        <p class="spec__desc" id="spec-2-desc">Urine smell treated at the source. We flush the infill, break the residue down with an enzyme treatment, then apply an antimicrobial.</p>
+        <p class="count">133 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-2-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-2-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-3-name">Putting Green Restoration</b>
+        <p class="spec__desc" id="spec-3-desc">Greens brought back to a true roll: cleared and brushed, cups and fringe cleaned, top-dressed with kiln-dried green sand and rolled.</p>
+        <p class="count">132 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-3-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-3-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-4-name">Algae, Moss &amp; Mold Removal</b>
+        <p class="spec__desc" id="spec-4-desc">Algae, moss and mold in shady, damp spots treated with a turf-safe algaecide, never bleach, then brushed and rinsed.</p>
+        <p class="count">116 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-4-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-4-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-5-name">Antimicrobial Sanitizing</b>
+        <p class="spec__desc" id="spec-5-desc">Antimicrobial treatment after cleaning for pet yards, play areas and busy turf, aimed at the bacteria that cause odor.</p>
+        <p class="count">118 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-5-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-5-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-6-name">Infill Replenishment</b>
+        <p class="spec__desc" id="spec-6-desc">Infill measured, redistributed and topped up, or replaced with odor-control infill in pet areas, so fibers stand up and turf drains.</p>
+        <p class="count">132 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-6-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-6-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-7-name">Power Brushing</b>
+        <p class="spec__desc" id="spec-7-desc">Matted walking paths and flattened fibers brushed against the grain to stand them back up. No wire brushes or metal rakes.</p>
+        <p class="count">122 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-7-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-7-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-8-name">Turf Repair</b>
+        <p class="spec__desc" id="spec-8-desc">Open seams re-taped and glued, loose edges re-secured, and burned or damaged spots cut out and patched.</p>
+        <p class="count">103 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-8-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-8-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-9-name">Hard Water &amp; Stain Removal</b>
+        <p class="spec__desc" id="spec-9-desc">White crust from well water or dried salt removed with a mild descaler, never muriatic acid, plus deep stain treatment.</p>
+        <p class="count">119 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-9-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-9-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+      <li class="spec">
+        <b class="spec__name" id="spec-10-name">Storm &amp; Seasonal Cleanup</b>
+        <p class="spec__desc" id="spec-10-desc">Pollen, oak leaves, storm sand and salt cleared. Debris removed, salt and sand flushed, infill re-leveled, seams and edges checked.</p>
+        <p class="count">131 / 150</p>
+        <div class="actions"><button class="btn btn--line btn--sm" type="button" data-copy="spec-10-name"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy name</span></button><button class="btn btn--line btn--sm" type="button" data-copy="spec-10-desc"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="7" width="9.5" height="9.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Copy description</span></button></div>
+      </li>
+  </ul>
+</div>
+
+<p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
+
+<script>
+(() => {
+  const toastEl = document.getElementById('toast');
+  let timer;
+  const toast = (msg) => {
+    toastEl.textContent = msg;
+    toastEl.hidden = false;
+    clearTimeout(timer);
+    timer = setTimeout(() => { toastEl.hidden = true; }, 3000);
+  };
+
+  // Saving goes through the viewer's downloads capability when it exists; otherwise the plain link is left alone.
+  let saver = null;
+  if (window.claude && typeof window.claude.use === 'function') {
+    window.claude.use('downloads').then(
+      (d) => { saver = d; if (!d) document.body.classList.add('no-save'); },
+      () => document.body.classList.add('no-save')
+    );
+  }
+
+  const flash = (btn, text) => {
+    const label = btn.querySelector('span');
+    if (!btn.dataset.label) btn.dataset.label = label.textContent;
+    label.textContent = text;
+    btn.classList.add('is-done');
+    setTimeout(() => { label.textContent = btn.dataset.label; btn.classList.remove('is-done'); }, 1800);
+  };
+
+  async function save(btn, file) {
+    try {
+      const res = await fetch(file);
+      if (!res.ok) throw new Error('fetch failed');
+      await saver.save({ filename: file, data: await res.blob() });
+      flash(btn, 'Saved');
+    } catch (err) {
+      const code = err && err.code;
+      if (code === 'declined') return;
+      if (code === 'rate_limited') { toast('A save is already open. Finish that one first.'); return; }
+      document.body.classList.add('no-save');
+      toast("Couldn't save from here. Right-click or long-press the image instead.");
+    }
+  }
+
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+    return ok;
+  }
+
+  document.addEventListener('click', (e) => {
+    const dl = e.target.closest('[data-download]');
+    if (dl && saver) { e.preventDefault(); save(dl, dl.dataset.download); return; }
+    const cp = e.target.closest('[data-copy]');
+    if (!cp) return;
+    const src = document.getElementById(cp.dataset.copy);
+    copyText(src.textContent).then((ok) => {
+      if (ok) { flash(cp, 'Copied'); return; }
+      const range = document.createRange();
+      range.selectNodeContents(src);
+      const sel = getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      toast('Text selected. Press ⌘C or Ctrl+C to copy.');
+    });
+  });
+})();
+</script>
