@@ -1,0 +1,53 @@
+---
+/**
+ * Two-step lead form for the /lp/ landing pages: the Instant Form's questions as tap-to-answer chips, then
+ * name, phone and ZIP. Without JS both steps show at once. On success main.js fires the Pixel "Lead" event
+ * and swaps the form for the done panel. Carries utm_* and fbclid so every lead shows which ad it came from.
+ */
+import Icon from '../Icon.astro';
+import { brand } from '../../data/site';
+import { REPLY_TIME, FINAL, type Angle } from '../../data/campaigns';
+interface Props { a: Angle }
+const { a } = Astro.props;
+const name = `lp-${a.slug}`;
+const sms = `${brand.smsHref}?&body=${encodeURIComponent(a.fb.sms)}`;
+const ATTR = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
+---
+<form class="form lf" id="quote" name={name} method="POST" data-netlify="true" netlify-honeypot="bot-field" data-fbq="Lead" data-steps>
+  <input type="hidden" name="form-name" value={name}>
+  <input type="hidden" name="page" value={Astro.url.pathname}>
+  {ATTR.map((k) => <input type="hidden" name={k} data-attr />)}
+  <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+  <div class="lf__head">
+    <h2>{a.lp.formTitle}</h2>
+    <ol class="lf__bar" aria-hidden="true"><li class="is-on">1 · {a.slug === 'putting-green' ? 'Your green' : 'Your turf'}</li><li>2 · Where to send it</li></ol>
+  </div>
+  <div class="lf__step" data-step>
+    {a.questions.map((q) => (
+      <fieldset class="q">
+        <legend>{q.label}</legend>
+        <div class="chips-in">{q.choices.map((c) => <label class="chip"><input type="radio" name={q.name} value={c.label} data-hint={c.hint}><span>{c.label}</span></label>)}</div>
+        {q.choices.some((c) => c.hint) && <p class="ballpark" data-hint-out aria-live="polite" hidden></p>}
+      </fieldset>
+    ))}
+    <button class="btn btn--green btn--lg btn--block" type="button" data-next data-cta="lp-next">Next: where to send it<Icon name="arrow" /></button>
+  </div>
+  <div class="lf__step" data-step>
+    <div class="field"><label for={`${name}-name`}>Name *</label><input id={`${name}-name`} name="name" autocomplete="name" required></div>
+    <div class="field"><label for={`${name}-phone`}>Phone *</label><input id={`${name}-phone`} name="phone" type="tel" autocomplete="tel" required></div>
+    <div class="field"><label for={`${name}-zip`}>ZIP code *</label><input id={`${name}-zip`} name="zip" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" title="Five-digit ZIP code" required></div>
+    <button class="btn btn--green btn--lg btn--block" type="submit" data-cta="lp-submit">{FINAL[a.slug].submit}<Icon name="arrow" /></button>
+    <button class="lf__back" type="button" data-back><Icon name="arrow" />Change my answers</button>
+  </div>
+  <p class="form__msg form__msg--err" role="alert" hidden>Something went wrong. Please call or text {brand.phone}.</p>
+  <p class="form__fine">By submitting, you agree {brand.owner} may call or text you about your request. <a href="/privacy/">Privacy</a></p>
+  <div class="lf__done" data-done tabindex="-1" hidden>
+    <span class="okmark" aria-hidden="true"></span>
+    <h2>You're in<span data-done-name></span>!</h2>
+    <p>{brand.owner} will call or text you from <b>{brand.phone}</b> {REPLY_TIME}.</p>
+    <div class="btnrow btnrow--center">
+      <a class="btn btn--ghost" href="/assets/timeless-contact.vcf"><Icon name="save" />Save the number</a>
+      <a class="btn btn--green" href={sms}><Icon name="chat" />Text photos</a>
+    </div>
+  </div>
+</form>

@@ -25,6 +25,7 @@ Disallow: /
 User-agent: *
 Allow: /
 Disallow: /fb/
+Disallow: /lp/
 Disallow: /quote/
 Disallow: /.netlify/
 

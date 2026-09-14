@@ -1,0 +1,156 @@
+---
+/* Follow-up page for Meta Instant Form leads: the form's completion-screen button lands here.
+   noindex, no navigation. The Instant Form already counted the Lead, so nothing here fires Lead: call and
+   text taps and the optional best-time form fire Contact. Copy: src/data/campaigns.ts. */
+import Base from '../../layouts/Base.astro';
+import Icon from '../Icon.astro';
+import Steps from '../Steps.astro';
+import PriceTable from '../PriceTable.astro';
+import ProofGallery from '../ProofGallery.astro';
+import LpBar from './LpBar.astro';
+import LpFoot from './LpFoot.astro';
+import MeetBrian from './MeetBrian.astro';
+import CampaignFaq from './CampaignFaq.astro';
+import { REPLY_TIME, NEXT, GREEN_STEPS, PUSHY, type Angle } from '../../data/campaigns';
+import { brand, pricing as P, money } from '../../data/site';
+interface Props { a: Angle }
+const { a } = Astro.props;
+const text = (body: string) => `${brand.smsHref}?&body=${encodeURIComponent(body)}`;
+const sms = text(a.fb.sms);
+const form = `fb-${a.slug}`;
+const isGreen = a.slug === 'putting-green';
+---
+<Base title={a.fb.title} description="Your request is in. Here's what happens next." robots="noindex, nofollow" chrome="minimal">
+
+<LpBar home />
+
+<section class="hero lp-hero">
+  <div class="wrap lp-hero__in">
+    <span class="okmark" aria-hidden="true"></span>
+    <p class="kicker intro" style="--d:1">Request received</p>
+    <h1 class="intro" style="--d:2">{a.fb.h1[0]}<span data-name></span>{a.fb.h1[1]}</h1>
+    <p class="lead intro" style="--d:3">{brand.owner}, the owner, will call or text you from <b>{brand.phone}</b> {REPLY_TIME}.</p>
+    <div class="phonecard intro" style="--d:4">
+      <img src="/assets/brand/apple-touch-icon.png" width="180" height="180" alt="">
+      <div><small>Calls &amp; texts come from</small><b>{brand.phone}</b><span>{brand.owner} · {brand.name}</span></div>
+      <a class="btn btn--ghost btn--sm" href="/assets/timeless-contact.vcf" data-cta="save-contact"><Icon name="save" />Save</a>
+    </div>
+    <p class="lp-hint">Save the number so you know it's {brand.owner} when he calls.</p>
+    <div class="btnrow btnrow--center" data-hero-cta>
+      <a class="btn btn--green btn--lg" href={sms} data-cta="sms-hero"><Icon name="chat" />Text {brand.owner} photos</a>
+      <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><Icon name="phone" />Call now</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faster">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Optional · 1 minute</p><h2>Get your {a.slug === 'membership' ? 'plan' : isGreen ? 'quote' : 'price'} faster</h2><p>Text {brand.owner} a few photos. These help most:</p></div>
+    <div class="tips" data-stagger>{a.fb.tips.map((t) => <div class="tip"><span class="tip__ic"><Icon name={t.icon} /></span><h3>{t.title}</h3><p>{t.text}</p></div>)}</div>
+    <div class="btnrow btnrow--center lp-after"><a class="btn btn--green btn--lg" href={sms} data-cta="sms-tips"><Icon name="camera" />Text photos to {brand.phone}</a></div>
+  </div>
+</section>
+
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">What happens next</p><h2>{isGreen ? 'From request to a true roll' : a.slug === 'membership' ? 'From request to your first visit' : 'From request to clean turf'}</h2></div>
+    <Steps steps={NEXT[a.slug]} />
+  </div>
+</section>
+
+{!isGreen && (
+<section class="sec lp-work" aria-label="Recent work">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Before &amp; after</p><h2>What one visit changes</h2></div>
+    <ProofGallery limit={3} />
+  </div>
+</section>
+)}
+
+{a.slug === 'clean' && (
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Upfront pricing</p><h2>No hourly rates. No surprises.</h2><p>Your exact price comes before any work starts.</p></div>
+    <PriceTable />
+    <p class="note">Want it kept clean all year? Memberships start at {money(P.memberships[0].monthly)}/month.</p>
+  </div>
+</section>
+)}
+
+{a.slug === 'membership' && (
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">The plans</p><h2>Four visits a year on every plan</h2><p>{brand.owner} will recommend one when he calls. Already know? Tell him by text.</p></div>
+    <div class="plans" data-stagger>
+      {P.memberships.map((m, i) => (
+        <article class:list={['plan', { 'plan--pop': i === 1 }]}>
+          {i === 1 && <span class="plan__badge">Deep clean every quarter</span>}
+          <p class="plan__lvl"><Icon name="calendar" />{m.visits} visits a year</p>
+          <h3>{m.name}</h3>
+          <p class="plan__for">{m.for}</p>
+          <p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p>
+          <ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>
+          {'note' in m && m.note && <p class="plan__note">{m.note}</p>}
+          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={text(`Hi ${brand.owner}! I'm interested in the ${m.name} membership.`)} data-cta="sms-plan"><Icon name="chat" />Ask about {m.name}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+{isGreen && (
+<section class="sec">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">The restoration</p><h2>Six steps back to a true roll</h2></div>
+    <Steps steps={GREEN_STEPS} cols={3} />
+  </div>
+</section>
+)}
+
+<MeetBrian cream={isGreen} green={isGreen} />
+
+<section class:list={['sec', { 'sec--cream': !isGreen }]}>
+  <div class="wrap lp-narrow">
+    <div class="sec__head center" data-reveal><p class="kicker">Optional</p><h2>When should {brand.owner} call?</h2><p>Pick a time and he'll aim for it.</p></div>
+    <form class="form lp-form" name={form} method="POST" data-netlify="true" netlify-honeypot="bot-field" data-fbq="Contact" data-reveal>
+      <input type="hidden" name="form-name" value={form}>
+      <input type="hidden" name="page" value={Astro.url.pathname}>
+      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <fieldset class="q">
+        <legend>Best time to reach you?</legend>
+        <div class="chips-in">{['Morning', 'Afternoon', 'Evening', 'Text me instead'].map((t) => <label class="chip"><input type="radio" name="best_time" value={t}><span>{t}</span></label>)}</div>
+      </fieldset>
+      <div class="field"><label for={`${form}-name`}>First name</label><input id={`${form}-name`} name="name" autocomplete="given-name" data-name-input></div>
+      <div class="field"><label for={`${form}-phone`}>Phone *</label><input id={`${form}-phone`} name="phone" type="tel" autocomplete="tel" required></div>
+      <button class="btn btn--green btn--lg" type="submit" data-cta="fb-best-time">Send to {brand.owner}<Icon name="arrow" /></button>
+      <p class="form__msg form__msg--ok" role="status" hidden>Got it. {brand.owner} will aim for that time.</p>
+      <p class="form__msg form__msg--err" role="alert" hidden>Something went wrong. Please call or text {brand.phone}.</p>
+      <p class="form__fine">We only use your number to match this with your request.</p>
+    </form>
+  </div>
+</section>
+
+<CampaignFaq items={[PUSHY, ...a.faq]} kicker={`Before ${brand.owner} calls`} cream={isGreen} />
+
+<section class="final">
+  <img src="/assets/img/putting-green-landscape-lighting-at-dusk.jpg" width="1400" height="1050" alt="" loading="lazy" decoding="async">
+  <div class="wrap" data-reveal>
+    <p class="kicker">Questions before {brand.owner} calls?</p>
+    <h2>Call or text anytime.</h2>
+    <p>Send photos, ask about pricing, or pick a better time to talk.</p>
+    <div class="btnrow btnrow--center">
+      <a class="btn btn--green btn--lg" href={brand.phoneHref} data-cta="call-final"><Icon name="phone" />Call {brand.phone}</a>
+      <a class="btn btn--outline-light btn--lg" href={sms} data-cta="sms-final"><Icon name="chat" />Send a text</a>
+    </div>
+  </div>
+</section>
+
+<LpFoot />
+
+<div class="mbar">
+  <a class="btn btn--ghost" href={brand.phoneHref} data-cta="call-mbar"><Icon name="phone" />Call</a>
+  <a class="btn btn--green" href={sms} data-cta="sms-mbar"><Icon name="chat" />Text us photos</a>
+</div>
+
+</Base>

@@ -151,27 +151,85 @@
     if (!reduce) new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { ba.classList.add('is-peek'); obs.disconnect(); } }, { threshold: 0.6 }).observe(ba);
   });
 
-  // Netlify forms: submit without leaving the page
+  // Ad attribution: utm_* and fbclid from the landing URL, kept for the visit and copied into forms that carry them
+  const ATTR = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
+  let attr = {};
+  try { attr = JSON.parse(sessionStorage.getItem('attr') || '{}'); } catch { /* storage blocked */ }
+  const query = new URLSearchParams(location.search);
+  if (ATTR.some((k) => query.get(k))) {
+    attr = Object.fromEntries(ATTR.map((k) => [k, query.get(k) || '']));
+    try { sessionStorage.setItem('attr', JSON.stringify(attr)); } catch { /* storage blocked */ }
+  }
+  $$('input[data-attr]').forEach((i) => { i.value = attr[i.name] || ''; });
+
+  // Meta Pixel: a tap on a phone or text link is a Contact
+  document.addEventListener('click', (e) => { if (window.fbq && e.target.closest('a[href^="tel:"], a[href^="sms:"]')) window.fbq('track', 'Contact'); });
+
+  // Answer chips with a hint (a ballpark price, a plan): picking one shows it under the question
+  $$('[data-hint-out]').forEach((out) => {
+    $$('input[type="radio"]', out.closest('fieldset')).forEach((r) => r.addEventListener('change', () => {
+      out.hidden = !r.dataset.hint;
+      if (!r.dataset.hint) return;
+      out.innerHTML = r.dataset.hint;
+      out.style.animation = 'none'; void out.offsetWidth; out.style.animation = '';
+    }));
+  });
+
+  // Two-step lead forms: answers first, then contact details (without JS both steps show)
+  $$('form[data-steps]').forEach((form) => {
+    const steps = $$('[data-step]', form), marks = $$('.lf__bar li', form);
+    const go = (n, move) => {
+      steps.forEach((s, i) => { s.hidden = i !== n; });
+      marks.forEach((m, i) => m.classList.toggle('is-on', i <= n));
+      if (!move) return;
+      if (form.getBoundingClientRect().top < 0) form.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+      $('input', steps[n])?.focus({ preventScroll: true });
+    };
+    $$('[data-next]', form).forEach((b) => b.addEventListener('click', () => go(1, true)));
+    $$('[data-back]', form).forEach((b) => b.addEventListener('click', () => go(0, true)));
+    go(0);
+  });
+
+  // "Choose this plan" links: tick the matching answer in the form they scroll to
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-pick]');
+    if (!b) return;
+    const [name, value] = b.dataset.pick.split('=');
+    const r = $$(`input[name="${name}"]`).find((i) => i.value === value);
+    if (r) { r.checked = true; r.dispatchEvent(new Event('change')); }
+  });
+
+  // Netlify forms: submit without leaving the page. A form with a done panel swaps to it; others show a message.
   $$('form[data-netlify]').forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const ok = $('.form__msg--ok', form), err = $('.form__msg--err', form), btn = $('button[type="submit"]', form);
-      ok.hidden = err.hidden = true;
+      const ok = $('.form__msg--ok', form), err = $('.form__msg--err', form), done = $('[data-done]', form), btn = $('button[type="submit"]', form);
+      [ok, err].forEach((m) => { if (m) m.hidden = true; });
       btn.disabled = true;
+      const data = new FormData(form);
       try {
         const res = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(new FormData(form)).toString(),
+          body: new URLSearchParams(data).toString(),
         });
         if (!res.ok) throw new Error(res.status);
+        if (window.fbq && form.dataset.fbq) window.fbq('track', form.dataset.fbq, { content_name: form.getAttribute('name') });
         form.reset();
-        $$('[data-ballpark]', form).forEach((b) => { b.hidden = true; });
-        ok.hidden = false;
-        ok.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
-        if (window.fbq && form.dataset.fbq) window.fbq('track', form.dataset.fbq);
+        $$('[data-hint-out]', form).forEach((b) => { b.hidden = true; });
+        if (done) {
+          const first = String(data.get('name') || '').trim().split(/\s+/)[0].slice(0, 24);
+          if (first) $('[data-done-name]', done).textContent = `, ${first.charAt(0).toUpperCase()}${first.slice(1)}`;
+          form.classList.add('is-done');
+          done.hidden = false;
+          done.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+          done.focus({ preventScroll: true });
+        } else if (ok) {
+          ok.hidden = false;
+          ok.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+        }
       } catch {
-        err.hidden = false;
+        if (err) err.hidden = false;
       } finally {
         btn.disabled = false;
       }
@@ -195,17 +253,6 @@
       const input = $('[data-name-input]');
       if (input) input.value = first;
     }
-  }
-
-  // /fb/ page: show a ballpark price as soon as a turf size is picked
-  const ballpark = $('[data-ballpark]');
-  if (ballpark) {
-    $$('input[name="size"]').forEach((r) => r.addEventListener('change', () => {
-      ballpark.hidden = false;
-      ballpark.innerHTML = r.dataset.e
-        ? `Ballpark for your yard: Essential Clean <b>${r.dataset.e}</b> · Premium Restoration <b>${r.dataset.p}</b>`
-        : 'No problem. Brian will help you measure. Pricing starts at <b>$199</b> for yards up to 500 sq ft.';
-    }));
   }
 
   // Site search: fetch the build-time index once, filter by words, keyboard-navigable

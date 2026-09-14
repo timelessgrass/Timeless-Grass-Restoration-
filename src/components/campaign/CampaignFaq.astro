@@ -1,0 +1,12 @@
+---
+/** Objection-handling FAQ for the campaign pages. No link out to /quote/: the form is on the page. */
+import type { Faq } from '../../data/campaigns';
+interface Props { items: Faq[]; kicker?: string; title?: string; cream?: boolean }
+const { items, kicker = 'Good to know', title = 'Quick answers', cream = false } = Astro.props;
+---
+<section class:list={['sec', { 'sec--cream': cream }]}>
+  <div class="wrap faq">
+    <div class="sec__head center" data-reveal><p class="kicker">{kicker}</p><h2>{title}</h2></div>
+    <div data-stagger>{items.map((f, i) => <details><summary><span class="n">{i + 1}</span>{f.q}</summary><p set:html={f.a} /></details>)}</div>
+  </div>
+</section>

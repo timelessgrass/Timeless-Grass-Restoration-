@@ -2,10 +2,10 @@
 /** Numbered process steps with an icon each. The order is real, so the numbers are too. */
 import Icon from './Icon.astro';
 type Step = { icon: string; title: string; text: string; label?: string };
-interface Props { steps: Step[] }
-const { steps } = Astro.props;
+interface Props { steps: Step[]; /** three columns regardless of count (e.g. six steps in two rows) */ cols?: 3 | 4 }
+const { steps, cols } = Astro.props;
 ---
-<ol class:list={['isteps', { 'isteps--3': steps.length === 3 }]} data-stagger>
+<ol class:list={['isteps', { 'isteps--3': (cols ?? steps.length) === 3 }]} data-stagger>
   {steps.map((s, i) => (
     <li class="istep">
       <div class="istep__top"><span class="istep__ic"><Icon name={s.icon} /></span><span class="istep__n">{s.label ?? `Step ${i + 1}`}</span></div>

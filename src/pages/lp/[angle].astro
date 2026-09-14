@@ -1,0 +1,190 @@
+---
+/* Landing pages for Facebook and Instagram ads that send people to the website, one per ad angle.
+   noindex, no navigation, the form in the first screen. Copy and questions: src/data/campaigns.ts. */
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Steps from '../../components/Steps.astro';
+import PriceTable from '../../components/PriceTable.astro';
+import ProofGallery from '../../components/ProofGallery.astro';
+import LpBar from '../../components/campaign/LpBar.astro';
+import LpFoot from '../../components/campaign/LpFoot.astro';
+import LeadForm from '../../components/campaign/LeadForm.astro';
+import MeetBrian from '../../components/campaign/MeetBrian.astro';
+import CampaignFaq from '../../components/campaign/CampaignFaq.astro';
+import { ANGLES, HOW, GREEN_WHY, GREEN_STEPS, GREEN_RANGE, FINAL, type Angle } from '../../data/campaigns';
+import { SERVICES } from '../../data/services';
+import { brand, pricing as P, money } from '../../data/site';
+
+export function getStaticPaths() {
+  return ANGLES.map((a) => ({ params: { angle: a.slug }, props: { a } }));
+}
+const { a } = Astro.props as { a: Angle };
+const img = a.lp.image;
+const og = img.src.includes('/jobs/') ? img.src.replace('-640.webp', '.jpg') : img.src;
+const green = SERVICES.find((s) => s.slug === 'putting-green-restoration')!;
+const planQ = a.questions.find((q) => q.name === 'plan_pick');
+const R = P.rows, M = P.memberships;
+const fin = FINAL[a.slug];
+---
+<Base title={a.lp.title} description={a.lp.description} robots="noindex, nofollow" chrome="minimal" ogImage={og}>
+
+<LpBar />
+
+<section class="hero lp-top">
+  <div class="wrap lp-top__grid">
+    <div class="lp-top__copy">
+      <p class="kicker intro" style="--d:0">{a.lp.kicker}</p>
+      <h1 class="intro" style="--d:1">{a.lp.h1[0]} <span class="grad">{a.lp.h1[1]}</span></h1>
+      <p class="lead intro" style="--d:2">{a.lp.lede}</p>
+      <ul class="trust intro" style="--d:3">{a.lp.ticks.map((t) => <li><Icon name={t.icon} />{t.label}</li>)}</ul>
+    </div>
+    <div class="lp-top__form intro" style="--d:2" data-hero-cta><LeadForm a={a} /></div>
+    <figure class="lp-top__shot">
+      <img class="intro-media" src={img.src} srcset={img.srcset} sizes="(max-width: 960px) 92vw, 460px" width={img.width} height={img.height} alt={img.alt} fetchpriority="high" decoding="async">
+      {img.caption && <figcaption>{img.caption}</figcaption>}
+    </figure>
+  </div>
+</section>
+
+{a.slug !== 'putting-green' && (
+<section class="sec lp-work">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Before &amp; after</p><h2>What one visit changes</h2></div>
+    <ProofGallery limit={3} />
+  </div>
+</section>
+)}
+
+{a.slug === 'clean' && (
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Upfront pricing</p><h2>Two ways to clean it</h2><p>Priced by the square foot, never by the hour. Your exact price comes before any work starts.</p></div>
+    <div class="plans plans--two" data-stagger>
+      {[P.essential, P.premium].map((plan, i) => (
+        <article class:list={['plan', { 'plan--pop': i === 1 }]}>
+          {i === 1 && <span class="plan__badge">Best for dog yards</span>}
+          <p class="plan__lvl"><Icon name={i === 1 ? 'paw' : 'sparkle'} />One-time clean</p>
+          <h3>{plan.name}</h3>
+          <p class="plan__for">{plan.for}</p>
+          <p class="plan__price"><span class="from">from </span>{money(i === 0 ? R[0].essential! : R[0].premium!)}<small>Up to 500 sq ft. Every size below.</small></p>
+          <ul>{plan.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}{plan.excludes.map((x) => <li class="no">{x}</li>)}</ul>
+          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href="#quote" data-cta="lp-plan">Get my price</a>
+        </article>
+      ))}
+    </div>
+    <PriceTable />
+  </div>
+</section>
+)}
+
+{a.slug === 'membership' && (
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Memberships</p><h2>Pick how much care it gets</h2><p>Four visits a year on every plan. {brand.owner} matches the plan to your yard and dogs.</p></div>
+    <div class="plans" data-stagger>
+      {M.map((m, i) => (
+        <article class:list={['plan', { 'plan--pop': i === 1 }]}>
+          {i === 1 && <span class="plan__badge">Deep clean every quarter</span>}
+          <p class="plan__lvl"><Icon name="calendar" />{m.visits} visits a year</p>
+          <h3>{m.name}</h3>
+          <p class="plan__for">{m.for}</p>
+          <p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p>
+          <ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>
+          {'note' in m && m.note && <p class="plan__note">{m.note}</p>}
+          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href="#quote" data-pick={planQ && `${planQ.name}=${planQ.choices[i].label}`} data-cta="lp-plan">Choose {m.name}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Straight answer</p><h2>Membership or one-time clean?</h2></div>
+    <div class="fit" data-stagger>
+      <div class="fit__col fit__col--pop">
+        <h3><Icon name="calendar" />A membership fits if</h3>
+        <ul>
+          <li>Dogs use the turf every day</li>
+          <li>You want visits on the calendar without booking each one</li>
+          <li>The yard is over 1,000 sq ft: {M[1].name} is {money(M[1].monthly * 12)} a year, less than four {P.premium.name}s ({money(R[2].premium! * 4)} at 1,001–1,500 sq ft)</li>
+        </ul>
+      </div>
+      <div class="fit__col">
+        <h3><Icon name="sparkle" />One-time cleans fit if</h3>
+        <ul>
+          <li>It's a people-only yard with light use</li>
+          <li>The yard is under 1,000 sq ft and you're happy to book when it needs it (four {P.premium.name}s are {money(R[0].premium! * 4)} a year up to 500 sq ft)</li>
+          <li>You want one deep clean before deciding</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Not sure? Pick "Not sure yet" in the form and {brand.owner} will recommend one.</p>
+  </div>
+</section>
+)}
+
+{a.slug !== 'putting-green' && (
+<section class:list={['sec', { 'sec--cream': a.slug === 'membership' }]}>
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">How it works</p><h2>{a.slug === 'clean' ? 'From quote to blown clean' : 'How a membership works'}</h2></div>
+    <Steps steps={HOW[a.slug]} />
+  </div>
+</section>
+)}
+
+{a.slug === 'putting-green' && (<>
+<section class="sec">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Why greens slow down</p><h2>Three things steal the roll</h2></div>
+    <div class="tips" data-stagger>{GREEN_WHY.map((t) => <div class="tip"><span class="tip__ic"><Icon name={t.icon} /></span><h3>{t.title}</h3><p>{t.text}</p></div>)}</div>
+  </div>
+</section>
+<section class="sec sec--cream">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">The restoration</p><h2>Six steps back to a true roll</h2></div>
+    <Steps steps={GREEN_STEPS} cols={3} />
+  </div>
+</section>
+<section class="sec">
+  <div class="wrap split">
+    <figure class="photo" data-reveal="scale">
+      <img src="/assets/img/backyard-putting-green-landscaped-boulders.jpg" width="1400" height="1050" alt="Backyard synthetic putting green set among landscaped boulders" loading="lazy" decoding="async">
+      <figcaption><b>Checked every visit.</b> Seams, cups, edges and drainage.</figcaption>
+    </figure>
+    <div data-reveal>
+      <p class="kicker">Honest pricing</p>
+      <h2>What a green costs to restore</h2>
+      <p class="body">Greens are quoted after a look, because size, slope, cup count and sand condition all move the price. Typical backyard greens run <b>{GREEN_RANGE}</b>.</p>
+      <ul class="lp-list">{green.included.map((x) => <li>{x}</li>)}</ul>
+      <p class="lp-note"><Icon name="alert" /><span>A green that puddles after rain has a base problem sand can't fix. {brand.owner} will tell you, and our sister company builds greens.</span></p>
+      <a class="btn btn--green btn--lg" href="#quote" data-cta="lp-price">Get my green quote<Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+</>)}
+
+<MeetBrian cream={a.slug !== 'membership'} green={a.slug === 'putting-green'} />
+
+<CampaignFaq items={a.faq} cream={a.slug === 'membership'} />
+
+<section class="final">
+  <img src="/assets/img/putting-green-landscape-lighting-at-dusk.jpg" width="1400" height="1050" alt="" loading="lazy" decoding="async">
+  <div class="wrap" data-reveal>
+    <p class="kicker">Takes 30 seconds</p>
+    <h2>{fin.title}</h2>
+    <p>{fin.text}</p>
+    <div class="btnrow btnrow--center">
+      <a class="btn btn--green btn--lg" href="#quote" data-cta="lp-final">{fin.cta}<Icon name="arrow" /></a>
+      <a class="btn btn--outline-light btn--lg" href={brand.phoneHref} data-cta="call-final"><Icon name="phone" />{brand.phone}</a>
+    </div>
+  </div>
+</section>
+
+<LpFoot />
+
+<div class="mbar">
+  <a class="btn btn--ghost" href={brand.phoneHref} data-cta="call-mbar"><Icon name="phone" />Call</a>
+  <a class="btn btn--green" href="#quote" data-cta="lp-mbar">{fin.cta}<Icon name="arrow" /></a>
+</div>
+
+</Base>

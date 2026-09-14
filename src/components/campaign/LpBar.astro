@@ -1,0 +1,14 @@
+---
+/** The campaign pages' only header: logo and phone, no navigation. The landing pages leave the logo unlinked. */
+import Icon from '../Icon.astro';
+import { brand } from '../../data/site';
+interface Props { home?: boolean }
+const { home = false } = Astro.props;
+const logo = `<img src="/assets/brand/logo.webp" width="420" height="373" alt="${brand.name}">`;
+---
+<header class="lp-bar">
+  <div class="wrap lp-bar__in">
+    {home ? <a href="/" set:html={logo} /> : <span set:html={logo} />}
+    <a class="lp-bar__tel" href={brand.phoneHref} data-cta="call-bar"><Icon name="phone" /><span>Call or text</span>{brand.phone}</a>
+  </div>
+</header>

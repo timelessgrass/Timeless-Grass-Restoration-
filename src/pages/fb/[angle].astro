@@ -1,0 +1,11 @@
+---
+/* Instant Form follow-up pages, one per ad angle: /fb/clean/, /fb/membership/, /fb/putting-green/. */
+import FollowUp from '../../components/campaign/FollowUp.astro';
+import { ANGLES, type Angle } from '../../data/campaigns';
+
+export function getStaticPaths() {
+  return ANGLES.map((a) => ({ params: { angle: a.slug }, props: { a } }));
+}
+const { a } = Astro.props as { a: Angle };
+---
+<FollowUp a={a} />

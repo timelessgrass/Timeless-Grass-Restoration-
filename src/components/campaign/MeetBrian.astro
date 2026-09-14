@@ -1,0 +1,21 @@
+---
+/** "Hi, I'm Brian", shared by the campaign pages. */
+import { brand } from '../../data/site';
+interface Props { cream?: boolean; green?: boolean }
+const { cream = false, green = false } = Astro.props;
+---
+<section class:list={['sec', { 'sec--cream': cream }]}>
+  <div class="wrap split">
+    <figure class="photo" data-reveal="scale">
+      <img src="/assets/img/putting-green-at-sunset-wide.jpg" width="1400" height="1050" alt="Backyard putting green at sunset" loading="lazy" decoding="async">
+      <figcaption><b>Blown clean.</b> The finish on every job.</figcaption>
+    </figure>
+    <div data-reveal>
+      <p class="kicker">Who you'll talk to</p>
+      <h2>Hi, I'm {brand.owner}.</h2>
+      <p class="body">I've spent {brand.ownerYears} years building and caring for artificial turf and putting greens. {green ? 'I restore a green the way it was built: sand, brush and roller, until it runs right.' : 'I clean turf the way it was built: through the blades, backing and infill.'}</p>
+      <p class="body">You get a clear price before any work starts, and I don't leave until it's blown clean.</p>
+      <p class="sig">{brand.owner}, owner of {brand.name}</p>
+    </div>
+  </div>
+</section>
