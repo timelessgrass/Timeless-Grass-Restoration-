@@ -153,7 +153,6 @@ export const EXPLAINERS: Article[] = [
       `Unlike fragrance or bleach, enzymes actually remove the source material rather than covering or partially disinfecting it.`,
       `Enzymes cannot reach urine that has dried into crusted, saturated infill; that infill needs replacing instead.`,
     ],
-    diagram: 'odor',
     sections: [
       { h2: `What enzymes actually digest`, html: `<p>Enzymes are proteins that speed up specific chemical reactions, and the ones used in pet-turf cleaners are chosen to break down the organic compounds in urine, feces and other biological residue into smaller molecules that no longer produce the same odor. This is fundamentally different from a fragrance product, which adds a stronger, more pleasant smell on top of the existing one without changing the residue underneath it at all, and it is why the two behave so differently over time.</p>` },
       { h2: `Why dwell time is the whole method`, html: `<p>An enzyme reaction takes time to run, often longer for a heavily soiled area, which is why the product is applied and left to dwell per the label rather than sprayed and immediately rinsed off. Rinsing too soon washes the enzymes away before they have finished breaking the residue down, which is the single most common reason a homeowner tries an enzyme cleaner and feels like it did not do much at all, then assumes the product itself was the problem rather than the timing.</p>` },
@@ -254,7 +253,6 @@ export const EXPLAINERS: Article[] = [
       `The bacteria producing ammonia need moisture to stay active, which is why the smell fades when dry and returns after rain.`,
       `Hosing, fragrance and vinegar all fail for the same reason: none of them remove the urea or treat the bacteria feeding on it.`,
     ],
-    diagram: 'odor',
     sections: [
       { h2: `The chemistry in three steps`, html: `<p>Urine is mostly water, salts and urea, and urea itself has very little smell. The process that creates the odor happens after the urine has already soaked into the infill: bacteria that live naturally in soil, sand and organic debris consume urea as a food source, and ammonia is a byproduct of that metabolic process. So the smell is not urine at all; it is the output of a bacterial colony that has set up shop wherever urine residue has accumulated over time.</p>` },
       { h2: `Where the residue actually sits`, html: `<p>Urine passes through turf fibers in seconds, which is why hosing the surface does almost nothing about a urine smell: by the time you are spraying the visible grass, the residue has already moved on to the infill and the backing underneath it. That is also where the bacteria responsible for the smell are living and where any effective treatment has to reach, rather than the fiber tips a casual rinse actually touches.</p>` },

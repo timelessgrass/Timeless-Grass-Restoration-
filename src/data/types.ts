@@ -2,7 +2,7 @@
 export type Faq = { q: string; a: string };
 export type Section = { h2: string; html: string };
 export type Img = { src: string; alt: string };
-export type DiagramName = 'cross-section' | 'odor' | 'shade' | 'green';
+export type DiagramName = 'cross-section' | 'green';
 export type Article = {
   slug: string;
   /** short label for menus, footer, sidebars (≤ 32 chars) */

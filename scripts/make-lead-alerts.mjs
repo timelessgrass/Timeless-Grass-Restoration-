@@ -47,8 +47,11 @@ const band = (a, b = a) => {
   const r = (k) => (a === b ? money(R[a][k]) : `${money(R[a][k])}–${money(R[b][k])}`);
   return `${P.essential.name} ${r('essential')} · ${P.premium.name} ${r('premium')}`;
 };
-const sizes = choices('clean', 'size');
-const BALLPARK = [[sizes[0], band(0)], [sizes[1], band(1)], [sizes[2], band(2, 3)], [sizes[3], band(4, 5)], [sizes[4], 'Custom quote after a look']];
+const sizeChoices = angle('clean').questions.find((x) => x.name === 'size').choices;
+const sizes = sizeChoices.map((c) => c.label);
+const BAND_BY_SIZE = [band(0), band(1), band(2, 3), band(4, 5), 'Custom quote after a look'];
+/* The landing pages and the published Instant Forms word some sizes differently (`form`), so map both. */
+const BALLPARK = sizeChoices.slice(0, 5).flatMap((c, i) => [...new Set([c.label, c.form ?? c.label])].map((k) => [k, BAND_BY_SIZE[i]]));
 const ballparkIml = `switch(1.data.size; ${BALLPARK.map(([k, v]) => `${q(k)}; ${q(v)}`).join('; ')}; ${q('Help them measure: 20 × 25 ft is 500 sq ft')})`;
 const dogs = choices('membership', 'dogs');
 const PLAN_BY_DOGS = dogs.map((d, i) => [d, `${M[i].name} · ${money(M[i].monthly)}/mo`]);

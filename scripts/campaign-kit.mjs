@@ -98,7 +98,7 @@ ANGLES.forEach((a, i) => {
   L(`- **Questions description:** ${cc(a.form.questionsIntro)}`);
   a.questions.forEach((q, j) => {
     L(`- **Custom question ${j + 1} (Multiple choice):** ${cc(q.label)}`);
-    q.choices.forEach((c) => L(`  - ${c.label}`));
+    q.choices.forEach((c) => L(`  - ${c.form ?? c.label}`));
   });
   L('- **Contact information:** Full name, Phone number, ZIP code');
   L(`- **Completion headline:** ${cc(a.form.ending.headline)}`);
@@ -145,7 +145,7 @@ if (out > -1) {
       row('Description', a.form.questionsIntro),
       ...a.questions.flatMap((q, j) => [
         row(`Question ${j + 1}`, q.label, { note: 'Multiple choice' }),
-        ...q.choices.map((c, n) => row(`  Answer ${n + 1}`, c.label)),
+        ...q.choices.map((c, n) => row(`  Answer ${n + 1}`, c.form ?? c.label)),
       ]),
       row('Contact information', 'Full name · Phone number · ZIP code', { count: false, copy: false }),
       group('Completion'),

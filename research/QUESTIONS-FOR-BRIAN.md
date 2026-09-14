@@ -1,6 +1,6 @@
 # Questions for Brian
 
-Last updated 2026-09-14. For whoever is working on the TIMELESS Turf Restoration site.
+Last updated 2026-09-14 (campaign items added in section 6). For whoever is working on the TIMELESS Turf Restoration site.
 
 The site states every item below as fact, but nothing on file backs it up: not the 2026-08-30 planning doc (prices and plan contents), not the 2026-09-04 call notes cited in `src/data/site.ts`, and not `research/WRITER-BRIEF.md`. While `PRELAUNCH = true` every page is noindex, so the copy can stay as it is for now. Each item needs an answer before launch.
 
@@ -24,9 +24,7 @@ Already settled, no need to ask: prices and what each plan includes (planning do
 3. **Email.** The site lists timelessgrass@gmail.com, the Grass & Greens address. Keep it, or set up one for this brand?
    - Change in: `brand.email`.
    - Answer:
-4. **Domain.** Is timelessturfrestoration.com registered, or does he want a different domain?
-   - Change in: `SITE_URL`.
-   - Answer:
+4. **Domain.** Settled 2026-09-14: timelessturfrestoration.com is live on Netlify (www redirects to it), and `SITE_URL` matches.
 5. **Google Business Profile.** Who creates it, and which address verifies it? It should be a service-area business with the address hidden. What business hours should it list? The site lists no hours today.
    - Answer:
 6. **Start year.** The About page says "Owner-operated since 2024". Is that right?
@@ -63,8 +61,8 @@ Already settled, no need to ask: prices and what each plan includes (planning do
 14. **Time on site.** The cost guide explains the $199 minimum with "about two hours on site". Is that accurate?
     - Search: `two hours on site`.
     - Answer:
-15. **How fast he replies.** The Facebook landing page (/fb/) says Brian will call or text "within one business day". Can he commit to that?
-    - Search: `business day` in `src/pages/fb/index.astro`.
+15. **How fast he replies.** All six ad pages (/lp/clean/, /lp/membership/, /lp/putting-green/ and the /fb/ follow-ups) say Brian will call or text "within one business day". Can he commit to that? The Instant Forms avoid the claim. Needed before ads run.
+    - Change in: `REPLY_TIME` in `src/data/campaigns.ts`.
     - Answer:
 16. **Free quotes and price changes.** Please confirm all three of these:
     - The header, the call-to-action band and the quote page promise a "Free, no-obligation quote". Is the on-site visit free if the customer says no?
@@ -73,7 +71,7 @@ Already settled, no need to ask: prices and what each plan includes (planning do
     - Search: `no-obligation`, `does not change unless`, `sell add-ons on the phone`, `rather than adjusting the invoice`.
     - Answer:
 17. **Products, dry time and safety.** The site says the products are "labeled for use on pet turf and are safe once the surface is dry". It also says turf is "dry enough to walk on the same day", and that a rental yard is "dry and usable within a few hours". Which enzyme, antimicrobial and algaecide products does he use, and what re-entry time do their labels give? These are safety claims, so they need to match the labels.
-    - Search: `safe once the surface is dry`, `pet-safe`, `walk on the same day`, `usable within a few hours`.
+    - Search: `safe once the surface is dry`, `pet-safe`, `walk on the same day`, `usable within a few hours`. The ad pages answer "Is it safe for kids and dogs?" with yes (`SAFE` in `src/data/campaigns.ts`), so this is needed before ads run.
     - Answer:
 18. **Photos and written records.** The planning doc includes before-and-after photos with every Premium Restoration. The site promises more than that:
     - a "written note of what was done" with every Premium Restoration (the pressure-washing warranty guide)
@@ -123,4 +121,21 @@ Already settled, no need to ask: prices and what each plan includes (planning do
 ## 5. What to ask him to send
 
 25. **Before-and-after photos from his own restoration jobs**, with each customer's OK to use them: a pet corner, a matted path, an algae strip and a putting green top-dress. The site has no before-and-after pairs from restoration jobs yet. Real pairs replace the "our work" note on the homepage (see "Adding content" in the README).
+    - Answer:
+
+## 6. Facebook campaign (added 2026-09-14)
+
+These are in the ad copy and the Instant Forms. A published Instant Form can't be edited, so ask before the forms go live.
+
+26. **Putting green restoration price.** The ad, the Instant Form intro and the /lp/putting-green/ hints say a typical backyard green runs $299–$899. That range is the Premium Restoration turf bands (up to 500 sq ft through 3,001–5,000 sq ft), not a green price from the planning doc. Is it right, with fresh sand included?
+    - Change in: `GREEN_RANGE` in `src/data/campaigns.ts`, then rerun `node scripts/campaign-kit.mjs`.
+    - Answer:
+27. **What a green restoration includes.** The ad and Instant Form say greens are cleared and brushed, cups and fringe cleaned, top-dressed with fresh sand, rolled and "speed-checked". Does every restoration include all five, including a speed check?
+    - Search: `speed-checked`, `cleans the cups`.
+    - Answer:
+28. **Community and golf greens.** The putting green form offers "HOA or community" and "Golf course or business". Will he quote those?
+    - Answer:
+29. **Photos from Grass & Greens.** Every service card and hero photo on this site came from the Grass & Greens site (install photos). OK to use them for the cleaning brand until cleaning photos arrive?
+    - Answer:
+30. **Photo of Brian** for the About page (optional).
     - Answer:

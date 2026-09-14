@@ -66,7 +66,6 @@ export const NEIGHBORHOODS_2: Neighborhood[] = [
       `HOA dues cover front-yard mowing only; turf and greens are separate.`,
     ],
     image: { src: '/assets/img/backyard-putting-green-from-the-street.jpg', alt: 'Backyard putting green viewed from the street' },
-    diagram: 'shade',
     sections: [
       { h2: 'Getting a crew past the gate', html: `<p>The community runs a 24-hour, live-guard gate rather than a code box. We confirm the visit date with you ahead of time so the gate expects the crew, and build in a few extra minutes for check-in.</p>` },
       { h2: 'Bluffs, Harbor Loft, South Island — different water on each side', html: `<div class="cards"><div><b>The Bluffs</b><p>Borders the salt marsh; humidity and salt spray sit on turf most of the year.</p></div><div><b>Harbor Loft and South Island</b><p>Border the Intracoastal directly, with dock traffic and waterway spray.</p></div><div><b>Interior lots</b><p>Course-facing; pine and oak litter is the bigger factor.</p></div></div><p>Bluffs-section turf gets checked for <a href="/turf-problems/black-patches-algae-on-artificial-grass/">algae</a> more closely.</p>` },
@@ -111,7 +110,6 @@ export const NEIGHBORHOODS_2: Neighborhood[] = [
       `City water is soft — white residue here is usually salt.`,
     ],
     image: { src: '/assets/img/artificial-turf-side-yard-concrete-edge.jpg', alt: 'Shaded artificial turf side yard along a concrete edge' },
-    diagram: 'shade',
     sections: [
       { h2: `A green built around Rees Jones's first solo design`, html: `<p>Arcadian Shores Golf Club opened in 1974 as Rees Jones's first solo design. <a href="/services/putting-green-restoration/">Putting green restoration</a> here follows the same clear, top-dress, brush and roll routine as any backyard green.</p>` },
       { h2: 'Where the algae actually starts', html: `<p>The course itself runs bunkers and lakes through its fairways, and the mature-tree lots around it carry the same shade-and-standing-water mix into nearby yards. A strip that stays damp and green-black under a fence line is <a href="/turf-problems/black-patches-algae-on-artificial-grass/">algae, not dirt</a>.</p>` },

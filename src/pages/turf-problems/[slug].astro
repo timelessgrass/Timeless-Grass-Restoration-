@@ -11,7 +11,7 @@ const svc = findService(p.service)!;
 const related = p.related.map(findProblem).filter(Boolean);
 const howtos = HOWTOS.filter((h) => (h.problems ?? []).includes(p.slug)).slice(0, 4);
 const a: Article = { slug: p.slug, short: p.short, title: p.title, description: p.description, h1: p.h1, lede: p.lede, question: p.question, answer: p.answer, image: p.image, sections: p.sections, faq: p.faq, updated: '2026-09-12',
-  diagram: p.cluster === 'odor' ? 'odor' : p.slug === 'black-patches-algae-on-artificial-grass' ? 'shade' : p.slug === 'putting-green-rolls-slow-or-bumpy' ? 'green' : p.slug === 'water-pooling-on-artificial-turf' ? 'cross-section' : undefined };
+  diagram: p.slug === 'putting-green-rolls-slow-or-bumpy' ? 'green' : p.slug === 'water-pooling-on-artificial-turf' ? 'cross-section' : undefined };
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Turf problems', item: '/turf-problems/' }, { name: p.short, item: `/turf-problems/${p.slug}/` }];
 ---
 <ArticleLayout a={a} kicker={CLUSTERS[p.cluster]} crumbs={crumbs} description={p.description} priceLine={svc.priceLine} priceLabel={svc.name} plan={svc.plan === 'premium' ? 'Premium Restoration' : svc.plan === 'essential' ? 'Essential Clean' : undefined}

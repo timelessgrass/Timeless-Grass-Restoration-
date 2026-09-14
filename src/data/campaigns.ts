@@ -5,8 +5,8 @@
  *  - a landing page with a two-step form, /lp/<slug>/, for ads that send people to the website
  *  - a follow-up page, /fb/<slug>/, linked from the Instant Form's completion screen
  *
- * The landing-page form asks the Instant Form's questions with the same answers, so a lead reaches Brian
- * in the same shape wherever it came from. Change a question here and both stay in step (then regenerate
+ * The landing-page form asks the Instant Form's questions with the same answers (except the size wording, see
+ * SIZE_CHOICES), so a lead reaches Brian in the same shape wherever it came from. Change a question here and both stay in step (then regenerate
  * the kit; a published Instant Form can't be edited, so a changed form is a new form in Ads Manager).
  *
  * Claims: nothing here states anything research/QUESTIONS-FOR-BRIAN.md still has open (cancellation terms,
@@ -22,7 +22,11 @@ export const REPLY_TIME = 'within one business day';
 /** The same promise as a short step label. */
 const REPLY_LABEL = 'Within 1 business day';
 
-export type Choice = { label: string; /** shown under the question on the landing page when picked (may contain <b>) */ hint?: string };
+export type Choice = {
+  label: string;
+  /** shown under the question on the landing page when picked (may contain <b>) */ hint?: string;
+  /** the published Instant Form's wording, when the landing page words this answer differently */ form?: string;
+};
 export type Question = { name: string; label: string; choices: Choice[] };
 export type Faq = { q: string; a: string };
 export type Tip = { icon: string; title: string; text: string };
@@ -53,7 +57,17 @@ const sizeHint = (a: number, b = a) => `Ballpark: ${P.essential.name} <b>${range
 export const GREEN_RANGE = `${money(R[0].premium!)}–${money(R[5].premium!)}`;
 const jobImg = (file: string) => ({ src: `/assets/img/jobs/${file}-640.webp`, srcset: `/assets/img/jobs/${file}-640.webp 640w, /assets/img/jobs/${file}.webp 1080w`, width: 1080, height: 1080 });
 
-const SIZE_CHOICES = ['Up to 500 sq ft', '500–1,000 sq ft', '1,000–2,000 sq ft', '2,000–5,000 sq ft', 'Over 5,000 sq ft', 'Not sure'];
+/** The landing pages word the sizes like the price table, so no two answers share a number. The Instant Forms were
+ *  published on 2026-09-14 with the older wording (500 appears in two answers); `form` keeps that wording so the
+ *  kit still matches Ads Manager, and the Make router maps both. */
+const SIZE_CHOICES: Choice[] = [
+  { label: 'Up to 500 sq ft' },
+  { label: '501–1,000 sq ft', form: '500–1,000 sq ft' },
+  { label: '1,001–2,000 sq ft', form: '1,000–2,000 sq ft' },
+  { label: '2,001–5,000 sq ft', form: '2,000–5,000 sq ft' },
+  { label: 'Over 5,000 sq ft' },
+  { label: 'Not sure' },
+];
 const NOT_SURE = `No problem. A 20 × 25 ft yard is 500 sq ft, and ${owner} can measure.`;
 
 const WHERE: Faq = { q: 'Where do you work?', a: `${area.line}. That includes Myrtle Beach, North Myrtle Beach, Carolina Forest and Little River.` };
@@ -68,7 +82,7 @@ export const ANGLES: Angle[] = [
     slug: 'clean',
     name: 'Turf cleaning quote',
     questions: [
-      { name: 'size', label: 'About how big is the turf?', choices: SIZE_CHOICES.map((label, i) => ({ label, hint: [sizeHint(0), sizeHint(1), sizeHint(2, 3), sizeHint(4, 5), `Big yard. ${owner} prices it after a look.`, NOT_SURE][i] })) },
+      { name: 'size', label: 'About how big is the turf?', choices: SIZE_CHOICES.map((c, i) => ({ ...c, hint: [sizeHint(0), sizeHint(1), sizeHint(2, 3), sizeHint(4, 5), `Big yard. ${owner} prices it after a look.`, NOT_SURE][i] })) },
       { name: 'dogs', label: 'Do dogs use it?', choices: [
         { label: 'No dogs', hint: `No pets and light dirt? The <b>${P.essential.name}</b> is usually enough.` },
         { label: '1 dog', hint: `Dog yards get the <b>${P.premium.name}</b>, with pet-odor and antimicrobial treatment.` },
@@ -122,7 +136,7 @@ export const ANGLES: Angle[] = [
     slug: 'membership',
     name: 'Turf membership',
     questions: [
-      { name: 'size', label: 'About how big is the turf?', choices: SIZE_CHOICES.map((label) => ({ label, hint: label === 'Not sure' ? NOT_SURE : undefined })) },
+      { name: 'size', label: 'About how big is the turf?', choices: SIZE_CHOICES.map((c) => ({ ...c, hint: c.label === 'Not sure' ? NOT_SURE : undefined })) },
       { name: 'dogs', label: 'Do dogs use it?', choices: [
         { label: 'No dogs', hint: `<b>${M[0].name}</b> (${money(M[0].monthly)}/mo) covers light upkeep, four times a year.` },
         { label: '1 dog', hint: `<b>${M[1].name}</b> (${money(M[1].monthly)}/mo) is a ${P.premium.name} every quarter, with pet-odor treatment.` },

@@ -5,10 +5,9 @@ import AnswerBox from '../../components/AnswerBox.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import CtaStrip from '../../components/CtaStrip.astro';
 import Steps from '../../components/Steps.astro';
-import Icon from '../../components/Icon.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
 import { SERVICES } from '../../data/services';
 import { brand, area, pricing as P, money } from '../../data/site';
-import { SERVICE_ICON } from '../../lib/icons';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Services', item: '/services/' }];
 const q = 'What does TIMELESS Turf Restoration do?';
 const a = `TIMELESS Turf Restoration cleans, treats and restores existing artificial turf and synthetic putting greens on ${area.name}: deep cleaning, pet odor removal, antimicrobial sanitizing, algae and mold removal, hard-water and stain removal, power brushing, infill replenishment, putting green restoration, seam and edge repair, and post-storm cleanup. We do not install new turf; our sister company does.`;
@@ -24,8 +23,8 @@ const groups = [
     <section class:list={['sec', { 'sec--flush': gi > 0 }]}>
       <div class="wrap">
         <div class="sec__head" data-reveal><p class="kicker">{g.k}</p><h2>{g.h}</h2></div>
-        <div class="svc-grid" data-stagger>
-          {g.items.map((s) => <a class="svc-card" href={`/services/${s.slug}/`}><span class="svc-card__ic"><Icon name={SERVICE_ICON[s.slug] ?? 'sparkle'} /></span><h3>{s.name}</h3><p>{s.short}</p><span class="price-chip"><Icon name="tag" />{s.priceLine.split(' · ')[0]}</span><Icon name="arrow" class="svc-card__go" /></a>)}
+        <div class="svc-grid svc-grid--5" data-stagger>
+          {g.items.map((s) => <ServiceCard s={s} />)}
         </div>
       </div>
     </section>

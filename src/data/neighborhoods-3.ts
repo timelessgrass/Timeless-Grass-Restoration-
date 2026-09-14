@@ -113,7 +113,6 @@ export const NEIGHBORHOODS_3: Neighborhood[] = [
       `Outside Emmens Preserve, most lots are small with one dog.`,
     ],
     image: { src: '/assets/img/artificial-turf-side-yard-concrete-edge.jpg', alt: 'Artificial turf in a small Market Common side yard against a concrete edge' },
-    diagram: 'odor',
     sections: [
       { h2: 'An urban village, not a subdivision', html: `<p>The Market Common opened in 2008 as a 114-acre mixed-use district on the old Myrtle Beach Air Force Base, homes set against the shops rather than a standard subdivision. Same <a href="/services/artificial-turf-cleaning/">cleaning process</a> as anywhere in <a href="/service-areas/myrtle-beach/">Myrtle Beach</a>.</p>` },
       { h2: `Emmens Preserve: the lawn's covered, the turf usually isn't`, html: `<div class="tbl"><table><tr><th>HOA dues cover</th><th>Still needs a visit</th></tr><tr><td>Lawn, shrub care</td><td>Artificial turf, pet odor</td></tr><tr><td>Irrigation, pool</td><td>Shared green top-dress &amp; roll</td></tr></table></div><p>29 acres of parks include a shared <a href="/services/putting-green-restoration/">putting green</a>, bocce court and dog park.</p>` },

@@ -200,7 +200,6 @@ export const HOWTOS: Article[] = [
       'Flush first, enzyme second, sanitizer last if at all. Sanitizer before enzyme kills the enzyme.',
       'Three weekly rounds. If a humid morning still smells after that, the infill has to come out.',
     ],
-    diagram: 'odor',
     sections: [
       { h2: 'Why an enzyme, in one paragraph', html: `<p>Fresh urine is mostly water and urea. It drains through the blades in seconds and dries in the sand infill and on the backing. Bacteria there break the urea down and give off ammonia, which is the smell, and every damp morning restarts them. An enzyme cleaner contains proteins that break urea, uric acid and the protein residue into pieces the bacteria cannot use, so the smell stops because the food is gone. The <a href="/turf-problems/artificial-grass-smells-like-dog-pee/">problem page</a> covers the why in more depth; this page is the how.</p>` },
       { h2: 'What you need', html: `<ul><li>An enzyme cleaner labeled for pet turf or artificial grass. Buy the concentrate; a ready-to-use bottle covers a doormat.</li><li>A two-gallon pump sprayer, or a hose-end sprayer if the product is made for one.</li><li>A hose with a shower or fan nozzle.</li><li>An evening. Enzymes are proteins; sun and heat dry them out and denature them before they have done anything.</li></ul>` },
@@ -477,7 +476,6 @@ export const HOWTOS: Article[] = [
       'The strip is wet because of shade, airflow or drainage. Fix one of those or it comes back.',
       'No chlorine bleach, no pressure washer, and vinegar alone will not clear established growth.',
     ],
-    diagram: 'shade',
     sections: [
       { h2: 'What it needs to grow', html: `<p>Three things, all at once: moisture, shade, and food. On the coast, moisture is a given from spring through fall; humidity sits near 85 percent before dawn and the wettest months run June to September. Shade comes from the house, the fence, a deck, a hedge, and it is why mold appears in strips and corners rather than across the yard. Food is the organic layer: pollen from March and April, leaf litter from the live oaks, dust, dog hair, whatever has settled into the fibers and started to rot. Take away any one of the three and it stops. The <a href="/turf-problems/black-patches-algae-on-artificial-grass/">black patches page</a> covers telling mold from algae, which need the same conditions and get the same treatment.</p>` },
       { h2: 'What you need', html: `<ul><li>A leaf blower and a stiff synthetic-bristle broom.</li><li>A hydrogen-peroxide-based oxidizer or an algaecide labeled for artificial turf or outdoor synthetic surfaces. Products sold for roofs and siding are often bleach-based; read the label.</li><li>A pump sprayer.</li><li>A dry, overcast day, or an evening. Not rain, and not full sun, which dries the product before it works.</li></ul>` },

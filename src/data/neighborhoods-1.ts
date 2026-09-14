@@ -115,7 +115,6 @@ export const NEIGHBORHOODS_1: Neighborhood[] = [
       `Pine Lakes Estates lots run up to half an acre.`,
     ],
     image: { src: '/assets/img/backyard-putting-green-from-the-street.jpg', alt: 'Backyard putting green seen from the street under mature trees' },
-    diagram: 'shade',
     sections: [
       { h2: 'The oldest course on the Strand', html: `<p>Pine Lakes Country Club opened in 1927 as Ocean Forest Country Club, listed on the National Register under that name and nicknamed "The Granddaddy" as the first golf club built in Myrtle Beach.</p>` },
       { h2: 'Bigger lots, more oak canopy, more debris', html: `<p>Homes here sit further apart under mature, moss-draped oaks than in a typical newer subdivision — more space means more <a href="/guides/coastal-turf-maintenance-calendar/">seasonal debris</a>, not less.</p>` },

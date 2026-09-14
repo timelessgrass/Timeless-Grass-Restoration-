@@ -9,6 +9,7 @@ import IconStats from '../components/IconStats.astro';
 import Steps from '../components/Steps.astro';
 import CtaStrip from '../components/CtaStrip.astro';
 import ProofGallery from '../components/ProofGallery.astro';
+import ServiceCard from '../components/ServiceCard.astro';
 import { brand, area, pricing as P, money } from '../data/site';
 import { SERVICES } from '../data/services';
 import { ALL_TOWNS as TOWNS, ALL_PROBLEMS as PROBLEMS } from '../data/registry';
@@ -106,8 +107,8 @@ const quiz = {
       <div><p class="kicker">What we do</p><h2>Cleaning, odor removal, repair &amp; restoration</h2><p>We restore turf that is already in the ground, priced by square foot.</p></div>
       <a class="textlink" href="/services/">All services <Icon name="arrow" class="ic--sm" /></a>
     </div>
-    <div class="svc-grid" data-stagger>
-      {SERVICES.map((s) => <a class="svc-card" href={`/services/${s.slug}/`}><span class="svc-card__ic"><Icon name={SERVICE_ICON[s.slug] ?? 'sparkle'} /></span><h3>{s.name}</h3><p>{s.short}</p><span class="price-chip"><Icon name="tag" />{s.priceLine.split(' · ')[0]}</span><Icon name="arrow" class="svc-card__go" /></a>)}
+    <div class="svc-grid svc-grid--5" data-stagger>
+      {SERVICES.map((s) => <ServiceCard s={s} />)}
     </div>
   </div>
 </section>

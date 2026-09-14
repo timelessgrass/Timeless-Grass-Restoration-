@@ -88,11 +88,11 @@ Current copy, in page order:
 - **H2:** Get your price
   - 1 · Your turf
   - 2 · Where to send it
-- **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 500–1,000 sq ft · 1,000–2,000 sq ft · 2,000–5,000 sq ft · Over 5,000 sq ft · Not sure
+- **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 501–1,000 sq ft · 1,001–2,000 sq ft · 2,001–5,000 sq ft · Over 5,000 sq ft · Not sure
 - **   hint:** when "Up to 500 sq ft" is picked: Ballpark: Essential Clean $199 · Premium Restoration $299
-- **   hint:** when "500–1,000 sq ft" is picked: Ballpark: Essential Clean $249 · Premium Restoration $399
-- **   hint:** when "1,000–2,000 sq ft" is picked: Ballpark: Essential Clean $299–$349 · Premium Restoration $499–$599
-- **   hint:** when "2,000–5,000 sq ft" is picked: Ballpark: Essential Clean $449–$599 · Premium Restoration $749–$899
+- **   hint:** when "501–1,000 sq ft" is picked: Ballpark: Essential Clean $249 · Premium Restoration $399
+- **   hint:** when "1,001–2,000 sq ft" is picked: Ballpark: Essential Clean $299–$349 · Premium Restoration $499–$599
+- **   hint:** when "2,001–5,000 sq ft" is picked: Ballpark: Essential Clean $449–$599 · Premium Restoration $749–$899
 - **   hint:** when "Over 5,000 sq ft" is picked: Big yard. Brian prices it after a look.
 - **   hint:** when "Not sure" is picked: No problem. A 20 × 25 ft yard is 500 sq ft, and Brian can measure.
 - **Form question:** Do dogs use it? — answers: No dogs · 1 dog · 2 or more dogs
@@ -434,7 +434,7 @@ Current copy, in page order:
 - **H2:** Find your plan
   - 1 · Your turf
   - 2 · Where to send it
-- **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 500–1,000 sq ft · 1,000–2,000 sq ft · 2,000–5,000 sq ft · Over 5,000 sq ft · Not sure
+- **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 501–1,000 sq ft · 1,001–2,000 sq ft · 2,001–5,000 sq ft · Over 5,000 sq ft · Not sure
 - **   hint:** when "Not sure" is picked: No problem. A 20 × 25 ft yard is 500 sq ft, and Brian can measure.
 - **Form question:** Do dogs use it? — answers: No dogs · 1 dog · 2 or more dogs
 - **   hint:** when "No dogs" is picked: Essential Care ($89/mo) covers light upkeep, four times a year.

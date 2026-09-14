@@ -25,7 +25,7 @@ const crumbs = [{ name: 'Home', item: '/' }, { name: 'Services', item: '/service
 const problems = s.problems.map((slug) => ALL_PROBLEMS.find((p) => p.slug === slug)).filter(Boolean);
 const related = s.related.map((slug) => serviceBySlug(slug)).filter(Boolean);
 const plan = s.plan === 'premium' ? 'Premium Restoration' : s.plan === 'essential' ? 'Essential Clean' : s.slug === 'putting-green-restoration' ? 'Putting green restoration' : s.slug === 'turf-repair' ? 'Turf repair' : undefined;
-const DIAGRAMS: Record<string, DiagramName> = { 'artificial-turf-cleaning': 'cross-section', 'pet-odor-removal': 'odor', 'antimicrobial-sanitizing': 'odor', 'algae-and-mold-removal': 'shade', 'infill-replenishment': 'cross-section', 'putting-green-restoration': 'green' };
+const DIAGRAMS: Record<string, DiagramName> = { 'artificial-turf-cleaning': 'cross-section', 'infill-replenishment': 'cross-section', 'putting-green-restoration': 'green' };
 const diagram = DIAGRAMS[s.slug];
 const price = s.priceLine.split(' · ')[0];
 const hasJobs = availableJobs(s.slug).length > 0;

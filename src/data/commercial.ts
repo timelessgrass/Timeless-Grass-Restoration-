@@ -83,7 +83,6 @@ export const COMMERCIAL: Article[] = [
       'Saturated infill gets extracted and replaced, not just re-treated.',
       'Scheduled around intake, nap and pickup hours, not business hours.',
     ],
-    diagram: 'odor',
     sections: [
       { h2: 'The highest load on the Strand', html: `<p><a href="/service-areas/socastee/">Socastee</a> alone holds four dog daycare and boarding operators in one ZIP code — the highest-traffic turf on the Strand, since every dog on the roster uses the same square feet, all day.</p>` },
       { h2: 'What a daily staff routine can and cannot fix', html: `<p>Daily hosing handles the surface. It cannot reach residue worked into the infill and backing, which is where the ammonia smell at pickup actually lives. Our monthly visit handles that with an <a href="/services/antimicrobial-sanitizing/">enzyme and antimicrobial</a> pass.</p>` },
@@ -318,7 +317,6 @@ export const COMMERCIAL: Article[] = [
       'Scheduling around resident routines and quiet hours matters too.',
     ],
     image: { src: '/assets/img/putting-green-shared-amenity-lawn.jpg', alt: 'Shared amenity putting green at a community' },
-    diagram: 'shade',
     sections: [
       { h2: 'Why algae here is a safety issue, not a stain', html: `<div class="callout callout--warn"><b>Heads up.</b> Algae on a shaded walkway is slippery footing for a resident with a cane or walker — worth treating before it grows, not after.</div>` },
       { h2: 'Small yards, and why they still need a professional visit', html: `<p><a href="/service-areas/north-myrtle-beach/">North Myrtle Beach</a>, Little River and Sunset Beach favor small, low-upkeep yards on purpose. A small yard with one dog still concentrates urine into the same few square feet — the odor shows up faster, not slower.</p>` },
@@ -352,7 +350,6 @@ export const COMMERCIAL: Article[] = [
       'Weekly or biweekly, tied to patient volume, fits a busy practice.',
       'Small footprint, low-end price, despite higher treatment intensity.',
     ],
-    diagram: 'odor',
     sections: [
       { h2: 'The smallest, hardest-working turf we service', html: `<p>Often under 100 square feet, a clinic relief area sees every patient at least once a day — a higher urine load per square foot than any <a href="/commercial/dog-daycares-and-boarding/">daycare run</a> we service.</p>` },
       { h2: 'Disinfecting, not just deodorizing', html: `<ol class="steps"><li><strong>Flush.</strong> Moves loose residue out.</li><li><strong><a href="/services/pet-odor-removal/">Enzyme treatment</a>.</strong> Breaks down what's left.</li><li><strong><a href="/services/antimicrobial-sanitizing/">Antimicrobial pass</a>.</strong> Targets the bacteria.</li></ol>` },

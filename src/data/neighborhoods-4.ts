@@ -68,7 +68,6 @@ export const NEIGHBORHOODS_4: Neighborhood[] = [
       `Front yards need 40% sod — check before a full turf swap.`,
     ],
     image: { src: '/assets/img/backyard-putting-green-from-the-street.jpg', alt: 'Backyard putting green seen from the street in a golf course neighborhood' },
-    diagram: 'shade',
     sections: [
       { h2: 'Fifty-four holes, and which one is behind your house', html: `<p>Three courses wrap the community: Maples backs wetlands and marsh, Byrd backs man-made lakes. Both hold more humidity and organic debris than the drier Jones side — same <a href="/services/algae-and-mold-removal/">algae and mold removal</a>, shorter interval.</p>` },
       { h2: `Front-yard turf and the ASC's sod minimum`, html: `<p>New construction must keep 40% sod in the front yard. A full synthetic front-lawn conversion should clear the ASC first; a backyard green or cleaning what's down doesn't.</p>` },

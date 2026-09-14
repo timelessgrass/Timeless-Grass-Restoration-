@@ -21,7 +21,6 @@ export const HOWTOS_2: Article[] = [
       'Fence lines, north-facing walls and the strip under a deck are the spots to check first.',
       'A wire brush pulls it faster but shreds fibers. Hand-pull or scrape with a plastic tool instead.',
     ],
-    diagram: 'shade',
     image: { src: '/assets/img/artificial-lawn-fenced-yard-rock-border.jpg', alt: 'Artificial lawn along a fenced, shaded border' },
     sections: [
       { h2: 'Why moss picks these spots', html: `<p>Moss is not algae, even though both show up in the same shaded corners and both get called "the green stuff" by whoever finds it first. Algae is a single-celled organism that forms a thin film on the surface of the fiber and backing. Moss is an actual small plant, and it needs something to root into, not just a wet surface to sit on. On turf, that something is the thin layer of decomposed pollen, leaf litter and dust that builds up in any spot that stays shaded and damp longer than the rest of the yard dries. Pull the moss and leave that layer, and it grows back within a season. Strip the layer along with the moss, and it usually does not.</p>` },
