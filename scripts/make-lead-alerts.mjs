@@ -53,25 +53,25 @@ const ballparkIml = `switch(1.data.size; ${BALLPARK.map(([k, v]) => `${q(k)}; ${
 const dogs = choices('membership', 'dogs');
 const PLAN_BY_DOGS = dogs.map((d, i) => [d, `${M[i].name} · ${money(M[i].monthly)}/mo`]);
 const planIml = `switch(1.data.dogs; ${PLAN_BY_DOGS.map(([k, v]) => `${q(k)}; ${q(v)}`).join('; ')}; ${q('Ask about dogs and how the yard is used')})`;
-const greenIml = `if(contains(ifempty(1.data.green_where; ""); "HOA"); "Community green: start with a site walk"; if(contains(ifempty(1.data.green_where; ""); "Golf"); "Business green: start with a site walk"; ${q(`Typical backyard green ${GREEN_RANGE}, quoted after a look`)}))`;
-const smsText = (firstNameIml) => `Hi%20${firstNameIml}%2C%20${encodeURIComponent(`it's ${brand.owner} with ${brand.name}. I got your request. Is now a good time to talk?`)}`;
+const greenIml = `if(contains(ifempty(1.data.green_where; ""); "HOA"); "Community green, so the quote starts with a site walk"; if(contains(ifempty(1.data.green_where; ""); "Golf"); "Business green, so the quote starts with a site walk"; ${q(`Typical backyard green restoration ${GREEN_RANGE}, quoted after a look`)}))`;
+const smsText = (firstNameIml) => `Hi%20${firstNameIml}%2C%20${encodeURIComponent(`it's ${brand.owner} with ${brand.name}. I got your request. When is a good time to talk?`)}`;
 
 /* ---------- the email ---------- */
 const F = 'font-family:Arial,Helvetica,sans-serif;';
-const row = ({ label, value, style = '' }) => `
-<tr style="${style}"><td class="lbl" style="${F}width:38%;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;">${label}</td><td class="val" style="${F}padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;">${value}</td></tr>`;
+const row = ({ label, value, style = '', last = false }) => `
+<tr style="${style}"><td class="lbl" style="${F}width:38%;padding:12px 18px;${last ? 'border-bottom:0;' : 'border-bottom:1px solid #e2e8d9;'}font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;">${label}</td><td class="val" style="${F}padding:12px 18px;${last ? 'border-bottom:0;' : 'border-bottom:1px solid #e2e8d9;'}font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;word-break:break-word;overflow-wrap:anywhere;">${value}</td></tr>`;
 const srcRow = ([label, value]) => `
-<tr><td style="${F}width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;">${label}</td><td style="${F}padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;">${value}</td></tr>`;
+<tr><td style="${F}width:38%;padding:5px 10px 5px 0;font-size:12px;color:#7a8874;vertical-align:top;">${label}</td><td style="${F}padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;">${value}</td></tr>`;
 const email = (t) => `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>${t.title}</title>
-<style>@media only screen and (max-width:480px){.px{padding-left:18px!important;padding-right:18px!important}.h1{font-size:25px!important}.lbl{width:36%!important;padding-left:14px!important;padding-right:8px!important}.val{padding-left:8px!important;padding-right:14px!important} }</style></head>
+<style>@media only screen and (max-width:480px){.px{padding-left:18px!important;padding-right:18px!important}.h1{font-size:25px!important}.lbl{width:36%!important;padding-left:14px!important;padding-right:8px!important}.val{padding-left:8px!important;padding-right:14px!important}.bsub{display:none!important} }</style></head>
 <body style="margin:0;padding:0;background:#eef2ea;-webkit-text-size-adjust:100%;">
-<div style="display:none;max-height:0;overflow:hidden;">${t.preheader}</div>
+<div style="display:none;max-height:0;overflow:hidden;">${t.preheader}${'&#847;&zwnj;&nbsp;'.repeat(40)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef2ea;"><tr><td align="center" style="padding:28px 12px 36px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;">
 <tr><td style="padding:0 6px 14px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-<td style="${F}font-size:15px;font-weight:800;letter-spacing:3px;color:#0c1809;">TIMELESS<span style="font-size:10px;font-weight:700;letter-spacing:2px;color:#2e7a0b;">&nbsp;&nbsp;TURF RESTORATION</span></td>
-<td align="right"><span style="${F}display:inline-block;padding:5px 11px;border-radius:999px;background:${t.accent};color:${t.accentInk};font-size:11px;font-weight:700;letter-spacing:1.2px;">${t.badge}</span></td>
+<td style="${F}font-size:15px;font-weight:800;letter-spacing:3px;color:#0c1809;">TIMELESS<span class="bsub" style="font-size:10px;font-weight:700;letter-spacing:2px;color:#2e7a0b;">&nbsp;&nbsp;TURF RESTORATION</span></td>
+<td align="right"><span style="${F}display:inline-block;padding:5px 11px;border-radius:999px;background:${t.accent};color:${t.accentInk};font-size:11px;font-weight:700;letter-spacing:1.2px;white-space:nowrap;">${t.badge}</span></td>
 </tr></table></td></tr>
 <tr><td style="background:#ffffff;border:1px solid #dde3d5;border-radius:18px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td class="px" style="background:#0c1809;border-radius:17px 17px 0 0;padding:30px 34px 28px;">
@@ -121,7 +121,7 @@ const organic = (v) => email({
     { label: 'Email', value: link(`mailto:${v.emailRaw}`, v.email) },
     { label: 'ZIP code', value: v.zip },
     { label: 'Wants', value: v.plan },
-    { label: 'Their note', value: `<span style="font-weight:400;white-space:pre-line;">${v.message}</span>` },
+    { label: 'Their note', value: `<span style="font-weight:400;white-space:pre-line;">${v.message}</span>`, last: true },
   ],
   footer: `Quote form on ${v.page}<br>Sent automatically by Make for ${brand.name}`,
 });
@@ -150,11 +150,11 @@ const facebook = (v) => email({
     { label: v.q2Label, value: v.q2, style: v.hide },
     { label: v.q3Label, value: v.q3, style: v.hide },
     { label: 'Phone', value: link(`tel:${v.digits}`, v.phone) },
-    { label: 'ZIP code', value: v.zip },
+    { label: 'ZIP code', value: v.zip, last: true },
   ],
   hint: `${v.hintLabel}: <b>${v.hint}</b>`,
   source: [['How they came in', v.medium], ['Platform', v.platform], ['Campaign', v.campaign], ['Ad set', v.adset], ['Ad', v.ad], ['Page or form', v.page]],
-  footer: `Facebook campaign lead · form ${v.formName}<br>Sent automatically by Make for ${brand.name}`,
+  footer: `Campaign lead · form ${v.formName}<br>Sent automatically by Make for ${brand.name}`,
 });
 const facebookMake = facebook({
   kicker: iml('3.kicker'), badge: iml('upper(3.label)'), accent: iml('3.accent'), accentInk: iml('3.accent_ink'),
@@ -179,19 +179,19 @@ const BASE_VARS = [
   ['page', 'ifempty(1.data.page; 1.site_url)'],
 ];
 const SERVICE_VARS = [
-  ['label', `if(${UPDATE}; "Lead update"; switch(2.service; "clean"; "Turf cleaning"; "membership"; "Membership"; "putting-green"; "Putting green"; "Facebook lead"))`],
-  ['kicker', `if(${UPDATE}; "Picked a time to talk"; switch(2.service; "clean"; "New turf cleaning lead"; "membership"; "New membership lead"; "putting-green"; "New putting green lead"; "New Facebook lead"))`],
+  ['label', `if(${UPDATE}; "Lead update"; switch(2.service; "clean"; "Turf cleaning"; "membership"; "Membership"; "putting-green"; "Green restoration"; "Facebook lead"))`],
+  ['kicker', `if(${UPDATE}; "Picked a time to talk"; switch(2.service; "clean"; "New turf cleaning lead"; "membership"; "New membership lead"; "putting-green"; "New putting green restoration lead"; "New Facebook lead"))`],
   ['accent', `if(${UPDATE}; "#4a5a45"; switch(2.service; "membership"; "#d6a816"; "putting-green"; "#8ad132"; "#2e7a0b"))`],
   ['accent_ink', `if(${UPDATE}; "#ffffff"; switch(2.service; "membership"; "#0c1809"; "putting-green"; "#0c1809"; "#ffffff"))`],
   ['rows_title', `if(${UPDATE}; "THEIR UPDATE"; "THEIR ANSWERS")`],
   ['q1_label', `if(${UPDATE}; "Best time"; switch(2.service; "putting-green"; "Green size"; "other"; "Form"; "Turf size"))`],
   ['q1', `if(${UPDATE}; ifempty(1.data.best_time; "No preference"); switch(2.service; "putting-green"; ifempty(1.data.green_size; "Not answered"); "other"; 1.form_name; ifempty(1.data.size; "Not answered")))`],
-  ['q2_label', 'switch(2.service; "putting-green"; "What it is doing"; "Dogs")'],
+  ['q2_label', 'switch(2.service; "putting-green"; "What the green is doing"; "Dogs")'],
   ['q2', 'switch(2.service; "putting-green"; ifempty(1.data.green_issue; "Not answered"); ifempty(1.data.dogs; "Not answered"))'],
   ['q3_label', 'switch(2.service; "clean"; "Bothers them most"; "membership"; "Plan they picked"; "putting-green"; "Where the green is"; "Details")'],
   ['q3', 'switch(2.service; "clean"; ifempty(1.data.issue; "Not answered"); "membership"; ifempty(1.data.plan_pick; "Not answered"); "putting-green"; ifempty(1.data.green_where; "Not answered"); "See the form")'],
   ['hide', `if(${UPDATE}; "display:none;"; if(2.service = "other"; "display:none;"; ""))`],
-  ['hint_label', `if(${UPDATE}; "Next"; switch(2.service; "clean"; "Ballpark"; "membership"; "Suggested plan"; "putting-green"; "Pricing"; "Next"))`],
+  ['hint_label', `if(${UPDATE}; "Next"; switch(2.service; "clean"; "Ballpark"; "membership"; "Suggested plan"; "putting-green"; "Restoration pricing"; "Next"))`],
   ['hint', `if(${UPDATE}; "Their answers came in with the first request. Match this to it by phone."; switch(2.service; "clean"; ${ballparkIml}; "membership"; ${planIml}; "putting-green"; ${greenIml}; "Call and ask what they need."))`],
 ];
 
@@ -237,8 +237,8 @@ const facebookBlueprint = (hook) => {
           '🧽 New turf cleaning lead: {{1.data.name}} · {{ifempty(1.data.size; "size not given")}} ({{2.medium}})', -300),
         route(8, 'Membership lead', [[cond('{{2.service}}', 'text:equal', 'membership'), notUpdate]],
           '📅 New membership lead: {{1.data.name}} · {{ifempty(1.data.plan_pick; "no plan picked")}} ({{2.medium}})', 0),
-        route(9, 'Putting green lead', [[cond('{{2.service}}', 'text:equal', 'putting-green'), notUpdate]],
-          '⛳ New putting green lead: {{1.data.name}} · {{ifempty(1.data.green_where; "location not given")}} ({{2.medium}})', 300),
+        route(9, 'Putting green restoration lead', [[cond('{{2.service}}', 'text:equal', 'putting-green'), notUpdate]],
+          '⛳ Putting green restoration lead: {{1.data.name}} · {{ifempty(1.data.green_where; "location not given")}} ({{2.medium}})', 300),
         route(10, 'Anything else', [[cond('{{2.service}}', 'text:equal', 'other'), notUpdate]],
           '📩 New Facebook lead: {{1.data.name}} ({{1.form_name}})', 600),
       ] },
@@ -303,18 +303,19 @@ if (preview) {
     const medium = form.includes('instant-') ? 'Facebook Instant Form' : form.includes('lp-') ? 'Website landing page' : form.includes('fb-') ? 'Follow-up page' : 'Website form';
     const up = medium === 'Follow-up page';
     const pick = (pairs, k, d) => (pairs.find(([x]) => x === k) || [0, d])[1];
-    const green = (data.green_where || '').includes('HOA') ? 'Community green: start with a site walk' : (data.green_where || '').includes('Golf') ? 'Business green: start with a site walk' : `Typical backyard green ${GREEN_RANGE}, quoted after a look`;
-    const s = { clean: 'Turf cleaning', membership: 'Membership', 'putting-green': 'Putting green' }[service];
+    const green = (data.green_where || '').includes('HOA') ? 'Community green, so the quote starts with a site walk' : (data.green_where || '').includes('Golf') ? 'Business green, so the quote starts with a site walk' : `Typical backyard green restoration ${GREEN_RANGE}, quoted after a look`;
+    const s = { clean: 'Turf cleaning', membership: 'Membership', 'putting-green': 'Putting green restoration' }[service];
+    const badgeText = { 'putting-green': 'Green restoration' }[service] || s;
     return facebook({
-      kicker: up ? 'Picked a time to talk' : `New ${s.toLowerCase()} lead`, badge: (up ? 'Lead update' : s).toUpperCase(),
+      kicker: up ? 'Picked a time to talk' : `New ${s.toLowerCase()} lead`, badge: (up ? 'Lead update' : badgeText).toUpperCase(),
       accent: up ? '#4a5a45' : { membership: '#d6a816', 'putting-green': '#8ad132' }[service] || '#2e7a0b', accentInk: up || service === 'clean' ? '#ffffff' : '#0c1809',
       name: data.name, zip: data.zip, when: 'Mon, Sep 14 · 2:41 PM', medium, platform: extra.platform || 'Facebook', digits: '8435550100', phone: data.phone, first: data.name.split(' ')[0], sms: smsText(enc(data.name.split(' ')[0])),
       rowsTitle: up ? 'THEIR UPDATE' : 'THEIR ANSWERS',
       q1Label: up ? 'Best time' : service === 'putting-green' ? 'Green size' : 'Turf size', q1: up ? data.best_time : service === 'putting-green' ? data.green_size : data.size,
-      q2Label: service === 'putting-green' ? 'What it is doing' : 'Dogs', q2: service === 'putting-green' ? data.green_issue : data.dogs,
+      q2Label: service === 'putting-green' ? 'What the green is doing' : 'Dogs', q2: service === 'putting-green' ? data.green_issue : data.dogs,
       q3Label: { clean: 'Bothers them most', membership: 'Plan they picked', 'putting-green': 'Where the green is' }[service], q3: { clean: data.issue, membership: data.plan_pick, 'putting-green': data.green_where }[service],
       hide: up ? 'display:none;' : '',
-      hintLabel: up ? 'Next' : { clean: 'Ballpark', membership: 'Suggested plan', 'putting-green': 'Pricing' }[service],
+      hintLabel: up ? 'Next' : { clean: 'Ballpark', membership: 'Suggested plan', 'putting-green': 'Restoration pricing' }[service],
       hint: up ? 'Their answers came in with the first request. Match this to it by phone.' : { clean: pick(BALLPARK, data.size, 'Help them measure'), membership: pick(PLAN_BY_DOGS, data.dogs, 'Ask about dogs'), 'putting-green': green }[service],
       campaign: extra.campaign || 'General Cleaning', adset: extra.adset || 'Grand Strand · homeowners', ad: extra.ad || 'Before-after video', page: data.page, formName: form,
     });
