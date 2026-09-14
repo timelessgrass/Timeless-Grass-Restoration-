@@ -52,9 +52,9 @@ Plain, specific, second person, like a tradesman explaining it at the kitchen ta
 
 | Angle | Website ad → landing page (form on the page) | Instant Form ad → follow-up page after the form |
 |---|---|---|
-| Turf cleaning quote | https://www.timelessturfrestoration.com/lp/clean/ (form `lp-clean`) | Instant Form "TTR · Turf cleaning quote" → completion button → https://www.timelessturfrestoration.com/fb/clean/ (optional best-time form `fb-clean`) |
-| Turf membership | https://www.timelessturfrestoration.com/lp/membership/ (form `lp-membership`) | Instant Form "TTR · Turf membership" → completion button → https://www.timelessturfrestoration.com/fb/membership/ (optional best-time form `fb-membership`) |
-| Putting green restoration | https://www.timelessturfrestoration.com/lp/putting-green/ (form `lp-putting-green`) | Instant Form "TTR · Putting green restoration" → completion button → https://www.timelessturfrestoration.com/fb/putting-green/ (optional best-time form `fb-putting-green`) |
+| Turf cleaning quote | https://timelessturfrestoration.com/lp/clean/ (form `lp-clean`) | Instant Form "TTR · Turf cleaning quote" → completion button → https://timelessturfrestoration.com/fb/clean/ (optional best-time form `fb-clean`) |
+| Turf membership | https://timelessturfrestoration.com/lp/membership/ (form `lp-membership`) | Instant Form "TTR · Turf membership" → completion button → https://timelessturfrestoration.com/fb/membership/ (optional best-time form `fb-membership`) |
+| Putting green restoration | https://timelessturfrestoration.com/lp/putting-green/ (form `lp-putting-green`) | Instant Form "TTR · Putting green restoration" → completion button → https://timelessturfrestoration.com/fb/putting-green/ (optional best-time form `fb-putting-green`) |
 
 - **Landing page** (`/lp/`): for ads whose destination is the website. No site navigation. The form sits in the first screen: step 1 taps the three questions (a hint appears under each answer), step 2 asks name, phone and ZIP. Submitting sends the lead to Make, which emails Brian, and fires the Meta Pixel "Lead" event. The visitor then sees "You're in, <name>!" with Save the number and Text photos buttons.
 - **Follow-up page** (`/fb/`): where people land after already submitting the Instant Form on Facebook. The job is to make sure they answer Brian's call (save the number), get photos texted in, set expectations and handle doubts. An optional "When should Brian call?" form sends a lead update to Brian. Call and text taps fire the Pixel "Contact" event.
@@ -67,7 +67,7 @@ Plain, specific, second person, like a tradesman explaining it at the kitchen ta
 
 **Offer and proof:** A price by the square foot before any work starts. Essential Clean from $199 and Premium Restoration from $299 for yards up to 500 sq ft. The page shows a live ballpark as soon as they pick a size.
 
-### 1A. Landing page: https://www.timelessturfrestoration.com/lp/clean/
+### 1A. Landing page: https://timelessturfrestoration.com/lp/clean/
 
 Current copy, in page order:
 
@@ -226,7 +226,7 @@ Current copy, in page order:
 - **Button:** Call
 - **Button:** Get my price
 
-### 1B. Follow-up page after the Instant Form: https://www.timelessturfrestoration.com/fb/clean/
+### 1B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/clean/
 
 Current copy, in page order:
 
@@ -397,11 +397,11 @@ Current copy, in page order:
 - **Contact information:** Full name, Phone number, ZIP code
 - **Completion headline:** Got it. Brian will reach out.  `29 chars`
 - **Completion description:** He'll call or text from 303-349-2368. Save the number, and send photos to get your price faster.  `96 chars`
-- **Completion button:** View website · text "See next steps" · link https://www.timelessturfrestoration.com/fb/clean/
+- **Completion button:** View website · text "See next steps" · link https://timelessturfrestoration.com/fb/clean/
 
 #### Website ad
 
-- **Website URL:** https://www.timelessturfrestoration.com/lp/clean/
+- **Website URL:** https://timelessturfrestoration.com/lp/clean/
 - **URL parameters:** as above
 - **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
 
@@ -413,7 +413,7 @@ Current copy, in page order:
 
 **Offer and proof:** Four visits a year with priority scheduling: Essential Care $89/mo, TIMELESS ELITE $139/mo (a Premium Restoration every quarter), Pet Turf ELITE $169/mo (multi-dog and daily-potty yards; its extra steps are not final, so do not describe them). Honest math already on the page: ELITE ($1,668/yr) costs less than four Premium Restorations only on yards over 1,000 sq ft.
 
-### 2A. Landing page: https://www.timelessturfrestoration.com/lp/membership/
+### 2A. Landing page: https://timelessturfrestoration.com/lp/membership/
 
 Current copy, in page order:
 
@@ -557,7 +557,7 @@ Current copy, in page order:
 - **Button:** Call
 - **Button:** Find my plan
 
-### 2B. Follow-up page after the Instant Form: https://www.timelessturfrestoration.com/fb/membership/
+### 2B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/membership/
 
 Current copy, in page order:
 
@@ -730,11 +730,11 @@ Current copy, in page order:
 - **Contact information:** Full name, Phone number, ZIP code
 - **Completion headline:** You're on Brian's list.  `23 chars`
 - **Completion description:** He'll call or text from 303-349-2368 to match you with a plan. Save the number so you know it's him.  `100 chars`
-- **Completion button:** View website · text "Compare the plans" · link https://www.timelessturfrestoration.com/fb/membership/
+- **Completion button:** View website · text "Compare the plans" · link https://timelessturfrestoration.com/fb/membership/
 
 #### Website ad
 
-- **Website URL:** https://www.timelessturfrestoration.com/lp/membership/
+- **Website URL:** https://timelessturfrestoration.com/lp/membership/
 - **URL parameters:** as above
 - **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
 
@@ -746,7 +746,7 @@ Current copy, in page order:
 
 **Offer and proof:** A restoration quote after a look at the green. Typical backyard green restoration runs $299–$899. HOA, community and golf/business greens start with a site walk. The work: blow and clear, brush, clean cups and fringe, top-dress with fresh green sand, roll, check speed; seams, cups, edges and drainage get checked.
 
-### 3A. Landing page: https://www.timelessturfrestoration.com/lp/putting-green/
+### 3A. Landing page: https://timelessturfrestoration.com/lp/putting-green/
 
 Current copy, in page order:
 
@@ -866,7 +866,7 @@ Current copy, in page order:
 - **Button:** Call
 - **Button:** Get my green quote
 
-### 3B. Follow-up page after the Instant Form: https://www.timelessturfrestoration.com/fb/putting-green/
+### 3B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/putting-green/
 
 Current copy, in page order:
 
@@ -1008,10 +1008,10 @@ Current copy, in page order:
 - **Contact information:** Full name, Phone number, ZIP code
 - **Completion headline:** Got it. Brian will reach out.  `29 chars`
 - **Completion description:** He'll call or text from 303-349-2368. Photos of the green help him quote it.  `76 chars`
-- **Completion button:** View website · text "Send photos of the green" · link https://www.timelessturfrestoration.com/fb/putting-green/
+- **Completion button:** View website · text "Send photos of the green" · link https://timelessturfrestoration.com/fb/putting-green/
 
 #### Website ad
 
-- **Website URL:** https://www.timelessturfrestoration.com/lp/putting-green/
+- **Website URL:** https://timelessturfrestoration.com/lp/putting-green/
 - **URL parameters:** as above
 - **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.

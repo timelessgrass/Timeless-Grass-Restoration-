@@ -8,12 +8,14 @@
  *    file is generated from brand/logo-source.png by scripts/brand-assets.py.
  *  - PHONE: 303-349-2368 is the only real number we have. A separate brand needs
  *    its own local (843) number so the GBP and this site match byte-for-byte.
- *  - SITE_URL: no domain registered yet. Canonicals and the sitemap use this value.
- *  - PRELAUNCH: while true every page is noindex and robots.txt blocks crawling.
- *    Flip to false only after name, phone, domain and GBP are settled.
+ *  - SITE_URL: live since 2026-09-14. Netlify's primary domain is the bare domain and
+ *    www redirects to it, so canonicals, the sitemap and every ad link use the bare one.
+ *  - PRELAUNCH: while true every page is noindex and robots.txt blocks crawling
+ *    (Meta's ad and link-preview crawlers excepted). Flip to false only after name,
+ *    phone and GBP are settled.
  */
 export const PRELAUNCH = true;
-export const SITE_URL = 'https://www.timelessturfrestoration.com';
+export const SITE_URL = 'https://timelessturfrestoration.com';
 /** Meta Pixel (Events Manager, 2026-09-14). Loads on every page; PageView on load, Lead on a submitted quote
  *  form, Contact on a call/text tap or the Instant Form follow-up form. Set to '' to switch it off. */
 export const META_PIXEL_ID = '1047663254935147';

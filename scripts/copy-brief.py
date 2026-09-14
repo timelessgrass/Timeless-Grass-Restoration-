@@ -8,7 +8,7 @@ import html, re, os
 from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = 'https://www.timelessturfrestoration.com'
+SITE = 'https://timelessturfrestoration.com'
 ANGLES = [
     ('clean', 'Turf cleaning quote', 'TTR · Turf cleaning quote'),
     ('membership', 'Turf membership', 'TTR · Turf membership'),

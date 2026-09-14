@@ -6,13 +6,13 @@ Generated 2026-09-14 from `src/data/campaigns.ts` by `node scripts/campaign-kit.
 
 | Angle | Instant Form ad: completion button goes to | Website ad: send traffic to |
 |---|---|---|
-| Turf cleaning quote | https://www.timelessturfrestoration.com/fb/clean/ | https://www.timelessturfrestoration.com/lp/clean/ |
-| Turf membership | https://www.timelessturfrestoration.com/fb/membership/ | https://www.timelessturfrestoration.com/lp/membership/ |
-| Putting green restoration | https://www.timelessturfrestoration.com/fb/putting-green/ | https://www.timelessturfrestoration.com/lp/putting-green/ |
+| Turf cleaning quote | https://timelessturfrestoration.com/fb/clean/ | https://timelessturfrestoration.com/lp/clean/ |
+| Turf membership | https://timelessturfrestoration.com/fb/membership/ | https://timelessturfrestoration.com/lp/membership/ |
+| Putting green restoration | https://timelessturfrestoration.com/fb/putting-green/ | https://timelessturfrestoration.com/lp/putting-green/ |
 
 ## Before you publish
 
-- The site has to be live at https://www.timelessturfrestoration.com before ads run (push the site, connect the domain). Until the domain works, swap in the Netlify address in every link here.
+- The site is live at https://timelessturfrestoration.com (www redirects there and keeps the tracking parameters). Use these exact links in Ads Manager.
 - Calls and texts go to 303-349-2368, a Colorado number. A local 843 number will convert better on the Grand Strand; changing it later means new Instant Forms.
 - A published Instant Form cannot be edited. Proof every field before you publish; a fix means a new form.
 - The web pages say Brian replies "within one business day" and answer "Is it safe for kids and dogs?" with yes. Brian should confirm both (QUESTIONS-FOR-BRIAN #15 and #17). The Instant Forms avoid both.
@@ -25,7 +25,7 @@ Generated 2026-09-14 from `src/data/campaigns.ts` by `node scripts/campaign-kit.
 - **Intro background image:** Use image from ad
 - **Contact information:** Full name · Phone number · ZIP code (Leave email off: Brian calls or texts.)
 - **Privacy policy link text:** Privacy policy
-- **Privacy policy URL:** https://www.timelessturfrestoration.com/privacy/
+- **Privacy policy URL:** https://timelessturfrestoration.com/privacy/
 - **Custom disclaimer title:** Calls and texts (Optional. No consent checkbox.)
 - **Custom disclaimer text:** By submitting, you agree TIMELESS Turf Restoration may call or text the number you entered about your request. Message and data rates may apply.
 - **Completion call to action:** View website (Button text and link are per form, below.)
@@ -79,11 +79,11 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 - **Contact information:** Full name, Phone number, ZIP code
 - **Completion headline:** Got it. Brian will reach out.  `29 chars`
 - **Completion description:** He'll call or text from 303-349-2368. Save the number, and send photos to get your price faster.  `96 chars`
-- **Completion button:** View website · text "See next steps" · link https://www.timelessturfrestoration.com/fb/clean/
+- **Completion button:** View website · text "See next steps" · link https://timelessturfrestoration.com/fb/clean/
 
 ### Website ad
 
-- **Website URL:** https://www.timelessturfrestoration.com/lp/clean/
+- **Website URL:** https://timelessturfrestoration.com/lp/clean/
 - **URL parameters:** as above
 - **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
 
@@ -126,11 +126,11 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 - **Contact information:** Full name, Phone number, ZIP code
 - **Completion headline:** You're on Brian's list.  `23 chars`
 - **Completion description:** He'll call or text from 303-349-2368 to match you with a plan. Save the number so you know it's him.  `100 chars`
-- **Completion button:** View website · text "Compare the plans" · link https://www.timelessturfrestoration.com/fb/membership/
+- **Completion button:** View website · text "Compare the plans" · link https://timelessturfrestoration.com/fb/membership/
 
 ### Website ad
 
-- **Website URL:** https://www.timelessturfrestoration.com/lp/membership/
+- **Website URL:** https://timelessturfrestoration.com/lp/membership/
 - **URL parameters:** as above
 - **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
 
@@ -173,10 +173,10 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 - **Contact information:** Full name, Phone number, ZIP code
 - **Completion headline:** Got it. Brian will reach out.  `29 chars`
 - **Completion description:** He'll call or text from 303-349-2368. Photos of the green help him quote it.  `76 chars`
-- **Completion button:** View website · text "Send photos of the green" · link https://www.timelessturfrestoration.com/fb/putting-green/
+- **Completion button:** View website · text "Send photos of the green" · link https://timelessturfrestoration.com/fb/putting-green/
 
 ### Website ad
 
-- **Website URL:** https://www.timelessturfrestoration.com/lp/putting-green/
+- **Website URL:** https://timelessturfrestoration.com/lp/putting-green/
 - **URL parameters:** as above
 - **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.

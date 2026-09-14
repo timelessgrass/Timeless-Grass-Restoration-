@@ -296,7 +296,7 @@ if (preview) {
   const enc = (s) => encodeURIComponent(s);
   fs.writeFileSync(path.join(preview, 'organic.html'), organic({
     name: 'Jane Doe', zip: '29577', plan: `${P.premium.name}`, when: 'Mon, Sep 14 · 2:41 PM', digits: '8435550100', phone: '843-555-0100', first: 'Jane',
-    sms: smsText(enc('Jane')), emailRaw: 'jane@example.com', email: 'jane@example.com', message: 'Two dogs, maybe 600 sq ft.\nSmells after it rains.', page: 'https://www.timelessturfrestoration.com/quote/',
+    sms: smsText(enc('Jane')), emailRaw: 'jane@example.com', email: 'jane@example.com', message: 'Two dogs, maybe 600 sq ft.\nSmells after it rains.', page: 'https://timelessturfrestoration.com/quote/',
   }));
   const fb = (form, data, extra = {}) => {
     const service = form.includes('membership') ? 'membership' : form.includes('putting') ? 'putting-green' : form.includes('clean') ? 'clean' : 'other';

@@ -43,7 +43,7 @@ const PARAMS = [
 ];
 const PARAM_STRING = 'utm_source={{site_source_name}}&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{adset.name}}';
 const CHECKLIST = [
-  `The site has to be live at ${SITE_URL} before ads run (push the site, connect the domain). Until the domain works, swap in the Netlify address in every link here.`,
+  `The site is live at ${SITE_URL} (www redirects there and keeps the tracking parameters). Use these exact links in Ads Manager.`,
   `Calls and texts go to ${brand.phone}, a Colorado number. A local 843 number will convert better on the Grand Strand; changing it later means new Instant Forms.`,
   'A published Instant Form cannot be edited. Proof every field before you publish; a fix means a new form.',
   `The web pages say Brian replies "${REPLY_TIME}" and answer "Is it safe for kids and dogs?" with yes. Brian should confirm both (QUESTIONS-FOR-BRIAN #15 and #17). The Instant Forms avoid both.`,
