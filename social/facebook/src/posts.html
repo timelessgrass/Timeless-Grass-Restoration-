@@ -1,0 +1,169 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Posts 1080x1350</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=block">
+<link rel="stylesheet" href="brand.css">
+<style>
+  /* One 4:5 post per section; render with posts.html#p1 ... #p5 */
+  .post{position:relative;width:1080px;height:1350px;overflow:hidden;display:none;background:var(--dark)}
+  .post.on{display:block}
+  .head{position:absolute;left:80px;right:80px;top:96px}
+  .head--low{top:auto;bottom:178px}
+  .kicker{font-size:26px}
+  .post h1{margin-top:22px;font-size:92px;line-height:1.02;font-weight:800;letter-spacing:-.035em}
+  .lede{margin-top:24px;font-size:38px;line-height:1.32;font-weight:500;color:var(--soft)}
+  .ribbon{position:absolute;left:0;right:0;bottom:118px;height:8px;background:var(--ribbon)}
+  .foot{position:absolute;left:0;right:0;bottom:0;height:118px;padding:0 80px;display:flex;align-items:center;justify-content:space-between;background:var(--dark)}
+  .foot .wordmark b{font-size:40px}
+  .foot .wordmark span{font-size:30px}
+  .foot small{font-size:23px;font-weight:600;color:#a9bba0}
+  .credit{position:absolute;right:80px;bottom:156px;font-size:22px;font-weight:600;color:#fff;background:rgba(12,24,9,.6);padding:8px 18px;border-radius:999px}
+
+  /* 1: meet Brian */
+  #p1 .photo{background-image:url(../../../public/assets/img/putting-green-fire-pit-stone-wall.jpg);background-position:44% 50%}
+  #p1 .veil{background:linear-gradient(180deg,rgba(12,24,9,.94) 0%,rgba(12,24,9,.78) 34%,rgba(12,24,9,0) 58%),linear-gradient(0deg,rgba(12,24,9,.5) 0%,rgba(12,24,9,0) 22%)}
+  #p1 h1{font-size:112px}
+
+  /* 2: pet odor */
+  #p2 .photo{background-image:url(../../../public/assets/img/pet-turf-dog-resting-under-deck.jpg);background-position:50% 62%}
+  #p2 .veil{background:linear-gradient(180deg,rgba(12,24,9,.96) 0%,rgba(12,24,9,.9) 36%,rgba(12,24,9,0) 56%),linear-gradient(0deg,rgba(12,24,9,.55) 0%,rgba(12,24,9,0) 16%)}
+  #p2 h1{font-size:84px}
+  .chain{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:38px}
+  .chain li{display:flex;gap:16px;align-items:center;font-size:28px;line-height:1.25;font-weight:600;color:#fff}
+  .chain li i{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--lime);color:var(--dark);font-style:normal;font-weight:800;font-size:26px}
+
+  /* 3: pricing */
+  #p3{background:var(--cream);color:var(--ink)}
+  #p3 .head{top:84px}
+  #p3 .kicker{color:var(--green)}
+  #p3 h1{font-size:80px;color:var(--dark)}
+  #p3 .lede{color:var(--muted);font-size:32px;margin-top:18px}
+  .prices{position:absolute;left:80px;right:80px;top:396px;border-radius:28px;overflow:hidden;box-shadow:0 24px 50px -28px rgba(12,24,9,.45);background:#fff}
+  .prices table{width:100%;border-collapse:collapse;table-layout:fixed}
+  .prices th{padding:24px 26px 18px;text-align:left;vertical-align:bottom;font-size:22px;font-weight:600;line-height:1.2;color:var(--muted)}
+  .prices th:first-child{width:31%}
+  .prices th strong{display:block;margin-bottom:4px;font-size:31px;line-height:1.1;font-weight:800;color:var(--dark);letter-spacing:-.01em}
+  .prices td{padding:14px 26px;font-size:31px;line-height:1.2;font-weight:600;border-top:2px solid #eef1ea}
+  .prices td.n{font-size:40px;font-weight:800;letter-spacing:-.02em}
+  .prices .prem{background:var(--dark2);color:#fff}
+  .prices th.prem{color:#b9cdb0}
+  .prices th.prem strong{color:#fff}
+  .prices td.prem{border-top-color:rgba(255,255,255,.08)}
+  .prices td.prem.n{color:var(--lime)}
+  .prices td.q{font-size:30px;font-weight:700;color:var(--muted)}
+  .prices td.q.prem{color:#b9cdb0}
+  .fine{position:absolute;left:80px;right:80px;bottom:152px;display:flex;justify-content:space-between;font-size:24px;font-weight:600;color:var(--muted)}
+
+  /* 4: putting green */
+  #p4 .photo{background-image:url(../../../public/assets/img/putting-green-landscape-lighting-at-dusk.jpg);background-position:64% 50%;filter:brightness(1.18) saturate(1.08)}
+  #p4 .veil{background:linear-gradient(180deg,rgba(12,24,9,.95) 0%,rgba(12,24,9,.8) 30%,rgba(12,24,9,0) 52%),linear-gradient(0deg,rgba(12,24,9,.97) 0%,rgba(12,24,9,.88) 22%,rgba(12,24,9,0) 40%)}
+  #p4 h1{font-size:90px}
+  .steps{position:absolute;left:80px;right:80px;bottom:170px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .steps li{font-size:26px;line-height:1.25;font-weight:600;color:#fff}
+  .steps li i{display:grid;place-items:center;width:52px;height:52px;margin-bottom:14px;border-radius:50%;background:var(--lime);color:var(--dark);font-style:normal;font-weight:800;font-size:26px}
+
+  /* 5: storm checklist */
+  #p5 .photo{bottom:auto;height:560px;background-image:url(../../../public/assets/img/backyard-putting-green-landscaped-boulders.jpg);background-position:50% 70%}
+  #p5 .veil{background:linear-gradient(180deg,rgba(12,24,9,.9) 0%,rgba(12,24,9,.72) 22%,rgba(12,24,9,.92) 36%,var(--dark) 42%)}
+  #p5 .head{top:80px}
+  #p5 h1{font-size:80px}
+  .check{position:absolute;left:80px;right:80px;top:436px}
+  .check li{display:flex;gap:24px;align-items:flex-start;padding:17px 0;border-top:2px solid rgba(255,255,255,.09)}
+  .check li:first-child{border-top:0}
+  .check i{flex:none;display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--lime);color:var(--dark);font-style:normal;font-weight:800;font-size:27px;margin-top:2px}
+  .check b{display:block;font-size:34px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
+  .check span{display:block;margin-top:4px;font-size:25px;line-height:1.3;color:#b9c8b0}
+  .warn{position:absolute;left:80px;right:80px;bottom:160px;display:flex;gap:22px;align-items:center;padding:22px 28px;border:3px solid var(--gold);border-radius:22px;background:rgba(214,168,22,.08)}
+  .warn b{font-size:30px;font-weight:800;color:var(--gold);white-space:nowrap}
+  .warn span{font-size:24px;line-height:1.3;color:var(--soft)}
+</style>
+
+<section class="post" id="p1">
+  <div class="photo"></div><div class="veil"></div>
+  <div class="head">
+    <p class="kicker">Meet the owner</p>
+    <h1>Hi, I'm Brian.</h1>
+    <p class="lede">13 years building artificial turf and putting greens. Now I clean, treat and restore them from Shallotte to Burgess.</p>
+  </div>
+  <p class="credit">A putting green Brian built</p>
+  <div class="ribbon"></div>
+  <footer class="foot"><div class="wordmark"><b>TIMELESS</b><span>Turf Restoration</span></div><small>Grand Strand</small></footer>
+</section>
+
+<section class="post" id="p2">
+  <div class="photo"></div><div class="veil"></div>
+  <div class="head">
+    <p class="kicker">Pet turf odor</p>
+    <h1>The smell isn't on the grass. <span class="gold">It's in the infill.</span></h1>
+    <ol class="chain">
+      <li><i>1</i>Urine drains through the blades</li>
+      <li><i>2</i>It dries in the infill and backing</li>
+      <li><i>3</i>Bacteria break it down</li>
+      <li><i>4</i>Ammonia: the smell you notice</li>
+    </ol>
+  </div>
+  <div class="ribbon"></div>
+  <footer class="foot"><div class="wordmark"><b>TIMELESS</b><span>Turf Restoration</span></div><small>Grand Strand</small></footer>
+</section>
+
+<section class="post" id="p3">
+  <div class="head">
+    <p class="kicker">Upfront pricing</p>
+    <h1>What turf cleaning costs</h1>
+    <p class="lede">Priced by square footage, never by the hour.</p>
+  </div>
+  <div class="prices">
+    <table>
+      <thead><tr><th><strong>Turf size</strong>Square feet</th><th><strong>Essential Clean</strong>Regular upkeep</th><th class="prem"><strong>Premium Restoration</strong>Pets, odor, algae</th></tr></thead>
+      <tbody>
+        <tr><td>Up to 500</td><td class="n">$199</td><td class="n prem">$299</td></tr>
+        <tr><td>501–1,000</td><td class="n">$249</td><td class="n prem">$399</td></tr>
+        <tr><td>1,001–1,500</td><td class="n">$299</td><td class="n prem">$499</td></tr>
+        <tr><td>1,501–2,000</td><td class="n">$349</td><td class="n prem">$599</td></tr>
+        <tr><td>2,001–3,000</td><td class="n">$449</td><td class="n prem">$749</td></tr>
+        <tr><td>3,001–5,000</td><td class="n">$599</td><td class="n prem">$899</td></tr>
+        <tr><td>Over 5,000</td><td class="q">Quoted</td><td class="q prem">Quoted</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fine"><span>Minimum visit $199</span><span>Prices as of September 2026</span></p>
+  <div class="ribbon"></div>
+  <footer class="foot"><div class="wordmark"><b>TIMELESS</b><span>Turf Restoration</span></div><small>Grand Strand</small></footer>
+</section>
+
+<section class="post" id="p4">
+  <div class="photo"></div><div class="veil"></div>
+  <div class="head">
+    <p class="kicker">Putting greens</p>
+    <h1>Green rolling slow or bumpy?</h1>
+    <p class="lede">It usually needs sand and a roller, not new turf.</p>
+  </div>
+  <ol class="steps">
+    <li><i>1</i>Clear and brush the green</li>
+    <li><i>2</i>Clean the cups and fringe</li>
+    <li><i>3</i>Top-dress with green sand</li>
+    <li><i>4</i>Roll it true</li>
+  </ol>
+  <div class="ribbon"></div>
+  <footer class="foot"><div class="wordmark"><b>TIMELESS</b><span>Turf Restoration</span></div><small>Grand Strand</small></footer>
+</section>
+
+<section class="post" id="p5">
+  <div class="photo"></div><div class="veil"></div>
+  <div class="head">
+    <p class="kicker">Hurricane season</p>
+    <h1>After a storm: your turf checklist</h1>
+  </div>
+  <ol class="check">
+    <li><i>1</i><div><b>Clear branches and heavy debris</b><span>Do this before you blow or rinse anything.</span></div></li>
+    <li><i>2</i><div><b>Blow off loose sand and leaves</b><span>What sits on top comes off dry.</span></div></li>
+    <li><i>3</i><div><b>Flush salt and sand with fresh water</b><span>High volume, low pressure, down through the infill.</span></div></li>
+    <li><i>4</i><div><b>Walk every seam and edge</b><span>Standing water can lift them.</span></div></li>
+    <li><i>5</i><div><b>Re-level the infill</b><span>Blown-in sand changes how turf drains and feels.</span></div></li>
+  </ol>
+  <div class="warn"><b>Within a few weeks</b><span>Salt and sand left to dry through the fall turn into a crust.</span></div>
+  <div class="ribbon"></div>
+  <footer class="foot"><div class="wordmark"><b>TIMELESS</b><span>Turf Restoration</span></div><small>Grand Strand</small></footer>
+</section>
+
+<script>document.getElementById((location.hash || '#p1').slice(1)).classList.add('on')</script>

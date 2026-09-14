@@ -1,0 +1,30 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Cover 1640x624</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=block">
+<link rel="stylesheet" href="brand.css">
+<style>
+  /* Facebook shows 820x312 on desktop (crops ~24px top and bottom) and crops ~90px off each side on phones.
+     The profile picture covers the bottom-left corner, so all copy sits right of centre inside the safe zone. */
+  .cover{position:relative;width:1640px;height:624px;overflow:hidden;background:var(--dark)}
+  .cover .photo{background-image:url(../../../public/assets/img/putting-green-landscape-lighting-at-dusk.jpg);background-position:30% 64%;filter:brightness(1.22) saturate(1.1)}
+  .cover .veil{background:linear-gradient(90deg,rgba(12,24,9,0) 18%,rgba(12,24,9,.55) 40%,rgba(12,24,9,.9) 56%,rgba(12,24,9,.96) 100%)}
+  .copy{position:absolute;left:770px;width:650px;top:50%;transform:translateY(-50%)}
+  .kicker{font-size:21px}
+  h1{margin-top:20px;font-size:58px;line-height:1.04;font-weight:800;letter-spacing:-.025em}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .chips li{font-size:21px;font-weight:600;color:var(--soft);border:2px solid rgba(138,209,50,.45);border-radius:999px;padding:7px 18px}
+  .tag{margin-top:26px;font-size:30px;font-weight:800;letter-spacing:-.01em}
+</style>
+<div class="cover">
+  <div class="photo"></div>
+  <div class="veil"></div>
+  <div class="copy">
+    <p class="kicker">Shallotte, NC to Burgess, SC</p>
+    <h1>Artificial turf cleaning &amp; <span class="gold">putting green restoration</span></h1>
+    <ul class="chips">
+      <li>Pet odor removal</li><li>Algae &amp; mold</li><li>Infill top-ups</li><li>Seam &amp; edge repair</li>
+    </ul>
+    <p class="tag">Blown clean, every job.</p>
+  </div>
+</div>

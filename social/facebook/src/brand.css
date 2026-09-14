@@ -1,0 +1,19 @@
+/* Shared tokens for the Facebook graphics. Colors match public/styles.css. */
+:root{
+  --dark:#0c1809; --dark2:#152a10; --green:#2e7a0b; --green-d:#225c06; --lime:#8ad132; --gold:#d6a816;
+  --cream:#f4f6ef; --stone:#dde3d5; --ink:#10180d; --muted:#4a5a45; --soft:#dfe9d8;
+  --ribbon:linear-gradient(90deg,#48a008,#80d028 55%,#409800);
+  --goldtext:linear-gradient(180deg,#fcea8f 0%,#eac53c 48%,#b88a0c 100%);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;overflow:hidden;background:var(--dark)}
+body{font-family:Poppins,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#fff}
+h1,h2,h3,p,ul,ol,li{margin:0;padding:0;list-style:none}
+.kicker{display:inline-flex;align-items:center;gap:16px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--lime)}
+.kicker::before{content:"";width:44px;height:6px;border-radius:6px;background:var(--ribbon)}
+.gold{background:var(--goldtext);-webkit-background-clip:text;background-clip:text;color:transparent}
+.photo{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat}
+.veil{position:absolute;inset:0}
+.wordmark{display:flex;align-items:baseline;gap:12px;white-space:nowrap}
+.wordmark b{font-weight:800;letter-spacing:.03em;background:var(--goldtext);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wordmark span{font-weight:600;color:#fff}
