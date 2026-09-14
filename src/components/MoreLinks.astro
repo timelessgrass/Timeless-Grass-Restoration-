@@ -1,0 +1,8 @@
+---
+/** Related links as chip groups under an article (moved out of the sticky sidebar so the CTA always fits). */
+interface Props { groups: { h: string; items: { href?: string; label: string }[] }[] }
+const groups = Astro.props.groups.filter((g) => g.items.some((i) => i.href));
+---
+{groups.length > 0 && <nav class="more-links" aria-label="Related pages">
+  {groups.map((g) => <div><h3>{g.h}</h3><ul class="chips chips--links">{g.items.filter((i) => i.href).map((i) => <li><a href={i.href}>{i.label}</a></li>)}</ul></div>)}
+</nav>}

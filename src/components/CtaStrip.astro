@@ -1,0 +1,16 @@
+---
+/** The mid-page call to action: one line of reassurance, quote + call. Sits between sections, never at the very top or bottom. */
+import Icon from './Icon.astro';
+import { brand } from '../data/site';
+interface Props { title: string; text?: string; icon?: string; plan?: string; light?: boolean; cta?: string }
+const { title, text, icon = 'quote', plan, light = false, cta = 'Get My Free Quote' } = Astro.props;
+const href = plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/';
+---
+<div class:list={['cta-strip', { 'cta-strip--light': light }]} data-reveal>
+  <span class="cta-strip__ic"><Icon name={icon} /></span>
+  <div class="cta-strip__txt"><b>{title}</b>{text && <p>{text}</p>}</div>
+  <div class="cta-strip__btns">
+    <a class="btn btn--green" href={href} data-cta="quote-strip">{cta}<Icon name="arrow" /></a>
+    <a class:list={['btn', light ? 'btn--ghost' : 'btn--outline-light']} href={brand.phoneHref} data-cta="call-strip"><Icon name="phone" />{brand.phone}</a>
+  </div>
+</div>

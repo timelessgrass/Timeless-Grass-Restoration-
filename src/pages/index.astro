@@ -4,125 +4,136 @@ import AnswerBox from '../components/AnswerBox.astro';
 import PriceTable from '../components/PriceTable.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Faq from '../components/Faq.astro';
-import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import IconStats from '../components/IconStats.astro';
+import Steps from '../components/Steps.astro';
+import CtaStrip from '../components/CtaStrip.astro';
+import ProofGallery from '../components/ProofGallery.astro';
 import { brand, area, pricing as P, money } from '../data/site';
 import { SERVICES } from '../data/services';
 import { ALL_TOWNS as TOWNS, ALL_PROBLEMS as PROBLEMS } from '../data/registry';
+import { SERVICE_ICON, iconFor } from '../lib/icons';
+import { teaser } from '../lib/text';
+import { availableJobs } from '../lib/jobs';
+
 const q = `Who cleans artificial turf on ${area.name}?`;
 const a = `${brand.name} deep-cleans, deodorizes and restores artificial turf and synthetic putting greens across ${area.name}, from Shallotte, NC to Burgess, SC and inland to Conway and Loris. Owner-operated by ${brand.owner}, who has built turf for ${brand.ownerYears} years. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration with pet-odor treatment from ${money(P.rows[0].premium!)}, priced by square foot before any work starts. Call ${brand.phone}.`;
 const faq = [
   { q: 'Why not just use a DIY turf spray?', a: 'Sprays treat the surface. The smell comes back because urine and bacteria stay trapped in the infill and backing. We flush the infill, break the residue down with enzymes, then treat what is left so the odor does not return. Our page on <a href="/turf-problems/artificial-grass-smells-like-dog-pee/">turf that smells like dog pee</a> explains it.' },
-  { q: 'What makes your process different?', a: 'Brian has built turf and putting greens for 13 years, so we clean it the way it was built: extraction instead of a perfume spray, seams and drainage checked, infill restored, matted blades lifted. Then we finish it blown clean.' },
-  { q: 'How long does a turf cleaning take?', a: 'Most residential yards are done in a single visit, usually two to four hours on site. The turf is ready to use as soon as it is dry.' },
   { q: 'How much does turf cleaning cost?', a: `We price by square footage and condition, never by the hour. For yards up to 500 sq ft, an Essential Clean is ${money(P.rows[0].essential!)} and a Premium Restoration is ${money(P.rows[0].premium!)}. Memberships start at $${P.memberships[0].monthly} a month. See the full <a href="/pricing/">price table</a>.` },
+  { q: 'How long does a turf cleaning take?', a: 'Most residential yards are done in a single visit, usually two to four hours on site. The turf is ready to use as soon as it is dry.' },
   { q: 'When can kids and pets use the turf again?', a: 'As soon as it is dry, usually the same day. The products we use are labeled for pet turf and are safe once the surface is dry.' },
-  { q: 'Can you restore my putting green?', a: 'Yes, and it is the work Brian is fussiest about. We clean, top-dress with green sand, brush and roll to bring back speed and a true roll, and check the fringe, cups and edges. See <a href="/services/putting-green-restoration/">putting green restoration</a>.' },
-  { q: 'Do you work with HOAs, rentals, daycares and commercial properties?', a: 'Yes. Homes, HOA common areas, vacation rentals, pet daycares, play areas and commercial turf. Ask about scheduled maintenance for high-traffic turf.' },
-  { q: 'Is it cheaper to clean turf or replace it?', a: 'Cleaning and restoring is almost always the smarter first move: a deep clean, fresh infill and a blade lift add years for a few hundred dollars. If your turf is truly past saving we will say so. Our guide on <a href="/guides/clean-or-replace-artificial-turf/">clean or replace</a> shows how to tell.' },
+  { q: 'Can you restore my putting green?', a: 'Yes. We clean, top-dress with green sand, brush and roll to bring back speed and a true roll, and check the fringe, cups and edges. See <a href="/putting-greens/">the putting green center</a>.' },
+  { q: 'Do you work with HOAs, rentals and commercial properties?', a: 'Yes. HOA common areas, vacation rentals, pet daycares, golf and resort properties and other commercial turf, on a schedule. See <a href="/commercial/">commercial programs</a>.' },
   { q: 'Do you install new turf?', a: `No. We clean, treat and restore turf that is already in the ground. New lawns and putting greens are built by our sister company, ${brand.sister.name}, run by the same owner.` },
 ];
-const core = SERVICES.filter((s) => s.tier === 'core');
-const restore = SERVICES.filter((s) => s.tier !== 'core');
 const sc = TOWNS.filter((t) => t.state === 'SC');
 const nc = TOWNS.filter((t) => t.state === 'NC');
-const topProblems = PROBLEMS.filter((p) => p.footer);
+const topProblems = PROBLEMS.filter((p) => p.footer).slice(0, 4);
+const jobs = availableJobs();
+const stats = [
+  { icon: 'flag', value: String(brand.ownerYears), count: brand.ownerYears, suffix: '+', label: `years ${brand.owner} has built turf and putting greens` },
+  { icon: 'tag', value: money(P.rows[0].essential!), label: 'Essential Clean, up to 500 sq ft' },
+  { icon: 'clock', value: '2–4 hrs', label: 'most yards, done in one visit' },
+  { icon: 'calendar', value: `${money(P.memberships[0].monthly)}/mo`, label: 'memberships, four visits a year' },
+];
+const steps = [
+  { icon: 'quote', title: 'Tell us about your turf', text: 'Send a few details or photos. You get a price by square foot before any work starts.' },
+  { icon: 'search', title: 'Inspect and diagnose', text: 'Odor sources, drainage, infill depth, seams and blade wear, checked first.' },
+  { icon: 'sparkle', title: 'Deep clean and treat', text: 'Extraction, enzyme treatment, infill where it is thin, brushing. Greens get sand and a roll.' },
+  { icon: 'flag', title: 'Blown clean', text: 'Every job ends blown clean, and we walk it with you if you are home.' },
+];
+const quiz = {
+  use: [['0', 'users', 'People only', 'No pets on it'], ['1', 'paw', 'Pets use it', 'A dog or two, regularly'], ['2', 'calendar', 'Heavy pet use', 'Multiple pets or daily potty'], ['green', 'flag', "It's a putting green", 'Slow, bumpy or worn']],
+  smell: [['0', 'check', 'Little to none', 'Barely notice it'], ['1', 'odor', 'Mild', 'Catch it sometimes'], ['2', 'alert', 'Strong', 'Hard to sit outside'], ['3', 'x', 'Overpowering', 'The neighbors notice']],
+  state: [['first', 'sparkle', 'First pro clean', 'Never had it done right'], ['back', 'microbe', 'Smell keeps coming back', 'Sprays and cleans failed'], ['worn', 'broom', 'Flat, matted or worn', 'Looks tired and crusty'], ['refresh', 'drop', 'Just needs a refresh', 'Mostly dirt and dullness']],
+};
 ---
 <Base title="Turf Cleaning Myrtle Beach & the Grand Strand | TIMELESS" description={`Deep artificial turf cleaning, pet odor removal and putting green restoration from Shallotte to Burgess. Owner-operated, 13 years in turf. From $199.`} answer={{ question: q, answer: a }} faq={faq}>
 <section class="hero">
   <div class="wrap hero__grid">
     <div class="hero__copy">
-      <p class="pill"><svg class="ic"><use href="#i-flag"/></svg>Owner-operated · 13 years in turf</p>
-      <p class="eyebrow">Turf cleaning · Odor removal · Green restoration</p>
-      <h1>Professional Turf Cleaning&nbsp;&amp; <span class="grad">Putting Green Restoration</span></h1>
-      <p class="lead">Smelly, matted or tired turf? We deep-clean through the blades, backing and infill, pull pet urine out instead of perfuming it, and bring putting greens back to a true roll. Every job is done by Brian, who has built turf and putting greens for thirteen years.</p>
-      <p class="hero__meta"><span>Cleans from $199</span><span>Kid- &amp; pet-safe products</span><span>Blown-clean finish</span></p>
-      <div class="hero__btns">
-        <a class="btn btn--green btn--lg" href="#quote">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a>
-        <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-home"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+      <p class="eyebrow intro" style="--d:0">Turf cleaning · Pet odor removal · Putting greens</p>
+      <h1 class="intro" style="--d:1">Turf Cleaning&nbsp;&amp; <span class="grad">Putting Green Restoration</span></h1>
+      <p class="lead intro" style="--d:2">We pull pet odor out of the infill, lift matted turf and bring greens back to a true roll, across {area.name}.</p>
+      <ul class="trust intro" style="--d:3">
+        <li><Icon name="tag" />From {money(P.rows[0].essential!)}</li>
+        <li><Icon name="ruler" />Priced by square foot</li>
+        <li><Icon name="flag" />{brand.ownerYears} years building turf</li>
+        <li><Icon name="sparkle" />Blown-clean finish</li>
+      </ul>
+      <div class="hero__btns intro" style="--d:4" data-hero-cta>
+        <a class="btn btn--green btn--lg" href="#quote" data-cta="quote-hero">Get My Free Quote<Icon name="arrow" /></a>
+        <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-home"><Icon name="phone" />{brand.phone}</a>
       </div>
-      <a class="hero__areas" href="/service-areas/">View service areas<svg class="ic ic--sm"><use href="#i-arrow"/></svg></a>
     </div>
     <div class="hero__media">
-      <div class="hero__img"><img src="/assets/img/backyard-putting-green-landscaped-boulders.jpg" width="1400" height="1050" alt="Backyard putting green framed by landscaped boulders" fetchpriority="high"></div>
-      <div class="hero__badge"><svg class="ic"><use href="#i-flag"/></svg><div><strong>Blown clean.</strong><small>The finish standard on every Timeless job.</small></div></div>
+      <div class="hero__img intro-media"><img src="/assets/img/backyard-putting-green-landscaped-boulders.jpg" width="1400" height="1050" alt="Backyard putting green framed by landscaped boulders" fetchpriority="high"></div>
+      <div class="hero__badge intro"><Icon name="sparkle" /><div><strong>Blown clean.</strong><small>The finish standard on every job.</small></div></div>
     </div>
   </div>
-  <div class="wrap">
-    <ol class="steps3">
-      <li><b>1</b>Free quote in minutes</li>
-      <li><b>2</b>Priced by square foot, up front</li>
-      <li><b>3</b>Done in one visit, back in use once dry</li>
-    </ol>
-  </div>
 </section>
-<section class="who" aria-label="Who we serve">
-  <div class="wrap who__in">
-    <p>Turf care for</p>
-    <ul>
-      <li>Backyards</li><li>Putting greens</li><li>Pet yards &amp; daycares</li><li>HOAs &amp; communities</li><li>Sports fields</li><li>Commercial</li>
-    </ul>
-  </div>
-</section>
-<section class="stats" aria-label="At a glance">
-  <div class="wrap stats__grid">
-    <div class="stat"><b><span data-count="13">13</span>+</b><p>years building &amp; caring for turf</p></div>
-    <div class="stat"><b data-count="10">10</b><p>cleaning &amp; restoration services</p></div>
-    <div class="stat"><b>{money(P.rows[0].essential!)}</b><p>Essential Clean, up to 500 sq ft</p></div>
-    <div class="stat"><b>1</b><p>owner who answers the phone</p></div>
-  </div>
-</section>
-<section class="sec sec--cream" id="about">
-  <div class="wrap split">
-    <div data-reveal>
-      <p class="kicker">About Timeless</p>
-      <h2>Owner-operated. Built by a turf builder. <span class="hl">Obsessed with a clean green.</span></h2>
-      <p class="body">Brian has spent 13 years building and caring for artificial turf and putting greens. That building background is the difference. We know how your turf was built, from the base and backing to the seams and infill, so we clean and restore it the way it was meant to perform.</p>
-      <ul class="checks">
-        <li>Deep extraction that reaches the infill and backing, not a perfume spray on top.</li>
-        <li>Pet urine, bacteria and odor pulled out, then treated so it stays gone.</li>
-        <li>Seams, drainage, infill and flattened blades handled by someone who has built turf for 13 years.</li>
-      </ul>
-      <a class="btn btn--green btn--lg" href="/about/">More about Brian<svg class="ic"><use href="#i-arrow"/></svg></a>
+
+<IconStats items={stats} />
+
+{jobs.length > 0 ? (
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec__head sec__head--row" data-reveal>
+        <div><p class="kicker">Before &amp; after</p><h2>What one visit changes</h2><p>Tap a photo to see it full size.</p></div>
+        <a class="btn btn--green" href="#quote" data-cta="quote-work">Get My Free Quote<Icon name="arrow" /></a>
+      </div>
+      <ProofGallery />
     </div>
-    <figure class="photo" data-reveal>
-      <img src="/assets/img/putting-green-fire-pit-stone-wall.jpg" width="1400" height="1050" alt="Putting green beside a fire pit and stone wall" loading="lazy" decoding="async">
-      <figcaption><b>Putting greens are our specialty.</b> We clean and restore them to the same standard we build them.</figcaption>
-    </figure>
-  </div>
-</section>
-<section class="sec sec--tight"><div class="wrap"><AnswerBox question={q} answer={a} /></div></section>
+  </section>
+) : (
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec__head" data-reveal><p class="kicker">Our work</p><h2>Lawns and greens, kept like new</h2></div>
+      <div class="work" data-stagger>
+        <figure><img src="/assets/img/putting-green-at-sunset-wide.jpg" alt="Backyard putting green at sunset" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>A green that has been blown clean.</figcaption></figure>
+        <figure><img src="/assets/img/backyard-putting-green-from-the-street.jpg" alt="Backyard putting green seen from the street" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>Fringe, collar and cups kept clear.</figcaption></figure>
+        <figure><img src="/assets/img/practice-nets-and-goals-on-turf.jpg" alt="Practice nets and goals on artificial turf" width="1050" height="1400" loading="lazy" decoding="async"><figcaption>Sports turf: groomed, infill level.</figcaption></figure>
+        <figure><img src="/assets/img/artificial-turf-backyard-patio.jpg" alt="Artificial turf lawn beside a patio" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>Fibers upright, edges tight.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+)}
 
 <section class="sec sec--cream" id="services">
   <div class="wrap">
-    <div class="sec__head" data-reveal>
-      <p class="kicker">What we do</p>
-      <h2>Cleaning, odor removal, repair &amp; restoration</h2>
-      <p>We clean, treat and restore turf that is already in the ground. Every service is priced by square foot and every job ends blown clean.</p>
+    <div class="sec__head sec__head--row" data-reveal>
+      <div><p class="kicker">What we do</p><h2>Cleaning, odor removal, repair &amp; restoration</h2><p>We restore turf that is already in the ground, priced by square foot.</p></div>
+      <a class="textlink" href="/services/">All services <Icon name="arrow" class="ic--sm" /></a>
     </div>
-    <div class="svc">
-      {core.map((s) => <a class="card" href={`/services/${s.slug}/`} data-reveal><img src={s.image.src} alt={s.image.alt} width="1400" height="1050" loading="lazy" decoding="async"><div><h3>{s.name}</h3><p>{s.short}</p></div></a>)}
+    <div class="svc-grid" data-stagger>
+      {SERVICES.map((s) => <a class="svc-card" href={`/services/${s.slug}/`}><span class="svc-card__ic"><Icon name={SERVICE_ICON[s.slug] ?? 'sparkle'} /></span><h3>{s.name}</h3><p>{s.short}</p><span class="price-chip"><Icon name="tag" />{s.priceLine.split(' · ')[0]}</span><Icon name="arrow" class="svc-card__go" /></a>)}
     </div>
-    <div class="svc" style="margin-top:22px">
-      {restore.map((s) => <a class="card" href={`/services/${s.slug}/`} data-reveal><img src={s.image.src} alt={s.image.alt} width="1400" height="1050" loading="lazy" decoding="async"><div><h3>{s.name}</h3><p>{s.short}</p></div></a>)}
-    </div>
-    <p class="plans__note">Not sure which? <a href="/turf-problems/">Start with the symptom</a>, or take the quiz below.</p>
   </div>
 </section>
 
-<section class="sec" id="plans">
+<section class="sec" id="process">
   <div class="wrap">
-    <div class="sec__head center" data-reveal>
-      <p class="kicker">Pricing</p>
-      <h2>Honest, upfront turf cleaning prices</h2>
-      <p>Priced by square footage and condition, never by the hour. Two one-time cleans, three memberships, and every number on the <a href="/pricing/">pricing page</a>.</p>
+    <div class="sec__head center" data-reveal><p class="kicker">How it works</p><h2>From a quick quote to blown clean</h2></div>
+    <Steps steps={steps} />
+    <div class="btnrow btnrow--center" style="margin-top:36px" data-reveal>
+      <a class="btn btn--green btn--lg" href="#quote" data-cta="quote-process">Start with a free quote<Icon name="arrow" /></a>
+      <a class="btn btn--ghost btn--lg" href="#turf-quiz">Take the 30-second quiz</a>
     </div>
-    <div class="plans plans--two">
-      {[P.essential, P.premium].map((plan, i) => <article class:list={['plan', { 'plan--pop': i === 1 }]} data-reveal>{i === 1 && <span class="plan__badge">Most popular</span>}<p class="plan__lvl">One-time clean</p><h3>{plan.name}</h3><p class="plan__for">{plan.for}</p><p class="plan__price"><span class="from">from </span>{money(i === 0 ? P.rows[0].essential! : P.rows[0].premium!)}<small>Up to 500 sq ft</small></p><ul>{plan.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}{plan.excludes.map((x) => <li class="no">{x}</li>)}</ul><a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={`/quote/?plan=${encodeURIComponent(plan.name)}`} data-cta="quote-plan">Book {plan.name}</a></article>)}
-    </div>
-    <PriceTable />
-    <p class="plans__note">Want it kept clean all year? <a href="/pricing/#memberships">TIMELESS CARE memberships</a> from ${P.memberships[0].monthly}/month, four visits a year.</p>
   </div>
 </section>
+
+<section class="sec sec--cream" id="plans">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">Pricing</p><h2>Upfront prices, by square foot</h2><p>Never by the hour. Every size and add-on is on the <a class="textlink" href="/pricing/">pricing page</a>.</p></div>
+    <div class="plans plans--two" data-stagger>
+      {[P.essential, P.premium].map((plan, i) => <article class:list={['plan', { 'plan--pop': i === 1 }]}>{i === 1 && <span class="plan__badge">Most popular</span>}<p class="plan__lvl"><Icon name={i === 1 ? 'paw' : 'sparkle'} />One-time clean</p><h3>{plan.name}</h3><p class="plan__for">{plan.for}</p><p class="plan__price"><span class="from">from </span>{money(i === 0 ? P.rows[0].essential! : P.rows[0].premium!)}<small>Up to 500 sq ft</small></p><ul>{plan.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}{plan.excludes.map((x) => <li class="no">{x}</li>)}</ul><a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={`/quote/?plan=${encodeURIComponent(plan.name)}`} data-cta="quote-plan">Book {plan.name}</a></article>)}
+    </div>
+    <PriceTable />
+    <p class="note">Want it kept clean all year? <a href="/pricing/#memberships">Memberships</a> from ${P.memberships[0].monthly}/month, four visits a year.</p>
+  </div>
+</section>
+
 <section class="sec" id="turf-quiz">
   <div class="wrap">
     <div class="quiz" data-quiz data-reveal>
@@ -130,41 +141,23 @@ const topProblems = PROBLEMS.filter((p) => p.footer);
       <div data-step="0">
         <p class="kicker">30-second turf quiz</p>
         <h2>How bad is your turf, really?</h2>
-        <p>Three quick taps and we'll point you to the right clean. No forms, no spam, no sales pitch mid-quiz.</p>
-        <button class="btn btn--green btn--lg" type="button" data-quiz-start>Let's find out<svg class="ic"><use href="#i-arrow"/></svg></button>
+        <p>Three taps and we point you to the right clean.</p>
+        <button class="btn btn--green btn--lg" type="button" data-quiz-start>Let's find out<Icon name="arrow" /></button>
       </div>
       <div data-step="1" hidden>
         <p class="quiz__count">Question 1 of 3</p>
         <h3>Who uses your turf?</h3>
-        <p>This decides how deep we need to clean.</p>
-        <div class="quiz__opts">
-          <button type="button" data-k="use" data-v="0"><span>☀️</span><b>People only</b><small>No pets on it</small></button>
-          <button type="button" data-k="use" data-v="1"><span>🐕</span><b>Pets use it</b><small>A dog or two, regularly</small></button>
-          <button type="button" data-k="use" data-v="2"><span>🐾</span><b>Heavy pet use</b><small>Multiple pets or daily potty</small></button>
-          <button type="button" data-k="use" data-v="green"><span>⛳</span><b>It's a putting green</b><small>Slow, bumpy or worn</small></button>
-        </div>
+        <div class="quiz__opts">{quiz.use.map(([v, ic, b, s]) => <button type="button" data-k="use" data-v={v}><Icon name={ic} /><b>{b}</b><small>{s}</small></button>)}</div>
       </div>
       <div data-step="2" hidden>
         <p class="quiz__count">Question 2 of 3</p>
         <h3>How strong is the smell?</h3>
-        <p>Pick the closest match.</p>
-        <div class="quiz__opts">
-          <button type="button" data-k="smell" data-v="0"><span>🌿</span><b>Little to none</b><small>Barely notice it</small></button>
-          <button type="button" data-k="smell" data-v="1"><span>😐</span><b>Mild</b><small>Catch it sometimes</small></button>
-          <button type="button" data-k="smell" data-v="2"><span>🤢</span><b>Strong</b><small>Hard to sit outside</small></button>
-          <button type="button" data-k="smell" data-v="3"><span>☢️</span><b>Overpowering</b><small>The neighbors notice</small></button>
-        </div>
+        <div class="quiz__opts">{quiz.smell.map(([v, ic, b, s]) => <button type="button" data-k="smell" data-v={v}><Icon name={ic} /><b>{b}</b><small>{s}</small></button>)}</div>
       </div>
       <div data-step="3" hidden>
         <p class="quiz__count">Question 3 of 3</p>
         <h3>What describes your turf best?</h3>
-        <p>Last tap, then we recommend a plan.</p>
-        <div class="quiz__opts">
-          <button type="button" data-k="state" data-v="first"><span>✨</span><b>First pro clean</b><small>Never had it done right</small></button>
-          <button type="button" data-k="state" data-v="back"><span>🧪</span><b>Smell keeps coming back</b><small>Sprays and cleans failed</small></button>
-          <button type="button" data-k="state" data-v="worn"><span>🪨</span><b>Flat, matted or worn</b><small>Looks tired and crusty</small></button>
-          <button type="button" data-k="state" data-v="refresh"><span>🧼</span><b>Just needs a refresh</b><small>Mostly dirt and dullness</small></button>
-        </div>
+        <div class="quiz__opts">{quiz.state.map(([v, ic, b, s]) => <button type="button" data-k="state" data-v={v}><Icon name={ic} /><b>{b}</b><small>{s}</small></button>)}</div>
       </div>
       <div data-step="r" hidden>
         <p class="quiz__count">Your match</p>
@@ -172,8 +165,8 @@ const topProblems = PROBLEMS.filter((p) => p.footer);
         <p class="quiz__price" data-plan-price>From $299</p>
         <p data-plan-why></p>
         <div class="quiz__actions">
-          <a class="btn btn--green btn--lg" href="#quote" data-plan="Premium Restoration" data-plan-cta>Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-home"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+          <a class="btn btn--green btn--lg" href="#quote" data-plan="Premium Restoration" data-plan-cta>Get My Free Quote<Icon name="arrow" /></a>
+          <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-quiz"><Icon name="phone" />{brand.phone}</a>
         </div>
         <button class="linkbtn" type="button" data-quiz-reset>Retake quiz</button>
       </div>
@@ -181,54 +174,34 @@ const topProblems = PROBLEMS.filter((p) => p.footer);
   </div>
 </section>
 
-<section class="sec sec--cream" id="work">
-  <div class="wrap">
-    <div class="sec__head" data-reveal>
-      <p class="kicker">Our work</p>
-      <h2>What a finished green looks like</h2>
-      <p>These are lawns and greens Brian built. Before-and-after photos from restoration jobs on {area.name} go here as the jobs get done, with the town and the problem named. Nothing on this site is stock. For owners of a green, the <a href="/putting-greens/">putting green center</a> covers speed, sand, seams and what a green costs to keep.</p>
+<section class="sec sec--cream" id="about">
+  <div class="wrap split">
+    <div data-reveal>
+      <p class="kicker">Who does the work</p>
+      <h2>Built by a turf builder. <span class="hl">Finished blown clean.</span></h2>
+      <p class="body">{brand.owner} has built artificial turf and putting greens for {brand.ownerYears} years, so he cleans turf the way it was built: through the infill and backing, not a spray on top.</p>
+      <ul class="checks">
+        <li>Odor pulled out of the infill, then treated so it stays gone</li>
+        <li>Seams, drainage and infill checked on every visit</li>
+        <li>Greens sanded, brushed and rolled back to a true roll</li>
+      </ul>
+      <a class="btn btn--ghost btn--lg" href="/about/">More about {brand.owner}<Icon name="arrow" /></a>
     </div>
-    <div class="work" data-reveal>
-      <figure><img src="/assets/img/putting-green-at-sunset-wide.jpg" alt="Backyard putting green at sunset" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>A green that has been blown clean.</figcaption></figure>
-      <figure><img src="/assets/img/backyard-putting-green-from-the-street.jpg" alt="Backyard putting green seen from the street" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>Fringe, collar and cups kept clear.</figcaption></figure>
-      <figure><img src="/assets/img/practice-nets-and-goals-on-turf.jpg" alt="Practice nets and goals on artificial turf" width="1050" height="1400" loading="lazy" decoding="async"><figcaption>Sports turf: groomed, infill level.</figcaption></figure>
-      <figure><img src="/assets/img/artificial-turf-backyard-patio.jpg" alt="Artificial turf lawn beside a patio" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>Fibers upright, edges tight.</figcaption></figure>
-    </div>
-  </div>
-</section>
-<section class="sec sec--cream" id="process">
-  <div class="wrap">
-    <div class="sec__head center" data-reveal>
-      <p class="kicker">Our process</p>
-      <h2>How we clean turf differently</h2>
-      <p>Most cleaners freshen the surface. We restore the whole system (blades, backing and infill) so odor stays gone and water drains again.</p>
-    </div>
-    <ol class="proc">
-      <li class="step" data-reveal><div class="step__n"><b>1</b><span>Step 1</span></div><h3>Inspect &amp; diagnose</h3><p>We check odor sources, drainage, infill depth, seams and blade wear before we start.</p></li>
-      <li class="step" data-reveal><div class="step__n"><b>2</b><span>Step 2</span></div><h3>Extract, don't just spray</h3><p>Powerful extraction pulls urine, bacteria and debris out of the infill and backing.</p></li>
-      <li class="step" data-reveal><div class="step__n"><b>3</b><span>Step 3</span></div><h3>Treat, protect &amp; restore</h3><p>Enzyme treatment, fresh infill where needed, blade lift and grooming. Greens get top-dressed and rolled.</p></li>
-      <li class="step" data-reveal><div class="step__n"><b>4</b><span>Step 4</span></div><h3>Blown clean &amp; walkthrough</h3><p>Every job ends blown clean. Then we walk it with you and show you what we did.</p></li>
-    </ol>
-    <div class="proc__cta">
-      <a class="btn btn--green btn--lg" href="#quote">Start with a free quote<svg class="ic"><use href="#i-arrow"/></svg></a>
-      <a class="textlink" href="#turf-quiz">Not sure? Take the 30-second quiz</a>
-    </div>
+    <figure class="photo" data-reveal="scale">
+      <img src="/assets/img/putting-green-fire-pit-stone-wall.jpg" width="1400" height="1050" alt="Putting green beside a fire pit and stone wall" loading="lazy" decoding="async">
+      <figcaption><b>Putting greens are our specialty.</b> Cleaned and restored to the standard they are built to.</figcaption>
+    </figure>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <div class="sec__head" data-reveal><p class="kicker">Start with the symptom</p><h2>Common turf problems, explained</h2></div>
-    <div class="index">{topProblems.map((p) => <a class="index__item" href={`/turf-problems/${p.slug}/`} data-reveal><small>{p.short}</small><h3>{p.h1}</h3><p>{p.answer.split('. ')[0]}.</p></a>)}</div>
-    <p class="plans__note"><a href="/turf-problems/">All turf problems</a> · <a href="/how-to/">How-to</a> · <a href="/guides/">Guides</a></p>
-  </div>
-</section>
-<section class="sec sec--cream">
-  <div class="wrap">
-    <div class="sec__head" data-reveal><p class="kicker">Learn</p><h2>Everything we know about turf, written down</h2><p>Hundreds of pages, each answering one question the way it gets asked. Search the site, or start with a tier.</p></div>
-    <div class="tiers">
-      {[['/putting-greens/','Putting greens','Speed, sand, seams, chip shots and what a green costs to keep.'],['/turf-problems/','Turf problems','Symptom first: what it is, why, how to check, what fixes it.'],['/how-to/','How-to','Honest DIY steps, and the point where a visit is cheaper.'],['/guides/','Guides & comparisons','Tables, schedules, checklists and the arithmetic.'],['/cost/','What it costs','Real numbers by square foot, and what neglect turns into.'],['/turf-care/','Care by turf type','Pet turf, greens, playgrounds, pools, rooftops, dog runs.'],['/turf-101/','Turf 101','How the layers work, where the smell lives, what infill does.'],['/commercial/','For businesses','Golf courses, mini golf, estates, rentals, HOAs, resorts, schools.'],['/service-areas/','Service areas','Every town on the Strand, with what its yards do to turf.']].map(([href,h,p]) => <a class="tier" href={href} data-reveal><h3>{h}</h3><p>{p}</p><span class="rel__more">Open<svg class="ic ic--sm"><use href="#i-arrow"/></svg></span></a>)}
+    <div class="sec__head sec__head--row" data-reveal>
+      <div><p class="kicker">Start with the symptom</p><h2>Common turf problems, fixed</h2></div>
+      <a class="textlink" href="/turf-problems/">All turf problems <Icon name="arrow" class="ic--sm" /></a>
     </div>
+    <div class="index" data-stagger>{topProblems.map((p) => <a class="index__item index__item--ic" href={`/turf-problems/${p.slug}/`}><span class="index__ic"><Icon name={iconFor(p.h1, 'alert')} /></span><small>{p.short}</small><h3>{p.h1}</h3><p>{teaser(p.answer)}</p></a>)}</div>
+    <CtaStrip title="Not sure what your turf needs?" text="Describe it or send photos. You get an honest answer and a price before anyone comes out." icon="camera" />
   </div>
 </section>
 
@@ -236,36 +209,39 @@ const topProblems = PROBLEMS.filter((p) => p.footer);
   <div class="wrap split">
     <div data-reveal>
       <p class="kicker">Where we work</p>
-      <h2>{area.name}, one blown-clean standard</h2>
+      <h2>{area.name}, one standard</h2>
       <p class="body">{area.line}.</p>
       <div class="regions">
-        <div class="region"><h3><svg class="ic"><use href="#i-pin"/></svg>South Carolina<small>Horry County</small></h3><ul class="chips chips--links">{sc.map((t) => <li><a href={`/service-areas/${t.slug}/`}>{t.name}</a></li>)}</ul></div>
-        {nc.length > 0 && <div class="region"><h3><svg class="ic"><use href="#i-pin"/></svg>North Carolina<small>Brunswick County</small></h3><ul class="chips chips--links">{nc.map((t) => <li><a href={`/service-areas/${t.slug}/`}>{t.name}</a></li>)}</ul></div>}
+        <div class="region"><h3><Icon name="pin" />South Carolina<small>Horry County</small></h3><ul class="chips chips--links">{sc.map((t) => <li><a href={`/service-areas/${t.slug}/`}>{t.name}</a></li>)}</ul></div>
+        {nc.length > 0 && <div class="region"><h3><Icon name="pin" />North Carolina<small>Brunswick County</small></h3><ul class="chips chips--links">{nc.map((t) => <li><a href={`/service-areas/${t.slug}/`}>{t.name}</a></li>)}</ul></div>}
       </div>
       <div class="btnrow">
-        <a class="btn btn--green btn--lg" href="/service-areas/">All service areas<svg class="ic"><use href="#i-arrow"/></svg></a>
-        <a class="btn btn--outline-light btn--lg" href={brand.phoneHref} data-cta="call-areas"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+        <a class="btn btn--green btn--lg" href="#quote" data-cta="quote-areas">Get My Free Quote<Icon name="arrow" /></a>
+        <a class="btn btn--outline-light btn--lg" href="/service-areas/">All service areas</a>
       </div>
-      <p class="areas__more">On {area.name} but don't see your town? Call to confirm availability.</p>
     </div>
-    <figure class="photo photo--tall" data-reveal>
+    <figure class="photo" data-reveal="scale">
       <img src="/assets/img/putting-green-shared-amenity-lawn.jpg" width="1050" height="1400" alt="Putting green on a shared community lawn" loading="lazy" decoding="async">
       <figcaption><b>Homes, HOAs, rentals &amp; commercial.</b> Same crew, same standard.</figcaption>
     </figure>
   </div>
 </section>
 
-<Faq faq={faq} h2="Turf cleaning questions, answered" intro="How professional cleaning works, what makes Timeless different, and how to protect your turf." />
+<section class="sec sec--tight"><div class="wrap" style="max-width:880px" data-reveal><AnswerBox question={q} answer={a} /></div></section>
 
-<CtaBand />
+<Faq faq={faq} h2="Turf cleaning questions, answered" more={false} />
 
 <section class="sec sec--cream" id="quote">
   <div class="wrap split split--form">
     <div data-reveal>
       <p class="kicker">Free quote</p>
-      <h2>Tell us about your turf</h2>
-      <p class="body">Send a few details and Brian will come back with a recommendation and a price by square foot. Rather talk? Call <a href={brand.phoneHref} data-cta="call-quote">{brand.phone}</a>.</p>
-      <ul class="checks"><li>No obligation, no pressure</li><li>Price before any work starts</li><li>A real turf pro follows up, not a call center</li></ul>
+      <h2>Get your price</h2>
+      <p class="body">Send a few details and {brand.owner} comes back with a recommendation and a price by square foot. Rather talk? Call <a class="textlink" href={brand.phoneHref} data-cta="call-quote">{brand.phone}</a>.</p>
+      <ul class="form-side">
+        <li><Icon name="ruler" /><div><b>Priced by square foot</b><span>Never by the hour.</span></div></li>
+        <li><Icon name="tag" /><div><b>Price before any work starts</b><span>You approve any add-on first.</span></div></li>
+        <li><Icon name="chat" /><div><b>Rather send photos?</b><span><a class="textlink" href={`${brand.smsHref}?&body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos:')}`} data-cta="sms-quote">Text {brand.phone}</a></span></div></li>
+      </ul>
     </div>
     <QuoteForm />
   </div>

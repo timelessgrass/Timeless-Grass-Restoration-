@@ -5,43 +5,48 @@ import AnswerBox from '../components/AnswerBox.astro';
 import PriceTable from '../components/PriceTable.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
+import CtaStrip from '../components/CtaStrip.astro';
+import Icon from '../components/Icon.astro';
 import { brand, area, pricing as P, money } from '../data/site';
+import { iconFor } from '../lib/icons';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Pricing', item: '/pricing/' }];
 const q = 'How much does TIMELESS Turf Restoration charge?';
-const a = `We price by turf square footage and condition, never by the hour. An Essential Clean runs ${money(P.rows[0].essential!)} for up to 500 sq ft to ${money(P.rows[5].essential!)} for up to 5,000 sq ft; a Premium Restoration with pet-odor, antimicrobial and algae treatment runs ${money(P.rows[0].premium!)} to ${money(P.rows[5].premium!)}. TIMELESS CARE memberships with four visits a year run $${P.memberships[0].monthly}–$${P.memberships[2].monthly} a month. Minimum visit ${money(P.minimum)}. Add-ons are quoted after inspection, before any work.`;
+const a = `We price by turf square footage and condition, never by the hour. An Essential Clean runs ${money(P.rows[0].essential!)} for up to 500 sq ft to ${money(P.rows[5].essential!)} for up to 5,000 sq ft; a Premium Restoration with pet-odor, antimicrobial and algae treatment runs ${money(P.rows[0].premium!)} to ${money(P.rows[5].premium!)}. Memberships with four visits a year run $${P.memberships[0].monthly}–$${P.memberships[2].monthly} a month. Minimum visit ${money(P.minimum)}. Add-ons are quoted after inspection, before any work.`;
 const faq = [
-  { q: 'Which plan do I need?', a: 'Pick by who uses the turf. No pets and light dirt: Essential Clean. Dogs, odor, algae or turf that has never been professionally cleaned: Premium Restoration. If in doubt, the <a href="/#turf-quiz">30-second quiz</a> on the homepage will tell you, or call and describe the yard.' },
-  { q: 'How do I measure my turf?', a: 'Length times width of each turf area, in feet, added together. Ignore the patio and beds. A tape measure and two minutes is enough; we confirm on site and the price does not change unless the area does.' },
-  { q: 'Do prices include everything?', a: 'The plan price covers everything listed under it. Repairs, new infill, and heavy odor or stain treatments are add-ons, priced in the table above and quoted after the inspection. You approve them before we do them.' },
+  { q: 'Which plan do I need?', a: 'Pick by who uses the turf. No pets and light dirt: Essential Clean. Dogs, odor, algae or turf that has never been professionally cleaned: Premium Restoration. Not sure? The <a href="/#turf-quiz">30-second quiz</a> tells you, or call and describe the yard.' },
+  { q: 'How do I measure my turf?', a: 'Length times width of each turf area, in feet, added together. Ignore the patio and beds. We confirm on site, and the price does not change unless the area does.' },
+  { q: 'Do prices include everything?', a: 'The plan price covers everything listed under it. Repairs, new infill, and heavy odor or stain treatments are add-ons, quoted after the inspection. You approve them before we do them.' },
   { q: 'Can I cancel a membership?', a: 'Yes, any time after the current quarter\'s visit. There is no long contract; the monthly price is the four visits a year spread over twelve months.' },
-  { q: 'Do you offer discounts?', a: `TIMELESS ELITE members get 10% off repairs and add-ons, and on turf over 1,000 square feet the membership also costs less than four separate Premium Restorations: ${money(P.memberships[1].monthly * 12)} a year against ${money(P.rows[2].premium! * 4)} for four bought one at a time in the 1,001–1,500 sq ft band, and the gap widens in every larger band. Up to 1,000 square feet, four one-time visits cost less (${money(P.rows[0].premium! * 4)} up to 500 sq ft, ${money(P.rows[1].premium! * 4)} at 501–1,000), so on a smaller yard ELITE is for priority scheduling and the add-on discount, not a lower price. <a href="/guides/one-time-clean-vs-membership/">The membership math</a> shows every size band. We also quote HOA common areas, dog daycares and rental portfolios as a group.` },
+  { q: 'Do you offer discounts?', a: 'Memberships are the discount: four Premium Restorations bought one at a time cost more than a year of TIMELESS ELITE. HOA common areas, dog daycares and rental portfolios are quoted as a group.' },
 ];
 ---
 <Base title="Turf Cleaning Prices, Grand Strand | TIMELESS" description={`Real prices by square foot: Essential Clean from $199, Premium Restoration from $299, memberships from $89/mo, add-ons listed. No hourly rates.`} crumbs={crumbs} answer={{ question: q, answer: a }} faq={faq}>
-  <SubHero kicker="Pricing" h1="Honest, upfront turf cleaning prices" lede={`Priced by square footage and condition, never by the hour, across ${area.name}. Book a one-time clean, or keep your turf looking new all year with a TIMELESS CARE membership.`} crumbs={crumbs}>
-    <AnswerBox question={q} answer={a} />
-  </SubHero>
+  <SubHero kicker="Pricing" h1="Turf cleaning prices, up front" lede={`By square footage and condition, never by the hour, anywhere on ${area.name}.`} crumbs={crumbs} cta
+    trust={[{ icon: 'ruler', label: 'By square foot, never hourly' }, { icon: 'tag', label: `${money(P.minimum)} minimum visit` }, { icon: 'calendar', label: `Memberships from $${P.memberships[0].monthly}/mo` }]} />
+
+  <section class="sec sec--tight"><div class="wrap" style="max-width:880px" data-reveal><AnswerBox question={q} answer={a} /></div></section>
 
   <section class="sec">
     <div class="wrap">
-      <div class="plans plans--two">
-        {[P.essential, P.premium].map((plan, i) => <article class:list={['plan', { 'plan--pop': i === 1 }]} data-reveal>{i === 1 && <span class="plan__badge">Most popular</span>}<p class="plan__lvl">One-time clean</p><h3>{plan.name}</h3><p class="plan__for">{plan.for}</p><p class="plan__price"><span class="from">from </span>{money(i === 0 ? P.rows[0].essential! : P.rows[0].premium!)}<small>Up to 500 sq ft. Every size below.</small></p><ul>{plan.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}{plan.excludes.map((x) => <li class="no">{x}</li>)}</ul><a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={`/quote/?plan=${encodeURIComponent(plan.name)}`} data-cta="quote-plan">Book {plan.name}</a></article>)}
+      <div class="sec__head center" data-reveal><p class="kicker">One-time cleans</p><h2>Two plans. Every size priced.</h2></div>
+      <div class="plans plans--two" data-stagger>
+        {[P.essential, P.premium].map((plan, i) => <article class:list={['plan', { 'plan--pop': i === 1 }]}>{i === 1 && <span class="plan__badge">Most popular</span>}<p class="plan__lvl"><Icon name={i === 1 ? 'paw' : 'sparkle'} />One-time clean</p><h3>{plan.name}</h3><p class="plan__for">{plan.for}</p><p class="plan__price"><span class="from">from </span>{money(i === 0 ? P.rows[0].essential! : P.rows[0].premium!)}<small>Up to 500 sq ft. Every size below.</small></p><ul>{plan.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}{plan.excludes.map((x) => <li class="no">{x}</li>)}</ul><a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={`/quote/?plan=${encodeURIComponent(plan.name)}`} data-cta="quote-plan">Book {plan.name}</a></article>)}
       </div>
       <PriceTable />
-      <div class="sizes" data-reveal style="margin-top:28px">
-        <table><caption>Add-ons, quoted after inspection</caption><thead><tr><th scope="col">Add-on</th><th scope="col">Price</th></tr></thead><tbody>{P.addons.map((x) => <tr><th scope="row">{x.name}</th><td>{x.price}</td></tr>)}</tbody></table>
-        <p class="sizes__note">We don't sell add-ons on the phone. If the inspection shows your yard needs one, we tell you the number and you decide before anything happens.</p>
-      </div>
+      <div class="wrap" style="max-width:880px;padding:0"><CtaStrip title="Not sure which plan fits?" text={`Tell ${brand.owner} about your yard. You get a recommendation and a price before any work.`} icon="question" /></div>
+      <h3 class="addons__h" data-reveal>Add-ons, quoted after inspection</h3>
+      <ul class="addons" data-stagger>{P.addons.map((x) => <li><Icon name={iconFor(x.name, 'plus')} /><div><b>{x.name}</b><span>{x.price}</span></div></li>)}</ul>
+      <p class="addons__note">If the inspection shows your yard needs one, we tell you the number and you decide before anything happens.</p>
     </div>
   </section>
 
   <section class="sec sec--cream" id="memberships">
     <div class="wrap">
-      <div class="sec__head center" data-reveal><p class="kicker">TIMELESS CARE memberships</p><h2>Keep it looking new, all year</h2><p>Four scheduled visits a year with priority booking, billed monthly, so your turf never slides back to smelly and matted.</p></div>
-      <div class="plans">
-        {P.memberships.map((m, i) => <article class:list={['plan', { 'plan--pop': i === 2 }]} data-reveal>{i === 2 && <span class="plan__badge">Best for dog yards</span>}<p class="plan__lvl">{m.visits} visits a year</p><h3>{m.name}</h3><p class="plan__for">{m.for}</p><p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p><ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>{'note' in m && m.note && <p class="hole">{m.note}</p>}<a class:list={['btn', i === 2 ? 'btn--green' : 'btn--ghost']} href={`/quote/?plan=${encodeURIComponent(m.name)}`} data-cta="quote-membership">Choose {m.name}</a></article>)}
+      <div class="sec__head center" data-reveal><p class="kicker">Memberships</p><h2>Keep it looking new, all year</h2><p>Four scheduled visits a year with priority booking, billed monthly.</p></div>
+      <div class="plans" data-stagger>
+        {P.memberships.map((m, i) => <article class:list={['plan', { 'plan--pop': i === 2 }]}>{i === 2 && <span class="plan__badge">Best for dog yards</span>}<p class="plan__lvl"><Icon name="calendar" />{m.visits} visits a year</p><h3>{m.name}</h3><p class="plan__for">{m.for}</p><p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p><ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>{'note' in m && m.note && <p class="plan__note">{m.note}</p>}<a class:list={['btn', i === 2 ? 'btn--green' : 'btn--ghost']} href={`/quote/?plan=${encodeURIComponent(m.name)}`} data-cta="quote-membership">Choose {m.name}</a></article>)}
       </div>
-      <p class="plans__note">Not sure? Our guide on <a href="/guides/how-often-to-clean-artificial-turf/">how often turf needs cleaning</a> has a table by dogs and square feet, and <a href="/guides/artificial-turf-cleaning-cost/">the cost guide</a> runs the one-time-vs-membership math.</p>
+      <p class="note">How often does your yard need it? See <a href="/guides/how-often-to-clean-artificial-turf/">how often to clean turf</a> and <a href="/guides/artificial-turf-cleaning-cost/">the one-time vs membership math</a>.</p>
     </div>
   </section>
   <Faq faq={faq} h2="Pricing questions" />

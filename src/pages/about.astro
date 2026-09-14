@@ -3,6 +3,10 @@ import Base from '../layouts/Base.astro';
 import SubHero from '../components/SubHero.astro';
 import AnswerBox from '../components/AnswerBox.astro';
 import CtaBand from '../components/CtaBand.astro';
+import IconStats from '../components/IconStats.astro';
+import Steps from '../components/Steps.astro';
+import Sidebar from '../components/Sidebar.astro';
+import CtaStrip from '../components/CtaStrip.astro';
 import { brand, area, SITE_URL } from '../data/site';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'About', item: '/about/' }];
 const q = `Who is behind ${brand.name}?`;
@@ -10,29 +14,40 @@ const a = `${brand.name} is owner-operated by ${brand.owner}, who has worked in 
 const schema = [{ '@type': 'Person', '@id': `${SITE_URL}/about/#brian`, name: brand.owner, jobTitle: 'Owner', worksFor: { '@id': `${SITE_URL}/#business` }, knowsAbout: ['Artificial turf', 'Synthetic putting greens', 'Turf cleaning and restoration'] }];
 ---
 <Base title={`About Brian | ${brand.name}`} description={`Brian has 13 years in artificial turf and putting greens. Why a turf builder started a turf cleaning company on the Grand Strand, and what blown clean means.`} crumbs={crumbs} answer={{ question: q, answer: a }} schema={schema}>
-  <SubHero kicker="About" h1="Hi, I'm Brian." lede="I've spent thirteen years building and looking after artificial turf and putting greens. I started the restoration company because most of the turf I was asked to replace didn't need replacing. It needed cleaning properly, by someone who knew how it was built." crumbs={crumbs} image={{ src: '/assets/img/putting-green-fire-pit-stone-wall.jpg', alt: 'A putting green Brian built, beside a fire pit and stone wall' }}>
-    <AnswerBox question={q} answer={a} />
-  </SubHero>
-  <section class="sec">
+  <SubHero kicker="About" h1="Hi, I'm Brian." lede="I've spent thirteen years building and looking after artificial turf and putting greens. Most of the turf I was asked to replace just needed cleaning properly, so that is what this company does." crumbs={crumbs} image={{ src: '/assets/img/putting-green-fire-pit-stone-wall.jpg', alt: 'A putting green Brian built, beside a fire pit and stone wall' }} cta />
+
+  <IconStats light label="About Brian" items={[
+    { icon: 'flag', value: String(brand.ownerYears), count: brand.ownerYears, suffix: '+', label: 'years building turf and putting greens' },
+    { icon: 'ruler', value: 'By sq ft', label: 'priced up front, never by the hour' },
+    { icon: 'sparkle', value: 'Blown clean', label: 'the finish on every job' },
+    { icon: 'map', value: 'Grand Strand', label: 'Shallotte, NC to Burgess, SC' },
+  ]} />
+
+  <section class="sec sec--flush">
     <div class="wrap article">
-      <article class="prose" data-reveal>
+      <article class="prose">
+        <AnswerBox question={q} answer={a} />
         <h2>Why a builder cleans turf</h2>
-        <p>When you have installed enough turf you stop seeing grass and start seeing the system: the base it sits on, the backing, the seams, the infill that holds the fibers up and the drainage that keeps it from smelling. Most "tired" turf I get called to look at has nothing wrong with any of that. It has years of pollen in the infill, a corner the dog uses, a shaded strip that has gone green, and paths nobody has brushed. That is a few hundred dollars of proper work, not a few thousand dollars of new turf. So I built a company to do the few hundred dollars of work, and do it properly.</p>
+        <p>After enough installs you stop seeing grass and start seeing the system: base, backing, seams, infill and drainage. Most "tired" turf has nothing wrong with any of it. It has pollen in the infill, a corner the dog uses and paths nobody has brushed. That is a few hundred dollars of proper work, not new turf.</p>
         <h2>The standard: blown clean</h2>
-        <p>My test of a turf job is whether you can blow off the green when it is finished. It sounds small. It is not. A green that has been blown clean has had every leaf and needle taken off it, the fringe cleared, the cups cleaned and the surface groomed, and it looks like what you paid for. If a crew leaves leaves on the green, they did not finish. Every job we do ends with the turf, the borders and the patio blown clean, and that is what you should expect to walk out to.</p>
+        <p>My test of a turf job is whether you can blow off the green when it is finished. Every leaf and needle off, fringe cleared, cups cleaned, surface groomed. Every job ends with the turf, the borders and the patio blown clean.</p>
+        <CtaStrip title="Want it done to that standard?" text="Free quote by square foot, before any work starts." icon="sparkle" />
         <h2>What we do and don't do</h2>
-        <p>We clean, treat and restore turf that is already installed: <a href="/services/">the full list is here</a>. We don't install new turf. When something is past saving, because the base has failed or the backing is going, I say so on the inspection and hand it to my other company, <a href={brand.sister.url} rel="noopener">{brand.sister.name}</a>, which builds lawns and greens. Keeping the two separate means the restoration company never has a reason to talk you into a replacement you don't need.</p>
-        <h2>How a job goes</h2>
-        <ol><li>You call or send the form. I call you back, usually the same day, and ask about the yard: size, pets, what is bothering you.</li><li>You get a price by square foot before anyone comes out. If the yard needs an add-on when I see it, I tell you the number and you decide.</li><li>We do the work, usually in one visit. You get before and after photos on a Premium Restoration.</li><li>It ends blown clean. I walk it with you if you are home.</li></ol>
-        <h2>The photos on this site</h2>
-        <p>The photographs here are lawns and greens I built. As the restoration work builds up, before and after photos from real cleaning jobs on the Grand Strand will go on the service and area pages, with the town and the problem named. I would rather show you nothing than show you someone else's yard.</p>
-        <h2>Where we work</h2>
-        <p>{area.line}. The <a href="/service-areas/">service areas</a> page lists every town.</p>
+        <p>We clean, treat and restore turf that is already installed: <a href="/services/">every service is here</a>. We don't install. When turf is past saving, I say so and hand it to my other company, <a href={brand.sister.url} rel="noopener">{brand.sister.name}</a>, so this company never has a reason to sell you a replacement.</p>
       </article>
-      <aside class="side">
-        <div class="side__card side__card--cta"><h3>Talk to Brian</h3><p>No call center. The person who answers is the person who does the work.</p><a class="btn btn--green" href={brand.phoneHref} data-cta="call-side"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a><a class="btn btn--outline-light" href="/quote/" data-cta="quote-side">Get My Free Quote</a></div>
-        <div class="side__card"><h3>At a glance</h3><ul><li>{brand.ownerYears} years in turf and putting greens</li><li>Owner-operated since {brand.founded}</li><li>Priced by square foot, never by the hour</li><li>Every job ends blown clean</li></ul></div>
-      </aside>
+      <Sidebar title={`Talk to ${brand.owner}`} />
+    </div>
+  </section>
+
+  <section class="sec sec--cream">
+    <div class="wrap">
+      <div class="sec__head center" data-reveal><p class="kicker">How a job goes</p><h2>Four steps, no surprises</h2></div>
+      <Steps steps={[
+        { icon: 'phone', title: 'You call or send the form', text: 'I get back to you, usually within one business day, and ask about size, pets and what is bothering you.' },
+        { icon: 'tag', title: 'You get a price', text: 'By square foot, before anyone comes out. Add-ons are quoted after I see the yard, and you decide.' },
+        { icon: 'camera', title: 'We do the work', text: 'Usually one visit. A Premium Restoration comes with before and after photos.' },
+        { icon: 'sparkle', title: 'It ends blown clean', text: 'I walk it with you if you are home.' },
+      ]} />
     </div>
   </section>
   <CtaBand />

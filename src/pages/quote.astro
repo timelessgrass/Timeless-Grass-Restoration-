@@ -1,26 +1,46 @@
 ---
 import Base from '../layouts/Base.astro';
 import QuoteForm from '../components/QuoteForm.astro';
+import Steps from '../components/Steps.astro';
+import ProofGallery from '../components/ProofGallery.astro';
+import Icon from '../components/Icon.astro';
 import { brand, area, pricing as P, money } from '../data/site';
+import { availableJobs } from '../lib/jobs';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Free quote', item: '/quote/' }];
+const sms = `${brand.smsHref}?&body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos of my turf:')}`;
+const jobs = availableJobs();
 ---
-<Base title={`Free Turf Cleaning Quote | ${brand.name}`} description={`Tell us about your turf and get an upfront price by square foot. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration from ${money(P.rows[0].premium!)}. No pressure, no call center.`} crumbs={crumbs} robots="noindex, follow">
+<Base title={`Free Turf Cleaning Quote | ${brand.name}`} description={`Tell us about your turf and get an upfront price by square foot. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration from ${money(P.rows[0].premium!)}.`} crumbs={crumbs} robots="noindex, follow">
   <section class="sec sec--cream" id="quote">
     <div class="wrap split split--form">
-      <div data-reveal>
-        <p class="kicker">Free quote</p>
-        <h1>Tell us about your turf</h1>
-        <p class="body">Send a few details and {brand.owner} will come back with a recommendation and a price by square foot. Rather talk? Call <a href={brand.phoneHref} data-cta="call-quote">{brand.phone}</a>.</p>
-        <ul class="checks"><li>No obligation, no pressure</li><li>Price before any work starts</li><li>A real turf pro follows up, not a call center</li><li>Serving {area.name}: {area.line}</li></ul>
-        <p class="ph-note">Prefer to text a photo? <a href={`${brand.smsHref}?&body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos of my turf:')}`} data-cta="sms-quote">Text {brand.phone}</a>.</p>
+      <div>
+        <p class="kicker intro" style="--d:0">Free quote</p>
+        <h1 class="intro" style="--d:1">Get your turf price</h1>
+        <p class="body intro" style="--d:2">A few details, and {brand.owner} comes back with a recommendation and a price by square foot.</p>
+        <ul class="form-side intro" style="--d:3">
+          <li><Icon name="tag" /><div><b>From {money(P.rows[0].essential!)}</b><span>Essential Clean, up to 500 sq ft.</span></div></li>
+          <li><Icon name="ruler" /><div><b>Priced before any work starts</b><span>By square foot, never by the hour.</span></div></li>
+          <li><Icon name="chat" /><div><b>Faster with photos</b><span><a class="textlink" href={sms} data-cta="sms-quote">Text {brand.phone}</a> a few shots of the turf.</span></div></li>
+          <li><Icon name="pin" /><div><b>{area.name}</b><span>{area.line}.</span></div></li>
+        </ul>
       </div>
       <QuoteForm />
     </div>
   </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec__head center" data-reveal><p class="kicker">What happens next</p><h2>From request to blown clean</h2></div>
+      <Steps steps={[
+        { icon: 'phone', title: `${brand.owner} gets back to you`, text: 'A call or text to ask about size, pets and what is bothering you.' },
+        { icon: 'tag', title: 'You get a price', text: 'By square foot, before anyone comes out. Add-ons are only quoted after a look.' },
+        { icon: 'sparkle', title: 'We do the work', text: 'Usually one visit, finished blown clean and ready once dry.' },
+      ]} />
+    </div>
+  </section>
+  {jobs.length > 0 && <section class="sec sec--cream">
+    <div class="wrap">
+      <div class="sec__head center" data-reveal><p class="kicker">Before &amp; after</p><h2>What one visit changes</h2></div>
+      <ProofGallery limit={3} />
+    </div>
+  </section>}
 </Base>
-<script is:inline>
-  // ?plan= from a "Select plan" button pre-selects the dropdown
-  const plan = new URLSearchParams(location.search).get('plan');
-  const sel = document.querySelector('#f-plan');
-  if (plan && sel) [...sel.options].forEach((o) => { if (o.value.startsWith(plan)) sel.value = o.value; });
-</script>

@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { brand } from '../data/site';
 interface Props { question: string; answer: string }
 const { question, answer } = Astro.props;
@@ -6,5 +7,8 @@ const { question, answer } = Astro.props;
 <div class="answer-box">
   <p class="answer-box__q">{question}</p>
   <p class="answer-box__a" set:html={answer} />
-  <p class="answer-box__tel">Talk to {brand.owner}: <a href={brand.phoneHref} data-cta="call-answer">{brand.phone}</a></p>
+  <p class="answer-box__tel">
+    <a href={brand.phoneHref} data-cta="call-answer"><Icon name="phone" />Talk to {brand.owner}: {brand.phone}</a>
+    <a href="/quote/" data-cta="quote-answer"><Icon name="quote" />Get a free quote</a>
+  </p>
 </div>

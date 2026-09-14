@@ -1,4 +1,5 @@
 ---
+import { clip } from '../../../lib/text';
 import ArticleLayout from '../../../components/ArticleLayout.astro';
 import { LOCAL_SERVICES, findTown, findService, ALL_PROBLEMS, withPhone } from '../../../data/registry';
 import { SITE_URL } from '../../../data/site';
@@ -22,7 +23,7 @@ const extraSchema = [{ '@type': 'Service', '@id': `${SITE_URL}/service-areas/${t
     { h: 'Problems this fixes', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
     { h: `${s.name} nearby`, items: siblings.filter((n) => t.nearby.includes(n.slug)).map((n) => ({ href: `/service-areas/${n.slug}/${s.slug}/`, label: `${n.name}, ${n.state}` })) },
   ]}
-  related={problems.slice(0, 3).map((p) => ({ href: `/turf-problems/${p!.slug}/`, title: p!.h1, blurb: p!.lede.slice(0, 140) + '…', image: p!.image?.src }))}
+  related={problems.slice(0, 3).map((p) => ({ href: `/turf-problems/${p!.slug}/`, title: p!.h1, blurb: clip(p!.lede, 140), image: p!.image?.src }))}
   relatedH2="Problems this service fixes" extraSchema={extraSchema}
   callout={`<b>${s.name} in ${t.name}.</b> ${s.priceLine}. Method in full: <a href="/services/${s.slug}/">${s.name}</a>. <a href="/quote/">Get a free quote</a>.`}
 />

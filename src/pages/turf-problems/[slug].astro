@@ -1,4 +1,5 @@
 ---
+import { clip } from '../../lib/text';
 import ArticleLayout from '../../components/ArticleLayout.astro';
 import { CLUSTERS } from '../../data/problems';
 import { ALL_PROBLEMS, findProblem, findService, HOWTOS } from '../../data/registry';
@@ -19,7 +20,7 @@ const crumbs = [{ name: 'Home', item: '/' }, { name: 'Turf problems', item: '/tu
     { h: 'Do it yourself', items: howtos.map((h) => ({ href: `/how-to/${h.slug}/`, label: h.short })) },
     { h: 'Related problems', items: related.map((r) => ({ href: `/turf-problems/${r!.slug}/`, label: r!.short })) },
   ]}
-  related={related.map((r) => ({ href: `/turf-problems/${r!.slug}/`, title: r!.h1, blurb: r!.lede.slice(0, 140) + '…', image: r!.image?.src }))}
+  related={related.map((r) => ({ href: `/turf-problems/${r!.slug}/`, title: r!.h1, blurb: clip(r!.lede, 140), image: r!.image?.src }))}
   relatedH2="If you have this, you might also have…"
   callout={`<b>The fix:</b> <a href="/services/${svc.slug}/">${svc.name}</a>. ${svc.priceLine}. <a href="/quote/">Get a free quote</a> or call ${brand.phone}.`}
 />

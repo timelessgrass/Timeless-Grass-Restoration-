@@ -1,8 +1,8 @@
 ---
 /**
- * The reading layout every article tier uses: hero (image or diagram), answer-box,
- * takeaways, table of contents, sections, "when to call" callout, sidebar, FAQ,
- * related rail, closing band. One layout so 250 pages read as one site.
+ * The reading layout every article tier uses, tuned to sell: hero with quote buttons, answer box,
+ * a mobile CTA right under it, takeaways, sections (optionally collapsible), a mid-page CTA strip,
+ * an end CTA, related links as chips, a sticky quote card, FAQ, related rail and closing band.
  */
 import Base from '../layouts/Base.astro';
 import SubHero from './SubHero.astro';
@@ -12,28 +12,38 @@ import Sidebar from './Sidebar.astro';
 import Faq from './Faq.astro';
 import Related from './Related.astro';
 import CtaBand from './CtaBand.astro';
+import CtaStrip from './CtaStrip.astro';
+import MoreLinks from './MoreLinks.astro';
+import Icon from './Icon.astro';
 import { brand, SITE_URL } from '../data/site';
+import { iconFor } from '../lib/icons';
+import { teaser } from '../lib/text';
 import type { Article } from '../data/types';
 
+type Cta = { title: string; text?: string; icon?: string };
 interface Props {
   a: Article;
   kicker: string;
   crumbs: { name: string; item: string }[];
   description: string;
-  sideLinks?: { h: string; items: { href: string; label: string }[] }[];
+  sideLinks?: { h: string; items: { href?: string; label: string }[] }[];
   related?: { href: string; title: string; blurb: string; image?: string }[];
   priceLine?: string;
   priceLabel?: string;
   plan?: string;
-  /** HTML for the closing callout; defaults to a generic call-us line */
+  /** optional HTML note shown before the end CTA */
   callout?: string;
   faqH2?: string;
   relatedH2?: string;
   extraSchema?: Record<string, unknown>[];
   /** external pages that support the page's local facts, printed under the sections */
   sources?: { label: string; url: string }[];
+  /** collapse every section after the first into accordions (long local and commercial pages) */
+  collapse?: boolean;
+  midCta?: Cta;
+  endCta?: Cta;
 }
-const { a, kicker, crumbs, description, sideLinks = [], related = [], priceLine, priceLabel, plan, callout, faqH2 = 'Related questions', relatedH2 = 'Keep reading', extraSchema = [], sources = [] } = Astro.props;
+const { a, kicker, crumbs, description, sideLinks = [], related = [], priceLine, priceLabel, plan, callout, faqH2 = 'Related questions', relatedH2 = 'Keep reading', extraSchema = [], sources = [], collapse = false, midCta, endCta } = Astro.props;
 const words = (a.lede + ' ' + a.answer + ' ' + a.sections.map((s) => s.html).join(' ') + ' ' + a.faq.map((f) => f.q + f.a).join(' ')).replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
 const minutes = Math.max(2, Math.round(words / 220));
 const updated = new Date(a.updated + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -46,24 +56,37 @@ const schema = [{
 }, ...extraSchema];
 /** Every green or golf page outside the greens tier points back to the putting green hub. */
 const hubLinks = /putting-green|golf/.test(a.slug) && !Astro.url.pathname.startsWith('/putting-greens/') ? [{ h: 'Putting green center', items: [{ href: '/putting-greens/', label: 'Every putting green guide, problem and cost' }] }] : [];
-const defaultCallout = `<b>Need it done?</b> ${brand.name} does this across the Grand Strand, priced by square foot before we come out. <a href="/quote/">Get a free quote</a> or call ${brand.phone}.`;
+const quoteHref = plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/';
+const midAt = a.sections.length >= 4 ? 1 : -1;
+const mid: Cta = midCta ?? { title: 'Rather have it done properly the first time?', text: `${brand.owner} prices it by square foot before any work starts, and every job ends blown clean.`, icon: iconFor(a.h1, 'quote') };
+const end: Cta = endCta ?? { title: 'Get a price for your turf', text: 'Free quote, priced by square foot. You approve any add-on before we do it.', icon: 'quote' };
+const inlinePrice = priceLine ? priceLine.split(' · ')[0] : 'Free quote by square foot';
 ---
 <Base title={a.title} description={description} crumbs={crumbs} answer={{ question: a.question, answer: a.answer }} faq={a.faq} schema={schema} ogImage={a.image?.src}>
-  <SubHero kicker={kicker} h1={a.h1} lede={a.lede} crumbs={crumbs} image={a.image}>
-    <p class="sub-hero__meta">{minutes} min read · Updated <time datetime={a.updated}>{updated}</time> · by {brand.owner}, {brand.name}</p>
+  {a.sections.length > 3 && <div class="progress" aria-hidden="true"></div>}
+  <SubHero kicker={kicker} h1={a.h1} lede={a.lede} crumbs={crumbs} image={a.image} cta plan={plan}>
+    <p class="sub-hero__meta intro" style="--d:5">{minutes} min read · Updated <time datetime={a.updated}>{updated}</time> · by {brand.owner}, {brand.name}</p>
   </SubHero>
   <section class="sec">
     <div class="wrap article">
-      <article class="prose">
+      <article class="prose" data-progress>
         <AnswerBox question={a.question} answer={a.answer} />
-        {a.takeaways?.length ? <div class="takeaways"><p class="takeaways__h">Key takeaways</p><ul>{a.takeaways.map((t) => <li>{t}</li>)}</ul></div> : null}
+        <div class="cta-inline"><div><b>{inlinePrice}</b><small>Price before any work starts</small></div><a class="btn btn--green" href={quoteHref} data-cta="quote-inline">Get a quote</a><a class="btn btn--outline-light" href={brand.phoneHref} data-cta="call-inline"><Icon name="phone" />Call</a></div>
+        {a.takeaways?.length ? <div class="takeaways" data-reveal><p class="takeaways__h">Key takeaways</p><ul>{a.takeaways.map((t) => <li>{t}</li>)}</ul></div> : null}
         {a.diagram && <Diagram name={a.diagram} />}
         {a.sections.length > 3 && <nav class="toc" aria-label="On this page"><p class="toc__h">On this page</p><ol>{a.sections.map((s) => <li><a href={`#${slugify(s.h2)}`}>{s.h2}</a></li>)}<li><a href="#faq">Questions</a></li></ol></nav>}
-        {a.sections.map((s) => <><h2 id={slugify(s.h2)}>{s.h2}</h2><div set:html={s.html} /></>)}
+        {a.sections.map((s, i) => <>
+          {collapse && i > 0
+            ? <details class="acc" id={slugify(s.h2)}><summary><span class="acc__ic"><Icon name={iconFor(s.h2)} /></span><span class="acc__h"><h2>{s.h2}</h2><span class="acc__teaser">{teaser(s.html, 120)}</span></span><Icon name="chev" class="acc__chev" /></summary><div class="acc__body" set:html={s.html} /></details>
+            : <><h2 id={slugify(s.h2)}>{s.h2}</h2><div set:html={s.html} /></>}
+          {i === midAt && <CtaStrip title={mid.title} text={mid.text} icon={mid.icon} plan={plan} />}
+        </>)}
         {sources.length > 0 && <div class="src"><b>Sources for the facts on this page</b><ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener">{s.label}</a></li>)}</ul></div>}
-        <div class="callout callout--cta" set:html={callout ?? defaultCallout} />
+        {callout && <div class="callout" set:html={callout} />}
+        <CtaStrip light title={end.title} text={end.text} icon={end.icon} plan={plan} />
+        <MoreLinks groups={[...sideLinks, ...hubLinks]} />
       </article>
-      <Sidebar priceLine={priceLine} priceLabel={priceLabel} plan={plan} links={[...sideLinks, ...hubLinks]} />
+      <Sidebar priceLine={priceLine} priceLabel={priceLabel} plan={plan} />
     </div>
   </section>
   <Faq faq={a.faq} h2={faqH2} />

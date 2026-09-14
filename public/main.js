@@ -3,7 +3,7 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Header shadow, mobile drawer and Services dropdown (the /fb/ page has no header)
+  // Header shadow, mobile drawer and dropdowns (the /fb/ page has no header)
   const hdr = $('[data-hdr]');
   if (hdr) {
     const onScroll = () => hdr.classList.toggle('is-scrolled', scrollY > 8);
@@ -16,7 +16,6 @@
     burger.addEventListener('click', () => setDrawer(drawer.hidden));
     $$('a', drawer).forEach((a) => a.addEventListener('click', () => setDrawer(false)));
 
-    // Dropdowns: hover/focus handled in CSS, click for touch; only one open at a time
     const drops = $$('.nav__drop');
     const setDrop = (d, open) => { d.classList.toggle('is-open', open); $('button', d).setAttribute('aria-expanded', open); };
     drops.forEach((d) => {
@@ -26,43 +25,87 @@
     document.addEventListener('click', (e) => { drops.forEach((d) => { if (!d.contains(e.target)) setDrop(d, false); }); });
   }
 
-  // Reveal sections as they enter the viewport
+  // Scroll reveals: single elements, staggered groups (children get --i), and the closing band's photo
+  $$('[data-stagger]').forEach((g) => [...g.children].forEach((c, i) => c.style.setProperty('--i', Math.min(i, 8))));
   const io = new IntersectionObserver((entries) => entries.forEach((e) => {
     if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
   }), { rootMargin: '0px 0px -8% 0px' });
-  $$('[data-reveal]').forEach((el) => io.observe(el));
+  $$('[data-reveal], [data-stagger], .final').forEach((el) => io.observe(el));
 
-  // Count-up stats (final numbers ship in the HTML)
+  // Count-up numbers (the final value ships in the HTML)
   const counter = new IntersectionObserver((entries) => entries.forEach((e) => {
     if (!e.isIntersecting) return;
     counter.unobserve(e.target);
     if (reduce) return;
-    const el = e.target, end = +el.dataset.count, t0 = performance.now();
+    const el = e.target, end = +el.dataset.count, t0 = performance.now(), dur = 1400;
     const tick = (t) => {
-      const p = Math.min(1, (t - t0) / 1400);
-      el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+      const p = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US');
       if (p < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   }), { threshold: 0.6 });
   $$('[data-count]').forEach((el) => counter.observe(el));
 
+  // Mobile call bar: appears once the page's own hero buttons have scrolled away, hides over forms
+  const mbar = $('.mbar');
+  if (mbar) {
+    const heroCta = $('[data-hero-cta]');
+    let pastHero = !heroCta, formsInView = 0;
+    const sync = () => mbar.classList.toggle('is-on', pastHero && formsInView === 0);
+    if (heroCta) new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; sync(); }).observe(heroCta);
+    const formWatch = new IntersectionObserver((entries) => { entries.forEach((e) => { formsInView += e.isIntersecting ? 1 : (e.target.dataset.seen ? -1 : 0); e.target.dataset.seen = e.isIntersecting ? '1' : ''; }); formsInView = Math.max(0, formsInView); sync(); });
+    $$('form[data-netlify]').forEach((f) => formWatch.observe(f));
+    sync();
+  }
+
+  // Reading progress on long articles
+  const article = $('[data-progress]');
+  const bar = $('.progress');
+  if (article && bar && !reduce) {
+    let ticking = false;
+    const update = () => {
+      const r = article.getBoundingClientRect();
+      const total = r.height - innerHeight * 0.6;
+      bar.style.setProperty('--p', Math.max(0, Math.min(1, -r.top / Math.max(1, total))).toFixed(4));
+      ticking = false;
+    };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+
+  // Photo lightbox for before/after proof
+  const dialog = $('[data-lightbox-dialog]');
+  if (dialog) {
+    const img = $('img', dialog);
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-lightbox]');
+      if (t) { img.src = t.dataset.lightbox; img.alt = t.dataset.alt || ''; dialog.showModal(); return; }
+      if (e.target === dialog) dialog.close();
+    });
+  }
+
+  // In-page links (table of contents) open the collapsed section they point to
+  const openTarget = (id) => { const t = id && document.getElementById(id); const d = t && (t.matches('details') ? t : t.closest('details')); if (d) d.open = true; };
+  document.addEventListener('click', (e) => { const a = e.target.closest('a[href^="#"]'); if (a) openTarget(decodeURIComponent(a.getAttribute('href').slice(1))); });
+  openTarget(decodeURIComponent(location.hash.slice(1)));
+
   // Turf quiz
   const quiz = $('[data-quiz]');
   if (quiz) {
     const steps = $$('[data-step]', quiz);
-    const bar = $('.quiz__bar i', quiz);
+    const qbar = $('.quiz__bar i', quiz);
     const answers = {};
     const PLANS = {
       'Essential Clean': ['From $199', 'Your turf mostly needs upkeep: debris out, power brushing, a rinse and a final groom.'],
       'Premium Restoration': ['From $299', 'Pets, odor or buildup call for a deep clean with pet-odor and antimicrobial treatment, infill redistribution and detailed grooming.'],
       'TIMELESS ELITE': ['$139/mo', "If the smell keeps coming back, one clean won't hold it. Quarterly deep restorations stop odor and buildup from returning."],
-      'Pet Turf ELITE': ['$169/mo', 'Heavy daily pet use needs a schedule, not a one-off. Our flagship plan for dog yards keeps urine odor and bacteria in check all year.'],
+      'Pet Turf ELITE': ['$169/mo', 'Heavy daily pet use needs a schedule, not a one-off. Built for dog yards, it keeps urine odor and bacteria in check all year.'],
     };
-    const GREEN = 'Putting greens need a deep clean, infill redistribution and detailed grooming to roll true again.';
+    const GREEN = 'Putting greens need a deep clean, fresh sand where it is thin, brushing and rolling to roll true again.';
     const show = (step) => {
       steps.forEach((s) => { s.hidden = s.dataset.step !== String(step); });
-      bar.style.width = step === 'r' ? '100%' : `${Math.max(0, step - 1) / 3 * 100}%`;
+      qbar.style.width = step === 'r' ? '100%' : `${Math.max(0, step - 1) / 3 * 100}%`;
     };
     $('[data-quiz-start]', quiz).addEventListener('click', () => show(1));
     $('[data-quiz-reset]', quiz).addEventListener('click', () => show(1));
@@ -83,29 +126,25 @@
     }));
   }
 
-  // Any "Select plan" button pre-fills the quote form
+  // Any "Select plan" button pre-fills the quote form on the same page
   const planSelect = $('#f-plan');
   document.addEventListener('click', (e) => {
     const a = e.target.closest('[data-plan]');
     if (a && planSelect) [...planSelect.options].forEach((o) => { if (o.value.startsWith(a.dataset.plan)) planSelect.value = o.value; });
   });
 
-  // Before / after slider: drag anywhere on the photo, or use arrow keys on the range
-  const ba = $('[data-ba]');
-  if (ba) {
+  // Before / after slider: drag anywhere, arrow keys on the range; a one-time peek teaches the drag
+  $$('[data-ba]').forEach((ba) => {
     const range = $('input', ba);
-    const set = (v) => {
-      v = Math.max(0, Math.min(100, v));
-      ba.style.setProperty('--pos', `${v}%`);
-      range.value = v;
-    };
+    const set = (v) => { v = Math.max(0, Math.min(100, v)); ba.style.setProperty('--pos', `${v}%`); range.value = v; };
     const fromPointer = (e) => { const b = ba.getBoundingClientRect(); set((e.clientX - b.left) / b.width * 100); };
     let dragging = false;
     range.addEventListener('input', () => set(+range.value));
-    ba.addEventListener('pointerdown', (e) => { dragging = true; ba.setPointerCapture(e.pointerId); fromPointer(e); });
+    ba.addEventListener('pointerdown', (e) => { ba.classList.remove('is-peek'); dragging = true; ba.setPointerCapture(e.pointerId); fromPointer(e); });
     ba.addEventListener('pointermove', (e) => { if (dragging) fromPointer(e); });
     ['pointerup', 'pointercancel'].forEach((t) => ba.addEventListener(t, () => { dragging = false; }));
-  }
+    if (!reduce) new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { ba.classList.add('is-peek'); obs.disconnect(); } }, { threshold: 0.6 }).observe(ba);
+  });
 
   // Netlify forms: submit without leaving the page
   $$('form[data-netlify]').forEach((form) => {
@@ -134,7 +173,13 @@
     });
   });
 
-  // /fb/ page: greet by name from ?name= or ?first_name= (e.g. a link sent by text after the lead form)
+  // Quote page: ?plan= from a "Book" button pre-selects the dropdown
+  if (planSelect) {
+    const plan = new URLSearchParams(location.search).get('plan');
+    if (plan) [...planSelect.options].forEach((o) => { if (o.value.startsWith(plan)) planSelect.value = o.value; });
+  }
+
+  // /fb/ page: greet by name from ?name= or ?first_name=
   const nameSlot = $('[data-name]');
   if (nameSlot) {
     const qs = new URLSearchParams(location.search);

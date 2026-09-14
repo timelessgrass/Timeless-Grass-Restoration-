@@ -1,4 +1,5 @@
 ---
+import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
 import AnswerBox from '../../components/AnswerBox.astro';
@@ -12,7 +13,7 @@ const crumbs = [{ name: 'Home', item: '/' }, { name: T.name, item: T.base }];
 const svc = findService('putting-green-restoration')!;
 type Entry = { slug: string; h1: string; answer: string };
 type Card = { href: string; label: string; h: string; p: string };
-const firstSentence = (s: string) => s.replace(/<[^>]+>/g, '').split('. ')[0].replace(/\.$/, '') + '.';
+const firstSentence = (s: string) => teaser(s);
 const cards = (items: Entry[], base: string, label: string): Card[] => items.map((a) => ({ href: `${base}${a.slug}/`, label, h: a.h1, p: firstSentence(a.answer) }));
 const pick = <X extends { slug: string }>(arr: X[], slugs: string[]) => slugs.map((s) => arr.find((x) => x.slug === s)).filter(Boolean) as X[];
 

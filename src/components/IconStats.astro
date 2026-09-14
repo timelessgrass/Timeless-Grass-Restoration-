@@ -1,0 +1,17 @@
+---
+/** Icon stat tiles. Every value must be a real buying reason (price, years, visit length), never filler. */
+import Icon from './Icon.astro';
+type Stat = { icon: string; value: string; count?: number; prefix?: string; suffix?: string; label: string };
+interface Props { items: Stat[]; light?: boolean; label?: string }
+const { items, light = false, label = 'At a glance' } = Astro.props;
+---
+<section class:list={['istats', { 'istats--light': light }]} aria-label={label}>
+  <div class="wrap istats__grid" data-stagger>
+    {items.map((s) => (
+      <div class="istat">
+        <span class="istat__ic"><Icon name={s.icon} /></span>
+        <div><b>{s.prefix}{s.count !== undefined ? <span data-count={s.count}>{s.value}</span> : s.value}{s.suffix}</b><span class="istat__label">{s.label}</span></div>
+      </div>
+    ))}
+  </div>
+</section>

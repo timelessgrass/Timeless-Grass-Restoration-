@@ -1,19 +1,36 @@
 ---
 import Crumbs from './Crumbs.astro';
-interface Props { kicker: string; h1: string; lede: string; crumbs?: { name: string; item: string }[]; image?: { src: string; alt: string }; dark?: boolean }
-const { kicker, h1, lede, crumbs, image, dark = false } = Astro.props;
+import Icon from './Icon.astro';
+import { brand } from '../data/site';
+interface Props {
+  kicker: string; h1: string; lede: string;
+  crumbs?: { name: string; item: string }[];
+  image?: { src: string; alt: string };
+  dark?: boolean;
+  /** show the quote + call buttons (they also tell the mobile call bar when to appear) */
+  cta?: boolean;
+  plan?: string;
+  trust?: { icon: string; label: string }[];
+}
+const { kicker, h1, lede, crumbs, image, dark = false, cta = false, plan, trust } = Astro.props;
+const quote = plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/';
 ---
 <section class:list={['sub-hero', { 'sub-hero--dark': dark, 'sub-hero--img': !!image }]}>
   <div class="wrap">
     {crumbs && <Crumbs crumbs={crumbs} />}
     <div class="sub-hero__grid">
       <div>
-        <p class="kicker">{kicker}</p>
-        <h1 set:html={h1} />
-        <p class="sub-hero__lede" set:html={lede} />
+        <p class="kicker intro" style="--d:0">{kicker}</p>
+        <h1 class="intro" style="--d:1" set:html={h1} />
+        <p class="sub-hero__lede intro" style="--d:2" set:html={lede} />
+        {trust && trust.length > 0 && <ul class="trust intro" style="--d:3">{trust.map((t) => <li><Icon name={t.icon} />{t.label}</li>)}</ul>}
+        {cta && <div class="btnrow intro" style="--d:4" data-hero-cta>
+          <a class="btn btn--green btn--lg" href={quote} data-cta="quote-hero">Get My Free Quote<Icon name="arrow" /></a>
+          <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><Icon name="phone" />{brand.phone}</a>
+        </div>}
         <slot />
       </div>
-      {image && <div class="sub-hero__media"><img src={image.src} alt={image.alt} width="1400" height="1050" fetchpriority="high" decoding="async"></div>}
+      {image && <div class="sub-hero__media intro-media"><img src={image.src} alt={image.alt} width="1400" height="1050" fetchpriority="high" decoding="async"></div>}
     </div>
   </div>
 </section>

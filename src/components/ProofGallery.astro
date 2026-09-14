@@ -1,0 +1,24 @@
+---
+/** Before/after job photos with a click-to-enlarge lightbox. Renders nothing until photo files exist. */
+import Icon from './Icon.astro';
+import { availableJobs } from '../lib/jobs';
+interface Props { limit?: number; service?: string }
+const { limit = 6, service } = Astro.props;
+const items = availableJobs(service).slice(0, limit);
+---
+{items.length > 0 && <>
+  <div class="proof" data-stagger>
+    {items.map((j) => (
+      <figure class="proof__item">
+        <button class="proof__btn" type="button" data-lightbox={`/assets/img/jobs/${j.file}`} data-alt={j.alt} aria-label={`Enlarge photo: ${j.alt}`}>
+          <img src={`/assets/img/jobs/${j.file}`} alt={j.alt} width="1080" height="1080" loading="lazy" decoding="async">
+        </button>
+        <figcaption><b>{j.title}</b> {j.caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+  <dialog class="lightbox" data-lightbox-dialog aria-label="Before and after photo">
+    <form method="dialog"><button class="lightbox__x" aria-label="Close photo"><Icon name="x" /></button></form>
+    <img alt="">
+  </dialog>
+</>}

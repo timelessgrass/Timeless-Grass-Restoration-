@@ -1,5 +1,7 @@
 ---
 import { brand, area } from '../data/site';
+import Icon from './Icon.astro';
+import { SERVICE_ICON } from '../lib/icons';
 import { SERVICES } from '../data/services';
 import { ALL_PROBLEMS, HOWTOS, ALL_GUIDES, EXPLAINERS, CARE } from '../data/registry';
 const core = SERVICES.filter((s) => s.tier === 'core');
@@ -7,7 +9,7 @@ const more = SERVICES.filter((s) => s.tier !== 'core');
 ---
 <div class="topbar">
   <div class="wrap topbar__in">
-    <span><svg class="ic ic--sm"><use href="#i-pin"/></svg>Serving {area.name}: {area.line}</span>
+    <span><svg class="ic ic--sm"><use href="#i-pin"/></svg><span class="topbar__long">Serving {area.name}: {area.line}</span><span class="topbar__short">Serving {area.name} · Free quotes</span></span>
     <span class="topbar__r">Owner-operated <i>·</i> Free quotes <i>·</i> <a href={brand.phoneHref} data-cta="call-topbar">{brand.phone}</a></span>
   </div>
 </div>
@@ -20,11 +22,11 @@ const more = SERVICES.filter((s) => s.tier !== 'core');
         <div class="mega">
           <div class="mega__col">
             <p class="mega__h">Cleaning &amp; odor</p>
-            {core.map((s) => <a href={`/services/${s.slug}/`}><b>{s.name}</b><small>{s.short}</small></a>)}
+            {core.map((s) => <a href={`/services/${s.slug}/`}><Icon name={SERVICE_ICON[s.slug] ?? 'sparkle'} /><span><b>{s.name}</b><small>{s.short}</small></span></a>)}
           </div>
           <div class="mega__col">
             <p class="mega__h">Repair &amp; restoration</p>
-            {more.map((s) => <a href={`/services/${s.slug}/`}><b>{s.name}</b><small>{s.short}</small></a>)}
+            {more.map((s) => <a href={`/services/${s.slug}/`}><Icon name={SERVICE_ICON[s.slug] ?? 'sparkle'} /><span><b>{s.name}</b><small>{s.short}</small></span></a>)}
             <a href="/services/"><b>All services</b><small>What we do, and what we don't</small></a>
           </div>
           <div class="mega__promo">

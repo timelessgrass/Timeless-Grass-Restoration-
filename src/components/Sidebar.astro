@@ -1,15 +1,23 @@
 ---
+/** The sticky quote card. Related links render under the article (MoreLinks) so this always fits a laptop screen. */
+import Icon from './Icon.astro';
 import { brand } from '../data/site';
-interface Props { priceLine?: string; priceLabel?: string; links?: { h: string; items: { href?: string; label: string }[] }[]; plan?: string }
-const { priceLine, priceLabel = 'Pricing', links = [], plan } = Astro.props;
+interface Props { priceLine?: string; priceLabel?: string; plan?: string; title?: string; links?: unknown }
+const { priceLine, priceLabel = 'Pricing', plan, title = 'Get an upfront price' } = Astro.props;
+const href = plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/';
 ---
-<aside class="side">
-  <div class="side__card side__card--cta">
-    <h3>Get an upfront price</h3>
-    {priceLine && <p class="side__price"><small>{priceLabel}</small>{priceLine}</p>}
-    <p>Free quote, priced by square foot before any work starts. Every job ends blown clean.</p>
-    <a class="btn btn--green" href={plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/'} data-cta="quote-side">Get My Free Quote</a>
-    <a class="btn btn--outline-light" href={brand.phoneHref} data-cta="call-side"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a>
+<aside class="side" aria-label="Get a quote">
+  <div class="side__sticky">
+    <div class="side__card side__card--cta">
+      <h3>{title}</h3>
+      {priceLine && <p class:list={['side__price', { 'side__price--long': priceLine.length > 30 }]}><small>{priceLabel}</small>{priceLine}</p>}
+      <ul class="side__ticks">
+        <li><Icon name="ruler" />Priced by square foot</li>
+        <li><Icon name="tag" />Price before any work starts</li>
+        <li><Icon name="sparkle" />Every job ends blown clean</li>
+      </ul>
+      <a class="btn btn--green" href={href} data-cta="quote-side">Get My Free Quote<Icon name="arrow" /></a>
+      <a class="btn btn--outline-light" href={brand.phoneHref} data-cta="call-side"><Icon name="phone" />{brand.phone}</a>
+    </div>
   </div>
-  {links.map((g) => g.items.length > 0 && <div class="side__card"><h3>{g.h}</h3><ul class:list={{ 'side__plain': !g.items.some((l) => l.href) }}>{g.items.map((l) => <li>{l.href ? <a href={l.href}>{l.label}</a> : l.label}</li>)}</ul></div>)}
 </aside>

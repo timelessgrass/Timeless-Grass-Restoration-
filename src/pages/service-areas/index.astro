@@ -1,4 +1,5 @@
 ---
+import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
 import AnswerBox from '../../components/AnswerBox.astro';
@@ -17,8 +18,8 @@ const nc = TOWNS.filter((t) => t.state === 'NC');
   </SubHero>
   <section class="sec"><div class="wrap">
     <div class="sec__head" data-reveal><p class="kicker">South Carolina</p><h2>Horry County</h2></div>
-    <div class="index">{sc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, SC</h3><p>{t.intro.split('. ')[0]}.</p></a>)}</div>
-    {nc.length > 0 && <><div class="sec__head" data-reveal style="margin-top:48px"><p class="kicker">North Carolina</p><h2>Brunswick County beaches</h2></div><div class="index">{nc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, NC</h3><p>{t.intro.split('. ')[0]}.</p></a>)}</div></>}
+    <div class="index">{sc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, SC</h3><p>{teaser(t.intro)}</p></a>)}</div>
+    {nc.length > 0 && <><div class="sec__head" data-reveal style="margin-top:48px"><p class="kicker">North Carolina</p><h2>Brunswick County beaches</h2></div><div class="index">{nc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, NC</h3><p>{teaser(t.intro)}</p></a>)}</div></>}
   </div></section>
   <CtaBand />
 </Base>

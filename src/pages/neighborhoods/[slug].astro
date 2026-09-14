@@ -1,4 +1,5 @@
 ---
+import { clip } from '../../lib/text';
 import ArticleLayout from '../../components/ArticleLayout.astro';
 import { NEIGHBORHOODS, LOCAL_SERVICES, ALL_PROBLEMS, ALL_GUIDES, findService, findTown, withPhone, TIERS } from '../../data/registry';
 export function getStaticPaths() { return NEIGHBORHOODS.map((a) => ({ params: { slug: a.slug }, props: { a } })); }
@@ -14,7 +15,7 @@ const related = (a.related ?? []).map((s) => NEIGHBORHOODS.find((x) => x.slug ==
 const more = related.length ? related : NEIGHBORHOODS.filter((n) => n.town === town.slug && n.slug !== a.slug);
 const svc = services[0];
 ---
-<ArticleLayout a={a} kicker={`${town.name}, ${town.state}`} crumbs={crumbs} description={withPhone(a.description)} sources={a.sources}
+<ArticleLayout collapse a={a} kicker={`${town.name}, ${town.state}`} crumbs={crumbs} description={withPhone(a.description)} sources={a.sources}
   priceLine={svc?.priceLine} priceLabel={svc?.name} plan={svc?.plan === 'premium' ? 'Premium Restoration' : svc?.plan === 'essential' ? 'Essential Clean' : undefined}
   sideLinks={[
     { h: town.name, items: [{ href: `/service-areas/${town.slug}/`, label: `Turf cleaning in ${town.name}` }, ...local] },
@@ -23,6 +24,6 @@ const svc = services[0];
     { h: 'Guides', items: guides.map((g) => ({ href: `/guides/${g!.slug}/`, label: g!.short })) },
     { h: 'More neighborhoods', items: [...more.map((r) => ({ href: `${T.base}${r!.slug}/`, label: r!.place })), { href: T.base, label: 'All neighborhood guides' }] },
   ]}
-  related={more.map((r) => ({ href: `${T.base}${r!.slug}/`, title: r!.h1, blurb: r!.lede.slice(0, 140) + '…', image: r!.image?.src }))}
+  related={more.map((r) => ({ href: `${T.base}${r!.slug}/`, title: r!.h1, blurb: clip(r!.lede, 140), image: r!.image?.src }))}
   relatedH2="More neighborhood guides"
 />

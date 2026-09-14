@@ -6,43 +6,63 @@ import Sidebar from '../../components/Sidebar.astro';
 import Faq from '../../components/Faq.astro';
 import Related from '../../components/Related.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import CtaStrip from '../../components/CtaStrip.astro';
+import MoreLinks from '../../components/MoreLinks.astro';
+import Diagram from '../../components/Diagram.astro';
+import ProofGallery from '../../components/ProofGallery.astro';
+import Icon from '../../components/Icon.astro';
 import { SERVICES, serviceBySlug } from '../../data/services';
-import { PROBLEMS } from '../../data/problems';
-import { ALL_TOWNS as TOWNS } from '../../data/registry';
+import { ALL_TOWNS as TOWNS, ALL_PROBLEMS } from '../../data/registry';
 import { brand, SITE_URL } from '../../data/site';
+import type { DiagramName } from '../../data/types';
+import { clip } from '../../lib/text';
+import { SERVICE_ICON } from '../../lib/icons';
+import { availableJobs } from '../../lib/jobs';
 
 export function getStaticPaths() { return SERVICES.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
 const { s } = Astro.props;
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Services', item: '/services/' }, { name: s.name, item: `/services/${s.slug}/` }];
-const problems = s.problems.map((slug) => PROBLEMS.find((p) => p.slug === slug)).filter(Boolean);
+const problems = s.problems.map((slug) => ALL_PROBLEMS.find((p) => p.slug === slug)).filter(Boolean);
 const related = s.related.map((slug) => serviceBySlug(slug)).filter(Boolean);
+const plan = s.plan === 'premium' ? 'Premium Restoration' : s.plan === 'essential' ? 'Essential Clean' : s.slug === 'putting-green-restoration' ? 'Putting green restoration' : s.slug === 'turf-repair' ? 'Turf repair' : undefined;
+const DIAGRAMS: Record<string, DiagramName> = { 'artificial-turf-cleaning': 'cross-section', 'pet-odor-removal': 'odor', 'antimicrobial-sanitizing': 'odor', 'algae-and-mold-removal': 'shade', 'infill-replenishment': 'cross-section', 'putting-green-restoration': 'green' };
+const diagram = DIAGRAMS[s.slug];
+const price = s.priceLine.split(' · ')[0];
+const hasJobs = availableJobs(s.slug).length > 0;
 const schema = [{
   '@type': 'Service', '@id': `${SITE_URL}/services/${s.slug}/#service`, name: s.name, serviceType: s.name, description: s.description,
   provider: { '@id': `${SITE_URL}/#business` }, areaServed: TOWNS.map((t) => ({ '@type': 'City', name: `${t.name}, ${t.state}` })),
 }];
+const links = [
+  { h: 'Problems this fixes', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
+  { h: 'Related services', items: related.map((r) => ({ href: `/services/${r!.slug}/`, label: r!.name })) },
+  { h: 'Where we do it', items: TOWNS.slice(0, 8).map((t) => ({ href: `/service-areas/${t.slug}/`, label: `${t.name}, ${t.state}` })) },
+  ...(s.slug === 'putting-green-restoration' ? [{ h: 'Putting green center', items: [{ href: '/putting-greens/', label: 'Every putting green guide, problem and cost' }] }] : []),
+];
 ---
 <Base title={s.title} description={s.description} crumbs={crumbs} answer={{ question: s.question, answer: s.answer }} faq={s.faq} schema={schema} ogImage={s.image.src}>
-  <SubHero kicker={s.tier === 'core' ? 'Cleaning & odor' : 'Repair & restoration'} h1={s.h1} lede={s.lede} crumbs={crumbs} image={s.image}>
-    <div class="btnrow"><a class="btn btn--green btn--lg" href="/quote/" data-cta="quote-hero">Get My Free Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
-  </SubHero>
+  <div class="progress" aria-hidden="true"></div>
+  <SubHero kicker={s.tier === 'core' ? 'Cleaning & odor' : 'Repair & restoration'} h1={s.h1} lede={s.lede} crumbs={crumbs} image={s.image} cta plan={plan}
+    trust={[{ icon: 'tag', label: price }, { icon: 'ruler', label: 'Priced by square foot' }, { icon: 'sparkle', label: 'Blown-clean finish' }]} />
   <section class="sec">
     <div class="wrap article">
-      <article class="prose">
+      <article class="prose" data-progress>
         <AnswerBox question={s.question} answer={s.answer} />
-        {s.sections.map((sec) => <><h2>{sec.h2}</h2><div set:html={sec.html} /></>)}
-        <h2>What's included</h2>
-        <ul class="checks">{s.included.map((i) => <li>{i}</li>)}</ul>
-        <p>See the <a href="/pricing/">full price table</a> for every size band, or the <a href="/services/">services overview</a> for what we do and don't do.</p>
+        <div class="cta-inline"><div><b>{price}</b><small>Price before any work starts</small></div><a class="btn btn--green" href={plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/'} data-cta="quote-inline">Get a quote</a><a class="btn btn--outline-light" href={brand.phoneHref} data-cta="call-inline"><Icon name="phone" />Call</a></div>
+        <div class="takeaways" data-reveal><p class="takeaways__h">Every visit includes</p><ul>{s.included.map((i) => <li>{i}</li>)}</ul></div>
+        {diagram && <Diagram name={diagram} />}
+        {s.sections.map((sec, i) => <>
+          <h2>{sec.h2}</h2><div set:html={sec.html} />
+          {i === 0 && s.sections.length > 1 && <CtaStrip title={`Ready for ${s.name.toLowerCase()}?`} text={s.priceLine} icon={SERVICE_ICON[s.slug] ?? 'quote'} plan={plan} />}
+        </>)}
+        {hasJobs && <><h2>Before and after</h2><ProofGallery service={s.slug} limit={3} /></>}
+        <CtaStrip light title="Get a price for your turf" text="Free quote, priced by square foot before any work starts." plan={plan} />
+        <MoreLinks groups={links} />
       </article>
-      <Sidebar priceLine={s.priceLine} plan={s.plan === 'premium' ? 'Premium Restoration' : s.plan === 'essential' ? 'Essential Clean' : undefined} links={[
-        { h: 'Problems this fixes', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
-        { h: 'Related services', items: related.map((r) => ({ href: `/services/${r!.slug}/`, label: r!.name })) },
-        { h: 'Where we do it', items: TOWNS.slice(0, 6).map((t) => ({ href: `/service-areas/${t.slug}/`, label: `${t.name}, ${t.state}` })) },
-        ...(s.slug === 'putting-green-restoration' ? [{ h: 'Putting green center', items: [{ href: '/putting-greens/', label: 'Every putting green guide, problem and cost' }] }] : []),
-      ]} />
+      <Sidebar priceLine={s.priceLine} priceLabel={s.name} plan={plan} />
     </div>
   </section>
   <Faq faq={s.faq} h2={`${s.name}: questions we get asked`} />
-  <Related kicker="Start with the symptom" h2="Turf problems this service fixes" items={problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, title: p!.h1, blurb: p!.lede.slice(0, 140) + '…', image: p!.image?.src }))} />
+  <Related kicker="Start with the symptom" h2="Turf problems this service fixes" items={problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, title: p!.h1, blurb: clip(p!.lede, 140), image: p!.image?.src }))} />
   <CtaBand />
 </Base>

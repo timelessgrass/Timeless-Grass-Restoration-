@@ -15,7 +15,7 @@ routes = {route(p) for p in pages}
 inbound = {r: 0 for r in routes}
 issues, words, tiers = [], {}, {}
 def prose_lines(h):
-    m = re.search(r'<article class="prose">(.*?)</article>', h, re.S)
+    m = re.search(r'<article class="prose"[^>]*>(.*?)</article>', h, re.S)
     t = re.sub(r'<[^>]+>', '\n', m.group(1) if m else '')
     return [l.strip() for l in t.split('\n') if len(l.strip()) > 40]
 tier_lines = {}
