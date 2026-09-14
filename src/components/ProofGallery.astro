@@ -5,13 +5,14 @@ import { availableJobs } from '../lib/jobs';
 interface Props { limit?: number; service?: string }
 const { limit = 6, service } = Astro.props;
 const items = availableJobs(service).slice(0, limit);
+const img = (file: string, size = '') => `/assets/img/jobs/${file}${size}.webp`;
 ---
 {items.length > 0 && <>
   <div class="proof" data-stagger>
     {items.map((j) => (
       <figure class="proof__item">
-        <button class="proof__btn" type="button" data-lightbox={`/assets/img/jobs/${j.file}`} data-alt={j.alt} aria-label={`Enlarge photo: ${j.alt}`}>
-          <img src={`/assets/img/jobs/${j.file}`} alt={j.alt} width="1080" height="1080" loading="lazy" decoding="async">
+        <button class="proof__btn" type="button" data-lightbox={img(j.file)} data-alt={j.alt} aria-label={`Enlarge photo: ${j.alt}`}>
+          <img src={img(j.file, '-640')} srcset={`${img(j.file, '-640')} 640w, ${img(j.file)} 1080w`} sizes="(max-width: 640px) 92vw, 380px" alt={j.alt} width="1080" height="1080" loading="lazy" decoding="async">
         </button>
         <figcaption><b>{j.title}</b> {j.caption}</figcaption>
       </figure>

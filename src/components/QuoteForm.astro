@@ -4,7 +4,7 @@ interface Props { plan?: string; compact?: boolean }
 const { plan, compact = false } = Astro.props;
 const options = ['Not sure, recommend one', pricing.essential.name, pricing.premium.name, ...pricing.memberships.map((m) => `${m.name} membership ($${m.monthly}/mo)`), 'Putting green restoration', 'Turf repair', 'Commercial, HOA or large property (site walk)', 'Something else'];
 ---
-<form class:list={['form', { 'form--compact': compact }]} name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-reveal>
+<form class:list={['form', { 'form--compact': compact }]} name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-fbq="Lead" data-reveal>
   <input type="hidden" name="form-name" value="quote">
   <input type="hidden" name="page" value={Astro.url.pathname}>
   <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>

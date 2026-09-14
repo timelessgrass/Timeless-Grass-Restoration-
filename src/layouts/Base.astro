@@ -4,7 +4,7 @@
  * One LocalBusiness node (#business) for the whole site; pages hang WebPage / Service /
  * FAQPage / BreadcrumbList off it by @id. No ratings, no reviews in JSON-LD, ever.
  */
-import { brand, area, SITE_URL, PRELAUNCH } from '../data/site';
+import { brand, area, SITE_URL, PRELAUNCH, META_PIXEL_ID } from '../data/site';
 import { SERVICES } from '../data/services';
 import { ALL_TOWNS as TOWNS } from '../data/registry';
 import Icons from '../components/Icons.astro';
@@ -28,6 +28,8 @@ const { title, description, crumbs, answer, faq, schema, robots, ogImage, chrome
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const robotsMeta = PRELAUNCH ? 'noindex, nofollow' : robots;
 const og = new URL(ogImage ?? '/assets/brand/og-default.jpg', Astro.site).href;
+/* Meta Pixel base code, verbatim from Events Manager with the ID from site.ts. */
+const pixel = META_PIXEL_ID && `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`;
 
 const graph: any[] = [
   {
@@ -98,9 +100,11 @@ if (schema?.length) graph.push(...schema);
 <script is:inline>document.documentElement.classList.add('js')</script>
 <script is:inline src="/main.js" defer></script>
 <script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
+{pixel && <script is:inline set:html={pixel} />}
 <slot name="head" />
 </head>
 <body class={bodyClass}>
+{META_PIXEL_ID && <noscript><img height="1" width="1" style="display:none" alt="" src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}></noscript>}
 <a class="skip" href="#main">Skip to content</a>
 <Icons />
 {chrome === 'full' && <Header />}

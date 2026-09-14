@@ -14,6 +14,9 @@
  */
 export const PRELAUNCH = true;
 export const SITE_URL = 'https://www.timelessturfrestoration.com';
+/** Meta Pixel (Events Manager, 2026-09-14). Loads on every page; PageView on load, Lead on a submitted quote
+ *  form, Contact on a call/text tap or the Instant Form follow-up form. Set to '' to switch it off. */
+export const META_PIXEL_ID = '1047663254935147';
 
 export const brand = {
   name: 'TIMELESS Turf Restoration',
