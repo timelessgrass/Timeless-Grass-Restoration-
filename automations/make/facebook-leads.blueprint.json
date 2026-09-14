@@ -1,0 +1,420 @@
+{
+  "name": "Timeless Turf — Facebook leads → route by medium & service → Brian",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": 2812951,
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "filter": {
+        "name": "Campaign forms only (not the main quote form)",
+        "conditions": [
+          [
+            {
+              "a": "{{1.form_name}}",
+              "o": "text:notequal",
+              "b": "quote"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "variables": [
+          {
+            "name": "service",
+            "value": "{{if(contains(1.form_name; \"membership\"); \"membership\"; if(contains(1.form_name; \"putting\"); \"putting-green\"; if(contains(1.form_name; \"clean\"); \"clean\"; \"other\")))}}"
+          },
+          {
+            "name": "medium",
+            "value": "{{if(contains(1.form_name; \"instant-\"); \"Facebook Instant Form\"; if(contains(1.form_name; \"lp-\"); \"Website landing page\"; if(contains(1.form_name; \"fb-\"); \"Follow-up page\"; \"Website form\")))}}"
+          },
+          {
+            "name": "platform",
+            "value": "{{switch(lower(ifempty(1.data.utm_source; \"none\")); \"fb\"; \"Facebook\"; \"facebook\"; \"Facebook\"; \"ig\"; \"Instagram\"; \"instagram\"; \"Instagram\"; \"an\"; \"Audience Network\"; \"msg\"; \"Messenger\"; \"none\"; \"Not tagged\"; 1.data.utm_source)}}"
+          },
+          {
+            "name": "first",
+            "value": "{{first(split(trim(ifempty(1.data.name; \"there\")); \" \"))}}"
+          },
+          {
+            "name": "digits",
+            "value": "{{replace(ifempty(1.data.phone; \"\"); /[^0-9+]/g; emptystring)}}"
+          },
+          {
+            "name": "when",
+            "value": "{{formatDate(ifempty(1.created_at; now); \"ddd, MMM D · h:mm A\"; \"America/New_York\")}}"
+          },
+          {
+            "name": "campaign",
+            "value": "{{ifempty(1.data.utm_campaign; \"Not tagged\")}}"
+          },
+          {
+            "name": "adset",
+            "value": "{{ifempty(1.data.utm_term; \"Not tagged\")}}"
+          },
+          {
+            "name": "ad",
+            "value": "{{ifempty(1.data.utm_content; \"Not tagged\")}}"
+          },
+          {
+            "name": "page",
+            "value": "{{ifempty(1.data.page; 1.site_url)}}"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "label",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"Lead update\"; switch(2.service; \"clean\"; \"Turf cleaning\"; \"membership\"; \"Membership\"; \"putting-green\"; \"Putting green\"; \"Facebook lead\"))}}"
+          },
+          {
+            "name": "kicker",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"Picked a time to talk\"; switch(2.service; \"clean\"; \"New turf cleaning lead\"; \"membership\"; \"New membership lead\"; \"putting-green\"; \"New putting green lead\"; \"New Facebook lead\"))}}"
+          },
+          {
+            "name": "accent",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"#4a5a45\"; switch(2.service; \"membership\"; \"#d6a816\"; \"putting-green\"; \"#8ad132\"; \"#2e7a0b\"))}}"
+          },
+          {
+            "name": "accent_ink",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"#ffffff\"; switch(2.service; \"membership\"; \"#0c1809\"; \"putting-green\"; \"#0c1809\"; \"#ffffff\"))}}"
+          },
+          {
+            "name": "rows_title",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"THEIR UPDATE\"; \"THEIR ANSWERS\")}}"
+          },
+          {
+            "name": "q1_label",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"Best time\"; switch(2.service; \"putting-green\"; \"Green size\"; \"other\"; \"Form\"; \"Turf size\"))}}"
+          },
+          {
+            "name": "q1",
+            "value": "{{if(2.medium = \"Follow-up page\"; ifempty(1.data.best_time; \"No preference\"); switch(2.service; \"putting-green\"; ifempty(1.data.green_size; \"Not answered\"); \"other\"; 1.form_name; ifempty(1.data.size; \"Not answered\")))}}"
+          },
+          {
+            "name": "q2_label",
+            "value": "{{switch(2.service; \"putting-green\"; \"What it is doing\"; \"Dogs\")}}"
+          },
+          {
+            "name": "q2",
+            "value": "{{switch(2.service; \"putting-green\"; ifempty(1.data.green_issue; \"Not answered\"); ifempty(1.data.dogs; \"Not answered\"))}}"
+          },
+          {
+            "name": "q3_label",
+            "value": "{{switch(2.service; \"clean\"; \"Bothers them most\"; \"membership\"; \"Plan they picked\"; \"putting-green\"; \"Where the green is\"; \"Details\")}}"
+          },
+          {
+            "name": "q3",
+            "value": "{{switch(2.service; \"clean\"; ifempty(1.data.issue; \"Not answered\"); \"membership\"; ifempty(1.data.plan_pick; \"Not answered\"); \"putting-green\"; ifempty(1.data.green_where; \"Not answered\"); \"See the form\")}}"
+          },
+          {
+            "name": "hide",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"display:none;\"; if(2.service = \"other\"; \"display:none;\"; \"\"))}}"
+          },
+          {
+            "name": "hint_label",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"Next\"; switch(2.service; \"clean\"; \"Ballpark\"; \"membership\"; \"Suggested plan\"; \"putting-green\"; \"Pricing\"; \"Next\"))}}"
+          },
+          {
+            "name": "hint",
+            "value": "{{if(2.medium = \"Follow-up page\"; \"Their answers came in with the first request. Match this to it by phone.\"; switch(2.service; \"clean\"; switch(1.data.size; \"Up to 500 sq ft\"; \"Essential Clean $199 · Premium Restoration $299\"; \"500–1,000 sq ft\"; \"Essential Clean $249 · Premium Restoration $399\"; \"1,000–2,000 sq ft\"; \"Essential Clean $299–$349 · Premium Restoration $499–$599\"; \"2,000–5,000 sq ft\"; \"Essential Clean $449–$599 · Premium Restoration $749–$899\"; \"Over 5,000 sq ft\"; \"Custom quote after a look\"; \"Help them measure: 20 × 25 ft is 500 sq ft\"); \"membership\"; switch(1.data.dogs; \"No dogs\"; \"Essential Care · $89/mo\"; \"1 dog\"; \"TIMELESS ELITE · $139/mo\"; \"2 or more dogs\"; \"Pet Turf ELITE · $169/mo\"; \"Ask about dogs and how the yard is used\"); \"putting-green\"; if(contains(ifempty(1.data.green_where; \"\"); \"HOA\"); \"Community green: start with a site walk\"; if(contains(ifempty(1.data.green_where; \"\"); \"Golf\"); \"Business green: start with a site walk\"; \"Typical backyard green $299–$899, quoted after a look\")); \"Call and ask what they need.\"))}}"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "util:ComposeTransformer",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "value": "<!DOCTYPE html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"color-scheme\" content=\"light only\"><title>{{3.kicker}}</title>\n<style>@media only screen and (max-width:480px){.px{padding-left:18px!important;padding-right:18px!important}.h1{font-size:25px!important}.lbl{width:36%!important;padding-left:14px!important;padding-right:8px!important}.val{padding-left:8px!important;padding-right:14px!important} }</style></head>\n<body style=\"margin:0;padding:0;background:#eef2ea;-webkit-text-size-adjust:100%;\">\n<div style=\"display:none;max-height:0;overflow:hidden;\">{{3.kicker}}: {{1.data.name}} · {{2.medium}} · {{3.q1}}</div>\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#eef2ea;\"><tr><td align=\"center\" style=\"padding:28px 12px 36px;\">\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;max-width:600px;\">\n<tr><td style=\"padding:0 6px 14px;\"><table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>\n<td style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:800;letter-spacing:3px;color:#0c1809;\">TIMELESS<span style=\"font-size:10px;font-weight:700;letter-spacing:2px;color:#2e7a0b;\">&nbsp;&nbsp;TURF RESTORATION</span></td>\n<td align=\"right\"><span style=\"font-family:Arial,Helvetica,sans-serif;display:inline-block;padding:5px 11px;border-radius:999px;background:{{3.accent}};color:{{3.accent_ink}};font-size:11px;font-weight:700;letter-spacing:1.2px;\">{{upper(3.label)}}</span></td>\n</tr></table></td></tr>\n<tr><td style=\"background:#ffffff;border:1px solid #dde3d5;border-radius:18px;\">\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"px\" style=\"background:#0c1809;border-radius:17px 17px 0 0;padding:30px 34px 28px;\">\n<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8ad132;\">{{3.kicker}}</div>\n<div class=\"h1\" style=\"font-family:Arial,Helvetica,sans-serif;padding-top:8px;font-size:30px;line-height:1.15;font-weight:800;color:#ffffff;\">{{1.data.name}}</div>\n<div style=\"font-family:Arial,Helvetica,sans-serif;padding-top:8px;font-size:14px;color:#b7c7af;\">ZIP {{ifempty(1.data.zip; \"not given\")}} &nbsp;·&nbsp; {{2.when}}</div>\n<table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin-top:16px;\"><tr><td style=\"font-family:Arial,Helvetica,sans-serif;padding:7px 14px;border:1px solid #33492a;border-radius:999px;background:#1b2b14;font-size:13px;font-weight:700;color:#dfe9d8;\">{{2.medium}} &nbsp;·&nbsp; <span style=\"color:#8ad132;\">{{2.platform}}</span></td></tr></table>\n</td></tr></table>\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"px\" style=\"padding:24px 34px 4px;\">\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>\n<td width=\"50%\" style=\"padding-right:6px;\"><a href=\"tel:{{2.digits}}\" style=\"font-family:Arial,Helvetica,sans-serif;display:block;padding:15px 8px;border-radius:999px;background:#2e7a0b;font-size:15px;font-weight:800;color:#ffffff;text-align:center;text-decoration:none;\">Call {{2.first}}</a></td>\n<td width=\"50%\" style=\"padding-left:6px;\"><a href=\"sms:{{2.digits}}?&amp;body=Hi%20{{encodeURL(2.first)}}%2C%20it's%20Brian%20with%20TIMELESS%20Turf%20Restoration.%20I%20got%20your%20request.%20Is%20now%20a%20good%20time%20to%20talk%3F\" style=\"font-family:Arial,Helvetica,sans-serif;display:block;padding:13px 8px;border:2px solid #0c1809;border-radius:999px;background:#ffffff;font-size:15px;font-weight:800;color:#0c1809;text-align:center;text-decoration:none;\">Text {{2.first}}</a></td>\n</tr></table>\n<div style=\"font-family:Arial,Helvetica,sans-serif;padding-top:12px;font-size:12px;color:#6b7a65;text-align:center;\">Call first. No answer? The Text button opens a message ready to send.</div>\n</td></tr></table>\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"px\" style=\"padding:22px 34px 8px;\">\n<div style=\"font-family:Arial,Helvetica,sans-serif;padding-bottom:8px;font-size:11px;font-weight:700;letter-spacing:2px;color:#2e7a0b;\">{{3.rows_title}}</div>\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#f4f6ef;border-radius:14px;\">\n<tr style=\"\"><td class=\"lbl\" style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;\">{{3.q1_label}}</td><td class=\"val\" style=\"font-family:Arial,Helvetica,sans-serif;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;\">{{3.q1}}</td></tr>\n<tr style=\"{{3.hide}}\"><td class=\"lbl\" style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;\">{{3.q2_label}}</td><td class=\"val\" style=\"font-family:Arial,Helvetica,sans-serif;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;\">{{3.q2}}</td></tr>\n<tr style=\"{{3.hide}}\"><td class=\"lbl\" style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;\">{{3.q3_label}}</td><td class=\"val\" style=\"font-family:Arial,Helvetica,sans-serif;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;\">{{3.q3}}</td></tr>\n<tr style=\"\"><td class=\"lbl\" style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;\">Phone</td><td class=\"val\" style=\"font-family:Arial,Helvetica,sans-serif;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;\"><a href=\"tel:{{2.digits}}\" style=\"color:#0c1809;text-decoration:none;\">{{1.data.phone}}</a></td></tr>\n<tr style=\"\"><td class=\"lbl\" style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:12px;font-weight:700;letter-spacing:.4px;color:#5d6c57;vertical-align:top;\">ZIP code</td><td class=\"val\" style=\"font-family:Arial,Helvetica,sans-serif;padding:12px 18px;border-bottom:1px solid #e2e8d9;font-size:15px;line-height:1.45;font-weight:700;color:#0c1809;vertical-align:top;\">{{ifempty(1.data.zip; \"not given\")}}</td></tr>\n</table>\n<div style=\"font-family:Arial,Helvetica,sans-serif;margin-top:12px;padding:13px 16px;border-radius:12px;background:#e6f3d9;font-size:14px;line-height:1.45;color:#1d3313;\">{{3.hint_label}}: <b>{{3.hint}}</b></div>\n</td></tr></table>\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"px\" style=\"padding:14px 34px 30px;\">\n<div style=\"font-family:Arial,Helvetica,sans-serif;padding-bottom:6px;font-size:11px;font-weight:700;letter-spacing:2px;color:#2e7a0b;\">WHERE THIS LEAD CAME FROM</div>\n<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;\">How they came in</td><td style=\"font-family:Arial,Helvetica,sans-serif;padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;\">{{2.medium}}</td></tr>\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;\">Platform</td><td style=\"font-family:Arial,Helvetica,sans-serif;padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;\">{{2.platform}}</td></tr>\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;\">Campaign</td><td style=\"font-family:Arial,Helvetica,sans-serif;padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;\">{{2.campaign}}</td></tr>\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;\">Ad set</td><td style=\"font-family:Arial,Helvetica,sans-serif;padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;\">{{2.adset}}</td></tr>\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;\">Ad</td><td style=\"font-family:Arial,Helvetica,sans-serif;padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;\">{{2.ad}}</td></tr>\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;width:38%;padding:5px 0;font-size:12px;color:#7a8874;vertical-align:top;\">Page or form</td><td style=\"font-family:Arial,Helvetica,sans-serif;padding:5px 0;font-size:13px;color:#2b3a26;vertical-align:top;\">{{2.page}}</td></tr>\n</table>\n</td></tr></table>\n</td></tr>\n<tr><td style=\"font-family:Arial,Helvetica,sans-serif;padding:16px 10px 0;font-size:12px;line-height:1.6;color:#6b7a65;text-align:center;\">Facebook campaign lead · form {{1.form_name}}<br>Sent automatically by Make for TIMELESS Turf Restoration</td></tr>\n</table>\n</td></tr></table>\n</body></html>"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 1050,
+          "y": 0
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "google-email:sendAnEmail",
+              "version": 4,
+              "parameters": {
+                "__IMTCONN__": 7749147
+              },
+              "filter": {
+                "name": "Follow-up page: best time to call",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{2.medium}}",
+                      "o": "text:equal",
+                      "b": "Follow-up page"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "to": [
+                  "timelessgrass@gmail.com"
+                ],
+                "subject": "⏰ {{1.data.name}} picked a time: {{ifempty(1.data.best_time; \"any time\")}}",
+                "bodyType": "rawHtml",
+                "content": "{{4.value}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -600
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 7,
+              "module": "google-email:sendAnEmail",
+              "version": 4,
+              "parameters": {
+                "__IMTCONN__": 7749147
+              },
+              "filter": {
+                "name": "Turf cleaning lead",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{2.service}}",
+                      "o": "text:equal",
+                      "b": "clean"
+                    },
+                    {
+                      "a": "{{2.medium}}",
+                      "o": "text:notequal",
+                      "b": "Follow-up page"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "to": [
+                  "timelessgrass@gmail.com"
+                ],
+                "subject": "🧽 New turf cleaning lead: {{1.data.name}} · {{ifempty(1.data.size; \"size not given\")}} ({{2.medium}})",
+                "bodyType": "rawHtml",
+                "content": "{{4.value}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -300
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 8,
+              "module": "google-email:sendAnEmail",
+              "version": 4,
+              "parameters": {
+                "__IMTCONN__": 7749147
+              },
+              "filter": {
+                "name": "Membership lead",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{2.service}}",
+                      "o": "text:equal",
+                      "b": "membership"
+                    },
+                    {
+                      "a": "{{2.medium}}",
+                      "o": "text:notequal",
+                      "b": "Follow-up page"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "to": [
+                  "timelessgrass@gmail.com"
+                ],
+                "subject": "📅 New membership lead: {{1.data.name}} · {{ifempty(1.data.plan_pick; \"no plan picked\")}} ({{2.medium}})",
+                "bodyType": "rawHtml",
+                "content": "{{4.value}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 9,
+              "module": "google-email:sendAnEmail",
+              "version": 4,
+              "parameters": {
+                "__IMTCONN__": 7749147
+              },
+              "filter": {
+                "name": "Putting green lead",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{2.service}}",
+                      "o": "text:equal",
+                      "b": "putting-green"
+                    },
+                    {
+                      "a": "{{2.medium}}",
+                      "o": "text:notequal",
+                      "b": "Follow-up page"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "to": [
+                  "timelessgrass@gmail.com"
+                ],
+                "subject": "⛳ New putting green lead: {{1.data.name}} · {{ifempty(1.data.green_where; \"location not given\")}} ({{2.medium}})",
+                "bodyType": "rawHtml",
+                "content": "{{4.value}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 300
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 10,
+              "module": "google-email:sendAnEmail",
+              "version": 4,
+              "parameters": {
+                "__IMTCONN__": 7749147
+              },
+              "filter": {
+                "name": "Anything else",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{2.service}}",
+                      "o": "text:equal",
+                      "b": "other"
+                    },
+                    {
+                      "a": "{{2.medium}}",
+                      "o": "text:notequal",
+                      "b": "Follow-up page"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "to": [
+                  "timelessgrass@gmail.com"
+                ],
+                "subject": "📩 New Facebook lead: {{1.data.name}} ({{1.form_name}})",
+                "bodyType": "rawHtml",
+                "content": "{{4.value}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 600
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "name": "Timeless Turf — Instant Form leads → Facebook lead router",
+  "flow": [
+    {
+      "id": 1,
+      "module": "facebook-lead-ads:NewLeadMultiple",
+      "version": 2,
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "v": "2",
+        "fields": [
+          "id",
+          "ad_id",
+          "ad_name",
+          "adset_id",
+          "adset_name",
+          "campaign_id",
+          "campaign_name",
+          "created_time",
+          "custom_disclaimer_responses",
+          "field_data",
+          "form_id",
+          "is_organic",
+          "platform"
+        ],
+        "__IMTHOOK__": 2812952
+      }
+    },
+    {
+      "id": 2,
+      "module": "facebook-lead-ads:GetForm",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": 5649539
+      },
+      "mapper": {
+        "pageId": "1360007903856817",
+        "formId": "{{1.formId}}",
+        "outputFields": [
+          "name"
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDeCompress": true
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "url": "https://hook.us2.make.com/6sad5csnuuzxxnwzfnao957roumxfdky",
+        "method": "post",
+        "bodyType": "raw",
+        "contentType": "application/json",
+        "data": "{\n  \"form_name\": \"instant-{{if(contains(lower(2.name); \"membership\"); \"membership\"; if(contains(lower(2.name); \"putting\"); \"putting-green\"; \"clean\"))}}\",\n  \"form_title\": \"{{2.name}}\",\n  \"created_at\": \"{{1.dateCreated}}\",\n  \"site_url\": \"Facebook Instant Form\",\n  \"data\": {\n    \"name\": \"{{1.data.full_name}}\",\n    \"phone\": \"{{1.data.phone_number}}\",\n    \"email\": \"{{1.data.email}}\",\n    \"zip\": \"{{ifempty(1.data.zip_code; 1.data.post_code)}}\",\n    \"size\": \"{{ifempty(get(1.data; \"about_how_big_is_the_turf?\"); get(1.data; \"about_how_big_is_the_turf\"))}}\",\n    \"dogs\": \"{{ifempty(get(1.data; \"do_dogs_use_it?\"); get(1.data; \"do_dogs_use_it\"))}}\",\n    \"issue\": \"{{ifempty(get(1.data; \"what_bothers_you_most?\"); get(1.data; \"what_bothers_you_most\"))}}\",\n    \"plan_pick\": \"{{ifempty(get(1.data; \"which_plan_sounds_right?\"); get(1.data; \"which_plan_sounds_right\"))}}\",\n    \"green_size\": \"{{ifempty(get(1.data; \"how_big_is_the_green?\"); get(1.data; \"how_big_is_the_green\"))}}\",\n    \"green_issue\": \"{{ifempty(get(1.data; \"what_is_the_green_doing?\"); get(1.data; \"what_is_the_green_doing\"))}}\",\n    \"green_where\": \"{{ifempty(get(1.data; \"where_is_the_green?\"); get(1.data; \"where_is_the_green\"))}}\",\n    \"utm_source\": \"{{1.platform}}\",\n    \"utm_medium\": \"instant_form\",\n    \"utm_campaign\": \"{{1.campaignName}}\",\n    \"utm_content\": \"{{1.adName}}\",\n    \"utm_term\": \"{{1.adsetName}}\",\n    \"page\": \"Instant Form: {{2.name}}\",\n    \"lead_id\": \"{{1.leadgenId}}\"\n  }\n}",
+        "qs": [],
+        "headers": [],
+        "gzip": true,
+        "ca": "",
+        "timeout": "",
+        "useMtls": false,
+        "serializeUrl": false,
+        "shareCookies": false,
+        "parseResponse": false,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "followAllRedirects": false,
+        "rejectUnauthorized": true
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "designer": {
+      "orphans": []
+    },
+    "scenario": {
+      "dlq": false,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  }
+}
