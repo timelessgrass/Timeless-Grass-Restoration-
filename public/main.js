@@ -47,15 +47,20 @@
   }), { threshold: 0.6 });
   $$('[data-count]').forEach((el) => counter.observe(el));
 
-  // Mobile call bar: appears once the page's own hero buttons have scrolled away, hides over forms
+  // Mobile call bar: appears once the page's own hero buttons have scrolled away, hides while a form is on screen
   const mbar = $('.mbar');
   if (mbar) {
     const heroCta = $('[data-hero-cta]');
-    let pastHero = !heroCta, formsInView = 0;
-    const sync = () => mbar.classList.toggle('is-on', pastHero && formsInView === 0);
-    if (heroCta) new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; sync(); }).observe(heroCta);
-    const formWatch = new IntersectionObserver((entries) => { entries.forEach((e) => { formsInView += e.isIntersecting ? 1 : (e.target.dataset.seen ? -1 : 0); e.target.dataset.seen = e.isIntersecting ? '1' : ''; }); formsInView = Math.max(0, formsInView); sync(); });
-    $$('form[data-netlify]').forEach((f) => formWatch.observe(f));
+    const forms = $$('form[data-netlify]');
+    let queued = false;
+    const sync = () => {
+      queued = false;
+      const pastHero = !heroCta || heroCta.getBoundingClientRect().bottom < 0;
+      const overForm = forms.some((f) => { const r = f.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; });
+      mbar.classList.toggle('is-on', pastHero && !overForm);
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(sync); } }, { passive: true });
+    addEventListener('resize', sync, { passive: true });
     sync();
   }
 
