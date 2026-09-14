@@ -10,7 +10,7 @@ const { items, light = false, label = 'At a glance' } = Astro.props;
     {items.map((s) => (
       <div class="istat">
         <span class="istat__ic"><Icon name={s.icon} /></span>
-        <div><b>{s.prefix}{s.count !== undefined ? <span data-count={s.count}>{s.value}</span> : s.value}{s.suffix}</b><span class="istat__label">{s.label}</span></div>
+        <div><b class:list={[{ 'istat__word': !/\d/.test(s.value) }]}>{s.prefix}{s.count !== undefined ? <span data-count={s.count}>{s.value}</span> : s.value}{s.suffix}</b><span class="istat__label">{s.label}</span></div>
       </div>
     ))}
   </div>

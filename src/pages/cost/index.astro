@@ -1,4 +1,6 @@
 ---
+import Icon from '../../components/Icon.astro';
+import { iconFor, KIND_ICON } from '../../lib/icons';
 import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
@@ -11,7 +13,7 @@ const kinds = [...new Set(COSTS.map((a) => a.kind).filter(Boolean))] as string[]
 const groups = kinds.length > 1 ? kinds.map((k) => ({ k, items: COSTS.filter((a) => a.kind === k) })) : [{ k: '', items: COSTS }];
 ---
 <Base title={`Turf Cleaning & Restoration Costs | TIMELESS`} description={`Real numbers by square foot, what moves the price, worked examples for typical yards, and what neglect turns into.`} crumbs={crumbs}>
-  <SubHero kicker={T.name} h1="What turf work costs on the Grand Strand" lede="Real numbers by square foot, what moves the price, worked examples for typical yards, and what neglect turns into." crumbs={crumbs} />
-  {groups.map((g) => <section class="sec sec--tight"><div class="wrap">{g.k && <div class="sec__head" data-reveal><h2>{g.k.charAt(0).toUpperCase() + g.k.slice(1)}</h2></div>}<div class="index">{g.items.map((a) => <a class="index__item" href={`${T.base}${a.slug}/`} data-reveal><small>{a.short}</small><h3>{a.h1}</h3><p>{teaser(a.answer)}</p></a>)}</div></div></section>)}
+  <SubHero cta kicker={T.name} h1="What turf work costs on the Grand Strand" lede="Real numbers by square foot, what moves the price, worked examples for typical yards, and what neglect turns into." crumbs={crumbs} />
+  {groups.map((g) => <section class="sec sec--tight"><div class="wrap">{g.k && <div class="sec__head" data-reveal><h2>{g.k.charAt(0).toUpperCase() + g.k.slice(1)}</h2></div>}<div class="index" data-stagger>{g.items.map((a) => <a class="index__item index__item--ic" href={`${T.base}${a.slug}/`}><span class="index__ic"><Icon name={iconFor(a.h1)} /></span><small>{a.short}</small><h3>{a.h1}</h3><p>{teaser(a.answer)}</p></a>)}</div></div></section>)}
   <CtaBand />
 </Base>

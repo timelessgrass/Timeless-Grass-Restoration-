@@ -14,9 +14,13 @@ def route(p):
 routes = {route(p) for p in pages}
 inbound = {r: 0 for r in routes}
 issues, words, tiers = [], {}, {}
+# Shared CTA and link blocks repeat on every page by design; similarity measures the content around them.
+BOILERPLATE = [r'<div class="cta-strip[^>]*>.*?<div class="cta-strip__btns">.*?</div>\s*</div>', r'<div class="cta-inline">.*?</a></div>', r'<nav class="more-links".*?</nav>', r'<p class="answer-box__tel">.*?</p>']
 def prose_lines(h):
     m = re.search(r'<article class="prose"[^>]*>(.*?)</article>', h, re.S)
-    t = re.sub(r'<[^>]+>', '\n', m.group(1) if m else '')
+    body = m.group(1) if m else ''
+    for pat in BOILERPLATE: body = re.sub(pat, ' ', body, flags=re.S)
+    t = re.sub(r'<[^>]+>', '\n', body)
     return [l.strip() for l in t.split('\n') if len(l.strip()) > 40]
 tier_lines = {}
 for p in pages:

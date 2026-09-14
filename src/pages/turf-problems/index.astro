@@ -1,4 +1,6 @@
 ---
+import Icon from '../../components/Icon.astro';
+import { iconFor, KIND_ICON } from '../../lib/icons';
 import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
@@ -10,7 +12,7 @@ const crumbs = [{ name: 'Home', item: '/' }, { name: 'Turf problems', item: '/tu
 const clusters = Object.keys(CLUSTERS) as (keyof typeof CLUSTERS)[];
 ---
 <Base title="Artificial Turf Problems, Diagnosed & Fixed | TIMELESS" description={`Smells, algae, flat paths, white crust, slow greens, flies, pooling water: every common turf problem, what causes it, and what fixes it. Call ${brand.phone}.`} crumbs={crumbs}>
-  <SubHero kicker="Turf problems" h1="Start with the symptom" lede="Every page here answers one question the way it gets asked on the phone: what is it, why is it happening, how to check, and what fixes it. Some of the fixes are things you can do yourself. The rest are what we do." crumbs={crumbs} />
-  {clusters.map((c) => { const items = PROBLEMS.filter((p) => p.cluster === c); return items.length > 0 && <section class="sec sec--tight"><div class="wrap"><div class="sec__head" data-reveal><h2>{CLUSTERS[c]}</h2></div><div class="index">{items.map((p) => <a class="index__item" href={`/turf-problems/${p.slug}/`} data-reveal><small>{p.short}</small><h3>{p.h1}</h3><p>{teaser(p.answer)}</p></a>)}</div></div></section>; })}
+  <SubHero cta kicker="Turf problems" h1="Start with the symptom" lede="Every page here answers one question the way it gets asked on the phone: what is it, why is it happening, how to check, and what fixes it. Some of the fixes are things you can do yourself. The rest are what we do." crumbs={crumbs} />
+  {clusters.map((c) => { const items = PROBLEMS.filter((p) => p.cluster === c); return items.length > 0 && <section class="sec sec--tight"><div class="wrap"><div class="sec__head" data-reveal><h2>{CLUSTERS[c]}</h2></div><div class="index" data-stagger>{items.map((p) => <a class="index__item index__item--ic" href={`/turf-problems/${p.slug}/`}><span class="index__ic"><Icon name={iconFor(p.h1)} /></span><small>{p.short}</small><h3>{p.h1}</h3><p>{teaser(p.answer)}</p></a>)}</div></div></section>; })}
   <CtaBand h2="Not sure what you're looking at?" text="Send a photo or describe it. Brian will tell you what it is and what it costs to fix, before anyone comes out." />
 </Base>

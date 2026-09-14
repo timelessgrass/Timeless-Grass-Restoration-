@@ -1,4 +1,6 @@
 ---
+import Icon from '../../components/Icon.astro';
+import { iconFor, KIND_ICON } from '../../lib/icons';
 import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
@@ -13,7 +15,7 @@ const groups = ALL_TOWNS.map((t) => ({ t, items: NEIGHBORHOODS.filter((n) => n.t
 const lede = `A gated golf community, a waterway estate and a village of small courtyard yards all put different demands on turf and backyard greens. These guides cover what changes in specific communities across ${area.name}, with the sources for every local fact.`;
 ---
 <Base title="Grand Strand Neighborhood Turf & Green Guides | TIMELESS" description={`Turf and putting green care in specific Grand Strand communities: gates, review boards, water, golf and what each means for a visit. Call ${brand.phone}.`} crumbs={crumbs}>
-  <SubHero kicker="Neighborhood guides" h1="Turf and putting green care, community by community" lede={lede} crumbs={crumbs} />
+  <SubHero cta kicker="Neighborhood guides" h1="Turf and putting green care, community by community" lede={lede} crumbs={crumbs} />
   <section class="sec sec--tight">
     <div class="wrap">
       <div class="prose">
@@ -26,7 +28,7 @@ const lede = `A gated golf community, a waterway estate and a village of small c
     <section class="sec sec--tight">
       <div class="wrap">
         <div class="sec__head" data-reveal><h2><a href={`/service-areas/${g.t.slug}/`}>{g.t.name}, {g.t.state}</a></h2></div>
-        <div class="index">{g.items.map((n) => <a class="index__item" href={`${T.base}${n.slug}/`} data-reveal><small>{n.place}</small><h3>{n.h1}</h3><p>{teaser(n.answer)}</p></a>)}</div>
+        <div class="index" data-stagger>{g.items.map((n) => <a class="index__item index__item--ic" href={`${T.base}${n.slug}/`}><span class="index__ic"><Icon name={'map'} /></span><small>{n.place}</small><h3>{n.h1}</h3><p>{teaser(n.lede)}</p></a>)}</div>
       </div>
     </section>
   ))}

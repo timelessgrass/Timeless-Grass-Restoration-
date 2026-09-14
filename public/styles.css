@@ -221,6 +221,7 @@ p{margin:0}
 .istat__ic .ic{width:26px;height:26px}
 .istat b{display:block;font-size:clamp(1.6rem,2.6vw,2rem);font-weight:800;line-height:1;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
 .istat b span{display:inline}
+.istat b.istat__word{font-size:1.22rem;line-height:1.2;letter-spacing:-.01em}
 .istat__label{display:block;margin-top:5px;font-size:.86rem;line-height:1.35;color:var(--on-dark-muted)}
 .istats--light{background:transparent}
 .istats--light::before{display:none}

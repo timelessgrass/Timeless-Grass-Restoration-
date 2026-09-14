@@ -12,18 +12,13 @@ export function clip(text: string, max = 140): string {
 }
 
 /**
- * Card teaser from an answer or lede: skips a bare "Yes." / "No." opener, keeps whole sentences
- * until the teaser says something (60+ chars), and never exceeds `max`.
+ * Card teaser from an answer or lede: skips a bare "Yes." / "No." opener, then keeps the text from its
+ * first word and cuts at the last real sentence end (the next word starts a new sentence) under `max`.
  */
 export function teaser(text: string, max = 150): string {
   const t = strip(text).replace(/^(yes|no)\s*[.,!:;—–-]\s*/i, '');
-  const sentences = t.match(/[^.!?]+[.!?]+(?=\s|$)/g) ?? [t];
-  let out = '';
-  for (const s of sentences) {
-    const next = (out + ' ' + s.trim()).trim();
-    if (next.length > max && out) break;
-    out = next;
-    if (out.length >= 60) break;
-  }
-  return clip(out || t, max);
+  if (t.length <= max) return t;
+  const head = t.slice(0, max);
+  const ends = [...head.matchAll(/[.!?](?=\s+[A-Z“"(])/g)].map((m) => m.index ?? 0).filter((n) => n >= 50);
+  return ends.length ? head.slice(0, ends[ends.length - 1] + 1) : clip(t, max);
 }

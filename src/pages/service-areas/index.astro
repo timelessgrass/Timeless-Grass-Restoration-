@@ -1,4 +1,6 @@
 ---
+import Icon from '../../components/Icon.astro';
+import { iconFor, KIND_ICON } from '../../lib/icons';
 import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
@@ -13,13 +15,13 @@ const sc = TOWNS.filter((t) => t.state === 'SC');
 const nc = TOWNS.filter((t) => t.state === 'NC');
 ---
 <Base title="Turf Cleaning Service Areas, Grand Strand | TIMELESS" description={`Artificial turf cleaning and putting green restoration across the Grand Strand, Shallotte NC to Burgess SC. Owner-operated. Call ${brand.phone}.`} crumbs={crumbs} answer={{ question: q, answer: a }}>
-  <SubHero kicker="Service areas" h1={`Turf cleaning across ${area.name}`} lede={`${area.line}. Every town page explains what its yards, water and weather do to turf, and what we do about it.`} crumbs={crumbs}>
+  <SubHero cta kicker="Service areas" h1={`Turf cleaning across ${area.name}`} lede={`${area.line}. Every town page explains what its yards, water and weather do to turf, and what we do about it.`} crumbs={crumbs}>
     <AnswerBox question={q} answer={a} />
   </SubHero>
   <section class="sec"><div class="wrap">
     <div class="sec__head" data-reveal><p class="kicker">South Carolina</p><h2>Horry County</h2></div>
-    <div class="index">{sc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, SC</h3><p>{teaser(t.intro)}</p></a>)}</div>
-    {nc.length > 0 && <><div class="sec__head" data-reveal style="margin-top:48px"><p class="kicker">North Carolina</p><h2>Brunswick County beaches</h2></div><div class="index">{nc.map((t) => <a class="index__item" href={`/service-areas/${t.slug}/`} data-reveal><small>{t.zips.join(' · ')}</small><h3>{t.name}, NC</h3><p>{teaser(t.intro)}</p></a>)}</div></>}
+    <div class="index" data-stagger>{sc.map((t) => <a class="index__item index__item--ic" href={`/service-areas/${t.slug}/`}><span class="index__ic"><Icon name={'pin'} /></span><small>{t.zips.join(' · ')}</small><h3>{t.name}, SC</h3><p>{teaser(t.intro)}</p></a>)}</div>
+    {nc.length > 0 && <><div class="sec__head" data-reveal style="margin-top:48px"><p class="kicker">North Carolina</p><h2>Brunswick County beaches</h2></div><div class="index" data-stagger>{nc.map((t) => <a class="index__item index__item--ic" href={`/service-areas/${t.slug}/`}><span class="index__ic"><Icon name={'pin'} /></span><small>{t.zips.join(' · ')}</small><h3>{t.name}, NC</h3><p>{teaser(t.intro)}</p></a>)}</div></>}
   </div></section>
   <CtaBand />
 </Base>

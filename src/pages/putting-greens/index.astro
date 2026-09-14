@@ -1,4 +1,6 @@
 ---
+import Icon from '../../components/Icon.astro';
+import { iconFor, KIND_ICON } from '../../lib/icons';
 import { teaser } from '../../lib/text';
 import Base from '../../layouts/Base.astro';
 import SubHero from '../../components/SubHero.astro';
@@ -68,7 +70,7 @@ const image = { src: '/assets/img/backyard-putting-green-landscaped-boulders.jpg
 ---
 <Base title="Putting Green Maintenance on the Grand Strand | TIMELESS" description={description} crumbs={crumbs} answer={{ question, answer }} ogImage={image.src}>
   <SubHero kicker="Putting greens" h1="Keeping a synthetic green rolling true" lede={`A green is the one piece of turf that has to play, not just look clean. Everything we have written about greens is here: why they slow down, speed up and stop holding shots, what they cost to keep, and how we restore them across ${area.name}.`} crumbs={crumbs} image={image}>
-    <div class="btnrow"><a class="btn btn--green btn--lg" href="/quote/?plan=Putting" data-cta="quote-hero">Get a Putting Green Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
+    <div class="btnrow" data-hero-cta><a class="btn btn--green btn--lg" href="/quote/?plan=Putting" data-cta="quote-hero">Get a Putting Green Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
   </SubHero>
 
   <section class="sec sec--tight">
@@ -90,7 +92,7 @@ const image = { src: '/assets/img/backyard-putting-green-landscaped-boulders.jpg
     <section class="sec sec--tight">
       <div class="wrap">
         <div class="sec__head" data-reveal><h2>{g.h}</h2><p>{g.intro}</p></div>
-        <div class="index">{g.items.map((c) => <a class="index__item" href={c.href} data-reveal><small>{c.label}</small><h3>{c.h}</h3><p>{c.p}</p></a>)}</div>
+        <div class="index" data-stagger>{g.items.map((c) => <a class="index__item index__item--ic" href={c.href}><span class="index__ic"><Icon name={iconFor(c.h)} /></span><small>{c.label}</small><h3>{c.h}</h3><p>{c.p}</p></a>)}</div>
       </div>
     </section>
   ))}
@@ -98,7 +100,7 @@ const image = { src: '/assets/img/backyard-putting-green-landscaped-boulders.jpg
   <section class="sec sec--tight">
     <div class="wrap">
       <div class="sec__head" data-reveal><h2>Putting green restoration by town</h2><p>What the trees, water and golf in each town do to the greens there.</p></div>
-      <div class="index">{towns.map((c) => <a class="index__item" href={c.href} data-reveal><small>{c.label}</small><h3>{c.h}</h3><p>{c.p}</p></a>)}</div>
+      <div class="index" data-stagger>{towns.map((c) => <a class="index__item index__item--ic" href={c.href}><span class="index__ic"><Icon name={iconFor(c.h)} /></span><small>{c.label}</small><h3>{c.h}</h3><p>{c.p}</p></a>)}</div>
     </div>
   </section>
   <CtaBand />

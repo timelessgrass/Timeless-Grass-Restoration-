@@ -21,7 +21,7 @@ const jobs = availableJobs();
           <li><Icon name="tag" /><div><b>From {money(P.rows[0].essential!)}</b><span>Essential Clean, up to 500 sq ft.</span></div></li>
           <li><Icon name="ruler" /><div><b>Priced before any work starts</b><span>By square foot, never by the hour.</span></div></li>
           <li><Icon name="chat" /><div><b>Faster with photos</b><span><a class="textlink" href={sms} data-cta="sms-quote">Text {brand.phone}</a> a few shots of the turf.</span></div></li>
-          <li><Icon name="pin" /><div><b>{area.name}</b><span>{area.line}.</span></div></li>
+          <li><Icon name="pin" /><div><b>{area.short}</b><span>{area.line}.</span></div></li>
         </ul>
       </div>
       <QuoteForm />
