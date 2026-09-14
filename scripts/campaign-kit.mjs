@@ -48,7 +48,7 @@ const CHECKLIST = [
   'A published Instant Form cannot be edited. Proof every field before you publish; a fix means a new form.',
   `The web pages say Brian replies "${REPLY_TIME}" and answer "Is it safe for kids and dogs?" with yes. Brian should confirm both (QUESTIONS-FOR-BRIAN #15 and #17). The Instant Forms avoid both.`,
   `Meta Pixel ${META_PIXEL_ID} is on every page. Website ads: optimize for the Lead event (fires only after a landing-page form submits). Taps on call and text links fire Contact.`,
-  'In Netlify, turn on email notifications for the lp-clean, lp-membership and lp-putting-green forms, plus fb-clean, fb-membership and fb-putting-green (best time to call).',
+  `Every lead goes to Make, which emails Brian: the website forms post straight to Make, and Instant Form leads are pulled from the Facebook Page. After publishing each Instant Form, send one test lead with Meta's Lead Ads Testing Tool and check the email (automations/make/README.md).`,
 ];
 
 /* ---------- Markdown ---------- */
@@ -109,7 +109,7 @@ ANGLES.forEach((a, i) => {
   L();
   L(`- **Website URL:** ${landingUrl(a)}`);
   L('- **URL parameters:** as above');
-  L(`- **Landing page form:** asks the same ${a.questions.length} questions, then name, phone and ZIP (Netlify form \`lp-${a.slug}\`).`);
+  L(`- **Landing page form:** asks the same ${a.questions.length} questions, then name, phone and ZIP, and posts to Make as form \`lp-${a.slug}\`.`);
 });
 const mdPath = path.join(root, 'marketing/facebook-lead-ads.md');
 fs.mkdirSync(path.dirname(mdPath), { recursive: true });

@@ -17,7 +17,7 @@ Generated 2026-09-14 from `src/data/campaigns.ts` by `node scripts/campaign-kit.
 - A published Instant Form cannot be edited. Proof every field before you publish; a fix means a new form.
 - The web pages say Brian replies "within one business day" and answer "Is it safe for kids and dogs?" with yes. Brian should confirm both (QUESTIONS-FOR-BRIAN #15 and #17). The Instant Forms avoid both.
 - Meta Pixel 1047663254935147 is on every page. Website ads: optimize for the Lead event (fires only after a landing-page form submits). Taps on call and text links fire Contact.
-- In Netlify, turn on email notifications for the lp-clean, lp-membership and lp-putting-green forms, plus fb-clean, fb-membership and fb-putting-green (best time to call).
+- Every lead goes to Make, which emails Brian: the website forms post straight to Make, and Instant Form leads are pulled from the Facebook Page. After publishing each Instant Form, send one test lead with Meta's Lead Ads Testing Tool and check the email (automations/make/README.md).
 
 ## Settings for all three Instant Forms
 
@@ -85,7 +85,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 - **Website URL:** https://www.timelessturfrestoration.com/lp/clean/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP (Netlify form `lp-clean`).
+- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
 
 ## 2. Turf membership
 
@@ -132,7 +132,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 - **Website URL:** https://www.timelessturfrestoration.com/lp/membership/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP (Netlify form `lp-membership`).
+- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
 
 ## 3. Putting green restoration
 
@@ -179,4 +179,4 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 - **Website URL:** https://www.timelessturfrestoration.com/lp/putting-green/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP (Netlify form `lp-putting-green`).
+- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.

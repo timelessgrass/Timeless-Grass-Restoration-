@@ -23,13 +23,30 @@
       "version": 1,
       "parameters": {},
       "filter": {
-        "name": "Campaign forms only (not the main quote form)",
+        "name": "Campaign forms, not spam (Instant Form leads always pass)",
         "conditions": [
           [
             {
               "a": "{{1.form_name}}",
               "o": "text:notequal",
               "b": "quote"
+            },
+            {
+              "a": "{{1.data.bot_field}}",
+              "o": "text:equal",
+              "b": ""
+            },
+            {
+              "a": "{{1.data.elapsed_ms}}",
+              "o": "number:greater",
+              "b": "2000"
+            }
+          ],
+          [
+            {
+              "a": "{{1.form_name}}",
+              "o": "text:contain",
+              "b": "instant-"
             }
           ]
         ]
@@ -54,7 +71,7 @@
           },
           {
             "name": "digits",
-            "value": "{{replace(ifempty(1.data.phone; \"\"); /[^0-9+]/g; emptystring)}}"
+            "value": "{{replace(replace(replace(replace(replace(ifempty(1.data.phone; \"\"); \" \"; emptystring); \"-\"; emptystring); \"(\"; emptystring); \")\"; emptystring); \".\"; emptystring)}}"
           },
           {
             "name": "when",

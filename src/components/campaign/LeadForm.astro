@@ -5,7 +5,7 @@
  * and swaps the form for the done panel. Carries utm_* and fbclid so every lead shows which ad it came from.
  */
 import Icon from '../Icon.astro';
-import { brand } from '../../data/site';
+import { brand, LEAD_HOOKS } from '../../data/site';
 import { REPLY_TIME, FINAL, type Angle } from '../../data/campaigns';
 interface Props { a: Angle }
 const { a } = Astro.props;
@@ -13,11 +13,10 @@ const name = `lp-${a.slug}`;
 const sms = `${brand.smsHref}?&body=${encodeURIComponent(a.fb.sms)}`;
 const ATTR = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
 ---
-<form class="form lf" id="quote" name={name} method="POST" data-netlify="true" netlify-honeypot="bot-field" data-fbq="Lead" data-steps>
-  <input type="hidden" name="form-name" value={name}>
+<form class="form lf" id="quote" name={name} method="POST" data-lead={LEAD_HOOKS.campaign} data-fbq="Lead" data-steps>
   <input type="hidden" name="page" value={Astro.url.pathname}>
   {ATTR.map((k) => <input type="hidden" name={k} data-attr />)}
-  <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+  <p class="hp"><label>Leave this empty <input name="bot_field" tabindex="-1" autocomplete="off"></label></p>
   <div class="lf__head">
     <h2>{a.lp.formTitle}</h2>
     <ol class="lf__bar" aria-hidden="true"><li class="is-on">1 · {a.slug === 'putting-green' ? 'Your green' : 'Your turf'}</li><li>2 · Where to send it</li></ol>

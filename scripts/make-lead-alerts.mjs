@@ -4,9 +4,11 @@
  * the three scenarios that send it. Prices, plan names, questions and Brian's address come from src/data, so
  * a price change is a rebuild plus a blueprint update in Make.
  *
- *   organic-lead          Netlify "quote" form on the main site             → one email
- *   facebook-leads        /lp/ and /fb/ Netlify forms, plus Instant Form leads → routed by medium, then service
- *   instant-form-feeder   Facebook Lead Ads (page "Timeless Restoration")     → facebook-leads webhook, shaped like Netlify
+ *   organic-lead          "quote" form on the main site (posts straight to Make) → one email
+ *   facebook-leads        /lp/ and /fb/ forms, plus Instant Form leads        → routed by medium, then service
+ *   instant-form-feeder   Facebook Lead Ads (page "Timeless Restoration")     → facebook-leads webhook, in the website forms' shape
+ *
+ * The website forms post { form_name, created_at, site_url, data: { ...fields, bot_field, elapsed_ms } } (public/main.js).
  *
  * Usage: node scripts/make-lead-alerts.mjs --organic-hook <id> --facebook-hook <id> --facebook-url <url> --lead-hook <id> [--preview <dir>]
  * Writes automations/make/*.blueprint.json; --preview also writes sample emails with made-up data.
@@ -37,6 +39,8 @@ const angle = (slug) => ANGLES.find((a) => a.slug === slug);
 const choices = (slug, name) => angle(slug).questions.find((q) => q.name === name).choices.map((c) => c.label);
 const q = (s) => { if (s.includes('"')) throw new Error(`quote in IML string: ${s}`); return `"${s}"`; };
 const iml = (s) => `{{${s}}}`;
+/* Phone number for tel:/sms: links. Plain nested replace(): Make rejects a regex literal in a blueprint. */
+const digitsOf = (x) => ['" "', '"-"', '"("', '")"', '"."'].reduce((acc, ch) => `replace(${acc}; ${ch}; emptystring)`, `ifempty(${x}; "")`);
 
 /* ---------- values Brian sees, computed from the site data ---------- */
 const band = (a, b = a) => {
@@ -124,7 +128,7 @@ const organic = (v) => email({
 const organicMake = organic({
   name: iml('1.data.name'), zip: iml('ifempty(1.data.zip; "not given")'), plan: iml('ifempty(1.data.plan; "Not sure, recommend one")'),
   when: iml(`formatDate(1.created_at; "ddd, MMM D · h:mm A"; "${TZ}")`),
-  digits: iml('replace(ifempty(1.data.phone; ""); /[^0-9+]/g; emptystring)'), phone: iml('1.data.phone'),
+  digits: iml(digitsOf('1.data.phone')), phone: iml('1.data.phone'),
   first: iml('first(split(trim(1.data.name); " "))'), sms: smsText(iml('encodeURL(first(split(trim(1.data.name); " ")))')),
   emailRaw: iml('1.data.email'), email: iml('ifempty(1.data.email; "Not given")'),
   message: iml('ifempty(1.data.message; "No note left")'), page: `${iml('1.site_url')}${iml('1.data.page')}`,
@@ -167,7 +171,7 @@ const BASE_VARS = [
   ['medium', 'if(contains(1.form_name; "instant-"); "Facebook Instant Form"; if(contains(1.form_name; "lp-"); "Website landing page"; if(contains(1.form_name; "fb-"); "Follow-up page"; "Website form")))'],
   ['platform', 'switch(lower(ifempty(1.data.utm_source; "none")); "fb"; "Facebook"; "facebook"; "Facebook"; "ig"; "Instagram"; "instagram"; "Instagram"; "an"; "Audience Network"; "msg"; "Messenger"; "none"; "Not tagged"; 1.data.utm_source)'],
   ['first', 'first(split(trim(ifempty(1.data.name; "there")); " "))'],
-  ['digits', 'replace(ifempty(1.data.phone; ""); /[^0-9+]/g; emptystring)'],
+  ['digits', digitsOf('1.data.phone')],
   ['when', `formatDate(ifempty(1.created_at; now); "ddd, MMM D · h:mm A"; "${TZ}")`],
   ['campaign', 'ifempty(1.data.utm_campaign; "Not tagged")'],
   ['adset', 'ifempty(1.data.utm_term; "Not tagged")'],
@@ -200,13 +204,15 @@ const gmail = (id, subject, content, filter, x, y) => ({
   mapper: { to: TO, subject, bodyType: 'rawHtml', content }, metadata: at(x, y),
 });
 const cond = (a, o, b) => ({ a, o, ...(b !== undefined ? { b } : {}) });
+/* Website forms are spam-checked here as well as in the browser: the honeypot must be empty and the form open over 2 s. */
+const HUMAN = [cond('{{1.data.bot_field}}', 'text:equal', ''), cond('{{1.data.elapsed_ms}}', 'number:greater', '2000')];
 
 const organicBlueprint = (hook) => ({
   name: 'Timeless Turf — Organic website lead → Brian (HTML email)',
   flow: [
     { id: 1, module: 'gateway:CustomWebHook', version: 1, parameters: { hook, maxResults: 1 }, mapper: {}, metadata: at(0) },
     gmail(2, `New turf quote request: {{1.data.name}} · {{ifempty(1.data.zip; "no ZIP")}}`, organicMake,
-      { name: 'Main site quote form only', conditions: [[cond('{{1.form_name}}', 'text:equal', 'quote')]] }, 300),
+      { name: 'Main site quote form, not spam', conditions: [[cond('{{1.form_name}}', 'text:equal', 'quote'), ...HUMAN]] }, 300),
   ],
   metadata: SCENARIO_META,
 });
@@ -219,7 +225,7 @@ const facebookBlueprint = (hook) => {
     flow: [
       { id: 1, module: 'gateway:CustomWebHook', version: 1, parameters: { hook, maxResults: 1 }, mapper: {}, metadata: at(0) },
       { id: 2, module: 'util:SetVariables', version: 1, parameters: {},
-        filter: { name: 'Campaign forms only (not the main quote form)', conditions: [[cond('{{1.form_name}}', 'text:notequal', 'quote')]] },
+        filter: { name: 'Campaign forms, not spam (Instant Form leads always pass)', conditions: [[cond('{{1.form_name}}', 'text:notequal', 'quote'), ...HUMAN], [cond('{{1.form_name}}', 'text:contain', 'instant-')]] },
         mapper: { variables: BASE_VARS.map(([name, value]) => ({ name, value: iml(value) })), scope: 'roundtrip' }, metadata: at(300) },
       { id: 3, module: 'util:SetVariables', version: 1, parameters: {},
         mapper: { variables: SERVICE_VARS.map(([name, value]) => ({ name, value: iml(value) })), scope: 'roundtrip' }, metadata: at(600) },

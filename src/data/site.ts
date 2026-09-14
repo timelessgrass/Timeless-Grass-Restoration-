@@ -17,6 +17,11 @@ export const SITE_URL = 'https://www.timelessturfrestoration.com';
 /** Meta Pixel (Events Manager, 2026-09-14). Loads on every page; PageView on load, Lead on a submitted quote
  *  form, Contact on a call/text tap or the Instant Form follow-up form. Set to '' to switch it off. */
 export const META_PIXEL_ID = '1047663254935147';
+/** Make.com webhooks the site's lead forms post to (automations/make/README.md). No Netlify Forms. */
+export const LEAD_HOOKS = {
+  organic: 'https://hook.us2.make.com/2rtexoaexdzczor72y9xtw2xyo29pf42', // "quote" form → Organic website lead scenario
+  campaign: 'https://hook.us2.make.com/6sad5csnuuzxxnwzfnao957roumxfdky', // lp-* and fb-* forms → Facebook leads router
+};
 
 export const brand = {
   name: 'TIMELESS Turf Restoration',

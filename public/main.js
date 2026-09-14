@@ -51,7 +51,7 @@
   const mbar = $('.mbar');
   if (mbar) {
     const heroCta = $('[data-hero-cta]');
-    const forms = $$('form[data-netlify]');
+    const forms = $$('form[data-lead]');
     let queued = false;
     const sync = () => {
       queued = false;
@@ -199,21 +199,27 @@
     if (r) { r.checked = true; r.dispatchEvent(new Event('change')); }
   });
 
-  // Netlify forms: submit without leaving the page. A form with a done panel swaps to it; others show a message.
-  $$('form[data-netlify]').forEach((form) => {
+  // Lead forms post straight to Make (automations/make/README.md) as { form_name, created_at, site_url, data }.
+  // A filled honeypot is dropped here without sending; Make's filters also drop it, and anything sent within 2 s of load.
+  // A form with a done panel swaps to it; others show a message.
+  const loadedAt = Date.now();
+  $$('form[data-lead]').forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const ok = $('.form__msg--ok', form), err = $('.form__msg--err', form), done = $('[data-done]', form), btn = $('button[type="submit"]', form);
       [ok, err].forEach((m) => { if (m) m.hidden = true; });
       btn.disabled = true;
       const data = new FormData(form);
+      const fields = { ...Object.fromEntries(data), elapsed_ms: Date.now() - loadedAt };
       try {
-        const res = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(data).toString(),
-        });
-        if (!res.ok) throw new Error(res.status);
+        if (!fields.bot_field) {
+          const res = await fetch(form.dataset.lead, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ form_name: form.getAttribute('name'), created_at: new Date().toISOString(), site_url: location.origin, data: fields }),
+          });
+          if (!res.ok) throw new Error(res.status);
+        }
         if (window.fbq && form.dataset.fbq) window.fbq('track', form.dataset.fbq, { content_name: form.getAttribute('name') });
         form.reset();
         $$('[data-hint-out]', form).forEach((b) => { b.hidden = true; });

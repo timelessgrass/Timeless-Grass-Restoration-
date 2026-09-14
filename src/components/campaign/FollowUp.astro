@@ -12,7 +12,7 @@ import LpFoot from './LpFoot.astro';
 import MeetBrian from './MeetBrian.astro';
 import CampaignFaq from './CampaignFaq.astro';
 import { REPLY_TIME, NEXT, GREEN_STEPS, PUSHY, type Angle } from '../../data/campaigns';
-import { brand, pricing as P, money } from '../../data/site';
+import { brand, pricing as P, money, LEAD_HOOKS } from '../../data/site';
 interface Props { a: Angle }
 const { a } = Astro.props;
 const text = (body: string) => `${brand.smsHref}?&body=${encodeURIComponent(body)}`;
@@ -113,10 +113,9 @@ const isGreen = a.slug === 'putting-green';
 <section class:list={['sec', { 'sec--cream': !isGreen }]}>
   <div class="wrap lp-narrow">
     <div class="sec__head center" data-reveal><p class="kicker">Optional</p><h2>When should {brand.owner} call?</h2><p>Pick a time and he'll aim for it.</p></div>
-    <form class="form lp-form" name={form} method="POST" data-netlify="true" netlify-honeypot="bot-field" data-fbq="Contact" data-reveal>
-      <input type="hidden" name="form-name" value={form}>
+    <form class="form lp-form" name={form} method="POST" data-lead={LEAD_HOOKS.campaign} data-fbq="Contact" data-reveal>
       <input type="hidden" name="page" value={Astro.url.pathname}>
-      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <p class="hp"><label>Leave this empty <input name="bot_field" tabindex="-1" autocomplete="off"></label></p>
       <fieldset class="q">
         <legend>Best time to reach you?</legend>
         <div class="chips-in">{['Morning', 'Afternoon', 'Evening', 'Text me instead'].map((t) => <label class="chip"><input type="radio" name="best_time" value={t}><span>{t}</span></label>)}</div>
