@@ -47,7 +47,7 @@ export const EXPLAINERS: Article[] = [
     h1: `What turf infill actually does`,
     lede: `Infill looks like an afterthought poured in after the grass goes down, sand or crumb scattered between the fibers. It is actually doing four or five jobs at once: holding the fibers upright, weighing the whole system down, cushioning the surface, helping water pass through, and in some products, controlling odor. Getting the depth and type right matters as much as anything else in the system.`,
     question: `What does the sand or infill in artificial turf actually do?`,
-    answer: `Turf infill supports the fibers upright, adds ballast weight, cushions the surface underfoot, and helps water drain evenly through the backing. Some infills, such as zeolite-type or antimicrobial-coated sand, also help control odor in pet areas. Depth matters: too little leaves fibers unsupported, too much buries them. TIMELESS Turf Restoration checks and restores infill depth across the Grand Strand on every visit.`,
+    answer: `Turf infill supports the fibers upright, adds ballast weight, cushions the surface underfoot, and helps water drain evenly through the backing. Some infills, such as zeolite-type or antimicrobial-coated sand, also help control odor in pet areas. Depth matters: too little leaves fibers unsupported, too much buries them. TIMELESS Turf Restoration checks and redistributes infill in every Premium Restoration across the Grand Strand.`,
     takeaways: [
       `Infill does several jobs at once: support, ballast, cushion, drainage and, in some products, odor control.`,
       `A crunchy or hard-feeling lawn is almost always compacted infill, not a fiber problem.`,
@@ -146,7 +146,7 @@ export const EXPLAINERS: Article[] = [
     h1: `What enzyme cleaners actually do, and why dwell time matters`,
     lede: `A fragrance spray covers a smell for as long as the fragrance lasts. An enzyme cleaner is different: it contains proteins that break organic residue down into smaller, odorless compounds, which is why it needs time sitting on the residue rather than an immediate rinse to work. Understanding that difference explains why one product fades in a day and the other actually removes the problem.`,
     question: `How do enzyme cleaners remove urine odor from artificial turf?`,
-    answer: `Enzyme cleaners contain proteins that break down organic compounds in urine and waste residue into smaller, odorless byproducts, rather than covering the smell with fragrance. They need dwell time to work, which is why they are applied and left rather than rinsed right away. They do not reach residue bonded into crusted, saturated infill, which needs replacing instead. TIMELESS Turf Restoration uses enzyme treatment on every Grand Strand visit.`,
+    answer: `Enzyme cleaners contain proteins that break down organic compounds in urine and waste residue into smaller, odorless byproducts, rather than covering the smell with fragrance. They need dwell time to work, which is why they are applied and left rather than rinsed right away. They do not reach residue bonded into crusted, saturated infill, which needs replacing instead. TIMELESS Turf Restoration includes enzyme treatment in every Premium Restoration on the Grand Strand.`,
     takeaways: [
       `Enzymes are proteins that digest urine residue into smaller, odorless compounds rather than masking the smell.`,
       `Enzyme cleaners need dwell time, well beyond a quick rinse, and rinsing too soon is the most common reason they seem not to work.`,

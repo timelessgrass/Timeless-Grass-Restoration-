@@ -60,7 +60,7 @@ export const COMPARISONS: Guide[] = [
     faq: [
       { q: 'Can I cancel a membership?', a: `Yes, any time after the current quarter's visit. There is no long contract; the plan is billed monthly for four visits a year, and it is meant to be an easier way to get visits you would book anyway.` },
       { q: 'Does the membership price change with yard size?', a: `As listed, the monthly rates are flat, which is why the plan gets better value as the yard gets bigger. Over 5,000 square feet everything is quoted, memberships included.` },
-      { q: 'Can I start with a one-time clean and switch?', a: `Yes, and most members do. The first Premium Restoration shows you what the yard looks like done properly; if you want that every quarter, we move you onto ELITE from the next visit.` },
+      { q: 'Can I start with a one-time clean and switch?', a: `Yes. The first Premium Restoration shows you what the yard looks like done properly; if you want that every quarter, we move you onto ELITE from the next visit.` },
       { q: 'What does Pet Turf ELITE add over ELITE?', a: `The price is set at ${money(P.memberships[2].monthly)} a month; the extra pet-yard steps are still being finalized, so we would rather not describe them until they are. Brian will tell you what it includes when he calls.` },
     ],
     services: ['artificial-turf-cleaning', 'pet-odor-removal'],

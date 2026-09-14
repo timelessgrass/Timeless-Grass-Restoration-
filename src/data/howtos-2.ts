@@ -274,7 +274,7 @@ export const HOWTOS_2: Article[] = [
     h1: `How to check artificial turf infill depth: the ruler test`,
     lede: `Infill depth is the one turf measurement you can take yourself with a two-dollar ruler, and it tells you more than a visual check ever will. A yard can look fine and still be running low where it matters: the pet zone, the main path, the spot where the kids play. Here is how to check it and what the number means.`,
     question: `How do you check how much infill is in artificial turf?`,
-    answer: `Push a steel ruler straight down through the fibers to the backing, pinch it where the sand level sits, and read the depth. Infill should cover enough of the pile that a healthy amount of fiber still stands exposed above it. Too little infill and fibers lean over instead of standing up. TIMELESS Turf Restoration measures infill depth on every Grand Strand visit.`,
+    answer: `Push a steel ruler straight down through the fibers to the backing, pinch it where the sand level sits, and read the depth. Infill should cover enough of the pile that a healthy amount of fiber still stands exposed above it. Too little infill and fibers lean over instead of standing up. TIMELESS Turf Restoration measures infill depth in every Premium Restoration on the Grand Strand.`,
     takeaways: [
       'A steel ruler pushed to the backing is the whole test. No app, no gauge, two minutes.',
       'Check the pet zone, the main path and the middle of the yard, not just one spot.',

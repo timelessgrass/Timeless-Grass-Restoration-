@@ -15,7 +15,7 @@ export const COMMERCIAL: Article[] = [
       'Turnover compresses a year of pet use into a season of five-night stays; the pet zone gets treated like it sees a new dog every week, because it does.',
       'Pre-season (late May) and a post-storm check are the two visits every rental on the Strand needs, on top of any turnover cleaning.',
       'Priced by square foot, the same bands as a house; a portfolio of properties runs on one schedule and one invoice.',
-      'Photo documentation from every visit gives you something to point to when an owner or a guest asks what was done.',
+      'Dated photos from every Premium Restoration give you something to point to when an owner or a guest asks what was done.',
     ],
     sections: [
       { h2: 'The turnover problem', html: `<p>A house gets one dog, most of the time, and a routine. A rental gets a different dog every week from Memorial Day to Labor Day, on a lease that never mentions the yard. Pet-friendly listings do better on the booking sites, so more of them allow dogs, and the guest who complains about a smell in a review does it publicly, not quietly. The fix is not cleaning harder between stays; it is treating the pet zone as a permanent feature of the property, the way a pool or a hot tub is, on a schedule instead of a reaction.</p>` },
@@ -45,7 +45,7 @@ export const COMMERCIAL: Article[] = [
     h1: 'Turf maintenance for HOAs and communities',
     lede: `An HOA board does not want a handshake and a hose. It wants a written scope, a price per square foot, and a schedule the property manager can put in next year's budget. We build that for common-area turf, dog parks and amenity greens the same way we build a homeowner's quote, just bigger and on paper.`,
     question: 'Do you provide a maintenance contract for HOA common areas and amenity turf?',
-    answer: `Yes. TIMELESS Turf Restoration writes a bid-ready scope of work for HOA common-area turf, dog parks and amenity greens across the Grand Strand: what gets cleaned, how often, what triggers an odor or algae treatment, and what a visit costs per square foot. Boards get a schedule they can put in the annual budget and dated photos from every visit for the minutes. Pricing follows the same per-square-foot bands as a homeowner's yard.`,
+    answer: `Yes. TIMELESS Turf Restoration writes a bid-ready scope of work for HOA common-area turf, dog parks and amenity greens across the Grand Strand: what gets cleaned, how often, what triggers an odor or algae treatment, and what a visit costs per square foot. Boards get a schedule they can put in the annual budget and dated photos from every Premium Restoration for the minutes. Pricing follows the same per-square-foot bands as a homeowner's yard.`,
     takeaways: [
       'A bid-ready scope names the turf areas, the frequency, the trigger for odor or algae treatment, and the price per square foot, the same document a board would ask any vendor for.',
       'Common-area amenity greens and community dog parks take more traffic than any single yard and need their own line item, not a share of the landscaping budget.',
