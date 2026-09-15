@@ -38,12 +38,24 @@ The browser silently skips sending when the trap is filled. Instant Form leads s
 
 Instant Form names must contain `cleaning`, `membership` or `putting` (the kit's `TTR · Turf cleaning quote`, `TTR · Turf membership`, `TTR · Putting green restoration` do).
 
+## Instant Forms
+
+Checked on 2026-09-15 against the three published forms: cleaning `1436778848336765`, membership `984843124016157`, putting green `1383462950568116`.
+- Every question key matches what the feeder reads (`about_how_big_is_the_turf?`, `do_dogs_use_it?`, `how_big_is_the_green?` and so on, "?" included), plus `full_name`, `phone_number` and `zip_code`.
+- Each answer arrives as its visible text ("500–1,000 sq ft"), so the ballpark and plan lookups match.
+- The feeder reads each answer from `1.data.<key>` or, failing that, Meta's raw `field_data` list.
+
+Send a test lead per form with Meta's [Lead Ads Testing Tool](https://developers.facebook.com/tools/lead-ads-testing). If a row says "Not answered", open the feeder's last run in Make and compare module 1's output with module 3's JSON body.
+
+## Test leads
+
+A lead whose name contains "test lead" (what Meta's testing tool sends) or "(TEST)" gets a `[TEST]` subject. Blueprints built with `--test-to <address>` send those leads to that address instead of Brian, so a test never reaches him while ads run. Keep the address out of the repo: build those blueprints with `--out <dir outside the repo>`, then update the scenarios in Make. The live scenarios were built that way on 2026-09-15.
+
+Every value that comes from a form or a URL parameter is HTML-escaped before it goes into an email.
+
 ## Still to check
 
-1. **Instant Forms.** After publishing each form, send a test lead with Meta's [Lead Ads Testing Tool](https://developers.facebook.com/tools/lead-ads-testing) and check the email.
-   - Answers are read by Meta's field keys, which are the question text in snake_case (`about_how_big_is_the_turf?`).
-   - If a row says "Not answered", open the feeder's last run in Make, read the real key under module 1 → Data, and fix it in module 3's JSON body.
-2. **Facebook connection.** "My Facebook connection" (Ty Stevens) still lists the page, but its stored expiry date is 2026-09-02. If Instant Form alerts stop, reauthorize it in Make → Credentials.
+1. **Facebook connection.** "My Facebook connection" (Ty Stevens) lists the page and could read all three forms on 2026-09-15, but its stored expiry date is 2026-09-02. If Instant Form alerts stop, reauthorize it in Make → Credentials.
 
 ## Changing prices, questions or the email
 

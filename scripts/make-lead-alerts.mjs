@@ -10,8 +10,9 @@
  *
  * The website forms post { form_name, created_at, site_url, data: { ...fields, bot_field, elapsed_ms } } (public/main.js).
  *
- * Usage: node scripts/make-lead-alerts.mjs --organic-hook <id> --facebook-hook <id> --facebook-url <url> --lead-hook <id> [--preview <dir>]
- * Writes automations/make/*.blueprint.json; --preview also writes sample emails with made-up data.
+ * Usage: node scripts/make-lead-alerts.mjs --organic-hook <id> --facebook-hook <id> --facebook-url <url> --lead-hook <id>
+ *          [--test-to <address>] [--out <dir>] [--preview <dir>]
+ * Writes automations/make/*.blueprint.json (or --out); --preview also writes sample emails with made-up data.
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -33,6 +34,10 @@ const FACEBOOK = 5649539; // "My Facebook connection" (Ty Stevens), which manage
 const PAGE_ID = '1360007903856817'; // Facebook Page "Timeless Restoration"
 const TO = [brand.email];
 const TZ = 'America/New_York';
+/* Test leads: Meta's Lead Ads Testing Tool names them "<test lead: dummy data ...>" and our own tests add "(TEST)".
+   They get a [TEST] subject, and with --test-to <address> they go there instead of Brian, so a test never reaches
+   him while ads are live. The address is passed on the command line and kept out of the committed blueprints. */
+const TEST_TO = arg('test-to');
 
 const R = P.rows, M = P.memberships;
 const angle = (slug) => ANGLES.find((a) => a.slug === slug);
@@ -128,13 +133,16 @@ const organic = (v) => email({
   ],
   footer: `Quote form on ${v.page}<br>Sent automatically by Make for ${brand.name}`,
 });
+/* Anything a visitor typed (or a URL parameter carried) is HTML-escaped before it goes into the email, so a lead can't
+   inject markup or links into Brian's inbox, and Meta's "<test lead: dummy data>" names still show. */
+const safe = (x) => iml(`escapeHTML(${x})`);
 const organicMake = organic({
-  name: iml('1.data.name'), zip: iml('ifempty(1.data.zip; "not given")'), plan: iml('ifempty(1.data.plan; "Not sure, recommend one")'),
+  name: safe('1.data.name'), zip: safe('ifempty(1.data.zip; "not given")'), plan: safe('ifempty(1.data.plan; "Not sure, recommend one")'),
   when: iml(`formatDate(1.created_at; "ddd, MMM D · h:mm A"; "${TZ}")`),
-  digits: iml(digitsOf('1.data.phone')), phone: iml('1.data.phone'),
-  first: iml('first(split(trim(1.data.name); " "))'), sms: smsText(iml('encodeURL(first(split(trim(1.data.name); " ")))')),
-  emailRaw: iml('1.data.email'), email: iml('ifempty(1.data.email; "Not given")'),
-  message: iml('ifempty(1.data.message; "No note left")'), page: `${iml('1.site_url')}${iml('1.data.page')}`,
+  digits: safe(digitsOf('1.data.phone')), phone: safe('1.data.phone'),
+  first: safe('first(split(trim(1.data.name); " "))'), sms: smsText(iml('encodeURL(first(split(trim(1.data.name); " ")))')),
+  emailRaw: safe('1.data.email'), email: safe('ifempty(1.data.email; "Not given")'),
+  message: safe('ifempty(1.data.message; "No note left")'), page: `${safe('1.site_url')}${safe('1.data.page')}`,
 });
 
 /* Facebook: module 2 sets the base variables, module 3 the service-specific ones, module 4 composes this */
@@ -161,11 +169,11 @@ const facebook = (v) => email({
 });
 const facebookMake = facebook({
   kicker: iml('3.kicker'), badge: iml('upper(3.label)'), accent: iml('3.accent'), accentInk: iml('3.accent_ink'),
-  name: iml('1.data.name'), zip: iml('ifempty(1.data.zip; "not given")'), when: iml('2.when'), medium: iml('2.medium'), platform: iml('2.platform'),
-  digits: iml('2.digits'), phone: iml('1.data.phone'), first: iml('2.first'), sms: smsText(iml('encodeURL(2.first)')),
-  rowsTitle: iml('3.rows_title'), q1Label: iml('3.q1_label'), q1: iml('3.q1'), q2Label: iml('3.q2_label'), q2: iml('3.q2'), q3Label: iml('3.q3_label'), q3: iml('3.q3'), hide: iml('3.hide'),
+  name: safe('1.data.name'), zip: safe('ifempty(1.data.zip; "not given")'), when: iml('2.when'), medium: iml('2.medium'), platform: safe('2.platform'),
+  digits: safe('2.digits'), phone: safe('1.data.phone'), first: safe('2.first'), sms: smsText(iml('encodeURL(2.first)')),
+  rowsTitle: iml('3.rows_title'), q1Label: iml('3.q1_label'), q1: safe('3.q1'), q2Label: iml('3.q2_label'), q2: safe('3.q2'), q3Label: iml('3.q3_label'), q3: safe('3.q3'), hide: iml('3.hide'),
   hintLabel: iml('3.hint_label'), hint: iml('3.hint'),
-  campaign: iml('2.campaign'), adset: iml('2.adset'), ad: iml('2.ad'), page: iml('2.page'), formName: iml('1.form_name'),
+  campaign: safe('2.campaign'), adset: safe('2.adset'), ad: safe('2.ad'), page: safe('2.page'), formName: safe('1.form_name'),
 });
 
 const UPDATE = '2.medium = "Follow-up page"';
@@ -201,10 +209,12 @@ const SERVICE_VARS = [
 /* ---------- blueprints ---------- */
 const SCENARIO_META = { instant: true, version: 1, designer: { orphans: [] }, scenario: { dlq: false, dataloss: false, maxErrors: 3, autoCommit: true, roundtrips: 1, sequential: false, confidential: false, freshVariables: false, autoCommitTriggerLast: true } };
 const at = (x, y = 0) => ({ designer: { x, y } });
+const ifTest = (yes, no) => `if(contains(lower(ifempty(1.data.name; "")); "test lead"); ${yes}; if(contains(lower(ifempty(1.data.name; "")); "(test)"); ${yes}; ${no}))`;
 const gmail = (id, subject, content, filter, x, y) => ({
   id, module: 'google-email:sendAnEmail', version: 4, parameters: { __IMTCONN__: GMAIL },
   ...(filter ? { filter } : {}),
-  mapper: { to: TO, subject, bodyType: 'rawHtml', content }, metadata: at(x, y),
+  mapper: { to: TEST_TO ? [iml(ifTest(q(TEST_TO), q(TO[0])))] : TO, subject: iml(ifTest(q('[TEST] '), 'emptystring')) + subject, bodyType: 'rawHtml', content },
+  metadata: at(x, y),
 });
 const cond = (a, o, b) => ({ a, o, ...(b !== undefined ? { b } : {}) });
 /* Website forms are spam-checked here as well as in the browser: the honeypot must be empty and the form open over 2 s. */
@@ -252,10 +262,10 @@ const facebookBlueprint = (hook) => {
 
 /* Instant Form answers arrive keyed by Meta's field names, which are the question text in snake_case. */
 const key = (label) => label.toLowerCase().replace(/[^a-z0-9? ]/g, '').trim().replace(/\s+/g, '_');
-const answer = (slug, name) => {
-  const label = angle(slug).questions.find((x) => x.name === name).label;
-  return `{{ifempty(get(1.data; ${q(key(label))}); get(1.data; ${q(key(label).replace(/\?$/, ''))}))}}`;
-};
+/* Keys and answer values checked against the three published forms on 2026-09-15: keys keep the "?", and each answer
+   arrives as its visible text. Make's lead bundle may hold answers as 1.data.<key> or as Meta's raw field_data list, so read either. */
+const field = (k) => `ifempty(get(1.data; ${q(k)}); first(first(map(1.field_data; "values"; "name"; ${q(k)}))))`;
+const answer = (slug, name) => iml(field(key(angle(slug).questions.find((x) => x.name === name).label)));
 const feederBlueprint = (hook, url) => {
   const body = {
     form_name: 'instant-{{if(contains(lower(2.name); "membership"); "membership"; if(contains(lower(2.name); "putting"); "putting-green"; "clean"))}}',
@@ -263,10 +273,10 @@ const feederBlueprint = (hook, url) => {
     created_at: '{{1.dateCreated}}',
     site_url: 'Facebook Instant Form',
     data: {
-      name: '{{1.data.full_name}}', phone: '{{1.data.phone_number}}', email: '{{1.data.email}}', zip: '{{ifempty(1.data.zip_code; 1.data.post_code)}}',
+      name: iml(field('full_name')), phone: iml(field('phone_number')), email: iml(field('email')), zip: iml(field('zip_code')),
       size: answer('clean', 'size'), dogs: answer('clean', 'dogs'), issue: answer('clean', 'issue'), plan_pick: answer('membership', 'plan_pick'),
       green_size: answer('putting-green', 'green_size'), green_issue: answer('putting-green', 'green_issue'), green_where: answer('putting-green', 'green_where'),
-      utm_source: '{{1.platform}}', utm_medium: 'instant_form', utm_campaign: '{{1.campaignName}}', utm_content: '{{1.adName}}', utm_term: '{{1.adsetName}}',
+      utm_source: '{{1.platform}}', utm_medium: 'instant_form', utm_campaign: '{{ifempty(1.campaignName; 1.campaign_name)}}', utm_content: '{{ifempty(1.adName; 1.ad_name)}}', utm_term: '{{ifempty(1.adsetName; 1.adset_name)}}',
       page: 'Instant Form: {{2.name}}', lead_id: '{{1.leadgenId}}',
     },
   };
@@ -283,9 +293,10 @@ const feederBlueprint = (hook, url) => {
   };
 };
 
-const outDir = path.join(root, 'automations/make');
+/* --out writes somewhere else, e.g. blueprints built with --test-to that shouldn't be committed. */
+const outDir = arg('out') ? path.resolve(arg('out')) : path.join(root, 'automations/make');
 fs.mkdirSync(outDir, { recursive: true });
-const write = (file, data) => { fs.writeFileSync(path.join(outDir, file), typeof data === 'string' ? data : JSON.stringify(data, null, 2) + '\n'); console.log('wrote', `automations/make/${file}`); };
+const write = (file, data) => { fs.writeFileSync(path.join(outDir, file), typeof data === 'string' ? data : JSON.stringify(data, null, 2) + '\n'); console.log('wrote', path.relative(root, path.join(outDir, file))); };
 write('organic-lead-email.html', organicMake);
 write('facebook-lead-email.html', facebookMake);
 if (arg('organic-hook')) write('organic-lead.blueprint.json', organicBlueprint(+arg('organic-hook')));
