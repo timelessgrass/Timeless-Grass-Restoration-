@@ -12,6 +12,8 @@ const problems = (a.problems ?? []).map((s) => ALL_PROBLEMS.find((p) => p.slug =
 const guides = (a.guides ?? []).map((s) => ALL_GUIDES.find((g) => g.slug === s)).filter(Boolean);
 const howtos = (a.howtos ?? []).map((s) => HOWTOS.find((h) => h.slug === s)).filter(Boolean);
 const related = (a.related ?? []).map((s) => GREENS.find((x) => x.slug === s)).filter(Boolean);
+/* Green pages that list this one as related get a link back, so no page is reachable from the hub alone. */
+const linkedBy = GREENS.filter((x) => x.slug !== a.slug && (x.related ?? []).includes(a.slug) && !(a.related ?? []).includes(x.slug)).slice(0, 6);
 const svc = services[0];
 ---
 <ArticleLayout a={a} kicker={KICKERS[a.kind ?? ''] ?? T.kicker} crumbs={crumbs} description={withPhone(a.description)}
@@ -21,7 +23,7 @@ const svc = services[0];
     { h: 'Related problems', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
     { h: 'How-to', items: howtos.map((h) => ({ href: `/how-to/${h!.slug}/`, label: h!.short })) },
     { h: 'Guides', items: guides.map((g) => ({ href: `/guides/${g!.slug}/`, label: g!.short })) },
-    { h: 'More on putting greens', items: [...related.map((r) => ({ href: `${T.base}${r!.slug}/`, label: r!.short })), { href: T.base, label: 'Putting green center' }] },
+    { h: 'More on putting greens', items: [...[...related, ...linkedBy].map((r) => ({ href: `${T.base}${r!.slug}/`, label: r!.short })), { href: T.base, label: 'Putting green center' }] },
   ]}
   related={related.map((r) => ({ href: `${T.base}${r!.slug}/`, title: r!.h1, blurb: clip(r!.lede, 140), image: r!.image?.src }))}
   relatedH2="More on putting greens"

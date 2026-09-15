@@ -11,3 +11,10 @@
   for = "/assets/timeless-contact.vcf"
   [headers.values]
     Content-Type = "text/vcard; charset=utf-8"
+
+# http://www would otherwise take two hops (Netlify's HTTPS upgrade, then its www → bare domain redirect).
+[[redirects]]
+  from = "http://www.timelessturfrestoration.com/*"
+  to = "https://timelessturfrestoration.com/:splat"
+  status = 301
+  force = true

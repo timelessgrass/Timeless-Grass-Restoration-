@@ -78,7 +78,7 @@ export const withPhone = (d: string) => {
 
 /** Every indexable route, for the sitemap and llms.txt. */
 export const allRoutes = (): string[] => [
-  '/', '/services/', '/pricing/', '/about/', '/service-areas/',
+  '/', '/services/', '/pricing/', '/about/', '/privacy/', '/service-areas/',
   ...Object.values(TIERS).map((t) => t.base),
   ...SERVICES.map((s) => `/services/${s.slug}/`),
   ...ALL_PROBLEMS.map((p) => `/turf-problems/${p.slug}/`),

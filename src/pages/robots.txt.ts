@@ -11,7 +11,10 @@ Allow: /
 `;
 
 /* AI retrieval agents (they fetch pages to answer live questions) are allowed in;
-   CCBot is training-corpus collection and costs no citations to block. */
+   CCBot is training-corpus collection and costs no citations to block.
+   /lp/, /fb/ and /quote/ are NOT disallowed: they carry a noindex meta tag, and a crawler has to be
+   allowed to fetch a page to see it. Blocking them let Google index the bare URL of /quote/, which
+   every page links to, as "Indexed, though blocked by robots.txt". */
 const LIVE = `# TIMELESS Turf Restoration
 ${META}
 User-agent: GPTBot
@@ -34,9 +37,6 @@ Disallow: /
 
 User-agent: *
 Allow: /
-Disallow: /fb/
-Disallow: /lp/
-Disallow: /quote/
 Disallow: /.netlify/
 
 Sitemap: ${SITE_URL}/sitemap.xml

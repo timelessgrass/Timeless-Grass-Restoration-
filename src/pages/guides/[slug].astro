@@ -10,6 +10,8 @@ const { g } = Astro.props;
 const services = g.services.map(findService).filter(Boolean);
 const problems = g.problems.map(findProblem).filter(Boolean);
 const related = g.related.map(findGuide).filter(Boolean);
+/* Guides that list this one as related get a link back, so no guide is reachable from the hub alone. */
+const linkedBy = ALL_GUIDES.filter((x) => x.slug !== g.slug && x.related.includes(g.slug) && !g.related.includes(x.slug)).slice(0, 6);
 const a: Article = { slug: g.slug, short: g.short, kind: g.kind, title: g.title, description: g.description, h1: g.h1, lede: g.lede, question: g.question, answer: g.answer, image: g.image, sections: g.slug === 'artificial-turf-cleaning-cost' ? g.sections.map((sec) => sec.h2 === 'The price table' ? { ...sec, html: sec.html + PRICE_TABLE } : sec) : g.sections, faq: g.faq, updated: g.updated };
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Guides', item: '/guides/' }, { name: g.short, item: `/guides/${g.slug}/` }];
 ---
@@ -17,7 +19,7 @@ const crumbs = [{ name: 'Home', item: '/' }, { name: 'Guides', item: '/guides/' 
   sideLinks={[
     { h: 'Services mentioned', items: services.map((s) => ({ href: `/services/${s!.slug}/`, label: s!.name })) },
     { h: 'Related problems', items: problems.map((p) => ({ href: `/turf-problems/${p!.slug}/`, label: p!.short })) },
-    { h: 'More guides', items: related.map((r) => ({ href: `/guides/${r!.slug}/`, label: r!.short })) },
+    { h: 'More guides', items: [...related, ...linkedBy].map((r) => ({ href: `/guides/${r!.slug}/`, label: r!.short })) },
   ]}
   related={related.map((r) => ({ href: `/guides/${r!.slug}/`, title: r!.h1, blurb: clip(r!.lede, 140), image: r!.image?.src }))}
   relatedH2="More guides"

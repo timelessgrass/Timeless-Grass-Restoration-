@@ -616,6 +616,8 @@ p{margin:0}
 .ftr__contact a{font-weight:600}
 .ftr__bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:48px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);font-size:.82rem;color:var(--muted-2)}
 .ftr__bottom p{margin:0;max-width:none}
+/* Design credit on the legal line: same size and colour as the line, underlined so it reads as a link. */
+.ftr__bottom a:not(.btn){color:inherit;text-decoration:underline;text-underline-offset:2px}
 .mbar{display:none}
 
 /* ===== Facebook lead follow-up page (/fb/) ===== */
