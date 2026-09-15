@@ -11,10 +11,11 @@
  *  - SITE_URL: live since 2026-09-14. Netlify's primary domain is the bare domain and
  *    www redirects to it, so canonicals, the sitemap and every ad link use the bare one.
  *  - PRELAUNCH: while true every page is noindex and robots.txt blocks crawling
- *    (Meta's ad and link-preview crawlers excepted). Flip to false only after name,
- *    phone and GBP are settled.
+ *    (Meta's ad and link-preview crawlers excepted). Turned off 2026-09-15 at the user's
+ *    request, with the 303 number, before the GBP and Brian's answers; when the phone
+ *    changes, update it here and in the GBP and listings on the same day.
  */
-export const PRELAUNCH = true;
+export const PRELAUNCH = false;
 export const SITE_URL = 'https://timelessturfrestoration.com';
 /** Meta Pixel (Events Manager, 2026-09-14). Loads on every page; PageView on load, Lead on a submitted quote
  *  form, Contact on a call/text tap or the Instant Form follow-up form. Set to '' to switch it off. */
