@@ -1,7 +1,7 @@
 ---
 /* Follow-up page for Meta Instant Form leads: the form's completion-screen button lands here.
-   noindex, no navigation. The Instant Form already counted the Lead, so nothing here fires Lead: call and
-   text taps and the optional best-time form fire Contact. Copy: src/data/campaigns.ts. */
+   noindex, no navigation. Meta already counted the Lead, so this page only tracks the actions that help
+   Brian connect: photo texts, calls, saved contact cards and preferred-time texts. Copy: campaigns.ts. */
 import Base from '../../layouts/Base.astro';
 import Icon from '../Icon.astro';
 import Steps from '../Steps.astro';
@@ -11,47 +11,83 @@ import LpBar from './LpBar.astro';
 import LpFoot from './LpFoot.astro';
 import MeetBrian from './MeetBrian.astro';
 import CampaignFaq from './CampaignFaq.astro';
-import { REPLY_TIME, NEXT, GREEN_STEPS, PUSHY, type Angle } from '../../data/campaigns';
-import { brand, pricing as P, money, LEAD_HOOKS } from '../../data/site';
+import { NEXT, GREEN_STEPS, PUSHY, type Angle } from '../../data/campaigns';
+import { brand, pricing as P, money } from '../../data/site';
 interface Props { a: Angle }
 const { a } = Astro.props;
-const text = (body: string) => `${brand.smsHref}?&body=${encodeURIComponent(body)}`;
+const text = (body: string) => `${brand.smsHref}?body=${encodeURIComponent(body)}`;
 const sms = text(a.fb.sms);
-const form = `fb-${a.slug}`;
 const isGreen = a.slug === 'putting-green';
+const contact = (method: string, location: string) => ({
+  'data-contact-method': method,
+  'data-contact-location': location,
+  'data-contact-angle': a.slug,
+});
+const timeChoices = [
+  ['Morning', `Hi ${brand.owner} — I submitted a ${a.name.toLowerCase()} request. Morning works best for a call.`],
+  ['Afternoon', `Hi ${brand.owner} — I submitted a ${a.name.toLowerCase()} request. Afternoon works best for a call.`],
+  ['Evening', `Hi ${brand.owner} — I submitted a ${a.name.toLowerCase()} request. Evening works best for a call.`],
+  ['Text me', `Hi ${brand.owner} — I submitted a ${a.name.toLowerCase()} request. Please text me instead of calling.`],
+];
 ---
-<Base title={a.fb.title} description="Your request is in. Here's what happens next." robots="noindex, nofollow" chrome="minimal">
+<Base title={a.fb.title} description="Your request is in. Send photos now to help Brian price the work." robots="noindex, nofollow" chrome="minimal">
 
 <LpBar home />
 
-<section class="hero lp-hero">
+<section class="hero lp-hero" data-fb-followup={a.slug}>
   <div class="wrap lp-hero__in">
     <span class="okmark" aria-hidden="true"></span>
     <p class="kicker intro" style="--d:1">Request received</p>
     <h1 class="intro" style="--d:2">{a.fb.h1[0]}<span data-name></span>{a.fb.h1[1]}</h1>
-    <p class="lead intro" style="--d:3">{brand.owner}, the owner, will call or text you from <b>{brand.phone}</b> {REPLY_TIME}.</p>
+    <p class="lead intro" style="--d:3">For a faster, more accurate {a.slug === 'membership' ? 'plan recommendation' : 'quote'}, text {brand.owner} a few photos now. Calls and texts about your request come from <b>{brand.phone}</b>.</p>
+    <div class="btnrow btnrow--center intro" style="--d:4" data-hero-cta>
+      <a class="btn btn--green btn--lg" href={sms} data-cta="sms-hero" {...contact('sms', 'hero')}><Icon name="camera" />{a.fb.photoCta}</a>
+      {a.slug === 'membership'
+        ? <a class="btn btn--ghost btn--lg" href="#plans" data-cta="plans-hero"><Icon name="calendar" />Compare plans</a>
+        : <a class="btn btn--ghost btn--lg" href="/assets/timeless-contact.vcf" data-cta="save-contact" {...contact('save', 'hero')}><Icon name="save" />Save {brand.owner}'s number</a>}
+    </div>
     <div class="phonecard intro" style="--d:4">
       <img src="/assets/brand/apple-touch-icon.png" width="180" height="180" alt="">
       <div><small>Calls &amp; texts come from</small><b>{brand.phone}</b><span>{brand.owner} · {brand.name}</span></div>
-      <a class="btn btn--ghost btn--sm" href="/assets/timeless-contact.vcf" data-cta="save-contact"><Icon name="save" />Save</a>
+      {a.slug === 'membership'
+        ? <a class="btn btn--ghost btn--sm" href="/assets/timeless-contact.vcf" data-cta="save-contact" {...contact('save', 'hero-card')}><Icon name="save" />Save</a>
+        : <a class="btn btn--ghost btn--sm" href={brand.phoneHref} data-cta="call-card" {...contact('call', 'hero-card')}><Icon name="phone" />Call</a>}
     </div>
-    <p class="lp-hint">Save the number so you know it's {brand.owner} when he calls.</p>
-    <div class="btnrow btnrow--center" data-hero-cta>
-      <a class="btn btn--green btn--lg" href={sms} data-cta="sms-hero"><Icon name="chat" />Text {brand.owner} photos</a>
-      <a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><Icon name="phone" />Call now</a>
-    </div>
+    <p class="lp-hint">Save this number so you recognize {brand.owner}'s call or text.</p>
   </div>
 </section>
 
 <section class="sec" id="faster">
   <div class="wrap">
-    <div class="sec__head center" data-reveal><p class="kicker">Optional · 1 minute</p><h2>Get your {a.slug === 'membership' ? 'plan' : isGreen ? 'quote' : 'price'} faster</h2><p>Text {brand.owner} a few photos. These help most:</p></div>
+    <div class="sec__head center" data-reveal><p class="kicker">Takes about 1 minute</p><h2>Send these 3 photos</h2><p>They help {brand.owner} understand the job before he contacts you.</p></div>
     <div class="tips" data-stagger>{a.fb.tips.map((t) => <div class="tip"><span class="tip__ic"><Icon name={t.icon} /></span><h3>{t.title}</h3><p>{t.text}</p></div>)}</div>
-    <div class="btnrow btnrow--center lp-after"><a class="btn btn--green btn--lg" href={sms} data-cta="sms-tips"><Icon name="camera" />Text photos to {brand.phone}</a></div>
+    <div class="btnrow btnrow--center lp-after"><a class="btn btn--green btn--lg" href={sms} data-cta="sms-tips" {...contact('sms', 'photo-guide')}><Icon name="camera" />{a.fb.photoCta}</a></div>
   </div>
 </section>
 
-<section class="sec sec--cream">
+{a.slug === 'membership' && (
+<section class="sec sec--cream" id="plans">
+  <div class="wrap">
+    <div class="sec__head center" data-reveal><p class="kicker">The plans</p><h2>Four visits a year on every plan</h2><p>{brand.owner} will recommend one when he contacts you. Already know? Tell him by text.</p></div>
+    <div class="plans" data-stagger>
+      {P.memberships.map((m, i) => (
+        <article class:list={['plan', { 'plan--pop': i === 1 }]}>
+          {i === 1 && <span class="plan__badge">Deep clean every quarter</span>}
+          <p class="plan__lvl"><Icon name="calendar" />{m.visits} visits a year</p>
+          <h3>{m.name}</h3>
+          <p class="plan__for">{m.for}</p>
+          <p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p>
+          <ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>
+          {'note' in m && m.note && <p class="plan__note">{m.note}</p>}
+          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={text(`Hi ${brand.owner} — I'm interested in the ${m.name} membership.`)} data-cta="sms-plan" {...contact('sms', `plan-${m.slug}`)}><Icon name="chat" />Ask about {m.name}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+)}
+
+<section class:list={['sec', { 'sec--cream': a.slug !== 'membership' }]}>
   <div class="wrap">
     <div class="sec__head center" data-reveal><p class="kicker">What happens next</p><h2>{isGreen ? 'From request to a true roll' : a.slug === 'membership' ? 'From request to your first visit' : 'From request to clean turf'}</h2></div>
     <Steps steps={NEXT[a.slug]} />
@@ -77,28 +113,6 @@ const isGreen = a.slug === 'putting-green';
 </section>
 )}
 
-{a.slug === 'membership' && (
-<section class="sec sec--cream">
-  <div class="wrap">
-    <div class="sec__head center" data-reveal><p class="kicker">The plans</p><h2>Four visits a year on every plan</h2><p>{brand.owner} will recommend one when he calls. Already know? Tell him by text.</p></div>
-    <div class="plans" data-stagger>
-      {P.memberships.map((m, i) => (
-        <article class:list={['plan', { 'plan--pop': i === 1 }]}>
-          {i === 1 && <span class="plan__badge">Deep clean every quarter</span>}
-          <p class="plan__lvl"><Icon name="calendar" />{m.visits} visits a year</p>
-          <h3>{m.name}</h3>
-          <p class="plan__for">{m.for}</p>
-          <p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p>
-          <ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>
-          {'note' in m && m.note && <p class="plan__note">{m.note}</p>}
-          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href={text(`Hi ${brand.owner}! I'm interested in the ${m.name} membership.`)} data-cta="sms-plan"><Icon name="chat" />Ask about {m.name}</a>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-)}
-
 {isGreen && (
 <section class="sec">
   <div class="wrap">
@@ -112,21 +126,10 @@ const isGreen = a.slug === 'putting-green';
 
 <section class:list={['sec', { 'sec--cream': !isGreen }]}>
   <div class="wrap lp-narrow">
-    <div class="sec__head center" data-reveal><p class="kicker">Optional</p><h2>When should {brand.owner} call?</h2><p>Pick a time and he'll aim for it.</p></div>
-    <form class="form lp-form" name={form} method="POST" data-lead={LEAD_HOOKS.campaign} data-fbq="Contact" data-reveal>
-      <input type="hidden" name="page" value={Astro.url.pathname}>
-      <p class="hp"><label>Leave this empty <input name="bot_field" tabindex="-1" autocomplete="off"></label></p>
-      <fieldset class="q">
-        <legend>Best time to reach you?</legend>
-        <div class="chips-in">{['Morning', 'Afternoon', 'Evening', 'Text me instead'].map((t) => <label class="chip"><input type="radio" name="best_time" value={t}><span>{t}</span></label>)}</div>
-      </fieldset>
-      <div class="field"><label for={`${form}-name`}>First name</label><input id={`${form}-name`} name="name" autocomplete="given-name" data-name-input></div>
-      <div class="field"><label for={`${form}-phone`}>Phone *</label><input id={`${form}-phone`} name="phone" type="tel" autocomplete="tel" required></div>
-      <button class="btn btn--green btn--lg" type="submit" data-cta="fb-best-time">Send to {brand.owner}<Icon name="arrow" /></button>
-      <p class="form__msg form__msg--ok" role="status" hidden>Got it. {brand.owner} will aim for that time.</p>
-      <p class="form__msg form__msg--err" role="alert" hidden>Something went wrong. Please call or text {brand.phone}.</p>
-      <p class="form__fine">We only use your number to match this with your request.</p>
-    </form>
+    <div class="sec__head center" data-reveal><p class="kicker">Optional</p><h2>When should {brand.owner} call?</h2><p>Tap one. Your phone's text app will open with the message ready; press Send to tell him.</p></div>
+    <div class="btnrow btnrow--center" data-stagger>
+      {timeChoices.map(([label, body]) => <a class="btn btn--ghost" href={text(body)} data-cta="sms-best-time" {...contact('sms', `best-time-${label.toLowerCase().replace(/\s+/g, '-')}`)}><Icon name="chat" />{label}</a>)}
+    </div>
   </div>
 </section>
 
@@ -137,10 +140,10 @@ const isGreen = a.slug === 'putting-green';
   <div class="wrap" data-reveal>
     <p class="kicker">Questions before {brand.owner} calls?</p>
     <h2>Call or text anytime.</h2>
-    <p>Send photos, ask about pricing, or pick a better time to talk.</p>
+    <p>Send photos, ask about pricing, or tell him a better time to talk.</p>
     <div class="btnrow btnrow--center">
-      <a class="btn btn--green btn--lg" href={brand.phoneHref} data-cta="call-final"><Icon name="phone" />Call {brand.phone}</a>
-      <a class="btn btn--outline-light btn--lg" href={sms} data-cta="sms-final"><Icon name="chat" />Send a text</a>
+      <a class="btn btn--green btn--lg" href={brand.phoneHref} data-cta="call-final" {...contact('call', 'final')}><Icon name="phone" />Call {brand.phone}</a>
+      <a class="btn btn--outline-light btn--lg" href={sms} data-cta="sms-final" {...contact('sms', 'final')}><Icon name="chat" />Send a text</a>
     </div>
   </div>
 </section>
@@ -148,8 +151,8 @@ const isGreen = a.slug === 'putting-green';
 <LpFoot />
 
 <div class="mbar">
-  <a class="btn btn--ghost" href={brand.phoneHref} data-cta="call-mbar"><Icon name="phone" />Call</a>
-  <a class="btn btn--green" href={sms} data-cta="sms-mbar"><Icon name="chat" />Text us photos</a>
+  <a class="btn btn--ghost" href={brand.phoneHref} data-cta="call-mbar" {...contact('call', 'sticky')}><Icon name="phone" />Call</a>
+  <a class="btn btn--green" href={sms} data-cta="sms-mbar" {...contact('sms', 'sticky')}><Icon name="camera" />Text photos</a>
 </div>
 
 </Base>

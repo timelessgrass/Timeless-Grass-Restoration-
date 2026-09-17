@@ -34,17 +34,16 @@ Plain, specific, second person, like a tradesman explaining it at the kitchen ta
 - Bleach, pressure washing, wire brushes or acid as advice.
 - The words elevate, seamless, unlock, delve, robust, leverage, game-changer, look no further.
 
-## Not confirmed by Brian yet (avoid, or flag if you use them)
+## Not confirmed by Brian yet (do not use)
 
-- Reply time ("within one business day" appears on the pages today).
-- "Pet-safe / safe for kids and dogs once dry" (appears in the FAQ today).
+- Reply time and product-safety claims are deliberately excluded from campaign copy until Brian confirms them.
 - Membership cancellation terms or "no contract"; what the ELITE 10% covers beyond add-ons; what Pet Turf ELITE adds.
 - Trip charges, free on-site visits, how fast a visit can be booked.
 
 ## Locked (the lead routing depends on these)
 
 - Every form question and answer, word for word. The same wording is used in the Meta Instant Forms and by the Make automation that emails Brian; changing a word breaks the routing and the ballpark in his email.
-- Form names (lp-clean, lp-membership, lp-putting-green, fb-clean, fb-membership, fb-putting-green) and the Instant Form names (they must contain "cleaning", "membership" or "putting").
+- Website form names (`lp-clean`, `lp-membership`, `lp-putting-green`) and the V2 Instant Form names (they must contain "cleaning", "membership" or "putting").
 - Prices, plan names and plan contents: they come from the sitewide price data and must match the pricing page.
 - A published Instant Form can't be edited, so Instant Form copy changes mean new forms.
 
@@ -52,12 +51,12 @@ Plain, specific, second person, like a tradesman explaining it at the kitchen ta
 
 | Angle | Website ad → landing page (form on the page) | Instant Form ad → follow-up page after the form |
 |---|---|---|
-| Turf cleaning quote | https://timelessturfrestoration.com/lp/clean/ (form `lp-clean`) | Instant Form "TTR · Turf cleaning quote" → completion button → https://timelessturfrestoration.com/fb/clean/ (optional best-time form `fb-clean`) |
-| Turf membership | https://timelessturfrestoration.com/lp/membership/ (form `lp-membership`) | Instant Form "TTR · Turf membership" → completion button → https://timelessturfrestoration.com/fb/membership/ (optional best-time form `fb-membership`) |
-| Putting green restoration | https://timelessturfrestoration.com/lp/putting-green/ (form `lp-putting-green`) | Instant Form "TTR · Putting green restoration" → completion button → https://timelessturfrestoration.com/fb/putting-green/ (optional best-time form `fb-putting-green`) |
+| Turf cleaning quote | https://timelessturfrestoration.com/lp/clean/ (form `lp-clean`) | Instant Form "TTR · Turf cleaning quote · V2" → completion button → https://timelessturfrestoration.com/fb/clean/ |
+| Turf membership | https://timelessturfrestoration.com/lp/membership/ (form `lp-membership`) | Instant Form "TTR · Turf membership · V2" → completion button → https://timelessturfrestoration.com/fb/membership/ |
+| Putting green restoration | https://timelessturfrestoration.com/lp/putting-green/ (form `lp-putting-green`) | Instant Form "TTR · Putting green restoration · V2" → completion button → https://timelessturfrestoration.com/fb/putting-green/ |
 
-- **Landing page** (`/lp/`): for ads whose destination is the website. No site navigation. The form sits in the first screen: step 1 taps the three questions (a hint appears under each answer), step 2 asks name, phone and ZIP. Submitting sends the lead to Make, which emails Brian, and fires the Meta Pixel "Lead" event. The visitor then sees "You're in, <name>!" with Save the number and Text photos buttons.
-- **Follow-up page** (`/fb/`): where people land after already submitting the Instant Form on Facebook. The job is to make sure they answer Brian's call (save the number), get photos texted in, set expectations and handle doubts. An optional "When should Brian call?" form sends a lead update to Brian. Call and text taps fire the Pixel "Contact" event.
+- **Landing page** (`/lp/`): for ads whose destination is the website. No site navigation. The form sits in the first screen: step 1 asks two multiple-choice questions, step 2 asks first name, phone and ZIP. Submitting sends the lead to Make, which emails Brian, and fires the Meta Pixel "Lead" event only after Make accepts it. The visitor then sees a confirmation with Save the number and Text photos buttons.
+- **Follow-up page** (`/fb/`): where people land after already submitting the Instant Form on Facebook. The primary next step is texting Brian three useful photos. The page also explains the process, lets the visitor save Brian's number or choose a preferred contact time by prefilled text, and handles common doubts. It never fires another Lead event; call and text taps fire Contact, while follow-up views and actions use custom events.
 
 ---
 
@@ -76,18 +75,20 @@ Current copy, in page order:
 
 #### 1. Top bar
 - **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
-- **Button:** Call or text 303-349-2368
+- **Button:** Call Brian 303-349-2368
 
-#### 2. Get your turf blown clean again
+#### 2. Get your turf clean again
 - **Eyebrow:** Grand Strand turf cleaning
-- **H1:** Get your turf blown clean again
-- **Text:** Deep cleaned through the fibers and infill, pet odor treated, brushed back up. You get your price before any work starts.
+- **H1:** Get your turf clean again
+- **Text:** Deep cleaning through the fibers and infill, pet-odor treatment when needed, and power brushing to lift matted turf. Pick two answers for a quote.
   - Up to 500 sq ft from $199
   - By the square foot, never hourly
   - 13 years in turf
 - **H2:** Get your price
-  - 1 · Your turf
-  - 2 · Where to send it
+  - 1 · Two quick questions
+  - 2 · Your contact info
+- **Text:** Choose one answer to continue.
+- **Form question:** What bothers you most? — answers: Pet odor · Dirty, dull or matted · Weeds, leaves or debris · Just due for a clean
 - **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 501–1,000 sq ft · 1,001–2,000 sq ft · 2,001–5,000 sq ft · Over 5,000 sq ft · Not sure
 - **   hint:** when "Up to 500 sq ft" is picked: Ballpark: Essential Clean $199 · Premium Restoration $299
 - **   hint:** when "501–1,000 sq ft" is picked: Ballpark: Essential Clean $249 · Premium Restoration $399
@@ -95,21 +96,17 @@ Current copy, in page order:
 - **   hint:** when "2,001–5,000 sq ft" is picked: Ballpark: Essential Clean $449–$599 · Premium Restoration $749–$899
 - **   hint:** when "Over 5,000 sq ft" is picked: Big yard. Brian prices it after a look.
 - **   hint:** when "Not sure" is picked: No problem. A 20 × 25 ft yard is 500 sq ft, and Brian can measure.
-- **Form question:** Do dogs use it? — answers: No dogs · 1 dog · 2 or more dogs
-- **   hint:** when "No dogs" is picked: No pets and light dirt? The Essential Clean is usually enough.
-- **   hint:** when "1 dog" is picked: Dog yards get the Premium Restoration, with pet-odor and antimicrobial treatment.
-- **   hint:** when "2 or more dogs" is picked: Dog yards get the Premium Restoration, with pet-odor and antimicrobial treatment.
-- **Form question:** What bothers you most? — answers: Pet odor · Dirty, dull or matted · Weeds, leaves or debris · Just due for a clean
-- **Button:** Next: where to send it
+- **Button:** Next: your contact info
+- **Text:** Brian, the owner, uses these details to call or text about this request and confirm the service area.
 - **Form field:** name (required)
 - **Form field:** phone (required)
 - **Form field:** zip (required)
-- **Button:** Get My Free Quote
+- **Button:** Request My Quote
 - **Button:** Change my answers
 - **Text:** Something went wrong. Please call or text 303-349-2368.
 - **Text:** By submitting, you agree Brian may call or text you about your request. Privacy
 - **H2:** You're in!
-- **Text:** Brian will call or text you from 303-349-2368 within one business day.
+- **Text:** Brian will call or text you from 303-349-2368 about your request.
 - **Button:** Save the number
 - **Button:** Text photos
 - **Image:** /assets/img/jobs/side-yard-turf-power-brushed-before-after-640.webp (alt: Side-yard artificial turf half cleaned, with a power brush resting on the finished section)
@@ -185,7 +182,7 @@ Current copy, in page order:
 #### 5. From quote to blown clean
 - **Eyebrow:** How it works
 - **H2:** From quote to blown clean
-  - Step 1 — Tell us about your turf — Three taps and a phone number. Photos help.
+  - Step 1 — Tell us about your turf — Two taps and your contact info. Photos help.
   - Step 2 — Get your price — By the square foot, before any work starts.
   - Step 3 — We clean it — Deep cleaned, groomed and blown clean.
 
@@ -207,62 +204,60 @@ Current copy, in page order:
 - **Text:** No pets and light dirt: Essential Clean. Dogs, odor, algae, or turf that has never been professionally cleaned: Premium Restoration. Not sure? Brian will recommend one.
 - **FAQ question:** Can you get the dog smell out?
 - **Text:** The smell lives in the infill, not the blades, so spraying the surface doesn't last. A Premium Restoration includes pet-odor and antimicrobial treatment. A yard that has gone a long time may need the heavy pet-odor add-on ($75–$150), quoted before any work.
-- **FAQ question:** Is it safe for kids and dogs?
-- **Text:** Yes. We use turf-safe, pet-safe products, and your turf is ready to use once it is dry.
 - **FAQ question:** Where do you work?
 - **Text:** Shallotte, NC to Burgess, SC — the coast, plus Conway, Loris and Longs inland. That includes Myrtle Beach, North Myrtle Beach, Carolina Forest and Little River.
 
 #### 8. Ready for clean turf?
 - **Eyebrow:** Takes 30 seconds
 - **H2:** Ready for clean turf?
-- **Text:** Three taps and your number. Brian comes back with a price.
-- **Button:** Get my price
+- **Text:** Two taps and your contact info. Brian follows up about the right clean and your price.
+- **Button:** Request my quote
 - **Button:** 303-349-2368
 
 #### 9. Footer
-- **Text:** © 2026 TIMELESS Turf Restoration · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy
+- **Text:** © 2026 TIMELESS Turf Restoration. All rights reserved. · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy · Website by To The Max Media
 
 #### 10. Sticky mobile bar
 - **Button:** Call
-- **Button:** Get my price
+- **Button:** Request my quote
 
 ### 1B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/clean/
 
 Current copy, in page order:
 
-- Browser title: You're in! Here's what happens next | TIMELESS Turf Restoration
-- Meta description (link previews): Your request is in. Here's what happens next.
+- Browser title: Turf-cleaning request received | TIMELESS Turf Restoration
+- Meta description (link previews): Your request is in. Send photos now to help Brian price the work.
 
 #### 1. Top bar
 - **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
-- **Button:** Call or text 303-349-2368
+- **Button:** Call Brian 303-349-2368
 
-#### 2. You're in! Here's what happens next.
+#### 2. Your turf-cleaning request is in.
 - **Eyebrow:** Request received
-- **H1:** You're in! Here's what happens next.
-- **Text:** Brian, the owner, will call or text you from 303-349-2368 within one business day.
-- **Button:** Save
-- **Text:** Save the number so you know it's Brian when he calls.
-- **Button:** Text Brian photos
-- **Button:** Call now
+- **H1:** Your turf-cleaning request is in.
+- **Text:** For a faster, more accurate quote, text Brian a few photos now. Calls and texts about your request come from 303-349-2368.
+- **Button:** Text 3 photos for a faster price
+- **Button:** Save Brian's number
+- **Button:** Call
+- **Text:** Save this number so you recognize Brian's call or text.
 
-#### 3. Get your price faster
-- **Eyebrow:** Optional · 1 minute
-- **H2:** Get your price faster
-- **Text:** Text Brian a few photos. These help most:
+#### 3. Send these 3 photos
+- **Eyebrow:** Takes about 1 minute
+- **H2:** Send these 3 photos
+- **Text:** They help Brian understand the job before he contacts you.
 - **H3:** One wide shot
 - **Text:** The whole yard from a corner, so Brian can size it up.
 - **H3:** The problem spots
 - **Text:** Where the dogs go, where it smells, where it looks flat.
 - **H3:** Rough size, if you know it
 - **Text:** Length × width is plenty. A 20 × 25 ft yard is 500 sq ft.
-- **Button:** Text photos to 303-349-2368
+- **Button:** Text 3 photos for a faster price
 
 #### 4. From request to clean turf
 - **Eyebrow:** What happens next
 - **H2:** From request to clean turf
-  - Within 1 business day — Brian reaches out — A quick call or text from 303-349-2368.
-  - Optional — You send a few photos — Two or three photos help get your price right the first time.
+  - Fastest next step — Text a few photos — The whole yard and problem spots help get the price right.
+  - After review — Brian reaches out — A call or text from 303-349-2368.
   - Before any work — You get an upfront price — By the square foot, never by the hour.
   - Most yards: one visit — We clean it — Deep cleaned, groomed and blown clean.
 
@@ -319,14 +314,11 @@ Current copy, in page order:
 #### 8. When should Brian call?
 - **Eyebrow:** Optional
 - **H2:** When should Brian call?
-- **Text:** Pick a time and he'll aim for it.
-- **Form question:** Best time to reach you? — answers: Morning · Afternoon · Evening · Text me instead
-- **Form field:** name
-- **Form field:** phone (required)
-- **Button:** Send to Brian
-- **Text:** Got it. Brian will aim for that time.
-- **Text:** Something went wrong. Please call or text 303-349-2368.
-- **Text:** We only use your number to match this with your request.
+- **Text:** Tap one. Your phone's text app will open with the message ready; press Send to tell him.
+- **Button:** Morning
+- **Button:** Afternoon
+- **Button:** Evening
+- **Button:** Text me
 
 #### 9. Quick answers
 - **Eyebrow:** Before Brian calls
@@ -339,24 +331,22 @@ Current copy, in page order:
 - **Text:** No pets and light dirt: Essential Clean. Dogs, odor, algae, or turf that has never been professionally cleaned: Premium Restoration. Not sure? Brian will recommend one.
 - **FAQ question:** Can you get the dog smell out?
 - **Text:** The smell lives in the infill, not the blades, so spraying the surface doesn't last. A Premium Restoration includes pet-odor and antimicrobial treatment. A yard that has gone a long time may need the heavy pet-odor add-on ($75–$150), quoted before any work.
-- **FAQ question:** Is it safe for kids and dogs?
-- **Text:** Yes. We use turf-safe, pet-safe products, and your turf is ready to use once it is dry.
 - **FAQ question:** Where do you work?
 - **Text:** Shallotte, NC to Burgess, SC — the coast, plus Conway, Loris and Longs inland. That includes Myrtle Beach, North Myrtle Beach, Carolina Forest and Little River.
 
 #### 10. Call or text anytime.
 - **Eyebrow:** Questions before Brian calls?
 - **H2:** Call or text anytime.
-- **Text:** Send photos, ask about pricing, or pick a better time to talk.
+- **Text:** Send photos, ask about pricing, or tell him a better time to talk.
 - **Button:** Call 303-349-2368
 - **Button:** Send a text
 
 #### 11. Footer
-- **Text:** © 2026 TIMELESS Turf Restoration · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy
+- **Text:** © 2026 TIMELESS Turf Restoration. All rights reserved. · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy · Website by To The Max Media
 
 #### 12. Sticky mobile bar
 - **Button:** Call
-- **Button:** Text us photos
+- **Button:** Text photos
 
 ### 1C. Matching ad and Instant Form copy (message match)
 
@@ -371,39 +361,35 @@ Current copy, in page order:
 
 #### Instant Form
 
-- **Form name:** TTR · Turf cleaning quote
-- **Intro headline:** Get your turf cleaning price  `28 chars`
+- **Form name:** TTR · Turf cleaning quote · V2
+- **Intro headline:** Get your free turf cleaning quote  `33 chars`
 - **Intro description (List layout):**
-  - Priced by the square foot, never by the hour  `44 chars`
-  - Yards up to 500 sq ft from $199  `31 chars`
-  - Brian, the owner, calls or texts you back  `41 chars`
-- **Questions description:** Three quick taps so Brian can price your yard before he calls. A 20 × 25 ft yard is 500 sq ft.  `94 chars`
-- **Custom question 1 (Multiple choice):** About how big is the turf?  `26 chars`
-  - Up to 500 sq ft
-  - 500–1,000 sq ft
-  - 1,000–2,000 sq ft
-  - 2,000–5,000 sq ft
-  - Over 5,000 sq ft
-  - Not sure
-- **Custom question 2 (Multiple choice):** Do dogs use it?  `15 chars`
-  - No dogs
-  - 1 dog
-  - 2 or more dogs
-- **Custom question 3 (Multiple choice):** What bothers you most?  `22 chars`
+  - Pet odor, matted fibers, leaves and buildup  `43 chars`
+  - Deep cleaning, odor treatment and power brushing  `48 chars`
+  - Prices start at $199 for turf up to 500 sq ft  `45 chars`
+- **Questions description:** Two quick taps help Brian understand the job before he calls or texts.  `70 chars`
+- **Custom question 1 (Multiple choice):** What bothers you most?  `22 chars`
   - Pet odor
   - Dirty, dull or matted
   - Weeds, leaves or debris
   - Just due for a clean
+- **Custom question 2 (Multiple choice):** About how big is the turf?  `26 chars`
+  - Up to 500 sq ft
+  - 501–1,000 sq ft
+  - 1,001–2,000 sq ft
+  - 2,001–5,000 sq ft
+  - Over 5,000 sq ft
+  - Not sure
 - **Contact information:** Full name, Phone number, ZIP code
-- **Completion headline:** Got it. Brian will reach out.  `29 chars`
-- **Completion description:** He'll call or text from 303-349-2368. Save the number, and send photos to get your price faster.  `96 chars`
+- **Completion headline:** Brian has your turf request.  `28 chars`
+- **Completion description:** He'll call or text from 303-349-2368 to discuss the right clean and your price. Tap below to save his number and see which photos help.  `135 chars`
 - **Completion button:** View website · text "See next steps" · link https://timelessturfrestoration.com/fb/clean/
 
 #### Website ad
 
 - **Website URL:** https://timelessturfrestoration.com/lp/clean/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
+- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
 
 ---
 
@@ -422,27 +408,27 @@ Current copy, in page order:
 
 #### 1. Top bar
 - **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
-- **Button:** Call or text 303-349-2368
+- **Button:** Call Brian 303-349-2368
 
-#### 2. Clean turf all year, handled for you
+#### 2. Keep your turf clean without rebooking
 - **Eyebrow:** Turf memberships
-- **H1:** Clean turf all year, handled for you
-- **Text:** A membership puts four visits a year on Brian's schedule, and members get priority scheduling. Plans from $89 a month.
+- **H1:** Keep your turf clean without rebooking
+- **Text:** Four visits a year go on Brian's schedule, and members get priority scheduling. Answer two questions and he'll recommend the right plan.
   - Four visits a year
   - Priority scheduling
   - From $89 a month
 - **H2:** Find your plan
-  - 1 · Your turf
-  - 2 · Where to send it
-- **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 501–1,000 sq ft · 1,001–2,000 sq ft · 2,001–5,000 sq ft · Over 5,000 sq ft · Not sure
-- **   hint:** when "Not sure" is picked: No problem. A 20 × 25 ft yard is 500 sq ft, and Brian can measure.
+  - 1 · Two quick questions
+  - 2 · Your contact info
+- **Text:** Choose one answer to continue.
 - **Form question:** Do dogs use it? — answers: No dogs · 1 dog · 2 or more dogs
 - **   hint:** when "No dogs" is picked: Essential Care ($89/mo) covers light upkeep, four times a year.
 - **   hint:** when "1 dog" is picked: TIMELESS ELITE ($139/mo) is a Premium Restoration every quarter, with pet-odor treatment.
 - **   hint:** when "2 or more dogs" is picked: Pet Turf ELITE ($169/mo) is built for multi-dog and daily-potty yards.
-- **Form question:** Which plan sounds right? — answers: Essential Care · $89/mo · TIMELESS ELITE · $139/mo · Pet Turf ELITE · $169/mo · Not sure yet
-- **   hint:** when "Not sure yet" is picked: Brian will recommend one when he calls.
-- **Button:** Next: where to send it
+- **Form question:** About how big is the turf? — answers: Up to 500 sq ft · 501–1,000 sq ft · 1,001–2,000 sq ft · 2,001–5,000 sq ft · Over 5,000 sq ft · Not sure
+- **   hint:** when "Not sure" is picked: No problem. A 20 × 25 ft yard is 500 sq ft, and Brian can measure.
+- **Button:** Next: your contact info
+- **Text:** Brian, the owner, uses these details to call or text about this request and confirm the service area.
 - **Form field:** name (required)
 - **Form field:** phone (required)
 - **Form field:** zip (required)
@@ -451,7 +437,7 @@ Current copy, in page order:
 - **Text:** Something went wrong. Please call or text 303-349-2368.
 - **Text:** By submitting, you agree Brian may call or text you about your request. Privacy
 - **H2:** You're in!
-- **Text:** Brian will call or text you from 303-349-2368 within one business day.
+- **Text:** Brian will call or text you from 303-349-2368 about your request.
 - **Button:** Save the number
 - **Button:** Text photos
 - **Image:** /assets/img/jobs/dog-yard-turf-cleaned-before-after-640.webp (alt: Before and after: artificial turf dog yard with pet waste, then cleaned and brushed)
@@ -471,146 +457,6 @@ Current copy, in page order:
 - **Eyebrow:** Memberships
 - **H2:** Pick how much care it gets
 - **Text:** Four visits a year on every plan. Brian matches the plan to your yard and dogs.
-- **Text:** 4 visits a year
-- **H3:** Essential Care
-- **Text:** Light maintenance, four times a year.
-- **Text:** $89/mo — $1,068 a year
-  - Blow-off & grooming
-  - Light rinse
-  - Basic odor treatment
-  - Priority scheduling
-- **Button:** Choose Essential Care
-- **Label:** Deep clean every quarter
-- **H3:** TIMELESS ELITE
-- **Text:** A Premium Restoration every quarter.
-- **Text:** $139/mo — $1,668 a year
-  - Deep cleaning
-  - Antimicrobial & pet-odor treatment
-  - Grooming & brushing
-  - Infill conditioning
-  - Edge & seam inspection
-  - Minor spot treatment
-  - Priority scheduling
-  - 10% off repairs & add-ons
-- **Button:** Choose TIMELESS ELITE
-- **H3:** Pet Turf ELITE
-- **Text:** Built for multi-dog and daily-potty yards.
-- **Text:** $169/mo — $2,028 a year
-  - Everything in TIMELESS ELITE
-- **Text:** The extra pet-yard steps in this plan are being finalized with Brian — ask when he calls.
-- **Button:** Choose Pet Turf ELITE
-
-#### 5. Membership or one-time clean?
-- **Eyebrow:** Straight answer
-- **H2:** Membership or one-time clean?
-- **H3:** A membership fits if
-  - Dogs use the turf every day
-  - You want visits on the calendar without booking each one
-  - The yard is over 1,000 sq ft: TIMELESS ELITE is $1,668 a year, less than four Premium Restorations ($1,996 at 1,001–1,500 sq ft)
-- **H3:** One-time cleans fit if
-  - It's a people-only yard with light use
-  - The yard is under 1,000 sq ft and you're happy to book when it needs it (four Premium Restorations are $1,196 a year up to 500 sq ft)
-  - You want one deep clean before deciding
-- **Text:** Not sure? Pick "Not sure yet" in the form and Brian will recommend one.
-
-#### 6. How a membership works
-- **Eyebrow:** How it works
-- **H2:** How a membership works
-  - Step 1 — Brian matches a plan — By yard size, dogs and how you use it.
-  - Step 2 — Four visits a year — Each one follows the plan you pick.
-  - Step 3 — Members book first — Priority scheduling on every visit.
-
-#### 7. Hi, I'm Brian.
-- **Image:** /assets/img/putting-green-at-sunset-wide.jpg (alt: Backyard putting green at sunset)
-- **Photo caption:** Blown clean. The finish on every job.
-- **Eyebrow:** Who you'll talk to
-- **H2:** Hi, I'm Brian.
-- **Text:** I've spent 13 years building and caring for artificial turf and putting greens. I clean turf the way it was built: through the blades, backing and infill.
-- **Text:** You get a clear price before any work starts, and I don't leave until it's blown clean.
-- **Text:** Brian, owner of TIMELESS Turf Restoration
-
-#### 8. Quick answers
-- **Eyebrow:** Good to know
-- **H2:** Quick answers
-- **FAQ question:** What is the difference between the plans?
-- **Text:** Essential Care ($89/mo) is light upkeep: blow-off & grooming, light rinse, basic odor treatment, four times a year. TIMELESS ELITE ($139/mo) is a Premium Restoration every quarter. Pet Turf ELITE ($169/mo) is built for multi-dog and daily-potty yards; Brian goes over what it adds when he calls.
-- **FAQ question:** Is a membership cheaper than booking cleans?
-- **Text:** On yards over 1,000 sq ft, yes: TIMELESS ELITE is $1,668 a year, less than four Premium Restorations ($1,996 at 1,001–1,500 sq ft). On smaller yards, four one-time visits cost less ($1,196 up to 500 sq ft), and a membership buys priority scheduling and never having to remember to book.
-- **FAQ question:** How does billing work?
-- **Text:** The monthly price is the four visits a year spread over twelve months. Brian walks you through the details before you sign up.
-- **FAQ question:** Is it safe for kids and dogs?
-- **Text:** Yes. We use turf-safe, pet-safe products, and your turf is ready to use once it is dry.
-- **FAQ question:** Where do you work?
-- **Text:** Shallotte, NC to Burgess, SC — the coast, plus Conway, Loris and Longs inland. That includes Myrtle Beach, North Myrtle Beach, Carolina Forest and Little River.
-
-#### 9. Put your turf on a schedule
-- **Eyebrow:** Takes 30 seconds
-- **H2:** Put your turf on a schedule
-- **Text:** Three taps and your number. Brian matches you with a plan.
-- **Button:** Find my plan
-- **Button:** 303-349-2368
-
-#### 10. Footer
-- **Text:** © 2026 TIMELESS Turf Restoration · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy
-
-#### 11. Sticky mobile bar
-- **Button:** Call
-- **Button:** Find my plan
-
-### 2B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/membership/
-
-Current copy, in page order:
-
-- Browser title: You're on the list! Here's how it works | TIMELESS Turf Restoration
-- Meta description (link previews): Your request is in. Here's what happens next.
-
-#### 1. Top bar
-- **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
-- **Button:** Call or text 303-349-2368
-
-#### 2. You're on the list! Here's how it works.
-- **Eyebrow:** Request received
-- **H1:** You're on the list! Here's how it works.
-- **Text:** Brian, the owner, will call or text you from 303-349-2368 within one business day.
-- **Button:** Save
-- **Text:** Save the number so you know it's Brian when he calls.
-- **Button:** Text Brian photos
-- **Button:** Call now
-
-#### 3. Get your plan faster
-- **Eyebrow:** Optional · 1 minute
-- **H2:** Get your plan faster
-- **Text:** Text Brian a few photos. These help most:
-- **H3:** One wide shot
-- **Text:** The whole yard, so Brian can size up the visits.
-- **H3:** Where the dogs go
-- **Text:** The corners and paths that get the most use.
-- **H3:** Dates that matter
-- **Text:** Guests coming, a party, a season you want it at its best.
-- **Button:** Text photos to 303-349-2368
-
-#### 4. From request to your first visit
-- **Eyebrow:** What happens next
-- **H2:** From request to your first visit
-  - Within 1 business day — Brian reaches out — A quick call or text about your yard and dogs.
-  - On the call — You pick a plan — Brian recommends one. You decide.
-  - Four a year — Visits on the calendar — Each one follows your plan.
-  - Every visit — Members book first — Priority scheduling for members.
-
-#### 5. What one visit changes
-- **Eyebrow:** Before & after
-- **H2:** What one visit changes
-- **Image:** /assets/img/jobs/dog-yard-turf-cleaned-before-after-640.webp (alt: Before and after: artificial turf dog yard with pet waste, then cleaned and brushed)
-- **Photo caption:** Dog yard. Waste and debris cleared, fibers brushed back up.
-- **Image:** /assets/img/jobs/side-yard-turf-power-brushed-before-after-640.webp (alt: Narrow side-yard artificial turf half cleaned, with a power brush resting on the finished section)
-- **Photo caption:** Side yard, mid-clean. Brushed and cleared past the line. The front is how we found it.
-- **Image:** /assets/img/jobs/front-lawn-turf-leaves-cleared-before-after-640.webp (alt: Before and after: artificial front lawn covered in dry leaves, then cleared and blown clean)
-- **Photo caption:** Front lawn. Leaves and debris cleared, turf blown clean.
-
-#### 6. Four visits a year on every plan
-- **Eyebrow:** The plans
-- **H2:** Four visits a year on every plan
-- **Text:** Brian will recommend one when he calls. Already know? Tell him by text.
 - **Text:** 4 visits a year
 - **H3:** Essential Care
 - **Text:** Light maintenance, four times a year.
@@ -640,6 +486,144 @@ Current copy, in page order:
 - **Text:** The extra pet-yard steps in this plan are being finalized with Brian — ask when he calls.
 - **Button:** Ask about Pet Turf ELITE
 
+#### 5. Membership or one-time clean?
+- **Eyebrow:** Straight answer
+- **H2:** Membership or one-time clean?
+- **H3:** A membership fits if
+  - Dogs use the turf every day
+  - You want visits on the calendar without booking each one
+  - The yard is over 1,000 sq ft: TIMELESS ELITE is $1,668 a year, less than four Premium Restorations ($1,996 at 1,001–1,500 sq ft)
+- **H3:** One-time cleans fit if
+  - It's a people-only yard with light use
+  - The yard is under 1,000 sq ft and you're happy to book when it needs it (four Premium Restorations are $1,196 a year up to 500 sq ft)
+  - You want one deep clean before deciding
+- **Text:** Not sure? Answer the two questions in the form and Brian will recommend one.
+
+#### 6. How a membership works
+- **Eyebrow:** How it works
+- **H2:** How a membership works
+  - Step 1 — Brian matches a plan — By yard size, dogs and how you use it.
+  - Step 2 — Four visits a year — Each one follows the plan you choose.
+  - Step 3 — Members book first — Priority scheduling on every visit.
+
+#### 7. Hi, I'm Brian.
+- **Image:** /assets/img/putting-green-at-sunset-wide.jpg (alt: Backyard putting green at sunset)
+- **Photo caption:** Blown clean. The finish on every job.
+- **Eyebrow:** Who you'll talk to
+- **H2:** Hi, I'm Brian.
+- **Text:** I've spent 13 years building and caring for artificial turf and putting greens. I clean turf the way it was built: through the blades, backing and infill.
+- **Text:** You get a clear price before any work starts, and I don't leave until it's blown clean.
+- **Text:** Brian, owner of TIMELESS Turf Restoration
+
+#### 8. Quick answers
+- **Eyebrow:** Good to know
+- **H2:** Quick answers
+- **FAQ question:** What is the difference between the plans?
+- **Text:** Essential Care ($89/mo) is light upkeep: blow-off & grooming, light rinse, basic odor treatment, four times a year. TIMELESS ELITE ($139/mo) is a Premium Restoration every quarter. Pet Turf ELITE ($169/mo) is built for multi-dog and daily-potty yards; Brian goes over what it adds when he calls.
+- **FAQ question:** Is a membership cheaper than booking cleans?
+- **Text:** On yards over 1,000 sq ft, yes: TIMELESS ELITE is $1,668 a year, less than four Premium Restorations ($1,996 at 1,001–1,500 sq ft). On smaller yards, four one-time visits cost less ($1,196 up to 500 sq ft), and a membership buys priority scheduling and never having to remember to book.
+- **FAQ question:** How does billing work?
+- **Text:** The monthly price is the four visits a year spread over twelve months. Brian walks you through the details before you sign up.
+- **FAQ question:** Where do you work?
+- **Text:** Shallotte, NC to Burgess, SC — the coast, plus Conway, Loris and Longs inland. That includes Myrtle Beach, North Myrtle Beach, Carolina Forest and Little River.
+
+#### 9. Put your turf on a schedule
+- **Eyebrow:** Takes 30 seconds
+- **H2:** Put your turf on a schedule
+- **Text:** Two taps and your contact info. Brian recommends a plan. You decide.
+- **Button:** Find my plan
+- **Button:** 303-349-2368
+
+#### 10. Footer
+- **Text:** © 2026 TIMELESS Turf Restoration. All rights reserved. · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy · Website by To The Max Media
+
+#### 11. Sticky mobile bar
+- **Button:** Call
+- **Button:** Find my plan
+
+### 2B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/membership/
+
+Current copy, in page order:
+
+- Browser title: Membership request received | TIMELESS Turf Restoration
+- Meta description (link previews): Your request is in. Send photos now to help Brian price the work.
+
+#### 1. Top bar
+- **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
+- **Button:** Call Brian 303-349-2368
+
+#### 2. Your membership request is in.
+- **Eyebrow:** Request received
+- **H1:** Your membership request is in.
+- **Text:** For a faster, more accurate plan recommendation, text Brian a few photos now. Calls and texts about your request come from 303-349-2368.
+- **Button:** Text Brian yard photos
+- **Button:** Compare plans
+- **Button:** Save
+- **Text:** Save this number so you recognize Brian's call or text.
+
+#### 3. Send these 3 photos
+- **Eyebrow:** Takes about 1 minute
+- **H2:** Send these 3 photos
+- **Text:** They help Brian understand the job before he contacts you.
+- **H3:** One wide shot
+- **Text:** The whole yard, so Brian can size up the visits.
+- **H3:** Where the dogs go
+- **Text:** The corners and paths that get the most use.
+- **H3:** Dates that matter
+- **Text:** Guests coming, a party, a season you want it at its best.
+- **Button:** Text Brian yard photos
+
+#### 4. Four visits a year on every plan
+- **Eyebrow:** The plans
+- **H2:** Four visits a year on every plan
+- **Text:** Brian will recommend one when he contacts you. Already know? Tell him by text.
+- **Text:** 4 visits a year
+- **H3:** Essential Care
+- **Text:** Light maintenance, four times a year.
+- **Text:** $89/mo — $1,068 a year
+  - Blow-off & grooming
+  - Light rinse
+  - Basic odor treatment
+  - Priority scheduling
+- **Button:** Ask about Essential Care
+- **Label:** Deep clean every quarter
+- **H3:** TIMELESS ELITE
+- **Text:** A Premium Restoration every quarter.
+- **Text:** $139/mo — $1,668 a year
+  - Deep cleaning
+  - Antimicrobial & pet-odor treatment
+  - Grooming & brushing
+  - Infill conditioning
+  - Edge & seam inspection
+  - Minor spot treatment
+  - Priority scheduling
+  - 10% off repairs & add-ons
+- **Button:** Ask about TIMELESS ELITE
+- **H3:** Pet Turf ELITE
+- **Text:** Built for multi-dog and daily-potty yards.
+- **Text:** $169/mo — $2,028 a year
+  - Everything in TIMELESS ELITE
+- **Text:** The extra pet-yard steps in this plan are being finalized with Brian — ask when he calls.
+- **Button:** Ask about Pet Turf ELITE
+
+#### 5. From request to your first visit
+- **Eyebrow:** What happens next
+- **H2:** From request to your first visit
+  - Fastest next step — Text yard photos — The whole yard and the areas the dogs use most.
+  - After review — Brian reaches out — A call or text about your yard and dogs.
+  - On the call — You pick a plan — Brian recommends one. You decide.
+  - Four a year — Visits on the calendar — Each one follows your plan.
+
+#### 6. What one visit changes
+- **Eyebrow:** Before & after
+- **H2:** What one visit changes
+- **Image:** /assets/img/jobs/dog-yard-turf-cleaned-before-after-640.webp (alt: Before and after: artificial turf dog yard with pet waste, then cleaned and brushed)
+- **Photo caption:** Dog yard. Waste and debris cleared, fibers brushed back up.
+- **Image:** /assets/img/jobs/side-yard-turf-power-brushed-before-after-640.webp (alt: Narrow side-yard artificial turf half cleaned, with a power brush resting on the finished section)
+- **Photo caption:** Side yard, mid-clean. Brushed and cleared past the line. The front is how we found it.
+- **Image:** /assets/img/jobs/front-lawn-turf-leaves-cleared-before-after-640.webp (alt: Before and after: artificial front lawn covered in dry leaves, then cleared and blown clean)
+- **Photo caption:** Front lawn. Leaves and debris cleared, turf blown clean.
+
 #### 7. Hi, I'm Brian.
 - **Image:** /assets/img/putting-green-at-sunset-wide.jpg (alt: Backyard putting green at sunset)
 - **Photo caption:** Blown clean. The finish on every job.
@@ -652,14 +636,11 @@ Current copy, in page order:
 #### 8. When should Brian call?
 - **Eyebrow:** Optional
 - **H2:** When should Brian call?
-- **Text:** Pick a time and he'll aim for it.
-- **Form question:** Best time to reach you? — answers: Morning · Afternoon · Evening · Text me instead
-- **Form field:** name
-- **Form field:** phone (required)
-- **Button:** Send to Brian
-- **Text:** Got it. Brian will aim for that time.
-- **Text:** Something went wrong. Please call or text 303-349-2368.
-- **Text:** We only use your number to match this with your request.
+- **Text:** Tap one. Your phone's text app will open with the message ready; press Send to tell him.
+- **Button:** Morning
+- **Button:** Afternoon
+- **Button:** Evening
+- **Button:** Text me
 
 #### 9. Quick answers
 - **Eyebrow:** Before Brian calls
@@ -672,24 +653,22 @@ Current copy, in page order:
 - **Text:** On yards over 1,000 sq ft, yes: TIMELESS ELITE is $1,668 a year, less than four Premium Restorations ($1,996 at 1,001–1,500 sq ft). On smaller yards, four one-time visits cost less ($1,196 up to 500 sq ft), and a membership buys priority scheduling and never having to remember to book.
 - **FAQ question:** How does billing work?
 - **Text:** The monthly price is the four visits a year spread over twelve months. Brian walks you through the details before you sign up.
-- **FAQ question:** Is it safe for kids and dogs?
-- **Text:** Yes. We use turf-safe, pet-safe products, and your turf is ready to use once it is dry.
 - **FAQ question:** Where do you work?
 - **Text:** Shallotte, NC to Burgess, SC — the coast, plus Conway, Loris and Longs inland. That includes Myrtle Beach, North Myrtle Beach, Carolina Forest and Little River.
 
 #### 10. Call or text anytime.
 - **Eyebrow:** Questions before Brian calls?
 - **H2:** Call or text anytime.
-- **Text:** Send photos, ask about pricing, or pick a better time to talk.
+- **Text:** Send photos, ask about pricing, or tell him a better time to talk.
 - **Button:** Call 303-349-2368
 - **Button:** Send a text
 
 #### 11. Footer
-- **Text:** © 2026 TIMELESS Turf Restoration · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy
+- **Text:** © 2026 TIMELESS Turf Restoration. All rights reserved. · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy · Website by To The Max Media
 
 #### 12. Sticky mobile bar
 - **Button:** Call
-- **Button:** Text us photos
+- **Button:** Text photos
 
 ### 2C. Matching ad and Instant Form copy (message match)
 
@@ -704,39 +683,34 @@ Current copy, in page order:
 
 #### Instant Form
 
-- **Form name:** TTR · Turf membership
-- **Intro headline:** Clean turf all year, from $89/mo  `32 chars`
+- **Form name:** TTR · Turf membership · V2
+- **Intro headline:** Find the right turf care plan  `29 chars`
 - **Intro description (List layout):**
-  - Four visits a year  `18 chars`
-  - Priority scheduling for members  `31 chars`
-  - Brian matches the plan to your yard  `35 chars`
-- **Questions description:** Three quick taps so Brian can match you with a plan when he calls.  `66 chars`
-- **Custom question 1 (Multiple choice):** About how big is the turf?  `26 chars`
-  - Up to 500 sq ft
-  - 500–1,000 sq ft
-  - 1,000–2,000 sq ft
-  - 2,000–5,000 sq ft
-  - Over 5,000 sq ft
-  - Not sure
-- **Custom question 2 (Multiple choice):** Do dogs use it?  `15 chars`
+  - Four scheduled visits a year  `28 chars`
+  - Cleaning and pet-odor options for your yard  `43 chars`
+  - Plans start at $89/month  `24 chars`
+- **Questions description:** Two quick taps help Brian recommend a plan. You choose after he explains the options.  `85 chars`
+- **Custom question 1 (Multiple choice):** Do dogs use it?  `15 chars`
   - No dogs
   - 1 dog
   - 2 or more dogs
-- **Custom question 3 (Multiple choice):** Which plan sounds right?  `24 chars`
-  - Essential Care · $89/mo
-  - TIMELESS ELITE · $139/mo
-  - Pet Turf ELITE · $169/mo
-  - Not sure yet
+- **Custom question 2 (Multiple choice):** About how big is the turf?  `26 chars`
+  - Up to 500 sq ft
+  - 501–1,000 sq ft
+  - 1,001–2,000 sq ft
+  - 2,001–5,000 sq ft
+  - Over 5,000 sq ft
+  - Not sure
 - **Contact information:** Full name, Phone number, ZIP code
-- **Completion headline:** You're on Brian's list.  `23 chars`
-- **Completion description:** He'll call or text from 303-349-2368 to match you with a plan. Save the number so you know it's him.  `100 chars`
+- **Completion headline:** Brian has your plan request.  `28 chars`
+- **Completion description:** He'll call or text from 303-349-2368 to recommend a plan for your yard and dogs. Tap below to compare the plans and save his number.  `132 chars`
 - **Completion button:** View website · text "Compare the plans" · link https://timelessturfrestoration.com/fb/membership/
 
 #### Website ad
 
 - **Website URL:** https://timelessturfrestoration.com/lp/membership/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
+- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
 
 ---
 
@@ -755,7 +729,7 @@ Current copy, in page order:
 
 #### 1. Top bar
 - **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
-- **Button:** Call or text 303-349-2368
+- **Button:** Call Brian 303-349-2368
 
 #### 2. Make your green roll true again
 - **Eyebrow:** Putting green restoration
@@ -765,29 +739,25 @@ Current copy, in page order:
   - Seams, cups and edges checked
   - 13 years building greens
 - **H2:** Get your green quote
-  - 1 · Your green
-  - 2 · Where to send it
-- **Form question:** How big is the green? — answers: Under 300 sq ft · 300–600 sq ft · 600–1,000 sq ft · Over 1,000 sq ft · Not sure
-- **   hint:** when "Under 300 sq ft" is picked: Typical backyard greens run $299–$899. Brian quotes yours after a look.
-- **   hint:** when "300–600 sq ft" is picked: Typical backyard greens run $299–$899. Brian quotes yours after a look.
-- **   hint:** when "600–1,000 sq ft" is picked: Typical backyard greens run $299–$899. Brian quotes yours after a look.
-- **   hint:** when "Over 1,000 sq ft" is picked: Typical backyard greens run $299–$899. Brian quotes yours after a look.
-- **   hint:** when "Not sure" is picked: No problem. Length × width is close enough.
+  - 1 · Two quick questions
+  - 2 · Your contact info
+- **Text:** Choose one answer to continue.
 - **Form question:** What is the green doing? — answers: Rolling slow · Bumpy or breaking oddly · Dirty, leaves or needles · Seams, cups or edges · Just due for service
 - **   hint:** when "Seams, cups or edges" is picked: Brian checks seams, cups and edges on every green.
 - **Form question:** Where is the green? — answers: Backyard · HOA or community · Golf course or business
 - **   hint:** when "HOA or community" is picked: Community and business greens start with a site walk.
 - **   hint:** when "Golf course or business" is picked: Community and business greens start with a site walk.
-- **Button:** Next: where to send it
+- **Button:** Next: your contact info
+- **Text:** Brian, the owner, uses these details to call or text about this request and confirm the service area.
 - **Form field:** name (required)
 - **Form field:** phone (required)
 - **Form field:** zip (required)
-- **Button:** Get My Green Quote
+- **Button:** Request My Green Quote
 - **Button:** Change my answers
 - **Text:** Something went wrong. Please call or text 303-349-2368.
 - **Text:** By submitting, you agree Brian may call or text you about your request. Privacy
 - **H2:** You're in!
-- **Text:** Brian will call or text you from 303-349-2368 within one business day.
+- **Text:** Brian will call or text you from 303-349-2368 about your request.
 - **Button:** Save the number
 - **Button:** Text photos
 - **Image:** /assets/img/putting-green-fire-pit-stone-wall.jpg (alt: Backyard putting green beside a stone wall and fire pit)
@@ -855,54 +825,54 @@ Current copy, in page order:
 #### 8. Get your green rolling true
 - **Eyebrow:** Takes 30 seconds
 - **H2:** Get your green rolling true
-- **Text:** Three taps and your number. Brian comes back with a quote.
-- **Button:** Get my green quote
+- **Text:** Two taps and your contact info. Brian follows up with the next step.
+- **Button:** Request my green quote
 - **Button:** 303-349-2368
 
 #### 9. Footer
-- **Text:** © 2026 TIMELESS Turf Restoration · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy
+- **Text:** © 2026 TIMELESS Turf Restoration. All rights reserved. · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy · Website by To The Max Media
 
 #### 10. Sticky mobile bar
 - **Button:** Call
-- **Button:** Get my green quote
+- **Button:** Request my green quote
 
 ### 3B. Follow-up page after the Instant Form: https://timelessturfrestoration.com/fb/putting-green/
 
 Current copy, in page order:
 
-- Browser title: Got it! Here's what happens next | TIMELESS Turf Restoration
-- Meta description (link previews): Your request is in. Here's what happens next.
+- Browser title: Putting-green request received | TIMELESS Turf Restoration
+- Meta description (link previews): Your request is in. Send photos now to help Brian price the work.
 
 #### 1. Top bar
 - **Image:** /assets/brand/logo.webp (alt: TIMELESS Turf Restoration)
-- **Button:** Call or text 303-349-2368
+- **Button:** Call Brian 303-349-2368
 
-#### 2. Got it! Here's what happens next.
+#### 2. Your putting-green request is in.
 - **Eyebrow:** Request received
-- **H1:** Got it! Here's what happens next.
-- **Text:** Brian, the owner, will call or text you from 303-349-2368 within one business day.
-- **Button:** Save
-- **Text:** Save the number so you know it's Brian when he calls.
-- **Button:** Text Brian photos
-- **Button:** Call now
+- **H1:** Your putting-green request is in.
+- **Text:** For a faster, more accurate quote, text Brian a few photos now. Calls and texts about your request come from 303-349-2368.
+- **Button:** Text 3 photos for a faster quote
+- **Button:** Save Brian's number
+- **Button:** Call
+- **Text:** Save this number so you recognize Brian's call or text.
 
-#### 3. Get your quote faster
-- **Eyebrow:** Optional · 1 minute
-- **H2:** Get your quote faster
-- **Text:** Text Brian a few photos. These help most:
+#### 3. Send these 3 photos
+- **Eyebrow:** Takes about 1 minute
+- **H2:** Send these 3 photos
+- **Text:** They help Brian understand the job before he contacts you.
 - **H3:** The whole green
 - **Text:** From behind the longest putt, so Brian sees the size and slope.
 - **H3:** Cups, fringe and seams
 - **Text:** Close-ups of the cups, the edges and any seam that has lifted.
 - **H3:** The slow or bumpy spot
 - **Text:** A low shot across the surface shows where sand has washed off or piled up.
-- **Button:** Text photos to 303-349-2368
+- **Button:** Text 3 photos for a faster quote
 
 #### 4. From request to a true roll
 - **Eyebrow:** What happens next
 - **H2:** From request to a true roll
-  - Within 1 business day — Brian reaches out — A quick call or text about your green.
-  - Optional — You send photos — The whole green, the cups and the slow spot.
+  - Fastest next step — Text three photos — The whole green, the cups and the slow spot.
+  - After review — Brian reaches out — A call or text about your green.
   - After a look — You get a quote — Typical backyard greens run $299–$899.
   - Step 4 — We restore it — Brushed, top-dressed, rolled and speed-checked.
 
@@ -928,14 +898,11 @@ Current copy, in page order:
 #### 7. When should Brian call?
 - **Eyebrow:** Optional
 - **H2:** When should Brian call?
-- **Text:** Pick a time and he'll aim for it.
-- **Form question:** Best time to reach you? — answers: Morning · Afternoon · Evening · Text me instead
-- **Form field:** name
-- **Form field:** phone (required)
-- **Button:** Send to Brian
-- **Text:** Got it. Brian will aim for that time.
-- **Text:** Something went wrong. Please call or text 303-349-2368.
-- **Text:** We only use your number to match this with your request.
+- **Text:** Tap one. Your phone's text app will open with the message ready; press Send to tell him.
+- **Button:** Morning
+- **Button:** Afternoon
+- **Button:** Evening
+- **Button:** Text me
 
 #### 8. Quick answers
 - **Eyebrow:** Before Brian calls
@@ -958,16 +925,16 @@ Current copy, in page order:
 #### 9. Call or text anytime.
 - **Eyebrow:** Questions before Brian calls?
 - **H2:** Call or text anytime.
-- **Text:** Send photos, ask about pricing, or pick a better time to talk.
+- **Text:** Send photos, ask about pricing, or tell him a better time to talk.
 - **Button:** Call 303-349-2368
 - **Button:** Send a text
 
 #### 10. Footer
-- **Text:** © 2026 TIMELESS Turf Restoration · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy
+- **Text:** © 2026 TIMELESS Turf Restoration. All rights reserved. · 303-349-2368 · timelessgrass@gmail.com · Visit our full site · Privacy · Website by To The Max Media
 
 #### 11. Sticky mobile bar
 - **Button:** Call
-- **Button:** Text us photos
+- **Button:** Text photos
 
 ### 3C. Matching ad and Instant Form copy (message match)
 
@@ -982,36 +949,30 @@ Current copy, in page order:
 
 #### Instant Form
 
-- **Form name:** TTR · Putting green restoration
-- **Intro headline:** Get your putting green quote  `28 chars`
+- **Form name:** TTR · Putting green restoration · V2
+- **Intro headline:** Get your putting green restoration quote  `40 chars`
 - **Intro description (List layout):**
+  - For slow, bumpy or uneven synthetic greens  `42 chars`
   - Brushed, top-dressed, rolled and speed-checked  `46 chars`
   - 13 years building and caring for greens  `39 chars`
-  - Typical backyard greens: $299–$899  `34 chars`
-- **Questions description:** Three quick taps so Brian knows what your green needs before he calls.  `70 chars`
-- **Custom question 1 (Multiple choice):** How big is the green?  `21 chars`
-  - Under 300 sq ft
-  - 300–600 sq ft
-  - 600–1,000 sq ft
-  - Over 1,000 sq ft
-  - Not sure
-- **Custom question 2 (Multiple choice):** What is the green doing?  `24 chars`
+- **Questions description:** Two quick taps help Brian understand the green before he calls or texts.  `72 chars`
+- **Custom question 1 (Multiple choice):** What is the green doing?  `24 chars`
   - Rolling slow
   - Bumpy or breaking oddly
   - Dirty, leaves or needles
   - Seams, cups or edges
   - Just due for service
-- **Custom question 3 (Multiple choice):** Where is the green?  `19 chars`
+- **Custom question 2 (Multiple choice):** Where is the green?  `19 chars`
   - Backyard
   - HOA or community
   - Golf course or business
 - **Contact information:** Full name, Phone number, ZIP code
-- **Completion headline:** Got it. Brian will reach out.  `29 chars`
-- **Completion description:** He'll call or text from 303-349-2368. Photos of the green help him quote it.  `76 chars`
-- **Completion button:** View website · text "Send photos of the green" · link https://timelessturfrestoration.com/fb/putting-green/
+- **Completion headline:** Brian has your green request.  `29 chars`
+- **Completion description:** He'll call or text from 303-349-2368 to discuss what the green needs and quote the restoration. Tap below to see which photos help.  `131 chars`
+- **Completion button:** View website · text "See photo guide" · link https://timelessturfrestoration.com/fb/putting-green/
 
 #### Website ad
 
 - **Website URL:** https://timelessturfrestoration.com/lp/putting-green/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.
+- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.

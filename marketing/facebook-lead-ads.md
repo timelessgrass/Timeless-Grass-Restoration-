@@ -1,6 +1,6 @@
 # Facebook lead ads: copy for Ads Manager
 
-Generated 2026-09-14 from `src/data/campaigns.ts` by `node scripts/campaign-kit.mjs`. Don't edit this file by hand: change the data file and run the script, so the forms keep matching the pages.
+Generated 2026-09-17 from `src/data/campaigns.ts` by `node scripts/campaign-kit.mjs`. Don't edit this file by hand: change the data file and run the script, so the forms keep matching the pages.
 
 ## How the campaign fits together
 
@@ -12,18 +12,27 @@ Generated 2026-09-14 from `src/data/campaigns.ts` by `node scripts/campaign-kit.
 
 ## Before you publish
 
+- Use one conversion location per ad set. Do not leave "Website and instant forms" mixed: the first $77 sent every link click to an Instant Form, so that setup did not test the website at all.
+- At the current $30/day, test sequentially instead of dividing the budget across six paths. Start with the V2 cleaning Instant Form; after it has a real result baseline, run a separate website-only test against /lp/clean/. Membership is a better follow-up/retargeting offer than the first cold test.
+- Expand the location targeting beyond Myrtle Beach +25 miles to the actual service area: Shallotte, NC through Burgess, SC, including Conway, Loris and Longs inland. Keep people living in this area.
+- Turn off Standard Enhancements, video auto-crop, filtering and uncrop while diagnosing conversion. Keep the ad creative and destination message under your control.
+- Fix the existing membership website destination from /fb/membership/ to /lp/membership/. The /fb/ routes are only completion pages after a Meta Instant Form submission.
+- Add the full URL-parameter string below to every ad. Video 1 and Video 2 were missing it in the audited campaign.
 - The site is live at https://timelessturfrestoration.com (www redirects there and keeps the tracking parameters). Use these exact links in Ads Manager.
-- Calls and texts go to 303-349-2368, a Colorado number. A local 843 number will convert better on the Grand Strand; changing it later means new Instant Forms.
-- A published Instant Form cannot be edited. Proof every field before you publish; a fix means a new form.
-- The web pages say Brian replies "within one business day" and answer "Is it safe for kids and dogs?" with yes. Brian should confirm both (QUESTIONS-FOR-BRIAN #15 and #17). The Instant Forms avoid both.
+- Calls and texts still go to 303-349-2368, a Colorado number. Decide whether to adopt a local 843 number before publishing V2; changing it later means another set of forms.
+- These are V2 replacement forms. A published Instant Form cannot be edited; keep the old forms in place until each V2 form passes a test lead.
+- The campaign pages intentionally make no reply-time or pet-safety promise until Brian confirms both items in QUESTIONS-FOR-BRIAN.
 - Meta Pixel 1047663254935147 is on every page. Website ads: optimize for the Lead event (fires only after a landing-page form submits). Taps on call and text links fire Contact.
 - Every lead goes to Make, which emails Brian: the website forms post straight to Make, and Instant Form leads are pulled from the Facebook Page. After publishing each Instant Form, send one test lead with Meta's Lead Ads Testing Tool and check the email (automations/make/README.md).
 
 ## Settings for all three Instant Forms
 
-- **Form type:** Higher intent (Adds a review screen before submit. Fewer leads, far fewer junk ones.)
+- **Form type:** More volume (Keep the live form type while diagnosing; V2 reduces friction with two qualifying questions and clearer value copy.)
+- **Sharing:** Restricted (Only people who receive the ad should open this lead form.)
+- **Language:** English (US)
 - **Intro background image:** Use image from ad
 - **Contact information:** Full name · Phone number · ZIP code (Leave email off: Brian calls or texts.)
+- **Contact information explanation:** Brian, the owner, will use these details to call or text you about this request. No email required. (Add manually in Ads Manager if the API cannot set it.)
 - **Privacy policy link text:** Privacy policy
 - **Privacy policy URL:** https://timelessturfrestoration.com/privacy/
 - **Custom disclaimer title:** Calls and texts (Optional. No consent checkbox.)
@@ -53,39 +62,35 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 ### Instant Form
 
-- **Form name:** TTR · Turf cleaning quote
-- **Intro headline:** Get your turf cleaning price  `28 chars`
+- **Form name:** TTR · Turf cleaning quote · V2
+- **Intro headline:** Get your free turf cleaning quote  `33 chars`
 - **Intro description (List layout):**
-  - Priced by the square foot, never by the hour  `44 chars`
-  - Yards up to 500 sq ft from $199  `31 chars`
-  - Brian, the owner, calls or texts you back  `41 chars`
-- **Questions description:** Three quick taps so Brian can price your yard before he calls. A 20 × 25 ft yard is 500 sq ft.  `94 chars`
-- **Custom question 1 (Multiple choice):** About how big is the turf?  `26 chars`
-  - Up to 500 sq ft
-  - 500–1,000 sq ft
-  - 1,000–2,000 sq ft
-  - 2,000–5,000 sq ft
-  - Over 5,000 sq ft
-  - Not sure
-- **Custom question 2 (Multiple choice):** Do dogs use it?  `15 chars`
-  - No dogs
-  - 1 dog
-  - 2 or more dogs
-- **Custom question 3 (Multiple choice):** What bothers you most?  `22 chars`
+  - Pet odor, matted fibers, leaves and buildup  `43 chars`
+  - Deep cleaning, odor treatment and power brushing  `48 chars`
+  - Prices start at $199 for turf up to 500 sq ft  `45 chars`
+- **Questions description:** Two quick taps help Brian understand the job before he calls or texts.  `70 chars`
+- **Custom question 1 (Multiple choice):** What bothers you most?  `22 chars`
   - Pet odor
   - Dirty, dull or matted
   - Weeds, leaves or debris
   - Just due for a clean
+- **Custom question 2 (Multiple choice):** About how big is the turf?  `26 chars`
+  - Up to 500 sq ft
+  - 501–1,000 sq ft
+  - 1,001–2,000 sq ft
+  - 2,001–5,000 sq ft
+  - Over 5,000 sq ft
+  - Not sure
 - **Contact information:** Full name, Phone number, ZIP code
-- **Completion headline:** Got it. Brian will reach out.  `29 chars`
-- **Completion description:** He'll call or text from 303-349-2368. Save the number, and send photos to get your price faster.  `96 chars`
+- **Completion headline:** Brian has your turf request.  `28 chars`
+- **Completion description:** He'll call or text from 303-349-2368 to discuss the right clean and your price. Tap below to save his number and see which photos help.  `135 chars`
 - **Completion button:** View website · text "See next steps" · link https://timelessturfrestoration.com/fb/clean/
 
 ### Website ad
 
 - **Website URL:** https://timelessturfrestoration.com/lp/clean/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
+- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
 
 ## 2. Turf membership
 
@@ -100,39 +105,34 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 ### Instant Form
 
-- **Form name:** TTR · Turf membership
-- **Intro headline:** Clean turf all year, from $89/mo  `32 chars`
+- **Form name:** TTR · Turf membership · V2
+- **Intro headline:** Find the right turf care plan  `29 chars`
 - **Intro description (List layout):**
-  - Four visits a year  `18 chars`
-  - Priority scheduling for members  `31 chars`
-  - Brian matches the plan to your yard  `35 chars`
-- **Questions description:** Three quick taps so Brian can match you with a plan when he calls.  `66 chars`
-- **Custom question 1 (Multiple choice):** About how big is the turf?  `26 chars`
-  - Up to 500 sq ft
-  - 500–1,000 sq ft
-  - 1,000–2,000 sq ft
-  - 2,000–5,000 sq ft
-  - Over 5,000 sq ft
-  - Not sure
-- **Custom question 2 (Multiple choice):** Do dogs use it?  `15 chars`
+  - Four scheduled visits a year  `28 chars`
+  - Cleaning and pet-odor options for your yard  `43 chars`
+  - Plans start at $89/month  `24 chars`
+- **Questions description:** Two quick taps help Brian recommend a plan. You choose after he explains the options.  `85 chars`
+- **Custom question 1 (Multiple choice):** Do dogs use it?  `15 chars`
   - No dogs
   - 1 dog
   - 2 or more dogs
-- **Custom question 3 (Multiple choice):** Which plan sounds right?  `24 chars`
-  - Essential Care · $89/mo
-  - TIMELESS ELITE · $139/mo
-  - Pet Turf ELITE · $169/mo
-  - Not sure yet
+- **Custom question 2 (Multiple choice):** About how big is the turf?  `26 chars`
+  - Up to 500 sq ft
+  - 501–1,000 sq ft
+  - 1,001–2,000 sq ft
+  - 2,001–5,000 sq ft
+  - Over 5,000 sq ft
+  - Not sure
 - **Contact information:** Full name, Phone number, ZIP code
-- **Completion headline:** You're on Brian's list.  `23 chars`
-- **Completion description:** He'll call or text from 303-349-2368 to match you with a plan. Save the number so you know it's him.  `100 chars`
+- **Completion headline:** Brian has your plan request.  `28 chars`
+- **Completion description:** He'll call or text from 303-349-2368 to recommend a plan for your yard and dogs. Tap below to compare the plans and save his number.  `132 chars`
 - **Completion button:** View website · text "Compare the plans" · link https://timelessturfrestoration.com/fb/membership/
 
 ### Website ad
 
 - **Website URL:** https://timelessturfrestoration.com/lp/membership/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
+- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
 
 ## 3. Putting green restoration
 
@@ -147,36 +147,30 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 ### Instant Form
 
-- **Form name:** TTR · Putting green restoration
-- **Intro headline:** Get your putting green quote  `28 chars`
+- **Form name:** TTR · Putting green restoration · V2
+- **Intro headline:** Get your putting green restoration quote  `40 chars`
 - **Intro description (List layout):**
+  - For slow, bumpy or uneven synthetic greens  `42 chars`
   - Brushed, top-dressed, rolled and speed-checked  `46 chars`
   - 13 years building and caring for greens  `39 chars`
-  - Typical backyard greens: $299–$899  `34 chars`
-- **Questions description:** Three quick taps so Brian knows what your green needs before he calls.  `70 chars`
-- **Custom question 1 (Multiple choice):** How big is the green?  `21 chars`
-  - Under 300 sq ft
-  - 300–600 sq ft
-  - 600–1,000 sq ft
-  - Over 1,000 sq ft
-  - Not sure
-- **Custom question 2 (Multiple choice):** What is the green doing?  `24 chars`
+- **Questions description:** Two quick taps help Brian understand the green before he calls or texts.  `72 chars`
+- **Custom question 1 (Multiple choice):** What is the green doing?  `24 chars`
   - Rolling slow
   - Bumpy or breaking oddly
   - Dirty, leaves or needles
   - Seams, cups or edges
   - Just due for service
-- **Custom question 3 (Multiple choice):** Where is the green?  `19 chars`
+- **Custom question 2 (Multiple choice):** Where is the green?  `19 chars`
   - Backyard
   - HOA or community
   - Golf course or business
 - **Contact information:** Full name, Phone number, ZIP code
-- **Completion headline:** Got it. Brian will reach out.  `29 chars`
-- **Completion description:** He'll call or text from 303-349-2368. Photos of the green help him quote it.  `76 chars`
-- **Completion button:** View website · text "Send photos of the green" · link https://timelessturfrestoration.com/fb/putting-green/
+- **Completion headline:** Brian has your green request.  `29 chars`
+- **Completion description:** He'll call or text from 303-349-2368 to discuss what the green needs and quote the restoration. Tap below to see which photos help.  `131 chars`
+- **Completion button:** View website · text "See photo guide" · link https://timelessturfrestoration.com/fb/putting-green/
 
 ### Website ad
 
 - **Website URL:** https://timelessturfrestoration.com/lp/putting-green/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 3 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.
+- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.

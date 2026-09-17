@@ -5,7 +5,7 @@
  * a price change is a rebuild plus a blueprint update in Make.
  *
  *   organic-lead          "quote" form on the main site (posts straight to Make) → one email
- *   facebook-leads        /lp/ and /fb/ forms, plus Instant Form leads        → routed by medium, then service
+ *   facebook-leads        /lp/ forms, plus Instant Form leads                → routed by medium, then service
  *   instant-form-feeder   Facebook Lead Ads (page "Timeless Restoration")     → facebook-leads webhook, in the website forms' shape
  *
  * The website forms post { form_name, created_at, site_url, data: { ...fields, bot_field, elapsed_ms } } (public/main.js).
@@ -91,7 +91,7 @@ const email = (t) => `<!DOCTYPE html>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td class="px" style="padding:24px 34px 4px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
 <td width="50%" style="padding-right:6px;"><a href="tel:${t.digits}" style="${F}display:block;padding:15px 8px;border-radius:999px;background:#2e7a0b;font-size:15px;font-weight:800;color:#ffffff;text-align:center;text-decoration:none;">Call ${t.first}</a></td>
-<td width="50%" style="padding-left:6px;"><a href="sms:${t.digits}?&amp;body=${t.sms}" style="${F}display:block;padding:13px 8px;border:2px solid #0c1809;border-radius:999px;background:#ffffff;font-size:15px;font-weight:800;color:#0c1809;text-align:center;text-decoration:none;">Text ${t.first}</a></td>
+<td width="50%" style="padding-left:6px;"><a href="sms:${t.digits}?body=${t.sms}" style="${F}display:block;padding:13px 8px;border:2px solid #0c1809;border-radius:999px;background:#ffffff;font-size:15px;font-weight:800;color:#0c1809;text-align:center;text-decoration:none;">Text ${t.first}</a></td>
 </tr></table>
 <div style="${F}padding-top:12px;font-size:12px;color:#6b7a65;text-align:center;">Call first. No answer? The Text button opens a message ready to send.</div>
 </td></tr></table>
@@ -113,7 +113,7 @@ ${t.source ? `<table role="presentation" width="100%" cellpadding="0" cellspacin
 </body></html>`;
 const link = (href, text) => `<a href="${href}" style="color:#0c1809;text-decoration:none;">${text}</a>`;
 
-/* Organic: tokens map straight onto the Netlify payload (module 1) */
+/* Organic: tokens map straight onto the website form payload (module 1). */
 const organic = (v) => email({
   title: 'New quote request',
   preheader: `${v.name} wants a turf quote · ZIP ${v.zip} · ${v.plan}`,
@@ -158,8 +158,8 @@ const facebook = (v) => email({
   rowsTitle: v.rowsTitle,
   rows: [
     { label: v.q1Label, value: v.q1 },
-    { label: v.q2Label, value: v.q2, style: v.hide },
-    { label: v.q3Label, value: v.q3, style: v.hide },
+    { label: v.q2Label, value: v.q2, style: v.hideQ2 },
+    { label: v.q3Label, value: v.q3, style: v.hideQ3 },
     { label: 'Phone', value: link(`tel:${v.digits}`, v.phone) },
     { label: 'ZIP code', value: v.zip, last: true },
   ],
@@ -171,15 +171,14 @@ const facebookMake = facebook({
   kicker: iml('3.kicker'), badge: iml('upper(3.label)'), accent: iml('3.accent'), accentInk: iml('3.accent_ink'),
   name: safe('1.data.name'), zip: safe('ifempty(1.data.zip; "not given")'), when: iml('2.when'), medium: iml('2.medium'), platform: safe('2.platform'),
   digits: safe('2.digits'), phone: safe('1.data.phone'), first: safe('2.first'), sms: smsText(iml('encodeURL(2.first)')),
-  rowsTitle: iml('3.rows_title'), q1Label: iml('3.q1_label'), q1: safe('3.q1'), q2Label: iml('3.q2_label'), q2: safe('3.q2'), q3Label: iml('3.q3_label'), q3: safe('3.q3'), hide: iml('3.hide'),
+  rowsTitle: iml('3.rows_title'), q1Label: iml('3.q1_label'), q1: safe('3.q1'), q2Label: iml('3.q2_label'), q2: safe('3.q2'), q3Label: iml('3.q3_label'), q3: safe('3.q3'), hideQ2: iml('3.hide_q2'), hideQ3: iml('3.hide_q3'),
   hintLabel: iml('3.hint_label'), hint: iml('3.hint'),
   campaign: safe('2.campaign'), adset: safe('2.adset'), ad: safe('2.ad'), page: safe('2.page'), formName: safe('1.form_name'),
 });
 
-const UPDATE = '2.medium = "Follow-up page"';
 const BASE_VARS = [
   ['service', 'if(contains(1.form_name; "membership"); "membership"; if(contains(1.form_name; "putting"); "putting-green"; if(contains(1.form_name; "clean"); "clean"; "other")))'],
-  ['medium', 'if(contains(1.form_name; "instant-"); "Facebook Instant Form"; if(contains(1.form_name; "lp-"); "Website landing page"; if(contains(1.form_name; "fb-"); "Follow-up page"; "Website form")))'],
+  ['medium', 'if(contains(1.form_name; "instant-"); "Facebook Instant Form"; if(contains(1.form_name; "lp-"); "Website landing page"; "Website form"))'],
   ['platform', 'switch(lower(ifempty(1.data.utm_source; "none")); "fb"; "Facebook"; "facebook"; "Facebook"; "ig"; "Instagram"; "instagram"; "Instagram"; "an"; "Audience Network"; "msg"; "Messenger"; "none"; "Not tagged"; 1.data.utm_source)'],
   ['first', 'first(split(trim(ifempty(1.data.name; "there")); " "))'],
   ['digits', digitsOf('1.data.phone')],
@@ -190,20 +189,21 @@ const BASE_VARS = [
   ['page', 'ifempty(1.data.page; 1.site_url)'],
 ];
 const SERVICE_VARS = [
-  ['label', `if(${UPDATE}; "Lead update"; switch(2.service; "clean"; "Turf cleaning"; "membership"; "Membership"; "putting-green"; "Green restoration"; "Facebook lead"))`],
-  ['kicker', `if(${UPDATE}; "Picked a time to talk"; switch(2.service; "clean"; "New turf cleaning lead"; "membership"; "New membership lead"; "putting-green"; "New putting green restoration lead"; "New Facebook lead"))`],
-  ['accent', `if(${UPDATE}; "#4a5a45"; switch(2.service; "membership"; "#d6a816"; "putting-green"; "#8ad132"; "#2e7a0b"))`],
-  ['accent_ink', `if(${UPDATE}; "#ffffff"; switch(2.service; "membership"; "#0c1809"; "putting-green"; "#0c1809"; "#ffffff"))`],
-  ['rows_title', `if(${UPDATE}; "THEIR UPDATE"; "THEIR ANSWERS")`],
-  ['q1_label', `if(${UPDATE}; "Best time"; switch(2.service; "putting-green"; "Green size"; "other"; "Form"; "Turf size"))`],
-  ['q1', `if(${UPDATE}; ifempty(1.data.best_time; "No preference"); switch(2.service; "putting-green"; ifempty(1.data.green_size; "Not answered"); "other"; 1.form_name; ifempty(1.data.size; "Not answered")))`],
-  ['q2_label', 'switch(2.service; "putting-green"; "What the green is doing"; "Dogs")'],
-  ['q2', 'switch(2.service; "putting-green"; ifempty(1.data.green_issue; "Not answered"); ifempty(1.data.dogs; "Not answered"))'],
-  ['q3_label', 'switch(2.service; "clean"; "Bothers them most"; "membership"; "Plan they picked"; "putting-green"; "Where the green is"; "Details")'],
-  ['q3', 'switch(2.service; "clean"; ifempty(1.data.issue; "Not answered"); "membership"; ifempty(1.data.plan_pick; "Not answered"); "putting-green"; ifempty(1.data.green_where; "Not answered"); "See the form")'],
-  ['hide', `if(${UPDATE}; "display:none;"; if(2.service = "other"; "display:none;"; ""))`],
-  ['hint_label', `if(${UPDATE}; "Next"; switch(2.service; "clean"; "Ballpark"; "membership"; "Suggested plan"; "putting-green"; "Restoration pricing"; "Next"))`],
-  ['hint', `if(${UPDATE}; "Their answers came in with the first request. Match this to it by phone."; switch(2.service; "clean"; ${ballparkIml}; "membership"; ${planIml}; "putting-green"; ${greenIml}; "Call and ask what they need."))`],
+  ['label', 'switch(2.service; "clean"; "Turf cleaning"; "membership"; "Membership"; "putting-green"; "Green restoration"; "Facebook lead")'],
+  ['kicker', 'switch(2.service; "clean"; "New turf cleaning lead"; "membership"; "New membership lead"; "putting-green"; "New putting green restoration lead"; "New Facebook lead")'],
+  ['accent', 'switch(2.service; "membership"; "#d6a816"; "putting-green"; "#8ad132"; "#2e7a0b")'],
+  ['accent_ink', 'switch(2.service; "membership"; "#0c1809"; "putting-green"; "#0c1809"; "#ffffff")'],
+  ['rows_title', '"THEIR ANSWERS"'],
+  ['q1_label', 'switch(2.service; "clean"; "Bothers them most"; "membership"; "Dogs"; "putting-green"; "What the green is doing"; "Form")'],
+  ['q1', 'switch(2.service; "clean"; ifempty(1.data.issue; "Not answered"); "membership"; ifempty(1.data.dogs; "Not answered"); "putting-green"; ifempty(1.data.green_issue; "Not answered"); 1.form_name)'],
+  ['q2_label', 'switch(2.service; "clean"; "Turf size"; "membership"; "Turf size"; "putting-green"; "Where the green is"; "Details")'],
+  ['q2', 'switch(2.service; "clean"; ifempty(1.data.size; "Not answered"); "membership"; ifempty(1.data.size; "Not answered"); "putting-green"; ifempty(1.data.green_where; "Not answered"); emptystring)'],
+  ['q3_label', 'switch(2.service; "clean"; "Dogs (legacy form)"; "membership"; "Plan selected (legacy form)"; "putting-green"; "Green size (legacy form)"; "Details")'],
+  ['q3', 'switch(2.service; "clean"; ifempty(1.data.dogs; emptystring); "membership"; ifempty(1.data.plan_pick; emptystring); "putting-green"; ifempty(1.data.green_size; emptystring); emptystring)'],
+  ['hide_q2', 'if(2.service = "other"; "display:none;"; "")'],
+  ['hide_q3', 'if(2.service = "other"; "display:none;"; if(2.service = "clean"; if(ifempty(1.data.dogs; emptystring) = emptystring; "display:none;"; ""); if(2.service = "membership"; if(ifempty(1.data.plan_pick; emptystring) = emptystring; "display:none;"; ""); if(ifempty(1.data.green_size; emptystring) = emptystring; "display:none;"; ""))))'],
+  ['hint_label', 'switch(2.service; "clean"; "Ballpark"; "membership"; "Suggested plan"; "putting-green"; "Restoration pricing"; "Next")'],
+  ['hint', `switch(2.service; "clean"; ${ballparkIml}; "membership"; ${planIml}; "putting-green"; ${greenIml}; "Call and ask what they need.")`],
 ];
 
 /* ---------- blueprints ---------- */
@@ -231,7 +231,6 @@ const organicBlueprint = (hook) => ({
 });
 
 const facebookBlueprint = (hook) => {
-  const notUpdate = cond('{{2.medium}}', 'text:notequal', 'Follow-up page');
   const route = (id, filterName, conditions, subject, y) => ({ flow: [gmail(id, subject, '{{4.value}}', { name: filterName, conditions }, 1200, y)] });
   return {
     name: 'Timeless Turf — Facebook leads → route by medium & service → Brian',
@@ -244,15 +243,13 @@ const facebookBlueprint = (hook) => {
         mapper: { variables: SERVICE_VARS.map(([name, value]) => ({ name, value: iml(value) })), scope: 'roundtrip' }, metadata: at(600) },
       { id: 4, module: 'util:ComposeTransformer', version: 1, parameters: {}, mapper: { value: facebookMake }, metadata: at(900) },
       { id: 5, module: 'builtin:BasicRouter', version: 1, mapper: null, metadata: at(1050), routes: [
-        route(6, 'Follow-up page: best time to call', [[cond('{{2.medium}}', 'text:equal', 'Follow-up page')]],
-          '⏰ {{1.data.name}} picked a time: {{ifempty(1.data.best_time; "any time")}}', -600),
-        route(7, 'Turf cleaning lead', [[cond('{{2.service}}', 'text:equal', 'clean'), notUpdate]],
+        route(6, 'Turf cleaning lead', [[cond('{{2.service}}', 'text:equal', 'clean')]],
           '🧽 New turf cleaning lead: {{1.data.name}} · {{ifempty(1.data.size; "size not given")}} ({{2.medium}})', -300),
-        route(8, 'Membership lead', [[cond('{{2.service}}', 'text:equal', 'membership'), notUpdate]],
-          '📅 New membership lead: {{1.data.name}} · {{ifempty(1.data.plan_pick; "no plan picked")}} ({{2.medium}})', 0),
-        route(9, 'Putting green restoration lead', [[cond('{{2.service}}', 'text:equal', 'putting-green'), notUpdate]],
+        route(7, 'Membership lead', [[cond('{{2.service}}', 'text:equal', 'membership')]],
+          '📅 New membership lead: {{1.data.name}} · {{ifempty(1.data.dogs; "dogs not answered")}} ({{2.medium}})', 0),
+        route(8, 'Putting green restoration lead', [[cond('{{2.service}}', 'text:equal', 'putting-green')]],
           '⛳ Putting green restoration lead: {{1.data.name}} · {{ifempty(1.data.green_where; "location not given")}} ({{2.medium}})', 300),
-        route(10, 'Anything else', [[cond('{{2.service}}', 'text:equal', 'other'), notUpdate]],
+        route(9, 'Anything else', [[cond('{{2.service}}', 'text:equal', 'other')]],
           '📩 New Facebook lead: {{1.data.name}} ({{1.form_name}})', 600),
       ] },
     ],
@@ -262,10 +259,27 @@ const facebookBlueprint = (hook) => {
 
 /* Instant Form answers arrive keyed by Meta's field names, which are the question text in snake_case. */
 const key = (label) => label.toLowerCase().replace(/[^a-z0-9? ]/g, '').trim().replace(/\s+/g, '_');
-/* Keys and answer values checked against the three published forms on 2026-09-15: keys keep the "?", and each answer
-   arrives as its visible text. Make's lead bundle may hold answers as 1.data.<key> or as Meta's raw field_data list, so read either. */
+const token = (value) => value.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+/* Keys checked against the published forms on 2026-09-15. Make's lead bundle may hold answers as
+   1.data.<key> or in Meta's raw field_data list, so read either. Ads Manager sometimes saves multiple-choice
+   answers as underscored tokens; normalize those and the V1 wording to the canonical V2 labels here. */
 const field = (k) => `ifempty(get(1.data; ${q(k)}); first(first(map(1.field_data; "values"; "name"; ${q(k)}))))`;
-const answer = (slug, name) => iml(field(key(angle(slug).questions.find((x) => x.name === name).label)));
+const normalize = (raw, list) => {
+  const pairs = [];
+  list.forEach((choice) => {
+    const canonical = typeof choice === 'string' ? choice : choice.label;
+    const aliases = typeof choice === 'string' ? [choice] : [choice.label, choice.form].filter(Boolean);
+    [...new Set(aliases.flatMap((value) => [value, token(value)]))].forEach((value) => pairs.push([value.toLowerCase(), canonical]));
+  });
+  return `switch(lower(ifempty(${raw}; "")); ${pairs.map(([alias, canonical]) => `${q(alias)}; ${q(canonical)}`).join('; ')}; ifempty(${raw}; emptystring))`;
+};
+const answer = (slug, name) => {
+  const question = angle(slug).questions.find((x) => x.name === name);
+  return iml(normalize(field(key(question.label)), question.choices));
+};
+const legacyAnswer = (label, values) => iml(normalize(field(key(label)), values));
+const legacyPlans = [...M.map((m) => `${m.name} · ${money(m.monthly)}/mo`), 'Not sure yet'];
+const legacyGreenSizes = ['Under 300 sq ft', '300–600 sq ft', '600–1,000 sq ft', 'Over 1,000 sq ft', 'Not sure'];
 const feederBlueprint = (hook, url) => {
   const body = {
     form_name: 'instant-{{if(contains(lower(2.name); "membership"); "membership"; if(contains(lower(2.name); "putting"); "putting-green"; "clean"))}}',
@@ -274,8 +288,9 @@ const feederBlueprint = (hook, url) => {
     site_url: 'Facebook Instant Form',
     data: {
       name: iml(field('full_name')), phone: iml(field('phone_number')), email: iml(field('email')), zip: iml(field('zip_code')),
-      size: answer('clean', 'size'), dogs: answer('clean', 'dogs'), issue: answer('clean', 'issue'), plan_pick: answer('membership', 'plan_pick'),
-      green_size: answer('putting-green', 'green_size'), green_issue: answer('putting-green', 'green_issue'), green_where: answer('putting-green', 'green_where'),
+      size: answer('clean', 'size'), dogs: answer('membership', 'dogs'), issue: answer('clean', 'issue'),
+      plan_pick: legacyAnswer('Which plan sounds right?', legacyPlans),
+      green_size: legacyAnswer('How big is the green?', legacyGreenSizes), green_issue: answer('putting-green', 'green_issue'), green_where: answer('putting-green', 'green_where'),
       utm_source: '{{1.platform}}', utm_medium: 'instant_form', utm_campaign: '{{ifempty(1.campaignName; 1.campaign_name)}}', utm_content: '{{ifempty(1.adName; 1.ad_name)}}', utm_term: '{{ifempty(1.adsetName; 1.adset_name)}}',
       page: 'Instant Form: {{2.name}}', lead_id: '{{1.leadgenId}}',
     },
@@ -314,29 +329,28 @@ if (preview) {
   }));
   const fb = (form, data, extra = {}) => {
     const service = form.includes('membership') ? 'membership' : form.includes('putting') ? 'putting-green' : form.includes('clean') ? 'clean' : 'other';
-    const medium = form.includes('instant-') ? 'Facebook Instant Form' : form.includes('lp-') ? 'Website landing page' : form.includes('fb-') ? 'Follow-up page' : 'Website form';
-    const up = medium === 'Follow-up page';
+    const medium = form.includes('instant-') ? 'Facebook Instant Form' : form.includes('lp-') ? 'Website landing page' : 'Website form';
     const pick = (pairs, k, d) => (pairs.find(([x]) => x === k) || [0, d])[1];
     const green = (data.green_where || '').includes('HOA') ? 'Community green, so the quote starts with a site walk' : (data.green_where || '').includes('Golf') ? 'Business green, so the quote starts with a site walk' : `Typical backyard green restoration ${GREEN_RANGE}, quoted after a look`;
     const s = { clean: 'Turf cleaning', membership: 'Membership', 'putting-green': 'Putting green restoration' }[service];
     const badgeText = { 'putting-green': 'Green restoration' }[service] || s;
+    const q1 = { clean: ['Bothers them most', data.issue], membership: ['Dogs', data.dogs], 'putting-green': ['What the green is doing', data.green_issue] }[service];
+    const q2 = { clean: ['Turf size', data.size], membership: ['Turf size', data.size], 'putting-green': ['Where the green is', data.green_where] }[service];
+    const q3 = { clean: ['Dogs (legacy form)', data.dogs], membership: ['Plan selected (legacy form)', data.plan_pick], 'putting-green': ['Green size (legacy form)', data.green_size] }[service];
     return facebook({
-      kicker: up ? 'Picked a time to talk' : `New ${s.toLowerCase()} lead`, badge: (up ? 'Lead update' : badgeText).toUpperCase(),
-      accent: up ? '#4a5a45' : { membership: '#d6a816', 'putting-green': '#8ad132' }[service] || '#2e7a0b', accentInk: up || service === 'clean' ? '#ffffff' : '#0c1809',
+      kicker: `New ${s.toLowerCase()} lead`, badge: badgeText.toUpperCase(),
+      accent: { membership: '#d6a816', 'putting-green': '#8ad132' }[service] || '#2e7a0b', accentInk: service === 'clean' ? '#ffffff' : '#0c1809',
       name: data.name, zip: data.zip, when: 'Mon, Sep 14 · 2:41 PM', medium, platform: extra.platform || 'Facebook', digits: '8435550100', phone: data.phone, first: data.name.split(' ')[0], sms: smsText(enc(data.name.split(' ')[0])),
-      rowsTitle: up ? 'THEIR UPDATE' : 'THEIR ANSWERS',
-      q1Label: up ? 'Best time' : service === 'putting-green' ? 'Green size' : 'Turf size', q1: up ? data.best_time : service === 'putting-green' ? data.green_size : data.size,
-      q2Label: service === 'putting-green' ? 'What the green is doing' : 'Dogs', q2: service === 'putting-green' ? data.green_issue : data.dogs,
-      q3Label: { clean: 'Bothers them most', membership: 'Plan they picked', 'putting-green': 'Where the green is' }[service], q3: { clean: data.issue, membership: data.plan_pick, 'putting-green': data.green_where }[service],
-      hide: up ? 'display:none;' : '',
-      hintLabel: up ? 'Next' : { clean: 'Ballpark', membership: 'Suggested plan', 'putting-green': 'Restoration pricing' }[service],
-      hint: up ? 'Their answers came in with the first request. Match this to it by phone.' : { clean: pick(BALLPARK, data.size, 'Help them measure'), membership: pick(PLAN_BY_DOGS, data.dogs, 'Ask about dogs'), 'putting-green': green }[service],
+      rowsTitle: 'THEIR ANSWERS',
+      q1Label: q1[0], q1: q1[1], q2Label: q2[0], q2: q2[1], q3Label: q3[0], q3: q3[1] || '',
+      hideQ2: '', hideQ3: q3[1] ? '' : 'display:none;',
+      hintLabel: { clean: 'Ballpark', membership: 'Suggested plan', 'putting-green': 'Restoration pricing' }[service],
+      hint: { clean: pick(BALLPARK, data.size, 'Help them measure'), membership: pick(PLAN_BY_DOGS, data.dogs, 'Ask about dogs'), 'putting-green': green }[service],
       campaign: extra.campaign || 'General Cleaning', adset: extra.adset || 'Grand Strand · homeowners', ad: extra.ad || 'Before-after video', page: data.page, formName: form,
     });
   };
-  fs.writeFileSync(path.join(preview, 'fb-clean.html'), fb('lp-clean', { name: 'Jane Doe', phone: '843-555-0100', zip: '29577', size: sizes[1], dogs: '1 dog', issue: 'Pet odor', page: '/lp/clean/' }));
-  fs.writeFileSync(path.join(preview, 'fb-membership.html'), fb('instant-membership', { name: 'Marcus Lee', phone: '843-555-0142', zip: '29579', size: sizes[2], dogs: '2 or more dogs', plan_pick: `${M[2].name} · ${money(M[2].monthly)}/mo`, page: 'Instant Form: TTR · Turf membership' }, { platform: 'Instagram', campaign: 'Memberships', ad: 'Dog yard carousel' }));
-  fs.writeFileSync(path.join(preview, 'fb-green.html'), fb('lp-putting-green', { name: 'Dana Walsh', phone: '843-555-0199', zip: '29572', green_size: '300–600 sq ft', green_issue: 'Rolling slow', green_where: 'HOA or community', page: '/lp/putting-green/' }, { campaign: 'Putting Green Restoration', ad: 'Green roll video' }));
-  fs.writeFileSync(path.join(preview, 'fb-update.html'), fb('fb-clean', { name: 'Jane Doe', phone: '843-555-0100', zip: '29577', best_time: 'Evening', page: '/fb/clean/' }, { platform: 'Not tagged', campaign: 'Not tagged', adset: 'Not tagged', ad: 'Not tagged' }));
+  fs.writeFileSync(path.join(preview, 'fb-clean.html'), fb('lp-clean', { name: 'Jane Doe', phone: '843-555-0100', zip: '29577', size: sizes[1], issue: 'Pet odor', page: '/lp/clean/' }));
+  fs.writeFileSync(path.join(preview, 'fb-membership.html'), fb('instant-membership', { name: 'Marcus Lee', phone: '843-555-0142', zip: '29579', size: sizes[2], dogs: '2 or more dogs', page: 'Instant Form: TTR · Turf membership · V2' }, { platform: 'Instagram', campaign: 'Memberships', ad: 'Dog yard carousel' }));
+  fs.writeFileSync(path.join(preview, 'fb-green.html'), fb('lp-putting-green', { name: 'Dana Walsh', phone: '843-555-0199', zip: '29572', green_issue: 'Rolling slow', green_where: 'HOA or community', page: '/lp/putting-green/' }, { campaign: 'Putting Green Restoration', ad: 'Green roll video' }));
   console.log('previews in', preview);
 }

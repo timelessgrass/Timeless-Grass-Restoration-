@@ -18,16 +18,19 @@ const entry = path.join(dir, 'entry.ts');
 fs.writeFileSync(entry, `export * from ${JSON.stringify(path.join(root, 'src/data/campaigns.ts'))};\nexport { brand, SITE_URL, META_PIXEL_ID } from ${JSON.stringify(path.join(root, 'src/data/site.ts'))};\n`);
 const bundle = path.join(dir, 'kit.mjs');
 execFileSync(path.join(root, 'node_modules/.bin/esbuild'), [entry, '--bundle', '--format=esm', '--platform=node', `--outfile=${bundle}`, '--log-level=error']);
-const { ANGLES, REPLY_TIME, brand, SITE_URL, META_PIXEL_ID, followUpUrl, landingUrl } = await import(pathToFileURL(bundle).href);
+const { ANGLES, brand, SITE_URL, META_PIXEL_ID, followUpUrl, landingUrl } = await import(pathToFileURL(bundle).href);
 
 const today = new Date().toISOString().slice(0, 10);
 const plain = (s) => s.replace(/<[^>]+>/g, '');
 
 /* Settings shared by all three Instant Forms and every ad. */
 const SETTINGS = [
-  ['Form type', 'Higher intent', 'Adds a review screen before submit. Fewer leads, far fewer junk ones.'],
+  ['Form type', 'More volume', 'Keep the live form type while diagnosing; V2 reduces friction with two qualifying questions and clearer value copy.'],
+  ['Sharing', 'Restricted', 'Only people who receive the ad should open this lead form.'],
+  ['Language', 'English (US)', ''],
   ['Intro background image', "Use image from ad", ''],
   ['Contact information', 'Full name · Phone number · ZIP code', 'Leave email off: Brian calls or texts.'],
+  ['Contact information explanation', 'Brian, the owner, will use these details to call or text you about this request. No email required.', 'Add manually in Ads Manager if the API cannot set it.'],
   ['Privacy policy link text', 'Privacy policy', ''],
   ['Privacy policy URL', `${SITE_URL}/privacy/`, ''],
   ['Custom disclaimer title', 'Calls and texts', 'Optional. No consent checkbox.'],
@@ -43,10 +46,16 @@ const PARAMS = [
 ];
 const PARAM_STRING = 'utm_source={{site_source_name}}&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{adset.name}}';
 const CHECKLIST = [
+  'Use one conversion location per ad set. Do not leave "Website and instant forms" mixed: the first $77 sent every link click to an Instant Form, so that setup did not test the website at all.',
+  'At the current $30/day, test sequentially instead of dividing the budget across six paths. Start with the V2 cleaning Instant Form; after it has a real result baseline, run a separate website-only test against /lp/clean/. Membership is a better follow-up/retargeting offer than the first cold test.',
+  'Expand the location targeting beyond Myrtle Beach +25 miles to the actual service area: Shallotte, NC through Burgess, SC, including Conway, Loris and Longs inland. Keep people living in this area.',
+  'Turn off Standard Enhancements, video auto-crop, filtering and uncrop while diagnosing conversion. Keep the ad creative and destination message under your control.',
+  'Fix the existing membership website destination from /fb/membership/ to /lp/membership/. The /fb/ routes are only completion pages after a Meta Instant Form submission.',
+  'Add the full URL-parameter string below to every ad. Video 1 and Video 2 were missing it in the audited campaign.',
   `The site is live at ${SITE_URL} (www redirects there and keeps the tracking parameters). Use these exact links in Ads Manager.`,
-  `Calls and texts go to ${brand.phone}, a Colorado number. A local 843 number will convert better on the Grand Strand; changing it later means new Instant Forms.`,
-  'A published Instant Form cannot be edited. Proof every field before you publish; a fix means a new form.',
-  `The web pages say Brian replies "${REPLY_TIME}" and answer "Is it safe for kids and dogs?" with yes. Brian should confirm both (QUESTIONS-FOR-BRIAN #15 and #17). The Instant Forms avoid both.`,
+  `Calls and texts still go to ${brand.phone}, a Colorado number. Decide whether to adopt a local 843 number before publishing V2; changing it later means another set of forms.`,
+  'These are V2 replacement forms. A published Instant Form cannot be edited; keep the old forms in place until each V2 form passes a test lead.',
+  'The campaign pages intentionally make no reply-time or pet-safety promise until Brian confirms both items in QUESTIONS-FOR-BRIAN.',
   `Meta Pixel ${META_PIXEL_ID} is on every page. Website ads: optimize for the Lead event (fires only after a landing-page form submits). Taps on call and text links fire Contact.`,
   `Every lead goes to Make, which emails Brian: the website forms post straight to Make, and Instant Form leads are pulled from the Facebook Page. After publishing each Instant Form, send one test lead with Meta's Lead Ads Testing Tool and check the email (automations/make/README.md).`,
 ];
@@ -98,7 +107,7 @@ ANGLES.forEach((a, i) => {
   L(`- **Questions description:** ${cc(a.form.questionsIntro)}`);
   a.questions.forEach((q, j) => {
     L(`- **Custom question ${j + 1} (Multiple choice):** ${cc(q.label)}`);
-    q.choices.forEach((c) => L(`  - ${c.form ?? c.label}`));
+    q.choices.forEach((c) => L(`  - ${c.label}`));
   });
   L('- **Contact information:** Full name, Phone number, ZIP code');
   L(`- **Completion headline:** ${cc(a.form.ending.headline)}`);
@@ -145,7 +154,7 @@ if (out > -1) {
       row('Description', a.form.questionsIntro),
       ...a.questions.flatMap((q, j) => [
         row(`Question ${j + 1}`, q.label, { note: 'Multiple choice' }),
-        ...q.choices.map((c, n) => row(`  Answer ${n + 1}`, c.form ?? c.label)),
+        ...q.choices.map((c, n) => row(`  Answer ${n + 1}`, c.label)),
       ]),
       row('Contact information', 'Full name · Phone number · ZIP code', { count: false, copy: false }),
       group('Completion'),
@@ -223,7 +232,7 @@ a,button{-webkit-tap-highlight-color:transparent}
     <h2>How it fits together</h2>
     <div class="flow">${ANGLES.map((a, i) => `<div><b>${i + 1}. ${esc(a.name)}</b><p>Instant Form → <code>/fb/${a.slug}/</code></p><p>Website ad → <code>/lp/${a.slug}/</code></p></div>`).join('')}</div>
     <ul class="checks">${CHECKLIST.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>
-    ${card('All three Instant Forms', 'Same settings on each', SETTINGS.map(([k, v, n]) => row(k, v, { count: false, copy: !/^(Higher intent|Use image|Full name|View website)/.test(v), note: n })).join(''))}
+    ${card('All three Instant Forms', 'Same settings on each', SETTINGS.map(([k, v, n]) => row(k, v, { count: false, copy: !/^(More volume|Use image|Full name|View website)/.test(v), note: n })).join(''))}
     ${card('URL parameters, every ad', 'Tracking → Build a URL parameter', PARAMS.map(([k, v, n]) => row(k, v, { count: false, note: n })).join('') + row('Or the whole string', PARAM_STRING, { count: false }))}
   </section>
   ${angles}

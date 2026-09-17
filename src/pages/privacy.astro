@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { brand } from '../data/site';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Privacy', item: '/privacy/' }];
-const updated = 'September 12, 2026';
+const updated = 'September 17, 2026';
 ---
 <Base title={`Privacy | ${brand.name}`} description={`What the ${brand.name} quote and lead forms collect, where your details are kept, who sees them, and how to ask us to delete them.`} crumbs={crumbs}>
   <section class="sec"><div class="wrap prose">
@@ -10,11 +10,11 @@ const updated = 'September 12, 2026';
     <h1>What happens to your details</h1>
     <p>You give us your name and number so we can call you about your turf. Here is what the forms on this site collect and where it goes.</p>
     <h2>What the forms collect</h2>
-    <p>The quote form asks for your name, phone number, ZIP code, what you need, and optionally your email and a message. The follow-up form for people who reached us through a Facebook ad asks about turf size, pets, the problem, the best time to call, and your first name and phone. Each submission also records the page it was sent from.</p>
+    <p>The main quote form asks for your name, phone number, ZIP code, what you need, and optionally your email and a message. Campaign quote forms ask two questions about the requested service, followed by your name, phone number and ZIP code. Each submission also records its source page and ad-tracking parameters when they are present.</p>
     <h2>What we use it for</h2>
     <p>To call, text or email you about your quote and your turf. We do not sell or share your details with anyone else, and we do not add you to a mailing list.</p>
     <h2>Where it is kept</h2>
-    <p>The forms are handled by Netlify, the company that hosts this site, which stores each submission for us. If you reached us through a Facebook lead form, Meta also holds the details you entered there under its own policy.</p>
+    <p>Website submissions are sent to Make, which routes them to the business by email. The site is hosted by Netlify, but Netlify Forms is not used for these submissions. If you reached us through a Facebook or Instagram lead form, Meta also holds the details you entered there under its own policy and sends the lead to Make.</p>
     <h2>Other services this site uses</h2>
     <p>Fonts load from Google Fonts. Pages that came from a Facebook ad may carry the Meta Pixel so we can see whether the ad worked; it does not see what you type into our forms. This site runs no other analytics or advertising trackers.</p>
     <h2>Deleting your details</h2>

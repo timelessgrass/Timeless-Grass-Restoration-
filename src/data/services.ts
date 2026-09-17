@@ -56,7 +56,7 @@ export const SERVICES: Service[] = [
     faq: [
       { q: 'Do you pressure wash artificial grass?', a: `No. A pressure washer can blow out infill and separate seams. We use a low-pressure, high-volume rinse instead.` },
       { q: 'How long does a turf cleaning take?', a: `Two to four hours for most yards, and it's ready to use the same day, once dry.` },
-      { q: 'Is the cleaning safe for kids and dogs?', a: `Yes, once dry. Products are labeled for pet turf; tell us about any sensitivity and we'll adjust.` },
+      { q: 'What should I tell you before the cleaning?', a: `Tell us how kids and pets use the yard and about any known sensitivities. We choose the cleaning approach around the turf, its condition and how the space is used.` },
       { q: 'How often should artificial turf be professionally cleaned?', a: `Once or twice a year for a people-only yard; quarterly for one dog, and that same schedule kept without gaps for multiple.` },
     ],
     problems: ['artificial-grass-smells-like-dog-pee', 'black-patches-algae-on-artificial-grass', 'matted-artificial-grass-walking-paths', 'pine-needles-and-oak-leaves-on-turf'],

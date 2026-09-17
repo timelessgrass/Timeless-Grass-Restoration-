@@ -7,7 +7,7 @@ import Icon from '../components/Icon.astro';
 import { brand, area, pricing as P, money } from '../data/site';
 import { availableJobs } from '../lib/jobs';
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Free quote', item: '/quote/' }];
-const sms = `${brand.smsHref}?&body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos of my turf:')}`;
+const sms = `${brand.smsHref}?body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos of my turf:')}`;
 const jobs = availableJobs();
 ---
 <Base title={`Free Turf Cleaning Quote | ${brand.name}`} description={`Tell us about your turf and get an upfront price by square foot. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration from ${money(P.rows[0].premium!)}.`} crumbs={crumbs} robots="noindex, follow">

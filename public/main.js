@@ -162,8 +162,23 @@
   }
   $$('input[data-attr]').forEach((i) => { i.value = attr[i.name] || ''; });
 
-  // Meta Pixel: a tap on a phone or text link is a Contact
-  document.addEventListener('click', (e) => { if (window.fbq && e.target.closest('a[href^="tel:"], a[href^="sms:"]')) window.fbq('track', 'Contact'); });
+  // Meta Pixel: phone/text taps are Contacts. Follow-up pages add enough context to compare the actions
+  // without firing another Lead (Meta already counted the Instant Form submission).
+  const fb = (kind, event, data) => { if (window.fbq) window.fbq(kind, event, data); };
+  const followUp = $('[data-fb-followup]');
+  if (followUp) fb('trackCustom', 'InstantFormFollowUpView', { content_name: followUp.dataset.fbFollowup });
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[data-contact-method], a[href^="tel:"], a[href^="sms:"]');
+    if (!link) return;
+    const method = link.dataset.contactMethod || (link.getAttribute('href').startsWith('sms:') ? 'sms' : 'call');
+    const detail = {
+      content_name: link.dataset.contactAngle || followUp?.dataset.fbFollowup || 'site',
+      method,
+      location: link.dataset.contactLocation || 'unspecified',
+    };
+    if (method === 'call' || method === 'sms') fb('track', 'Contact', detail);
+    if (link.dataset.contactMethod) fb('trackCustom', 'FollowUpAction', detail);
+  });
 
   // Answer chips with a hint (a ballpark price, a plan): picking one shows it under the question
   $$('[data-hint-out]').forEach((out) => {
@@ -178,6 +193,18 @@
   // Two-step lead forms: answers first, then contact details (without JS both steps show)
   $$('form[data-steps]').forEach((form) => {
     const steps = $$('[data-step]', form), marks = $$('.lf__bar li', form);
+    let started = false;
+    form.addEventListener('change', (e) => {
+      const radio = e.target.closest('input[type="radio"]');
+      if (!radio) return;
+      const error = $('[data-q-error]', radio.closest('fieldset'));
+      if (error) error.hidden = true;
+      radio.closest('fieldset').removeAttribute('aria-invalid');
+      if (!started) {
+        started = true;
+        fb('trackCustom', 'LeadFormStart', { content_name: form.getAttribute('name') });
+      }
+    });
     const go = (n, move) => {
       steps.forEach((s, i) => { s.hidden = i !== n; });
       marks.forEach((m, i) => m.classList.toggle('is-on', i <= n));
@@ -185,18 +212,21 @@
       if (form.getBoundingClientRect().top < 0) form.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
       $('input', steps[n])?.focus({ preventScroll: true });
     };
-    $$('[data-next]', form).forEach((b) => b.addEventListener('click', () => go(1, true)));
+    $$('[data-next]', form).forEach((b) => b.addEventListener('click', () => {
+      const missing = $$('fieldset.q', steps[0]).find((field) => !$('input[type="radio"]:checked', field));
+      $$('[data-q-error]', steps[0]).forEach((error) => { error.hidden = true; error.closest('fieldset').removeAttribute('aria-invalid'); });
+      if (missing) {
+        missing.setAttribute('aria-invalid', 'true');
+        $('[data-q-error]', missing).hidden = false;
+        $('input[type="radio"]', missing)?.focus({ preventScroll: true });
+        missing.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+        return;
+      }
+      fb('trackCustom', 'LeadFormContactStep', { content_name: form.getAttribute('name') });
+      go(1, true);
+    }));
     $$('[data-back]', form).forEach((b) => b.addEventListener('click', () => go(0, true)));
     go(0);
-  });
-
-  // "Choose this plan" links: tick the matching answer in the form they scroll to
-  document.addEventListener('click', (e) => {
-    const b = e.target.closest('[data-pick]');
-    if (!b) return;
-    const [name, value] = b.dataset.pick.split('=');
-    const r = $$(`input[name="${name}"]`).find((i) => i.value === value);
-    if (r) { r.checked = true; r.dispatchEvent(new Event('change')); }
   });
 
   // Lead forms post straight to Make (automations/make/README.md) as { form_name, created_at, site_url, data }.

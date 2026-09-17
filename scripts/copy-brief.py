@@ -10,9 +10,9 @@ from html.parser import HTMLParser
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://timelessturfrestoration.com'
 ANGLES = [
-    ('clean', 'Turf cleaning quote', 'TTR · Turf cleaning quote'),
-    ('membership', 'Turf membership', 'TTR · Turf membership'),
-    ('putting-green', 'Putting green restoration', 'TTR · Putting green restoration'),
+    ('clean', 'Turf cleaning quote', 'TTR · Turf cleaning quote · V2'),
+    ('membership', 'Turf membership', 'TTR · Turf membership · V2'),
+    ('putting-green', 'Putting green restoration', 'TTR · Putting green restoration · V2'),
 ]
 
 BLOCK = {'h1', 'h2', 'h3', 'p', 'li', 'summary', 'figcaption', 'th', 'td', 'caption'}
@@ -170,17 +170,16 @@ Plain, specific, second person, like a tradesman explaining it at the kitchen ta
 - Bleach, pressure washing, wire brushes or acid as advice.
 - The words elevate, seamless, unlock, delve, robust, leverage, game-changer, look no further.
 
-## Not confirmed by Brian yet (avoid, or flag if you use them)
+## Not confirmed by Brian yet (do not use)
 
-- Reply time ("within one business day" appears on the pages today).
-- "Pet-safe / safe for kids and dogs once dry" (appears in the FAQ today).
+- Reply time and product-safety claims are deliberately excluded from campaign copy until Brian confirms them.
 - Membership cancellation terms or "no contract"; what the ELITE 10% covers beyond add-ons; what Pet Turf ELITE adds.
 - Trip charges, free on-site visits, how fast a visit can be booked.
 
 ## Locked (the lead routing depends on these)
 
 - Every form question and answer, word for word. The same wording is used in the Meta Instant Forms and by the Make automation that emails Brian; changing a word breaks the routing and the ballpark in his email.
-- Form names (lp-clean, lp-membership, lp-putting-green, fb-clean, fb-membership, fb-putting-green) and the Instant Form names (they must contain "cleaning", "membership" or "putting").
+- Website form names (`lp-clean`, `lp-membership`, `lp-putting-green`) and the V2 Instant Form names (they must contain "cleaning", "membership" or "putting").
 - Prices, plan names and plan contents: they come from the sitewide price data and must match the pricing page.
 - A published Instant Form can't be edited, so Instant Form copy changes mean new forms.
 
@@ -190,10 +189,10 @@ Plain, specific, second person, like a tradesman explaining it at the kitchen ta
 |---|---|---|
 """]
 for slug, name, form in ANGLES:
-    out.append(f"| {name} | {SITE}/lp/{slug}/ (form `lp-{slug}`) | Instant Form \"{form}\" → completion button → {SITE}/fb/{slug}/ (optional best-time form `fb-{slug}`) |\n")
+    out.append(f"| {name} | {SITE}/lp/{slug}/ (form `lp-{slug}`) | Instant Form \"{form}\" → completion button → {SITE}/fb/{slug}/ |\n")
 out.append("""
-- **Landing page** (`/lp/`): for ads whose destination is the website. No site navigation. The form sits in the first screen: step 1 taps the three questions (a hint appears under each answer), step 2 asks name, phone and ZIP. Submitting sends the lead to Make, which emails Brian, and fires the Meta Pixel "Lead" event. The visitor then sees "You're in, <name>!" with Save the number and Text photos buttons.
-- **Follow-up page** (`/fb/`): where people land after already submitting the Instant Form on Facebook. The job is to make sure they answer Brian's call (save the number), get photos texted in, set expectations and handle doubts. An optional "When should Brian call?" form sends a lead update to Brian. Call and text taps fire the Pixel "Contact" event.
+- **Landing page** (`/lp/`): for ads whose destination is the website. No site navigation. The form sits in the first screen: step 1 asks two multiple-choice questions, step 2 asks first name, phone and ZIP. Submitting sends the lead to Make, which emails Brian, and fires the Meta Pixel "Lead" event only after Make accepts it. The visitor then sees a confirmation with Save the number and Text photos buttons.
+- **Follow-up page** (`/fb/`): where people land after already submitting the Instant Form on Facebook. The primary next step is texting Brian three useful photos. The page also explains the process, lets the visitor save Brian's number or choose a preferred contact time by prefilled text, and handles common doubts. It never fires another Lead event; call and text taps fire Contact, while follow-up views and actions use custom events.
 """)
 for i, (slug, name, form) in enumerate(ANGLES, 1):
     out.append(f"\n---\n\n## {i}. {name}\n\n**Who lands here:** {AUDIENCE[slug]}\n\n**Offer and proof:** {OFFER[slug]}\n\n")

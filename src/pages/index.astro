@@ -241,7 +241,7 @@ const quiz = {
       <ul class="form-side">
         <li><Icon name="ruler" /><div><b>Priced by square foot</b><span>Never by the hour.</span></div></li>
         <li><Icon name="tag" /><div><b>Price before any work starts</b><span>You approve any add-on first.</span></div></li>
-        <li><Icon name="chat" /><div><b>Rather send photos?</b><span><a class="textlink" href={`${brand.smsHref}?&body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos:')}`} data-cta="sms-quote">Text {brand.phone}</a></span></div></li>
+        <li><Icon name="chat" /><div><b>Rather send photos?</b><span><a class="textlink" href={`${brand.smsHref}?body=${encodeURIComponent('Hi Brian, I would like a turf cleaning quote. Here are a few photos:')}`} data-cta="sms-quote">Text {brand.phone}</a></span></div></li>
       </ul>
     </div>
     <QuoteForm />

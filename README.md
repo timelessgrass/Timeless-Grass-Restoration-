@@ -10,7 +10,7 @@ npm run dev      # http://localhost:4321
 npm run build    # -> dist/
 ```
 
-Netlify: build `npm run build`, publish `dist` (declared in `netlify.toml`). Two Netlify Forms: `quote` (home and /quote/) and `fb-followup` (/fb/). Enable form notifications after the first deploy.
+Netlify: build `npm run build`, publish `dist` (declared in `netlify.toml`). Website lead forms post directly to the Make webhooks in `src/data/site.ts`; the Meta Instant Form feeder and email routing live in `automations/make/`.
 
 ## Before launch (all in `src/data/site.ts`)
 

@@ -9,7 +9,7 @@ Three scenarios live in Make: To The Max Media, zone us2, team "My Team", folder
 | Scenario | ID | Trigger | What it does |
 |---|---|---|---|
 | Organic website lead → Brian | 6272666 | Webhook `https://hook.us2.make.com/2rtexoaexdzczor72y9xtw2xyo29pf42` | The `quote` form (home page and /quote/) → one email |
-| Facebook leads → route by medium & service → Brian | 6272684 | Webhook `https://hook.us2.make.com/6sad5csnuuzxxnwzfnao957roumxfdky` | Landing page forms `lp-*`, follow-up forms `fb-*`, and Instant Form leads from the feeder → router → email |
+| Facebook leads → route by medium & service → Brian | 6272684 | Webhook `https://hook.us2.make.com/6sad5csnuuzxxnwzfnao957roumxfdky` | Landing page forms `lp-*` and Instant Form leads from the feeder → router → email |
 | Instant Form leads → Facebook lead router | 6272696 | Facebook Lead Ads, page "Timeless Restoration" (1360007903856817), every form | Looks up the form name, reshapes the lead like a website submission, posts it to the router webhook |
 
 ## What the website sends
@@ -24,10 +24,9 @@ The browser silently skips sending when the trap is filled. Instant Form leads s
 
 ## How the Facebook router decides
 
-1. **Medium**, from the form name: `instant-*` Facebook Instant Form, `lp-*` website landing page, `fb-*` follow-up page.
+1. **Medium**, from the form name: `instant-*` Facebook Instant Form or `lp-*` website landing page.
 2. **Service**, also from the form name: contains `membership`, `putting`, or `clean`.
 3. Routes:
-   - Follow-up page (best time to call)
    - Turf cleaning (with a ballpark price from the size answer)
    - Membership (with a suggested plan from the dogs answer)
    - Putting green (flags HOA and golf greens for a site walk)
@@ -36,13 +35,13 @@ The browser silently skips sending when the trap is filled. Instant Form leads s
    Each route has its own subject line. The email body is built once (module 4) with the service's colour, answers and hint.
 4. **Ad attribution** comes from the URL parameters on the ad (`utm_source` `{{site_source_name}}`, `utm_campaign`, `utm_term` ad set, `utm_content` ad), which the landing page form carries. For Instant Forms it comes from the lead itself.
 
-Instant Form names must contain `cleaning`, `membership` or `putting` (the kit's `TTR · Turf cleaning quote`, `TTR · Turf membership`, `TTR · Putting green restoration` do).
+Instant Form names must contain `cleaning`, `membership` or `putting` (the kit's V2 names do).
 
 ## Instant Forms
 
-Checked on 2026-09-15 against the three published forms: cleaning `1436778848336765`, membership `984843124016157`, putting green `1383462950568116`.
-- Every question key matches what the feeder reads (`about_how_big_is_the_turf?`, `do_dogs_use_it?`, `how_big_is_the_green?` and so on, "?" included), plus `full_name`, `phone_number` and `zip_code`.
-- Each answer arrives as its visible text ("500–1,000 sq ft"), so the ballpark and plan lookups match.
+The three V1 published forms checked on 2026-09-15 are cleaning `1436778848336765`, membership `984843124016157`, and putting green `1383462950568116`. Do not delete or replace them in ads until the V2 forms pass end-to-end tests.
+- The feeder accepts the V2 question set and retains aliases for the V1 plan, dog and green-size fields during the transition.
+- It normalizes both visible answers (for example, `501–1,000 sq ft`) and Ads Manager's underscored tokens (for example, `501_1_000_sq_ft`) to the canonical label before routing.
 - The feeder reads each answer from `1.data.<key>` or, failing that, Meta's raw `field_data` list.
 
 Send a test lead per form with Meta's [Lead Ads Testing Tool](https://developers.facebook.com/tools/lead-ads-testing). If a row says "Not answered", open the feeder's last run in Make and compare module 1's output with module 3's JSON body.

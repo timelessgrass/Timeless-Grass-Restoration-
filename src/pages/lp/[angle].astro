@@ -22,7 +22,6 @@ const { a } = Astro.props as { a: Angle };
 const img = a.lp.image;
 const og = img.src.includes('/jobs/') ? img.src.replace('-640.webp', '.jpg') : img.src;
 const green = SERVICES.find((s) => s.slug === 'putting-green-restoration')!;
-const planQ = a.questions.find((q) => q.name === 'plan_pick');
 const R = P.rows, M = P.memberships;
 const fin = FINAL[a.slug];
 ---
@@ -91,7 +90,7 @@ const fin = FINAL[a.slug];
           <p class="plan__price">{money(m.monthly)}<span class="mo">/mo</span><small>{money(m.monthly * 12)} a year</small></p>
           <ul>{m.includes.map((x) => <li class:list={{ all: x.startsWith('Everything') }}>{x}</li>)}</ul>
           {'note' in m && m.note && <p class="plan__note">{m.note}</p>}
-          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href="#quote" data-pick={planQ && `${planQ.name}=${planQ.choices[i].label}`} data-cta="lp-plan">Choose {m.name}</a>
+          <a class:list={['btn', i === 1 ? 'btn--green' : 'btn--ghost']} href="#quote" data-cta="lp-plan">Ask about {m.name}</a>
         </article>
       ))}
     </div>
@@ -118,7 +117,7 @@ const fin = FINAL[a.slug];
         </ul>
       </div>
     </div>
-    <p class="note">Not sure? Pick "Not sure yet" in the form and {brand.owner} will recommend one.</p>
+    <p class="note">Not sure? Answer the two questions in the form and {brand.owner} will recommend one.</p>
   </div>
 </section>
 )}
