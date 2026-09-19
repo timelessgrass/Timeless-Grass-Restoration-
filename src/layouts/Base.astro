@@ -97,6 +97,7 @@ if (schema?.length) graph.push(...schema);
     stylesheet used to block rendering for about a second on mobile. */}
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/poppins-400.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/poppins-700.woff2" crossorigin>
+{META_PIXEL_ID && <link rel="preconnect" href="https://connect.facebook.net" crossorigin />}
 <link rel="stylesheet" href="/styles.css">
 <script is:inline>document.documentElement.classList.add('js')</script>
 <script is:inline src="/main.js" defer></script>
