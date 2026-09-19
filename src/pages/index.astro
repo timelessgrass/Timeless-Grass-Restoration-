@@ -16,7 +16,11 @@ import { ALL_TOWNS as TOWNS, ALL_PROBLEMS as PROBLEMS } from '../data/registry';
 import { SERVICE_ICON, iconFor } from '../lib/icons';
 import { teaser } from '../lib/text';
 import { availableJobs } from '../lib/jobs';
+import { photo } from '../lib/img';
 
+/* How wide these photos actually render, so the browser can pick the right cut (src/lib/img.ts). */
+const WORK_SIZES = '(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 280px';
+const SPLIT_SIZES = '(max-width: 900px) 92vw, 460px';
 const q = `Who cleans artificial turf on ${area.name}?`;
 const a = `${brand.name} deep-cleans, deodorizes and restores artificial turf and synthetic putting greens across ${area.name}, from Shallotte, NC to Burgess, SC and inland to Conway and Loris. Owner-operated by ${brand.owner}, who has built turf for ${brand.ownerYears} years. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration with pet-odor treatment from ${money(P.rows[0].premium!)}, priced by square foot before any work starts. Call ${brand.phone}.`;
 const faq = [
@@ -69,7 +73,7 @@ const quiz = {
       </div>
     </div>
     <div class="hero__media">
-      <div class="hero__img intro-media"><img src="/assets/img/backyard-putting-green-landscaped-boulders.jpg" width="1400" height="1050" alt="Backyard putting green framed by landscaped boulders" fetchpriority="high"></div>
+      <div class="hero__img intro-media"><img {...photo('/assets/img/backyard-putting-green-landscaped-boulders.jpg', '(max-width: 900px) 92vw, 560px')} alt="Backyard putting green framed by landscaped boulders" fetchpriority="high" decoding="async"></div>
       <div class="hero__badge intro"><Icon name="sparkle" /><div><strong>Blown clean.</strong><small>The finish standard on every job.</small></div></div>
     </div>
   </div>
@@ -92,10 +96,10 @@ const quiz = {
     <div class="wrap">
       <div class="sec__head" data-reveal><p class="kicker">Our work</p><h2>Lawns and greens, kept like new</h2></div>
       <div class="work" data-stagger>
-        <figure><img src="/assets/img/putting-green-at-sunset-wide.jpg" alt="Backyard putting green at sunset" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>A green that has been blown clean.</figcaption></figure>
-        <figure><img src="/assets/img/backyard-putting-green-from-the-street.jpg" alt="Backyard putting green seen from the street" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>Fringe, collar and cups kept clear.</figcaption></figure>
-        <figure><img src="/assets/img/practice-nets-and-goals-on-turf.jpg" alt="Practice nets and goals on artificial turf" width="1050" height="1400" loading="lazy" decoding="async"><figcaption>Sports turf: groomed, infill level.</figcaption></figure>
-        <figure><img src="/assets/img/artificial-turf-backyard-patio.jpg" alt="Artificial turf lawn beside a patio" width="1400" height="1050" loading="lazy" decoding="async"><figcaption>Fibers upright, edges tight.</figcaption></figure>
+        <figure><img {...photo('/assets/img/putting-green-at-sunset-wide.jpg', WORK_SIZES)} alt="Backyard putting green at sunset" loading="lazy" decoding="async"><figcaption>A green that has been blown clean.</figcaption></figure>
+        <figure><img {...photo('/assets/img/backyard-putting-green-from-the-street.jpg', WORK_SIZES)} alt="Backyard putting green seen from the street" loading="lazy" decoding="async"><figcaption>Fringe, collar and cups kept clear.</figcaption></figure>
+        <figure><img {...photo('/assets/img/practice-nets-and-goals-on-turf.jpg', WORK_SIZES)} alt="Practice nets and goals on artificial turf" loading="lazy" decoding="async"><figcaption>Sports turf: groomed, infill level.</figcaption></figure>
+        <figure><img {...photo('/assets/img/artificial-turf-backyard-patio.jpg', WORK_SIZES)} alt="Artificial turf lawn beside a patio" loading="lazy" decoding="async"><figcaption>Fibers upright, edges tight.</figcaption></figure>
       </div>
     </div>
   </section>
@@ -189,7 +193,7 @@ const quiz = {
       <a class="btn btn--ghost btn--lg" href="/about/">More about {brand.owner}<Icon name="arrow" /></a>
     </div>
     <figure class="photo" data-reveal="scale">
-      <img src="/assets/img/putting-green-fire-pit-stone-wall.jpg" width="1400" height="1050" alt="Putting green beside a fire pit and stone wall" loading="lazy" decoding="async">
+      <img {...photo('/assets/img/putting-green-fire-pit-stone-wall.jpg', SPLIT_SIZES)} alt="Putting green beside a fire pit and stone wall" loading="lazy" decoding="async">
       <figcaption><b>Putting greens are our specialty.</b> Cleaned and restored to the standard they are built to.</figcaption>
     </figure>
   </div>
@@ -222,7 +226,7 @@ const quiz = {
       </div>
     </div>
     <figure class="photo" data-reveal="scale">
-      <img src="/assets/img/putting-green-shared-amenity-lawn.jpg" width="1050" height="1400" alt="Putting green on a shared community lawn" loading="lazy" decoding="async">
+      <img {...photo('/assets/img/putting-green-shared-amenity-lawn.jpg', SPLIT_SIZES)} alt="Putting green on a shared community lawn" loading="lazy" decoding="async">
       <figcaption><b>Homes, HOAs, rentals &amp; commercial.</b> Same crew, same standard.</figcaption>
     </figure>
   </div>

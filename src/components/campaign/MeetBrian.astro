@@ -7,7 +7,7 @@ const { cream = false, green = false } = Astro.props;
 <section class:list={['sec', { 'sec--cream': cream }]}>
   <div class="wrap split">
     <figure class="photo" data-reveal="scale">
-      <img src="/assets/img/putting-green-at-sunset-wide.jpg" width="1400" height="1050" alt="Backyard putting green at sunset" loading="lazy" decoding="async">
+      <img src="/assets/img/putting-green-at-sunset-wide-960.webp" srcset="/assets/img/putting-green-at-sunset-wide-480.webp 480w, /assets/img/putting-green-at-sunset-wide-960.webp 960w, /assets/img/putting-green-at-sunset-wide-1400.webp 1400w" sizes="(max-width: 900px) 92vw, 420px" width="1400" height="1050" alt="Backyard putting green at sunset" loading="lazy" decoding="async">
       <figcaption><b>Blown clean.</b> The finish on every job.</figcaption>
     </figure>
     <div data-reveal>

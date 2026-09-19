@@ -12,7 +12,7 @@ const img = (file: string, size = '') => `/assets/img/jobs/${file}${size}.webp`;
     {items.map((j) => (
       <figure class="proof__item">
         <button class="proof__btn" type="button" data-lightbox={img(j.file)} data-alt={j.alt} aria-label={`Enlarge photo: ${j.alt}`}>
-          <img src={img(j.file, '-640')} srcset={`${img(j.file, '-640')} 640w, ${img(j.file)} 1080w`} sizes="(max-width: 640px) 92vw, 380px" alt={j.alt} width="1080" height="1080" loading="lazy" decoding="async">
+          <img src={img(j.file, '-640')} srcset={`${img(j.file, '-480')} 480w, ${img(j.file, '-640')} 640w, ${img(j.file, '-960')} 960w`} sizes="(max-width: 640px) 92vw, 380px" alt={j.alt} width="1080" height="1080" loading="lazy" decoding="async">
         </button>
         <figcaption><b>{j.title}</b>{' '}{j.caption}</figcaption>
       </figure>

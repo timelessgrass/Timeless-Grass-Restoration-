@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { photo } from '../lib/img';
 interface Props { kicker: string; h2: string; items: { href: string; title: string; blurb: string; image?: string }[] }
 const { kicker, h2, items } = Astro.props;
 /* Photos only when every card has one: a mixed row leaves blank space under the text-only cards. */
@@ -9,7 +10,7 @@ const allImg = items.every((it) => it.image);
   <div class="wrap">
     <div class="sec__head" data-reveal><p class="kicker">{kicker}</p><h2>{h2}</h2></div>
     <div class="rel" data-stagger>
-      {items.map((it) => <a class="rel__card" href={it.href}>{allImg && <img src={it.image} alt="" width="700" height="500" loading="lazy" decoding="async">}<div><h3>{it.title}</h3><p>{it.blurb}</p><span class="rel__more">Read more<Icon name="arrow" class="ic--sm" /></span></div></a>)}
+      {items.map((it) => <a class="rel__card" href={it.href}>{allImg && <img {...photo(it.image!, '(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 340px')} alt="" loading="lazy" decoding="async">}<div><h3>{it.title}</h3><p>{it.blurb}</p><span class="rel__more">Read more<Icon name="arrow" class="ic--sm" /></span></div></a>)}
     </div>
   </div>
 </section>}

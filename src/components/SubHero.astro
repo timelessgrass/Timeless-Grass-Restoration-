@@ -2,6 +2,7 @@
 import Crumbs from './Crumbs.astro';
 import Icon from './Icon.astro';
 import { brand } from '../data/site';
+import { photo } from '../lib/img';
 interface Props {
   kicker: string; h1: string; lede: string;
   crumbs?: { name: string; item: string }[];
@@ -30,7 +31,7 @@ const quote = plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/';
         </div>}
         <slot />
       </div>
-      {image && <div class="sub-hero__media intro-media"><img src={image.src} alt={image.alt} width="1400" height="1050" fetchpriority="high" decoding="async"></div>}
+      {image && <div class="sub-hero__media intro-media"><img {...photo(image.src, '(max-width: 900px) 92vw, 520px')} alt={image.alt} fetchpriority="high" decoding="async"></div>}
     </div>
   </div>
 </section>
