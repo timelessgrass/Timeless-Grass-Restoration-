@@ -21,6 +21,7 @@ import { photo } from '../lib/img';
 /* How wide these photos actually render, so the browser can pick the right cut (src/lib/img.ts). */
 const WORK_SIZES = '(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 280px';
 const SPLIT_SIZES = '(max-width: 900px) 92vw, 460px';
+const hero = photo('/assets/img/backyard-putting-green-landscaped-boulders.jpg', '(max-width: 900px) 92vw, 560px');
 const q = `Who cleans artificial turf on ${area.name}?`;
 const a = `${brand.name} deep-cleans, deodorizes and restores artificial turf and synthetic putting greens across ${area.name}, from Shallotte, NC to Burgess, SC and inland to Conway and Loris. Owner-operated by ${brand.owner}, who has built turf for ${brand.ownerYears} years. Essential Clean from ${money(P.rows[0].essential!)}, Premium Restoration with pet-odor treatment from ${money(P.rows[0].premium!)}, priced by square foot before any work starts. Call ${brand.phone}.`;
 const faq = [
@@ -55,6 +56,9 @@ const quiz = {
 };
 ---
 <Base title="Turf Cleaning Myrtle Beach & the Grand Strand | TIMELESS" description={`Deep artificial turf cleaning, pet odor removal and putting green restoration from Shallotte to Burgess. Owner-operated, 13 years in turf. From $199.`} answer={{ question: q, answer: a }} faq={faq}>
+{/* The hero photo is the Largest Contentful Paint element; preloading it starts the download with the
+    HTML instead of after the stylesheet (Lighthouse measured a second of load delay). */}
+<link slot="head" rel="preload" as="image" href={hero.src} imagesrcset={hero.srcset} imagesizes={hero.sizes} fetchpriority="high">
 <section class="hero">
   <div class="wrap hero__grid">
     <div class="hero__copy">
@@ -73,7 +77,7 @@ const quiz = {
       </div>
     </div>
     <div class="hero__media">
-      <div class="hero__img intro-media"><img {...photo('/assets/img/backyard-putting-green-landscaped-boulders.jpg', '(max-width: 900px) 92vw, 560px')} alt="Backyard putting green framed by landscaped boulders" fetchpriority="high" decoding="async"></div>
+      <div class="hero__img intro-media"><img {...hero} alt="Backyard putting green framed by landscaped boulders" fetchpriority="high" decoding="async"></div>
       <div class="hero__badge intro"><Icon name="sparkle" /><div><strong>Blown clean.</strong><small>The finish standard on every job.</small></div></div>
     </div>
   </div>
