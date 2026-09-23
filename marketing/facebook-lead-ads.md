@@ -1,6 +1,6 @@
 # Facebook lead ads: copy for Ads Manager
 
-Generated 2026-09-17 from `src/data/campaigns.ts` by `node scripts/campaign-kit.mjs`. Don't edit this file by hand: change the data file and run the script, so the forms keep matching the pages.
+Generated 2026-09-23 from `src/data/campaigns.ts` by `node scripts/campaign-kit.mjs`. Don't edit this file by hand: change the data file and run the script, so the forms keep matching the pages.
 
 ## How the campaign fits together
 
@@ -31,8 +31,8 @@ Generated 2026-09-17 from `src/data/campaigns.ts` by `node scripts/campaign-kit.
 - **Sharing:** Restricted (Only people who receive the ad should open this lead form.)
 - **Language:** English (US)
 - **Intro background image:** Use image from ad
-- **Contact information:** Full name · Phone number · ZIP code (Leave email off: Brian calls or texts.)
-- **Contact information explanation:** Brian, the owner, will use these details to call or text you about this request. No email required. (Add manually in Ads Manager if the API cannot set it.)
+- **Contact information:** Full name · Phone number · ZIP code · Email (Email is on the V3 cleaning form; add it to the others when you rebuild them.)
+- **Contact information explanation:** Brian, the owner, will use these details to call, text or email you about this request. (Add manually in Ads Manager if the API cannot set it.)
 - **Privacy policy link text:** Privacy policy
 - **Privacy policy URL:** https://timelessturfrestoration.com/privacy/
 - **Custom disclaimer title:** Calls and texts (Optional. No consent checkbox.)
@@ -81,7 +81,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
   - 2,001–5,000 sq ft
   - Over 5,000 sq ft
   - Not sure
-- **Contact information:** Full name, Phone number, ZIP code
+- **Contact information:** Full name, Phone number, ZIP code, Email (the V3 cleaning form asks for email; the others do not)
 - **Completion headline:** Brian has your turf request.  `28 chars`
 - **Completion description:** He'll call or text from 303-349-2368 to discuss the right clean and your price. Tap below to save his number and see which photos help.  `135 chars`
 - **Completion button:** View website · text "See next steps" · link https://timelessturfrestoration.com/fb/clean/
@@ -123,7 +123,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
   - 2,001–5,000 sq ft
   - Over 5,000 sq ft
   - Not sure
-- **Contact information:** Full name, Phone number, ZIP code
+- **Contact information:** Full name, Phone number, ZIP code, Email (the V3 cleaning form asks for email; the others do not)
 - **Completion headline:** Brian has your plan request.  `28 chars`
 - **Completion description:** He'll call or text from 303-349-2368 to recommend a plan for your yard and dogs. Tap below to compare the plans and save his number.  `132 chars`
 - **Completion button:** View website · text "Compare the plans" · link https://timelessturfrestoration.com/fb/membership/
@@ -164,7 +164,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
   - Backyard
   - HOA or community
   - Golf course or business
-- **Contact information:** Full name, Phone number, ZIP code
+- **Contact information:** Full name, Phone number, ZIP code, Email (the V3 cleaning form asks for email; the others do not)
 - **Completion headline:** Brian has your green request.  `29 chars`
 - **Completion description:** He'll call or text from 303-349-2368 to discuss what the green needs and quote the restoration. Tap below to see which photos help.  `131 chars`
 - **Completion button:** View website · text "See photo guide" · link https://timelessturfrestoration.com/fb/putting-green/

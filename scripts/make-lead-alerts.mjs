@@ -161,6 +161,7 @@ const facebook = (v) => email({
     { label: v.q2Label, value: v.q2, style: v.hideQ2 },
     { label: v.q3Label, value: v.q3, style: v.hideQ3 },
     { label: 'Phone', value: link(`tel:${v.digits}`, v.phone) },
+    { label: 'Email', value: link(`mailto:${v.emailRaw}`, v.email), style: v.hideEmail },
     { label: 'ZIP code', value: v.zip, last: true },
   ],
   hint: `${v.hintLabel}: <b>${v.hint}</b>`,
@@ -171,6 +172,7 @@ const facebookMake = facebook({
   kicker: iml('3.kicker'), badge: iml('upper(3.label)'), accent: iml('3.accent'), accentInk: iml('3.accent_ink'),
   name: safe('1.data.name'), zip: safe('ifempty(1.data.zip; "not given")'), when: iml('2.when'), medium: iml('2.medium'), platform: safe('2.platform'),
   digits: safe('2.digits'), phone: safe('1.data.phone'), first: safe('2.first'), sms: smsText(iml('encodeURL(2.first)')),
+  emailRaw: safe('1.data.email'), email: safe('1.data.email'), hideEmail: iml('3.hide_email'),
   rowsTitle: iml('3.rows_title'), q1Label: iml('3.q1_label'), q1: safe('3.q1'), q2Label: iml('3.q2_label'), q2: safe('3.q2'), q3Label: iml('3.q3_label'), q3: safe('3.q3'), hideQ2: iml('3.hide_q2'), hideQ3: iml('3.hide_q3'),
   hintLabel: iml('3.hint_label'), hint: iml('3.hint'),
   campaign: safe('2.campaign'), adset: safe('2.adset'), ad: safe('2.ad'), page: safe('2.page'), formName: safe('1.form_name'),
@@ -202,6 +204,8 @@ const SERVICE_VARS = [
   ['q3', 'switch(2.service; "clean"; ifempty(1.data.dogs; emptystring); "membership"; ifempty(1.data.plan_pick; emptystring); "putting-green"; ifempty(1.data.green_size; emptystring); emptystring)'],
   ['hide_q2', 'if(2.service = "other"; "display:none;"; "")'],
   ['hide_q3', 'if(2.service = "other"; "display:none;"; if(2.service = "clean"; if(ifempty(1.data.dogs; emptystring) = emptystring; "display:none;"; ""); if(2.service = "membership"; if(ifempty(1.data.plan_pick; emptystring) = emptystring; "display:none;"; ""); if(ifempty(1.data.green_size; emptystring) = emptystring; "display:none;"; ""))))'],
+  /* The V3 cleaning Instant Form collects an email; the other forms and the landing pages don't, so the row hides itself. */
+  ['hide_email', 'if(ifempty(1.data.email; emptystring) = emptystring; "display:none;"; "")'],
   ['hint_label', 'switch(2.service; "clean"; "Ballpark"; "membership"; "Suggested plan"; "putting-green"; "Restoration pricing"; "Next")'],
   ['hint', `switch(2.service; "clean"; ${ballparkIml}; "membership"; ${planIml}; "putting-green"; ${greenIml}; "Call and ask what they need.")`],
 ];
@@ -349,7 +353,7 @@ if (preview) {
       campaign: extra.campaign || 'General Cleaning', adset: extra.adset || 'Grand Strand · homeowners', ad: extra.ad || 'Before-after video', page: data.page, formName: form,
     });
   };
-  fs.writeFileSync(path.join(preview, 'fb-clean.html'), fb('lp-clean', { name: 'Jane Doe', phone: '843-555-0100', zip: '29577', size: sizes[1], issue: 'Pet odor', page: '/lp/clean/' }));
+  fs.writeFileSync(path.join(preview, 'fb-clean.html'), fb('instant-clean', { name: 'Jane Doe', phone: '843-555-0100', email: 'jane@example.com', zip: '29577', size: sizes[1], issue: 'Pet odor', page: 'Instant Form: TTR · Turf cleaning quote · V3' }));
   fs.writeFileSync(path.join(preview, 'fb-membership.html'), fb('instant-membership', { name: 'Marcus Lee', phone: '843-555-0142', zip: '29579', size: sizes[2], dogs: '2 or more dogs', page: 'Instant Form: TTR · Turf membership · V2' }, { platform: 'Instagram', campaign: 'Memberships', ad: 'Dog yard carousel' }));
   fs.writeFileSync(path.join(preview, 'fb-green.html'), fb('lp-putting-green', { name: 'Dana Walsh', phone: '843-555-0199', zip: '29572', green_issue: 'Rolling slow', green_where: 'HOA or community', page: '/lp/putting-green/' }, { campaign: 'Putting Green Restoration', ad: 'Green roll video' }));
   console.log('previews in', preview);

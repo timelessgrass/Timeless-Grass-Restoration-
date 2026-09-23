@@ -29,8 +29,8 @@ const SETTINGS = [
   ['Sharing', 'Restricted', 'Only people who receive the ad should open this lead form.'],
   ['Language', 'English (US)', ''],
   ['Intro background image', "Use image from ad", ''],
-  ['Contact information', 'Full name · Phone number · ZIP code', 'Leave email off: Brian calls or texts.'],
-  ['Contact information explanation', 'Brian, the owner, will use these details to call or text you about this request. No email required.', 'Add manually in Ads Manager if the API cannot set it.'],
+  ['Contact information', 'Full name · Phone number · ZIP code · Email', 'Email is on the V3 cleaning form; add it to the others when you rebuild them.'],
+  ['Contact information explanation', 'Brian, the owner, will use these details to call, text or email you about this request.', 'Add manually in Ads Manager if the API cannot set it.'],
   ['Privacy policy link text', 'Privacy policy', ''],
   ['Privacy policy URL', `${SITE_URL}/privacy/`, ''],
   ['Custom disclaimer title', 'Calls and texts', 'Optional. No consent checkbox.'],
@@ -109,7 +109,7 @@ ANGLES.forEach((a, i) => {
     L(`- **Custom question ${j + 1} (Multiple choice):** ${cc(q.label)}`);
     q.choices.forEach((c) => L(`  - ${c.label}`));
   });
-  L('- **Contact information:** Full name, Phone number, ZIP code');
+  L('- **Contact information:** Full name, Phone number, ZIP code, Email (the V3 cleaning form asks for email; the others do not)');
   L(`- **Completion headline:** ${cc(a.form.ending.headline)}`);
   L(`- **Completion description:** ${cc(a.form.ending.description)}`);
   L(`- **Completion button:** View website · text "${a.form.ending.button}" · link ${followUpUrl(a)}`);
@@ -156,7 +156,7 @@ if (out > -1) {
         row(`Question ${j + 1}`, q.label, { note: 'Multiple choice' }),
         ...q.choices.map((c, n) => row(`  Answer ${n + 1}`, c.label)),
       ]),
-      row('Contact information', 'Full name · Phone number · ZIP code', { count: false, copy: false }),
+      row('Contact information', 'Full name · Phone number · ZIP code · Email', { count: false, copy: false }),
       group('Completion'),
       row('Headline', a.form.ending.headline),
       row('Description', a.form.ending.description),
