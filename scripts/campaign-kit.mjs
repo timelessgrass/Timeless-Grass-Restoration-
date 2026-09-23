@@ -118,7 +118,7 @@ ANGLES.forEach((a, i) => {
   L();
   L(`- **Website URL:** ${landingUrl(a)}`);
   L('- **URL parameters:** as above');
-  L(`- **Landing page form:** asks the same ${a.questions.length} questions, then name, phone and ZIP, and posts to Make as form \`lp-${a.slug}\`.`);
+  L(`- **Landing page form:** asks the same ${a.questions.length} questions, then name, phone, an optional email and ZIP, and posts to Make as form \`lp-${a.slug}\`.`);
 });
 const mdPath = path.join(root, 'marketing/facebook-lead-ads.md');
 fs.mkdirSync(path.dirname(mdPath), { recursive: true });

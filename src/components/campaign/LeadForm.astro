@@ -36,6 +36,8 @@ const ATTR = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_te
     <p class="lf__why">{brand.owner}, the owner, uses these details to call or text about this request and confirm the service area.</p>
     <div class="field"><label for={`${name}-name`}>First name *</label><input id={`${name}-name`} name="name" autocomplete="given-name" required></div>
     <div class="field"><label for={`${name}-phone`}>Phone *</label><input id={`${name}-phone`} name="phone" type="tel" autocomplete="tel" required></div>
+    {/* Optional, to match the V3 Instant Form. Brian calls or texts, so requiring it would only cost submissions. */}
+    <div class="field"><label for={`${name}-email`}>Email (optional)</label><input id={`${name}-email`} name="email" type="email" autocomplete="email" inputmode="email"></div>
     <div class="field"><label for={`${name}-zip`}>ZIP code *</label><input id={`${name}-zip`} name="zip" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" title="Five-digit ZIP code" required></div>
     <button class="btn btn--green btn--lg btn--block" type="submit" data-cta="lp-submit">{FINAL[a.slug].submit}<Icon name="arrow" /></button>
     <button class="lf__back" type="button" data-back><Icon name="arrow" />Change my answers</button>

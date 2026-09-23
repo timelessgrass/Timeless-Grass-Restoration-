@@ -90,7 +90,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 - **Website URL:** https://timelessturfrestoration.com/lp/clean/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-clean`.
+- **Landing page form:** asks the same 2 questions, then name, phone, an optional email and ZIP, and posts to Make as form `lp-clean`.
 
 ## 2. Turf membership
 
@@ -132,7 +132,7 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 - **Website URL:** https://timelessturfrestoration.com/lp/membership/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-membership`.
+- **Landing page form:** asks the same 2 questions, then name, phone, an optional email and ZIP, and posts to Make as form `lp-membership`.
 
 ## 3. Putting green restoration
 
@@ -173,4 +173,4 @@ Or paste the whole string: `utm_source={{site_source_name}}&utm_medium=paid_soci
 
 - **Website URL:** https://timelessturfrestoration.com/lp/putting-green/
 - **URL parameters:** as above
-- **Landing page form:** asks the same 2 questions, then name, phone and ZIP, and posts to Make as form `lp-putting-green`.
+- **Landing page form:** asks the same 2 questions, then name, phone, an optional email and ZIP, and posts to Make as form `lp-putting-green`.
