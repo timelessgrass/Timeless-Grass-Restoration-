@@ -203,9 +203,10 @@ const SERVICE_VARS = [
   ['q3_label', 'switch(2.service; "clean"; "Dogs (legacy form)"; "membership"; "Plan selected (legacy form)"; "putting-green"; "Green size (legacy form)"; "Details")'],
   ['q3', 'switch(2.service; "clean"; ifempty(1.data.dogs; emptystring); "membership"; ifempty(1.data.plan_pick; emptystring); "putting-green"; ifempty(1.data.green_size; emptystring); emptystring)'],
   ['hide_q2', 'if(2.service = "other"; "display:none;"; "")'],
-  ['hide_q3', 'if(2.service = "other"; "display:none;"; if(2.service = "clean"; if(ifempty(1.data.dogs; emptystring) = emptystring; "display:none;"; ""); if(2.service = "membership"; if(ifempty(1.data.plan_pick; emptystring) = emptystring; "display:none;"; ""); if(ifempty(1.data.green_size; emptystring) = emptystring; "display:none;"; ""))))'],
+  /* `x = emptystring` never matched in Make, so these rows shipped blank instead of hidden; length() does test empty. */
+  ['hide_q3', 'if(2.service = "other"; "display:none;"; if(2.service = "clean"; if(length(ifempty(1.data.dogs; "")) = 0; "display:none;"; ""); if(2.service = "membership"; if(length(ifempty(1.data.plan_pick; "")) = 0; "display:none;"; ""); if(length(ifempty(1.data.green_size; "")) = 0; "display:none;"; ""))))'],
   /* The V3 cleaning Instant Form collects an email; the other forms and the landing pages don't, so the row hides itself. */
-  ['hide_email', 'if(ifempty(1.data.email; emptystring) = emptystring; "display:none;"; "")'],
+  ['hide_email', 'if(length(ifempty(1.data.email; "")) = 0; "display:none;"; "")'],
   ['hint_label', 'switch(2.service; "clean"; "Ballpark"; "membership"; "Suggested plan"; "putting-green"; "Restoration pricing"; "Next")'],
   ['hint', `switch(2.service; "clean"; ${ballparkIml}; "membership"; ${planIml}; "putting-green"; ${greenIml}; "Call and ask what they need.")`],
 ];
@@ -347,7 +348,7 @@ if (preview) {
       name: data.name, zip: data.zip, when: 'Mon, Sep 14 · 2:41 PM', medium, platform: extra.platform || 'Facebook', digits: '8435550100', phone: data.phone, first: data.name.split(' ')[0], sms: smsText(enc(data.name.split(' ')[0])),
       rowsTitle: 'THEIR ANSWERS',
       q1Label: q1[0], q1: q1[1], q2Label: q2[0], q2: q2[1], q3Label: q3[0], q3: q3[1] || '',
-      hideQ2: '', hideQ3: q3[1] ? '' : 'display:none;',
+      hideQ2: '', hideQ3: q3[1] ? '' : 'display:none;', hideEmail: data.email ? '' : 'display:none;',
       hintLabel: { clean: 'Ballpark', membership: 'Suggested plan', 'putting-green': 'Restoration pricing' }[service],
       hint: { clean: pick(BALLPARK, data.size, 'Help them measure'), membership: pick(PLAN_BY_DOGS, data.dogs, 'Ask about dogs'), 'putting-green': green }[service],
       campaign: extra.campaign || 'General Cleaning', adset: extra.adset || 'Grand Strand · homeowners', ad: extra.ad || 'Before-after video', page: data.page, formName: form,

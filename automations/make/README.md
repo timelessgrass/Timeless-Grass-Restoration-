@@ -39,7 +39,12 @@ Instant Form names must contain `cleaning`, `membership` or `putting` (the kit's
 
 ## Instant Forms
 
-The three V1 published forms checked on 2026-09-15 are cleaning `1436778848336765`, membership `984843124016157`, and putting green `1383462950568116`. Do not delete or replace them in ads until the V2 forms pass end-to-end tests.
+Live forms on 2026-09-23: cleaning **V3** `2335365190608627` (what the ad runs), cleaning V2 `1106011932376687`, membership V2 `943835454887950`, putting green V2 `1498408112152087`, and the three V1 forms from launch (cleaning `1436778848336765`, membership `984843124016157`, putting green `1383462950568116`).
+- V3 is V2 plus an **Email** field (key `email`); its question keys are unchanged, so the feeder needed no edit, and it already mapped email.
+- The alert shows an **Email** row that hides when a lead has none, so V2 forms and the landing pages look as before.
+- A form's name still picks the route: it has to contain `cleaning`, `membership` or `putting`.
+- Leave the older forms published until their ads are switched over; a published form can't be edited.
+- Hiding a row uses `length(ifempty(x; "")) = 0`. `x = emptystring` silently never matches in Make, which shipped blank rows instead of hidden ones (fixed 2026-09-23).
 - The feeder accepts the V2 question set and retains aliases for the V1 plan, dog and green-size fields during the transition.
 - It normalizes both visible answers (for example, `501–1,000 sq ft`) and Ads Manager's underscored tokens (for example, `501_1_000_sq_ft`) to the canonical label before routing.
 - The feeder reads each answer from `1.data.<key>` or, failing that, Meta's raw `field_data` list.

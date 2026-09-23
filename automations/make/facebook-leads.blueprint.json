@@ -160,11 +160,11 @@
           },
           {
             "name": "hide_q3",
-            "value": "{{if(2.service = \"other\"; \"display:none;\"; if(2.service = \"clean\"; if(ifempty(1.data.dogs; emptystring) = emptystring; \"display:none;\"; \"\"); if(2.service = \"membership\"; if(ifempty(1.data.plan_pick; emptystring) = emptystring; \"display:none;\"; \"\"); if(ifempty(1.data.green_size; emptystring) = emptystring; \"display:none;\"; \"\"))))}}"
+            "value": "{{if(2.service = \"other\"; \"display:none;\"; if(2.service = \"clean\"; if(length(ifempty(1.data.dogs; \"\")) = 0; \"display:none;\"; \"\"); if(2.service = \"membership\"; if(length(ifempty(1.data.plan_pick; \"\")) = 0; \"display:none;\"; \"\"); if(length(ifempty(1.data.green_size; \"\")) = 0; \"display:none;\"; \"\"))))}}"
           },
           {
             "name": "hide_email",
-            "value": "{{if(ifempty(1.data.email; emptystring) = emptystring; \"display:none;\"; \"\")}}"
+            "value": "{{if(length(ifempty(1.data.email; \"\")) = 0; \"display:none;\"; \"\")}}"
           },
           {
             "name": "hint_label",
