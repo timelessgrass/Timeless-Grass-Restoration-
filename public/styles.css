@@ -34,6 +34,7 @@ html{scroll-behavior:smooth;scroll-padding-top:90px;-webkit-text-size-adjust:100
 body{margin:0;font:400 16px/1.6 var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
+a[href^="tel:"]{white-space:nowrap} /* a phone number never breaks at its hyphen; the longest tel text is 27 chars, fits at 320px */
 h1,h2,h3,h4{margin:0;line-height:1.1;letter-spacing:-.025em;color:var(--dark);text-wrap:balance}
 h1{font-size:clamp(2.3rem,5vw,3.8rem);font-weight:800}
 h2{font-size:clamp(1.85rem,3.5vw,2.7rem);font-weight:800}
@@ -859,6 +860,12 @@ a.card{text-decoration:none;color:inherit}
   .faq__a,.faq details>p{padding-left:22px}
   .acc__body{padding-left:22px}
   .sizes th,.sizes td{padding:10px}
+  /* A nowrap button wider than a 320px column ("Ask about Essential Care" in a plan card, "Get a Putting Green
+     Quote" in a sub-hero) pushed the page sideways. Only these two may wrap: the sticky bar and form buttons fit
+     on one line and wrapping them made them taller for nothing. */
+  .plan .btn,.sub-hero .btn{white-space:normal;text-align:center}
+  .plans{grid-template-columns:minmax(0,1fr)}
+  .plan{padding:26px 22px}
   .prose{font-size:1.02rem}
   .toc ol{columns:1}
   .phonecard img{display:none}
