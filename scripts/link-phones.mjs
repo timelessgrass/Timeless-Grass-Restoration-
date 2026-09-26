@@ -19,7 +19,7 @@ const PHONE = /(?<!\d)\(?\d{3}\)?[\s.‑-]?\d{3}[\s.‑-]?\d{4}(?!\d)/g;
 /** Only this number: a stray number in copy (a customer's, a partner's) shouldn't silently become a call link. */
 const OURS = /^\(?303\)?[\s.‑-]?349[\s.‑-]?2368$/;
 const HREF = 'tel:+13033492368';
-const SKIP = new Set(['a', 'script', 'style', 'title', 'head', 'textarea', 'option', 'button', 'select']);
+const SKIP = new Set(['a', 'script', 'style', 'title', 'head', 'textarea', 'option', 'button', 'select', 'noscript']);
 
 const walk = (dir) => readdirSync(dir).flatMap((f) => {
   const p = join(dir, f);
