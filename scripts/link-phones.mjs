@@ -13,7 +13,9 @@ import { readdirSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const PHONE = /\(?\d{3}\)?[\s.‑-]?\d{3}[\s.‑-]?\d{4}/g;
+/* Lookarounds so ten digits inside a longer run never match. The Grass & Greens site hit this: a Facebook
+   profile id contains a phone-shaped substring, and a crawler read it as a second number. */
+const PHONE = /(?<!\d)\(?\d{3}\)?[\s.‑-]?\d{3}[\s.‑-]?\d{4}(?!\d)/g;
 /** Only this number: a stray number in copy (a customer's, a partner's) shouldn't silently become a call link. */
 const OURS = /^\(?303\)?[\s.‑-]?349[\s.‑-]?2368$/;
 const HREF = 'tel:+13033492368';
@@ -32,6 +34,11 @@ for (const file of walk(DIST).filter((f) => f.endsWith('.html'))) {
     const lt = html.indexOf('<', i);
     if (lt < 0) { out += rewrite(html.slice(i)); break; }
     out += rewrite(html.slice(i, lt));
+    if (html.startsWith('<!--', lt)) {                 // comments pass through untouched
+      const end = html.indexOf('-->', lt);
+      const stop = end < 0 ? html.length : end + 3;
+      out += html.slice(lt, stop); i = stop; continue;
+    }
     const gt = html.indexOf('>', lt);
     if (gt < 0) { out += html.slice(lt); break; }
     const tag = html.slice(lt, gt + 1);
