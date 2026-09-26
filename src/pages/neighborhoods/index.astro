@@ -12,7 +12,7 @@ import { brand, area } from '../../data/site';
 const T = TIERS.neighborhoods;
 const crumbs = [{ name: 'Home', item: '/' }, { name: 'Service areas', item: '/service-areas/' }, { name: 'Neighborhood guides', item: T.base }];
 const groups = ALL_TOWNS.map((t) => ({ t, items: NEIGHBORHOODS.filter((n) => n.town === t.slug) })).filter((g) => g.items.length);
-const lede = `A gated golf community, a waterway estate and a village of small courtyard yards all put different demands on turf and backyard greens. These guides cover what changes in specific communities across ${area.name}, with the sources for every local fact.`;
+const lede = `What changes for turf and backyard greens in specific communities across ${area.name}, with a source for every local fact.`;
 ---
 <Base title="Grand Strand Neighborhood Turf & Green Guides | TIMELESS" description={`Turf and putting green care in specific Grand Strand communities: gates, review boards, water, golf and what each means for a visit. Call ${brand.phone}.`} crumbs={crumbs}>
   <SubHero cta kicker="Neighborhood guides" h1="Turf and putting green care, community by community" lede={lede} crumbs={crumbs} />

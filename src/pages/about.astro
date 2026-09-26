@@ -14,7 +14,7 @@ const a = `${brand.name} is owner-operated by ${brand.owner}, who has worked in 
 const schema = [{ '@type': 'Person', '@id': `${SITE_URL}/about/#brian`, name: brand.owner, jobTitle: 'Owner', worksFor: { '@id': `${SITE_URL}/#business` }, knowsAbout: ['Artificial turf', 'Synthetic putting greens', 'Turf cleaning and restoration'] }];
 ---
 <Base title={`About Brian | ${brand.name}`} description={`Brian has 13 years in artificial turf and putting greens. Why a turf builder started a turf cleaning company on the Grand Strand, and what blown clean means.`} crumbs={crumbs} answer={{ question: q, answer: a }} schema={schema}>
-  <SubHero kicker="About" h1="Hi, I'm Brian." lede="I've spent thirteen years building and looking after artificial turf and putting greens. Most of the turf I was asked to replace just needed cleaning properly, so that is what this company does." crumbs={crumbs} image={{ src: '/assets/img/putting-green-fire-pit-stone-wall.jpg', alt: 'A putting green Brian built, beside a fire pit and stone wall' }} cta />
+  <SubHero kicker="About" h1="Hi, I'm Brian." lede="I've built and looked after turf and putting greens for thirteen years. Most of what I was asked to replace just needed cleaning properly." crumbs={crumbs} image={{ src: '/assets/img/putting-green-fire-pit-stone-wall.jpg', alt: 'A putting green Brian built, beside a fire pit and stone wall' }} cta />
 
   <IconStats light label="About Brian" items={[
     { icon: 'flag', value: String(brand.ownerYears), count: brand.ownerYears, suffix: '+', label: 'years building turf and putting greens' },

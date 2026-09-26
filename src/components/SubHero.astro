@@ -3,6 +3,7 @@ import Crumbs from './Crumbs.astro';
 import Icon from './Icon.astro';
 import { brand } from '../data/site';
 import { photo } from '../lib/img';
+import { LEDE_MAX, ledeWords } from '../lib/text';
 interface Props {
   kicker: string; h1: string; lede: string;
   crumbs?: { name: string; item: string }[];
@@ -14,6 +15,7 @@ interface Props {
   trust?: { icon: string; label: string }[];
 }
 const { kicker, h1, lede, crumbs, image, dark = false, cta = false, plan, trust } = Astro.props;
+if (ledeWords(lede) > LEDE_MAX) throw new Error(`Hero lede over ${LEDE_MAX} words (${ledeWords(lede)}) on ${Astro.url.pathname}: shorten it or split it with splitLede`);
 const quote = plan ? `/quote/?plan=${encodeURIComponent(plan)}` : '/quote/';
 ---
 <section class:list={['sub-hero', { 'sub-hero--dark': dark, 'sub-hero--img': !!image }]}>

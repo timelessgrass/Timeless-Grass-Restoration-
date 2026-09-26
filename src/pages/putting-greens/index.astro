@@ -7,7 +7,7 @@ import SubHero from '../../components/SubHero.astro';
 import AnswerBox from '../../components/AnswerBox.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { GREENS, ALL_PROBLEMS, ALL_GUIDES, HOWTOS, CARE, COSTS, EXPLAINERS, COMMERCIAL, LOCAL_SERVICES, NEIGHBORHOODS, findService, findTown, TIERS } from '../../data/registry';
-import { brand, area } from '../../data/site';
+import { brand } from '../../data/site';
 
 /** The putting green hub: every page on the site about greens, grouped by what the reader is trying to do. */
 const T = TIERS.greens;
@@ -69,8 +69,8 @@ const description = `How synthetic putting greens are restored and kept rolling 
 const image = { src: '/assets/img/backyard-putting-green-landscaped-boulders.jpg', alt: 'Backyard synthetic putting green set among landscaped boulders' };
 ---
 <Base title="Putting Green Maintenance on the Grand Strand | TIMELESS" description={description} crumbs={crumbs} answer={{ question, answer }} ogImage={image.src}>
-  <SubHero kicker="Putting greens" h1="Keeping a synthetic green rolling true" lede={`A green is the one piece of turf that has to play, not just look clean. Everything we have written about greens is here: why they slow down, speed up and stop holding shots, what they cost to keep, and how we restore them across ${area.name}.`} crumbs={crumbs} image={image}>
-    <div class="btnrow" data-hero-cta><a class="btn btn--green btn--lg" href="/quote/?plan=Putting" data-cta="quote-hero">Get a Putting Green Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
+  <SubHero kicker="Putting greens" h1="Keeping a synthetic green rolling true" lede="A green has to play, not just look clean. Here is what slows one down and how we bring it back." crumbs={crumbs} image={image}>
+    <div class="btnrow" data-hero-cta><a class="btn btn--green btn--lg" href="/quote/?plan=Putting" data-cta="quote-hero">Get a Green Quote<svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn btn--ghost btn--lg" href={brand.phoneHref} data-cta="call-hero"><svg class="ic"><use href="#i-phone"/></svg>{brand.phone}</a></div>
   </SubHero>
 
   <section class="sec sec--tight">
