@@ -13,6 +13,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG = os.path.join(ROOT, 'public/assets/img')
 WIDTHS = [240, 480, 720, 960, 1400]
 QUALITY = '78'
+# This detailed before/after was the largest gallery payload in the Lighthouse audit.
+# Keep the lightbox original and other photographs at their existing quality.
+QUALITY_OVERRIDES = {'jobs/dog-yard-turf-cleaned-before-after': '70'}
 
 def size(path):
     out = subprocess.run(['sips', '-g', 'pixelWidth', '-g', 'pixelHeight', path], capture_output=True, text=True).stdout
@@ -32,12 +35,14 @@ for dirpath, _, files in os.walk(IMG):
         sw, sh = size(src)
         if not sw: continue
         rel = '/' + os.path.relpath(src, os.path.join(ROOT, 'public')).replace(os.sep, '/')
+        quality_key = os.path.splitext(os.path.relpath(src, IMG))[0].replace(os.sep, '/')
+        quality = QUALITY_OVERRIDES.get(quality_key, QUALITY)
         cuts = []
         for w in WIDTHS:
             if w > sw: continue
             out = os.path.join(dirpath, f'{stem}-{w}.webp')
             if not os.path.exists(out) or os.path.getmtime(out) < os.path.getmtime(src):
-                subprocess.run(['cwebp', '-quiet', '-q', QUALITY, '-resize', str(w), '0', src, '-o', out], check=True)
+                subprocess.run(['cwebp', '-quiet', '-q', quality, '-resize', str(w), '0', src, '-o', out], check=True)
                 made += 1
             cuts.append(w)
         if cuts: manifest[rel] = {'widths': sorted(cuts), 'width': sw, 'height': sh}
