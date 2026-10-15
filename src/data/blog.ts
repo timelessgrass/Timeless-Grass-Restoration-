@@ -44,7 +44,10 @@ const ALL_POSTS: Post[] = [...BLOG_1];
  * BLOG_TODAY overrides the date for a preview build, e.g. BLOG_TODAY=2026-12-31
  * npm run build shows the whole queue. Never set it on Netlify.
  */
-const today = process.env.BLOG_TODAY || todayOnTheCoast();
+// Read through globalThis: the build runs in Node, but this project ships no
+// Node type definitions, so a bare `process` fails the type check.
+const env = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env;
+const today = env?.BLOG_TODAY || todayOnTheCoast();
 
 /** Live posts, newest first. Everything on the site reads this, never ALL_POSTS. */
 export const POSTS: Post[] = ALL_POSTS

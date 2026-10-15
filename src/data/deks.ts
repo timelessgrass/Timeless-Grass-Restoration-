@@ -71,4 +71,10 @@ export const DEKS: Record<string, string> = {
   '/turf-problems/static-shock-from-artificial-grass/': 'A shock off turf in dry weather is ordinary static, not a safety problem, and a rinse helps.',
   '/turf-problems/sunscreen-and-oil-stains-on-artificial-grass/': 'Sunscreen and tanning oil are made to resist water, so a hose will not lift them. A degreaser will.',
   '/turf-problems/wrinkles-and-ripples-in-artificial-turf/': 'A ripple that comes and goes with the sun is normal. A wrinkle that stays year-round needs a real fix.',
+
+  // Blog posts (src/data/blog-1.ts). Restate the lede only; no new facts.
+  '/blog/turf-smell-first-rain-in-drought/': "October's first real rain followed a dry September. Here is why your turf smells worse, and how to treat it while the drought holds.",
+  '/blog/king-tide-saltwater-on-artificial-turf/': "King tides run October 26 to 29 and again Thanksgiving week. Get low turf ready now, then rinse once, after the last big morning high.",
+  '/blog/fall-leaves-on-artificial-turf/': "Leaves are probably coming down on many Grand Strand yards this week. Wet most mornings, they mat down and rot into the infill if left.",
+  '/blog/christmas-decorations-on-artificial-turf/': "Leave the stakes in the box. Here is what to hold decorations down with instead, and how to take them down without a pale patch.",
 };
