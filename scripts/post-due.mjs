@@ -31,3 +31,5 @@ for (const file of readdirSync(dir).filter((f) => /^blog-\d+\.ts$/.test(f))) {
 }
 console.log(due.length ? `Due ${from}..${today}:\n  ${due.join('\n  ')}` : `Nothing due ${from}..${today}.`);
 console.log(`due=${due.length > 0}`);
+// For the publish step: the slugs, space separated, so it can name them in the log and check each one is live.
+console.log(`slugs=${due.map((d) => d.split(' ')[1]).join(' ')}`);
