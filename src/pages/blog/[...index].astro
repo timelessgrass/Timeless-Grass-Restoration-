@@ -1,0 +1,23 @@
+---
+import Icon from '../../components/Icon.astro';
+import { iconFor } from '../../lib/icons';
+import { teaser } from '../../lib/text';
+import Base from '../../layouts/Base.astro';
+import SubHero from '../../components/SubHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { BLOG } from '../../data/registry';
+/* A rest route, so the index can decline to exist. Until the first post is
+   live there is nothing to list, and an empty /blog/ would be an orphan page
+   with no words on it: the audit fails both, correctly. The registry route
+   list and the footer link wait for the same condition. */
+export function getStaticPaths() { return BLOG.length ? [{ params: { index: undefined } }] : []; }
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Blog', item: '/blog/' }];
+const day = (d: string) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+---
+<Base title="Turf Care Blog, Grand Strand | TIMELESS" description="A new post every week from the turf: what the season is doing to artificial grass on the Grand Strand right now, and what to do about it.">
+  <SubHero cta kicker="Blog" h1="This week on the turf" lede="One post a week, written for what the Grand Strand is doing to artificial grass right now: the pollen, the storms, the humidity and the dogs." crumbs={crumbs} />
+  <section class="sec sec--tight"><div class="wrap"><div class="index" data-stagger>
+    {BLOG.map((p) => <a class="index__item index__item--ic" href={`/blog/${p.slug}/`}><span class="index__ic"><Icon name={iconFor(p.h1)} /></span><small><time datetime={p.publish}>{day(p.publish)}</time></small><h3>{p.h1}</h3><p>{teaser(p.answer)}</p></a>)}
+  </div></div></section>
+  <CtaBand />
+</Base>

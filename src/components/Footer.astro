@@ -7,6 +7,7 @@ const topProblems = PROBLEMS.filter((p) => p.footer).slice(0, 6);
 const topHowtos = HOWTOS.slice(0, 5);
 const topGuides = ALL_GUIDES.slice(0, 4);
 const topCommercial = COMMERCIAL.slice(0, 5);
+import { BLOG } from '../data/registry';
 ---
 <footer class="ftr">
   <div class="wrap">
@@ -21,7 +22,7 @@ const topCommercial = COMMERCIAL.slice(0, 5);
       <div><h3>For businesses</h3><ul>{topCommercial.map((c) => <li><a href={`/commercial/${c.slug}/`}>{c.short}</a></li>)}<li><a href="/commercial/">All programs</a></li></ul></div>
       <div><h3>Service areas</h3><ul>{TOWNS.map((t) => <li><a href={`/service-areas/${t.slug}/`}>{t.name}</a></li>)}<li><a href="/service-areas/">All areas</a></li><li><a href="/neighborhoods/">Neighborhood guides</a></li></ul></div>
       <div class="ftr__contact"><h3>Ready to schedule?</h3><ul><li><a href={brand.phoneHref} data-cta="call-footer">{brand.phone}</a></li><li><a href={`mailto:${brand.email}`}>{brand.email}</a></li><li>{area.line}</li></ul><a class="btn btn--green btn--sm" href="/quote/" data-cta="quote-footer">Get My Free Quote</a>
-        <ul class="ftr__links"><li><a href="/pricing/">Pricing</a></li><li><a href="/guides/">Guides</a></li><li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul></div>
+        <ul class="ftr__links"><li><a href="/pricing/">Pricing</a></li><li><a href="/guides/">Guides</a></li>{BLOG.length > 0 && <li><a href="/blog/">Blog</a></li>}<li><a href="/about/">About</a></li><li><a href="/privacy/">Privacy</a></li></ul></div>
     </div>
     <div class="ftr__bottom"><p>© {year} {brand.name}. All rights reserved. · Website by <a href="https://tothemaxmedia.com/" target="_blank" rel="noopener">To The Max Media</a></p><p>Owner-operated since {brand.founded}.</p></div>
   </div>

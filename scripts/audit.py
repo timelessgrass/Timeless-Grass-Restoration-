@@ -46,7 +46,7 @@ for p in pages:
     main = re.search(r'<main id="main">(.*)</main>', h, re.S).group(1)
     txt = re.sub(r'<script.*?</script>', '', main, flags=re.S); txt = re.sub(r'<[^>]+>', ' ', txt)
     words[r] = len(txt.split())
-    if words[r] < MIN_WORDS and r not in SKIP_WORDS and not r.startswith(CAMPAIGN) and not r.endswith(('/how-to/', '/guides/', '/cost/', '/turf-care/', '/turf-101/', '/commercial/', '/turf-problems/', '/service-areas/', '/services/')):
+    if words[r] < MIN_WORDS and r not in SKIP_WORDS and not r.startswith(CAMPAIGN) and not r.endswith(('/blog/', '/how-to/', '/guides/', '/cost/', '/turf-care/', '/turf-101/', '/commercial/', '/turf-problems/', '/service-areas/', '/services/')):
         issues.append((r, f'thin (<{MIN_WORDS} words)', words[r]))
     body = re.sub(r'<footer.*', '', txt, flags=re.S)
     for pat in FORBIDDEN:

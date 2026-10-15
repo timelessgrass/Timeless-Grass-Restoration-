@@ -29,6 +29,7 @@ import { NEIGHBORHOODS_4 } from './neighborhoods-4';
 import { LOCAL_SERVICES_1 } from './local-services-1';
 import { LOCAL_SERVICES_2 } from './local-services-2';
 import { brand } from './site';
+import { POSTS } from './blog';
 
 const uniq = <T extends { slug: string }>(arr: T[], name: string): T[] => {
   const seen = new Set<string>();
@@ -45,6 +46,8 @@ export const COMMERCIAL = uniq([...COMMERCIAL_1, ...COMMERCIAL_2, ...COMMERCIAL_
 export const GREENS = uniq([...GREENS_1, ...GREENS_2, ...GREENS_3], 'greens');
 export const NEIGHBORHOODS = uniq([...NEIGHBORHOODS_1, ...NEIGHBORHOODS_2, ...NEIGHBORHOODS_3, ...NEIGHBORHOODS_4], 'neighborhoods');
 export { CARE, COSTS, EXPLAINERS };
+/** Live blog posts only, newest first. See blog.ts. */
+export const BLOG = POSTS;
 export const LOCAL_SERVICES = (() => { const all = [...LOCAL_SERVICES_1, ...LOCAL_SERVICES_2]; const seen = new Set<string>(); for (const l of all) { const k = `${l.town}/${l.service}`; if (seen.has(k)) throw new Error(`duplicate local page ${k}`); seen.add(k); } return all; })();
 
 /** Tier metadata: base path, index title, kicker. */
@@ -58,6 +61,7 @@ export const TIERS = {
   commercial: { base: '/commercial/', name: 'Commercial', kicker: 'Commercial' },
   greens: { base: '/putting-greens/', name: 'Putting greens', kicker: 'Putting greens' },
   neighborhoods: { base: '/neighborhoods/', name: 'Neighborhoods', kicker: 'Neighborhood' },
+  blog: { base: '/blog/', name: 'Blog', kicker: 'Blog' },
 } as const;
 
 export const findProblem = (slug: string) => ALL_PROBLEMS.find((p) => p.slug === slug);
@@ -79,7 +83,8 @@ export const withPhone = (d: string) => {
 /** Every indexable route, for the sitemap and llms.txt. */
 export const allRoutes = (): string[] => [
   '/', '/services/', '/pricing/', '/about/', '/privacy/', '/service-areas/',
-  ...Object.values(TIERS).map((t) => t.base),
+  ...Object.values(TIERS).filter((t) => t.base !== '/blog/' || POSTS.length > 0).map((t) => t.base),
+  ...POSTS.map((p) => `/blog/${p.slug}/`),
   ...SERVICES.map((s) => `/services/${s.slug}/`),
   ...ALL_PROBLEMS.map((p) => `/turf-problems/${p.slug}/`),
   ...HOWTOS.map((h) => `/how-to/${h.slug}/`),

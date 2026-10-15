@@ -1,0 +1,31 @@
+---
+import { clip } from '../../lib/text';
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { BLOG, findService, findProblem, findGuide } from '../../data/registry';
+import type { Article } from '../../data/types';
+/* Only live posts get a route. A queued post is not built at all, so it cannot leak through a guessed URL. */
+export function getStaticPaths() { return BLOG.map((p) => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props;
+const services = (p.services ?? []).map(findService).filter(Boolean);
+const problems = (p.problems ?? []).map(findProblem).filter(Boolean);
+const guides = (p.guides ?? []).map(findGuide).filter(Boolean);
+/* The posts either side of this one in time, so every post links to its neighbours and none is reachable from the index alone. */
+const i = BLOG.findIndex((x) => x.slug === p.slug);
+const neighbours = [BLOG[i - 1], BLOG[i + 1], BLOG[i + 2]].filter(Boolean).slice(0, 3);
+/* A post is dated by when it went out. `updated` only moves later if the post is revised. */
+const a: Article = { ...p, updated: p.updated > p.publish ? p.updated : p.publish };
+const crumbs = [{ name: 'Home', item: '/' }, { name: 'Blog', item: '/blog/' }, { name: p.short, item: `/blog/${p.slug}/` }];
+const relatedCards = neighbours.length
+  ? neighbours.map((r) => ({ href: `/blog/${r!.slug}/`, title: r!.h1, blurb: clip(r!.lede, 140), image: r!.image?.src }))
+  : guides.map((g) => ({ href: `/guides/${g!.slug}/`, title: g!.h1, blurb: clip(g!.lede, 140), image: g!.image?.src }));
+---
+<ArticleLayout a={a} kicker="Blog" crumbs={crumbs} description={p.description}
+  sideLinks={[
+    { h: 'Services mentioned', items: services.map((s) => ({ href: `/services/${s!.slug}/`, label: s!.name })) },
+    { h: 'Related problems', items: problems.map((x) => ({ href: `/turf-problems/${x!.slug}/`, label: x!.short })) },
+    { h: 'Guides', items: guides.map((g) => ({ href: `/guides/${g!.slug}/`, label: g!.short })) },
+  ]}
+  related={relatedCards}
+  relatedH2={neighbours.length ? 'More from the blog' : 'Related guides'}
+>
+</ArticleLayout>

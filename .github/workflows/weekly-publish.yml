@@ -1,0 +1,35 @@
+# Publishes the week's blog post by rebuilding the site on Netlify.
+#
+# Posts are merged ahead of time with a `publish` date (see src/data/blog.ts).
+# The site only shows a post from the first build on or after that date, so
+# something has to trigger a build each week. This does, and only in a week
+# with a post due, so a quiet week costs no Netlify build credit.
+#
+# Needs one repository secret, NETLIFY_BUILD_HOOK: the URL of a build hook
+# made in Netlify under Site configuration > Build & deploy > Build hooks.
+# Without it the job says so and stops; nothing else breaks.
+name: Weekly blog publish
+
+on:
+  schedule:
+    # Mondays 11:00 UTC: 7am in Myrtle Beach in summer, 6am in winter.
+    - cron: '0 11 * * 1'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - id: due
+        run: node scripts/post-due.mjs | tee /dev/stderr | grep '^due=' >> "$GITHUB_OUTPUT"
+      - if: steps.due.outputs.due == 'true'
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "::error::NETLIFY_BUILD_HOOK is not set, so this week's post was not published."; exit 1; fi
+          curl -fsS -X POST -d '{}' "$HOOK"
+          echo "Build requested."
